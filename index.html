@@ -368,6 +368,39 @@
   }
   .reward-toast.show{opacity:1;}
 
+  /* Widget flutuante de feedback — bug/sugestão, sempre acessível, discreto */
+  .feedback-fab{
+    position:fixed; bottom:22px; right:22px; z-index:900;
+    width:52px; height:52px; border-radius:50%; border:none; cursor:pointer;
+    background:var(--ink-soft); border:1px solid var(--line); color:var(--paper);
+    font-size:1.3rem; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.35); transition:transform .15s ease, background .15s ease;
+  }
+  .feedback-fab:hover{transform:scale(1.06); background:var(--ink);}
+  .feedback-panel{
+    position:fixed; bottom:86px; right:22px; z-index:900; width:320px; max-width:calc(100vw - 44px);
+    background:var(--ink-soft); border:1px solid var(--line); border-radius:18px; padding:20px;
+    box-shadow:0 16px 48px rgba(0,0,0,0.45); display:none;
+  }
+  .feedback-panel.open{display:block;}
+  .feedback-panel h4{font-family:var(--display); font-weight:600; font-size:1.05rem; margin-bottom:4px;}
+  .feedback-panel p.fb-sub{color:rgba(244,239,230,0.55); font-size:0.82rem; margin-bottom:14px;}
+  .feedback-panel select, .feedback-panel textarea, .feedback-panel input{
+    width:100%; background:var(--ink); border:1px solid var(--line); border-radius:10px;
+    color:var(--paper); font-family:var(--body); font-size:0.88rem; padding:9px 12px; margin-bottom:10px;
+  }
+  .feedback-panel textarea{min-height:88px; resize:vertical;}
+  .feedback-panel .fb-submit{
+    width:100%; background:var(--amber); color:var(--ink); border:none; border-radius:100px;
+    font-weight:600; font-size:0.88rem; padding:10px; cursor:pointer;
+  }
+  .feedback-panel .fb-submit:hover{filter:brightness(1.08);}
+  .feedback-panel .fb-close{
+    position:absolute; top:14px; right:16px; background:none; border:none; color:rgba(244,239,230,0.5);
+    font-size:1.1rem; cursor:pointer;
+  }
+  .feedback-panel .fb-status{font-family:var(--mono); font-size:0.78rem; color:var(--amber); margin-top:8px; min-height:1.1em;}
+
   .btn-share{
     width:100%; margin-top:14px;
     font-family:var(--body); font-weight:600; font-size:0.92rem;
@@ -708,10 +741,13 @@
   }
   .email-form input[type=email]{
     flex:1; min-width:220px;
-    background:var(--ink); border:1px solid var(--line); color:var(--paper);
-    padding:15px 18px; border-radius:100px; font-family:var(--body); font-size:0.95rem;
+    background:var(--ink); border:1.5px solid var(--line); color:var(--paper);
+    padding:17px 22px; border-radius:100px; font-family:var(--body); font-size:1rem;
+    transition:border-color .2s ease;
   }
+  .email-form input[type=email]:focus{outline:none; border-color:var(--amber);}
   .email-form input[type=email]::placeholder{color:rgba(244,239,230,0.4);}
+  .email-form .btn-primary{padding:17px 30px; font-size:0.98rem;}
   .form-note{margin-top:14px; font-family:var(--mono); font-size:0.78rem; color:rgba(244,239,230,0.4);}
   .thanks{
     display:none; margin-top:20px; padding:16px 20px; border:1px solid var(--teal);
@@ -1364,20 +1400,20 @@
 <section class="cta-band" id="comecar">
   <div class="wrap">
     <div class="cta-inner lang-de" data-reveal>
-      <span class="kicker">Fase inicial</span>
-      <h2>Estamos abrindo pras primeiras pessoas — brasileiros na Alemanha — agora.</h2>
-      <p class="lede">Deixa seu e-mail que a gente te chama assim que abrir uma vaga pra testar — e você ajuda a decidir os próximos cenários, do trabalho ao dia a dia.</p>
+      <span class="kicker">Ainda decidindo?</span>
+      <h2>Deixa seu e-mail e ganha dicas de alemão de verdade, sem enrolação.</h2>
+      <p class="lede">A gente manda frases e exercícios de conversação direto na sua caixa de entrada — e você é a primeira pessoa a saber quando sair novidade grande no app.</p>
       <p class="quiz-summary" id="quiz-summary-de"></p>
       <form class="email-form" id="waitlist-form-de">
         <input type="email" name="email" required placeholder="seu@email.com" aria-label="Seu e-mail">
         <input type="hidden" name="desafio" id="quiz-desafio-de">
         <input type="hidden" name="nivel_percebido" id="quiz-nivel-de">
         <input type="hidden" name="indicado_por" id="ref-de">
-        <button type="submit" class="btn-primary">Quero entrar na lista</button>
+        <button type="submit" class="btn-primary">Quero receber</button>
       </form>
-      <p class="form-note">sem spam — só um e-mail quando abrir sua vaga</p>
+      <p class="form-note">sem spam — só conteúdo que ajuda de verdade</p>
       <div class="thanks" id="thanks-msg-de">
-        <p>Prontinho! Assim que abrir uma vaga, você é uma das primeiras pessoas a saber.</p>
+        <p>Prontinho! Já te colocamos na lista — fica de olho na caixa de entrada.</p>
         <div class="referral-box">
           <p class="referral-title">🚀 Quer subir na fila? Convide amigos.</p>
           <p class="referral-desc">Quem entrar pelo seu link — e você — sobem juntos pra acesso prioritário.</p>
@@ -1391,28 +1427,28 @@
     </div>
 
     <div class="cta-inner lang-en" data-reveal>
-      <span class="kicker">Fase inicial</span>
-      <h2>Estamos abrindo pras primeiras pessoas agora.</h2>
-      <p class="lede">Deixa seu e-mail que a gente te chama assim que abrir uma vaga pra testar — e você ajuda a moldar o produto antes de todo mundo.</p>
+      <span class="kicker">Still deciding?</span>
+      <h2>Leave your email and get real German tips, no fluff.</h2>
+      <p class="lede">We'll send conversation phrases and exercises straight to your inbox — and you'll be the first to know when something big ships in the app.</p>
       <p class="quiz-summary" id="quiz-summary-en"></p>
       <form class="email-form" id="waitlist-form-en">
-        <input type="email" name="email" required placeholder="seu@email.com" aria-label="Seu e-mail">
+        <input type="email" name="email" required placeholder="you@email.com" aria-label="Your email">
         <input type="hidden" name="desafio" id="quiz-desafio-en">
         <input type="hidden" name="nivel_percebido" id="quiz-nivel-en">
         <input type="hidden" name="indicado_por" id="ref-en">
-        <button type="submit" class="btn-primary">Quero entrar na lista</button>
+        <button type="submit" class="btn-primary">Sign me up</button>
       </form>
-      <p class="form-note">sem spam — só um e-mail quando abrir sua vaga</p>
+      <p class="form-note">no spam — just content that actually helps</p>
       <div class="thanks" id="thanks-msg-en">
-        <p>Prontinho! Assim que abrir uma vaga, você é uma das primeiras pessoas a saber.</p>
+        <p>Done! You're on the list — keep an eye on your inbox.</p>
         <div class="referral-box">
-          <p class="referral-title">🚀 Quer subir na fila? Convide amigos.</p>
-          <p class="referral-desc">Quem entrar pelo seu link — e você — sobem juntos pra acesso prioritário.</p>
+          <p class="referral-title">🚀 Want priority access? Invite friends.</p>
+          <p class="referral-desc">Whoever joins through your link — and you — both move up together.</p>
           <div class="referral-link-row">
             <input type="text" readonly id="referral-link-en" class="referral-input">
-            <button class="btn-audio" id="copy-referral-en">📋 Copiar</button>
+            <button class="btn-audio" id="copy-referral-en">📋 Copy</button>
           </div>
-          <button class="btn-share" id="whatsapp-referral-en">📲 Convidar no WhatsApp</button>
+          <button class="btn-share" id="whatsapp-referral-en">📲 Invite on WhatsApp</button>
         </div>
       </div>
     </div>
@@ -1421,7 +1457,7 @@
 
 <footer>
   <div class="wrap">
-    <div class="logo">fala<span>real</span> <span class="version-tag">v11.12.1</span></div>
+    <div class="logo">fala<span>real</span> <span class="version-tag">v11.14.0</span></div>
     <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
     <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
   </div>
@@ -2742,7 +2778,77 @@
       });
     });
   });
+
+  // Widget de feedback (bug/sugestão) — flutuante, manda pro mesmo Formspree da waitlist
+  const feedbackFab = document.getElementById('feedback-fab');
+  const feedbackPanel = document.getElementById('feedback-panel');
+  const feedbackClose = document.getElementById('feedback-close');
+  const feedbackForm = document.getElementById('feedback-form');
+  const feedbackStatus = document.getElementById('feedback-status');
+
+  if(feedbackFab && feedbackPanel){
+    feedbackFab.addEventListener('click', ()=>{
+      feedbackPanel.classList.toggle('open');
+    });
+    feedbackClose.addEventListener('click', ()=> feedbackPanel.classList.remove('open'));
+  }
+
+  if(feedbackForm){
+    feedbackForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const submitBtn = feedbackForm.querySelector('.fb-submit');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      feedbackStatus.textContent = '';
+
+      const formData = new FormData(feedbackForm);
+      formData.append('origem', 'FalaReal — widget de feedback');
+      formData.append('idioma_atual', typeof currentLang !== 'undefined' ? (currentLang === 'de' ? 'alemão' : 'inglês') : '');
+      const versionEl = document.querySelector('.version-tag');
+      formData.append('versao_site', versionEl ? versionEl.textContent : '');
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      }).then(res=>{
+        if(res.ok){
+          feedbackStatus.textContent = '✓ Enviado! Obrigado por ajudar a melhorar o FalaReal.';
+          feedbackForm.reset();
+          setTimeout(()=> feedbackPanel.classList.remove('open'), 2200);
+        } else {
+          feedbackStatus.textContent = 'Ops, não consegui enviar. Tenta de novo.';
+        }
+      }).catch(()=>{
+        feedbackStatus.textContent = 'Ops, não consegui enviar. Tenta de novo.';
+      }).finally(()=>{
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      });
+    });
+  }
 </script>
+
+<button class="feedback-fab" id="feedback-fab" title="Reportar bug ou sugestão" aria-label="Reportar bug ou sugestão">🐞</button>
+
+<div class="feedback-panel" id="feedback-panel">
+  <button class="fb-close" id="feedback-close" aria-label="Fechar">✕</button>
+  <h4>Achou um bug? Tem uma ideia?</h4>
+  <p class="fb-sub">Manda direto — leio pessoalmente todos, e isso ajuda muito o FalaReal a melhorar.</p>
+  <form id="feedback-form">
+    <select id="feedback-type" name="tipo" required>
+      <option value="Bug">🐞 Bug / algo quebrado</option>
+      <option value="Sugestão">💡 Sugestão de melhoria</option>
+      <option value="Elogio">🎉 Elogio</option>
+      <option value="Outro">📝 Outro</option>
+    </select>
+    <textarea id="feedback-message" name="mensagem" placeholder="Descreve o que aconteceu ou o que você gostaria de ver..." required></textarea>
+    <input type="email" id="feedback-email" name="email" placeholder="Seu e-mail (opcional, pra eu responder)">
+    <button type="submit" class="fb-submit">Enviar</button>
+    <div class="fb-status" id="feedback-status"></div>
+  </form>
+</div>
 
 </body>
 </html>
