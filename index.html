@@ -529,6 +529,20 @@
   .dever-mark-btn{width:100%;}
   .dever-marked-txt{font-family:var(--mono); font-size:0.85rem; color:var(--amber); text-align:center; padding:12px;}
   .dever-streak-txt{font-family:var(--mono); font-size:0.78rem; color:rgba(244,239,230,0.45); margin-top:16px; text-align:center;}
+  .dever-bonus{margin-top:18px; padding-top:18px; border-top:1px dashed var(--line);}
+  .dever-bonus-locked{
+    font-size:0.85rem; color:rgba(244,239,230,0.6); padding:14px 16px;
+    border:1px dashed rgba(240,166,58,0.4); border-radius:12px; cursor:pointer;
+  }
+  .dever-bonus-locked a{color:var(--amber); font-weight:600; text-decoration:none;}
+  .dever-bonus-label{
+    font-family:var(--mono); font-size:0.7rem; text-transform:uppercase; letter-spacing:0.05em;
+    color:var(--amber); margin-bottom:10px;
+  }
+  .streak-shield{
+    font-family:var(--mono); font-size:0.76rem; color:var(--amber); margin:-10px 0 16px; display:none;
+  }
+  .streak-shield.show{display:block;}
 
   /* TRILHA DE GRAMÁTICA — A1 a C2, com aula real e quiz de verificação */
   .grammar-card{
@@ -549,6 +563,18 @@
   .grammar-level-tag{font-family:var(--mono); font-size:0.7rem; color:var(--amber); background:rgba(240,166,58,0.12); padding:3px 10px; border-radius:100px; margin-left:8px;}
   .grammar-level-pct{font-family:var(--mono); font-size:0.8rem; color:rgba(244,239,230,0.5);}
   .grammar-level.level-collapsed .grammar-topics{display:none;}
+  .grammar-level-locked .grammar-level-top{cursor:pointer;}
+  .grammar-topic-locked-row{
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+    padding:12px 0; cursor:pointer; border-top:1px solid var(--line);
+  }
+  .grammar-topic-locked-row:first-child{border-top:none;}
+  .grammar-topic-locked-name{color:rgba(244,239,230,0.45); font-size:0.92rem;}
+  .grammar-founder-lock-note{
+    margin-top:12px; padding:14px 16px; border:1px dashed rgba(240,166,58,0.4); border-radius:12px;
+    font-size:0.85rem; color:rgba(244,239,230,0.7); cursor:pointer;
+  }
+  .grammar-founder-lock-note a{color:var(--amber); font-weight:600; text-decoration:none;}
   .grammar-topics{display:flex; flex-direction:column; gap:10px;}
   .grammar-topic{border:1px solid var(--line); border-radius:12px; background:var(--ink-soft); overflow:hidden; transition:border-color .2s ease;}
   .grammar-topic.done{border-color:rgba(240,166,58,0.35);}
@@ -644,6 +670,26 @@
   }
   .league-bar{max-width:320px;}
   @media (max-width:560px){.league-bar{max-width:none;}}
+
+  /* Selo de fundador — some até confirmarmos que o usuário logado tem is_founder=true no Supabase */
+  .founder-badge{
+    font-family:var(--mono); font-size:0.78rem; font-weight:600; color:var(--ink);
+    background:linear-gradient(120deg, var(--amber), #f7c874); padding:4px 12px; border-radius:100px;
+    margin-left:8px; display:none;
+  }
+  .founder-badge.show{display:inline-block;}
+
+  /* Aviso flutuante mostrado quando alguém sem plano de fundador tenta usar algo exclusivo */
+  .founder-lock-toast{
+    position:fixed; left:50%; bottom:24px; transform:translateX(-50%) translateY(20px);
+    z-index:950; background:var(--ink-soft); border:1px solid rgba(240,166,58,0.4); border-radius:14px;
+    padding:14px 18px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+    max-width:calc(100vw - 44px); box-shadow:0 16px 48px rgba(0,0,0,0.45);
+    opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+    font-family:var(--body); font-size:0.85rem; color:rgba(244,239,230,0.85);
+  }
+  .founder-lock-toast.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
+  .founder-lock-toast-link{color:var(--amber); font-weight:600; text-decoration:none; white-space:nowrap;}
 
   /* Resumo unificado de progresso — consolida XP, sequência, dever, gramática, desconto */
   .progress-summary{
@@ -1362,6 +1408,7 @@
         <input class="profile-nickname" id="profile-nickname" placeholder="Seu nome de guerra" maxlength="20">
         <div class="league-row">
           <span class="league-badge" id="league-badge">🥉 Liga Bronze</span>
+          <span class="founder-badge" id="founder-badge">🎖️ Fundador</span>
         </div>
         <div class="challenge-bar-track league-bar"><div class="challenge-bar-fill" id="league-progress-fill"></div></div>
         <div class="challenge-progress-txt" id="league-progress-txt" style="display:block;"></div>
@@ -1428,6 +1475,7 @@
         </div>
 
         <div class="streak-dots" id="streak-dots"></div>
+        <div class="streak-shield" id="streak-shield">🛡️ Sequência protegida — como fundador, faltar 1 dia não derruba sua sequência.</div>
 
         <div class="xp-row">
           <div class="xp-bar-track"><div class="xp-bar-fill" id="xp-fill"></div></div>
@@ -1528,6 +1576,20 @@
       </div>
 
       <div class="dever-streak-txt" id="dever-streak-txt"></div>
+
+      <div class="dever-bonus" id="dever-bonus">
+        <div class="dever-bonus-locked" id="dever-bonus-locked" data-founder-lock="1">
+          🎁 Fundadores ganham uma <strong>segunda palavra por dia</strong> — vocabulário no dobro da velocidade. <a href="#preco">Ver planos</a>
+        </div>
+        <div class="dever-today" id="dever-bonus-unlocked" style="display:none;">
+          <div class="dever-bonus-label">🎁 Palavra bônus do fundador</div>
+          <div class="dever-word" id="dever-bonus-word">—</div>
+          <div class="dever-translation" id="dever-bonus-translation">—</div>
+          <div class="dever-example" id="dever-bonus-example"></div>
+          <button class="btn-audio dever-mark-btn" id="dever-bonus-mark-btn">Marcar como estudada +5xp</button>
+          <div class="dever-marked-txt" id="dever-bonus-marked-txt" style="display:none;">✓ Estudada hoje</div>
+        </div>
+      </div>
     </div>
 
     <div class="grammar-card" data-reveal>
@@ -1837,6 +1899,11 @@
   </div>
 </footer>
 
+<div class="founder-lock-toast" id="founder-lock-toast">
+  <span id="founder-lock-toast-text"></span>
+  <a href="#preco" class="founder-lock-toast-link">Ver planos →</a>
+</div>
+
 <button class="feedback-fab" id="feedback-fab" title="Reportar bug ou sugestão" aria-label="Reportar bug ou sugestão">🐞</button>
 
 <div class="feedback-panel" id="feedback-panel">
@@ -1959,6 +2026,10 @@
         deverData = loadDever(currentLang);
         if(typeof renderDever === 'function') renderDever();
       }
+      if(typeof loadDeverBonus === 'function'){
+        deverBonusData = loadDeverBonus(currentLang);
+        if(typeof renderBonusWord === 'function') renderBonusWord();
+      }
       if(typeof loadGrammar === 'function'){
         grammarData = loadGrammar(currentLang);
         if(typeof renderGrammar === 'function') renderGrammar();
@@ -1987,6 +2058,23 @@
     }
   };
   const tiers = ['iniciante','confortável','desafiador','intenso','brutal','insano','lendário'];
+
+  // ---- CONTROLE DE ACESSO FUNDADOR ----
+  // isFounder é atualizado depois do login (ver checkFounderStatus, lá embaixo, perto do bloco de auth).
+  // Enquanto não confirmado, tratamos todo mundo como plano free.
+  let isFounder = false;
+  const FREE_LEVEL_CAP = 2; // bate com o que a seção de preços promete: free = níveis 1 e 2
+
+  let founderLockTimer = null;
+  function showFounderLock(message){
+    const toast = document.getElementById('founder-lock-toast');
+    const textEl = document.getElementById('founder-lock-toast-text');
+    if(!toast || !textEl) return;
+    textEl.textContent = message;
+    toast.classList.add('show');
+    clearTimeout(founderLockTimer);
+    founderLockTimer = setTimeout(()=> toast.classList.remove('show'), 6000);
+  }
 
   let currentLevel = 1;
   const levelBadge = document.getElementById('level-badge');
@@ -2027,6 +2115,10 @@
   }
 
   levelUpBtn.addEventListener('click', ()=>{
+    if(!isFounder && currentLevel >= FREE_LEVEL_CAP){
+      showFounderLock('🔒 Níveis 3+ são exclusivos de quem já garantiu a vaga de fundador.');
+      return;
+    }
     if(typeof stopAllAudio === 'function') stopAllAudio();
     currentLevel += 1;
     renderLevel(currentLevel);
@@ -2460,15 +2552,21 @@
     if(streakData.streak > 0){
       document.getElementById('share-btn').style.display = 'block';
     }
+
+    const shieldEl = document.getElementById('streak-shield');
+    if(shieldEl) shieldEl.classList.toggle('show', !!isFounder);
   }
 
   streakBtn.addEventListener('click', (e)=>{
     const today = todayStr();
     if(streakData.lastDate === today) return;
 
+    // Fundadores têm proteção de sequência: faltar exatamente 1 dia não zera o progresso.
+    let graceUsed = false;
     if(streakData.lastDate){
       const gap = daysBetween(streakData.lastDate, today);
-      streakData.streak = gap === 1 ? streakData.streak + 1 : 1;
+      graceUsed = isFounder && gap === 2;
+      streakData.streak = (gap === 1 || graceUsed) ? streakData.streak + 1 : 1;
     } else {
       streakData.streak = 1;
     }
@@ -2489,6 +2587,9 @@
       rewardToast.textContent = '🏅 ' + hit.label;
       rewardToast.classList.add('show');
       confettiBurst();
+    } else if(graceUsed){
+      rewardToast.textContent = '🛡️ Sequência protegida — como fundador, faltar 1 dia não te derruba.';
+      rewardToast.classList.add('show');
     } else {
       rewardToast.textContent = '+10 xp — volta amanhã pra manter a sequência';
       rewardToast.classList.add('show');
@@ -3033,6 +3134,95 @@
   };
   const DEVER_KEYS = { de: 'falareal_dever_de_v1', en: 'falareal_dever_en_v1' };
 
+  // ---- PALAVRA BÔNUS DO FUNDADOR — segunda palavra por dia, mais coloquial/gíria,
+  // exclusiva de quem já garantiu a vaga de fundador ----
+  const BONUS_WORD_POOL = {
+    de: [
+      {word:'der Feierabend', translation:'o fim do expediente (e a sensação boa que vem junto)', example:'Endlich Feierabend!'},
+      {word:'krass', translation:'gíria pra "sério?"/"absurdo" (bom ou ruim, depende do tom)', example:'Das ist ja krass!'},
+      {word:'die Ellenbogengesellschaft', translation:'"sociedade dos cotovelos" — cada um por si', example:'Manchmal fühlt sich das wie eine Ellenbogengesellschaft an.'},
+      {word:'auf jeden Fall', translation:'com certeza, sem dúvida', example:'Das mache ich auf jeden Fall.'},
+      {word:'die Schnapsidee', translation:'ideia maluca (tipo "ideia de bêbado")', example:'Das war echt eine Schnapsidee.'},
+      {word:'quatschen', translation:'bater papo, jogar conversa fora', example:'Wir haben nur ein bisschen gequatscht.'},
+      {word:'die Kopfschmerzen', translation:'dor de cabeça (literal e figurada)', example:'Das Formular bereitet mir Kopfschmerzen.'},
+      {word:'null Bock', translation:'sem vontade nenhuma, "zero saco"', example:'Ich habe heute null Bock.'},
+      {word:'die Zicke', translation:'gíria informal pra alguém difícil/mimado (cuidado com o tom)', example:'Sei doch keine Zicke.'},
+      {word:'abchecken', translation:'checar, dar uma conferida', example:'Ich muss das noch abchecken.'}
+    ],
+    en: [
+      {word:'wing it', translation:'improvisar, ir sem plano', example:"We didn't prepare, we just winged it."},
+      {word:'small talk', translation:'papo fiado, conversa social superficial', example:"I'm bad at small talk."},
+      {word:'red tape', translation:'burocracia', example:'So much red tape to get this done.'},
+      {word:'ballpark figure', translation:'número aproximado', example:'Just give me a ballpark figure.'},
+      {word:'my bad', translation:'foi mal, minha culpa', example:'Oh, my bad — I forgot.'},
+      {word:'not a big deal', translation:'não é grande coisa', example:"Don't worry, it's not a big deal."},
+      {word:'burnt out', translation:'esgotado, exausto do trabalho', example:'I feel completely burnt out.'},
+      {word:'crash course', translation:'curso relâmpago', example:'I took a crash course in German.'},
+      {word:'no worries', translation:'sem problema, relaxa', example:"No worries, take your time."},
+      {word:'ghost someone', translation:'sumir sem explicação (de alguém)', example:'She totally ghosted me.'}
+    ]
+  };
+  const DEVER_BONUS_KEYS = { de: 'falareal_dever_bonus_de_v1', en: 'falareal_dever_bonus_en_v1' };
+
+  function bonusWordForDate(dateStr){
+    const pool = BONUS_WORD_POOL[currentLang];
+    return pool[dayOfYear(dateStr) % pool.length];
+  }
+  function loadDeverBonus(lang){
+    try{
+      const raw = localStorage.getItem(DEVER_BONUS_KEYS[lang]);
+      return raw ? JSON.parse(raw) : { markedDate:null };
+    }catch(e){ return { markedDate:null }; }
+  }
+  function saveDeverBonus(lang, data){
+    try{ localStorage.setItem(DEVER_BONUS_KEYS[lang], JSON.stringify(data)); }catch(e){}
+    if(typeof syncToCloud === 'function') syncToCloud();
+  }
+  let deverBonusData = loadDeverBonus(currentLang);
+
+  function renderBonusWord(){
+    const lockedEl = document.getElementById('dever-bonus-locked');
+    const unlockedEl = document.getElementById('dever-bonus-unlocked');
+    if(!lockedEl || !unlockedEl) return;
+
+    if(!isFounder){
+      lockedEl.style.display = 'block';
+      unlockedEl.style.display = 'none';
+      return;
+    }
+    lockedEl.style.display = 'none';
+    unlockedEl.style.display = 'block';
+
+    const today = todayStr();
+    const word = bonusWordForDate(today);
+    document.getElementById('dever-bonus-word').textContent = word.word;
+    document.getElementById('dever-bonus-translation').textContent = word.translation;
+    document.getElementById('dever-bonus-example').textContent = '"' + word.example + '"';
+
+    const markBtn = document.getElementById('dever-bonus-mark-btn');
+    const markedTxt = document.getElementById('dever-bonus-marked-txt');
+    const alreadyMarked = deverBonusData.markedDate === today;
+    markBtn.style.display = alreadyMarked ? 'none' : 'block';
+    markedTxt.style.display = alreadyMarked ? 'block' : 'none';
+  }
+
+  const deverBonusLockedEl = document.getElementById('dever-bonus-locked');
+  if(deverBonusLockedEl){
+    deverBonusLockedEl.addEventListener('click', ()=>{
+      showFounderLock('🎁 A palavra bônus do dia é exclusiva de quem já garantiu a vaga de fundador.');
+    });
+  }
+  const deverBonusMarkBtn = document.getElementById('dever-bonus-mark-btn');
+  if(deverBonusMarkBtn){
+    deverBonusMarkBtn.addEventListener('click', ()=>{
+      deverBonusData.markedDate = todayStr();
+      saveDeverBonus(currentLang, deverBonusData);
+      addXP(5);
+      renderBonusWord();
+    });
+  }
+  renderBonusWord();
+
   function wordForDate(dateStr){
     const pool = WORD_POOL[currentLang];
     return pool[dayOfYear(dateStr) % pool.length];
@@ -3395,8 +3585,31 @@
       totalDone += doneCount;
       const pct = Math.round((doneCount / level.topics.length) * 100);
 
+      // C1 e C2 ficam exclusivos de quem já garantiu a vaga de fundador
+      const isLockedLevel = (level.code === 'C1' || level.code === 'C2') && !isFounder;
+
       const levelEl = document.createElement('div');
-      levelEl.className = 'grammar-level' + (pct === 100 ? ' complete' : '') + ((level.code === 'C1' || level.code === 'C2') ? ' advanced' : '');
+      levelEl.className = 'grammar-level' + (pct === 100 ? ' complete' : '') + ((level.code === 'C1' || level.code === 'C2') ? ' advanced' : '') + (isLockedLevel ? ' grammar-level-locked' : '');
+
+      if(isLockedLevel){
+        const lockedTopicsHTML = level.topics.map(t=>
+          `<div class="grammar-topic-locked-row" data-founder-lock="1">
+            <div class="grammar-topic-locked-name">🔒 ${t.name}</div>
+          </div>`
+        ).join('');
+        levelEl.innerHTML = `
+          <div class="grammar-level-top" data-level-code="${level.code}">
+            <div><span class="grammar-level-name">${level.code}</span><span class="grammar-level-tag">🔒 fundador</span></div>
+            <span class="grammar-level-pct"></span>
+          </div>
+          <div class="grammar-topics">
+            ${lockedTopicsHTML}
+            <div class="grammar-founder-lock-note" data-founder-lock="1">🔒 A trilha ${level.code} é exclusiva de quem já garantiu a vaga de fundador. <a href="#preco">Ver planos</a></div>
+          </div>
+        `;
+        container.appendChild(levelEl);
+        return;
+      }
 
       const topicsHTML = level.topics.map(t=>{
         const key = level.code + ':' + t.name;
@@ -3465,6 +3678,13 @@
   const grammarLevelsEl = document.getElementById('grammar-levels');
   if(grammarLevelsEl){
     grammarLevelsEl.addEventListener('click', (e)=>{
+      // Tópico/nível travado pro plano free
+      const lockEl = e.target.closest('[data-founder-lock]');
+      if(lockEl){
+        const levelCode = lockEl.closest('.grammar-level')?.querySelector('[data-level-code]')?.dataset.levelCode || '';
+        showFounderLock('🔒 A trilha ' + levelCode + ' é exclusiva de quem já garantiu a vaga de fundador.');
+        return;
+      }
       // Selecionar uma opção de resposta
       const optBtn = e.target.closest('.grammar-quiz-opt');
       if(optBtn){
@@ -3917,12 +4137,41 @@
     'falareal_streak_de_v1', 'falareal_streak_en_v1',
     'falareal_challenges_de_v1', 'falareal_challenges_en_v1',
     'falareal_dever_de_v1', 'falareal_dever_en_v1',
+    'falareal_dever_bonus_de_v1', 'falareal_dever_bonus_en_v1',
     'falareal_gramatica_de_v1', 'falareal_gramatica_en_v1',
     'falareal_profile_v1'
   ];
 
   let currentUser = null;
   let syncDebounceTimer = null;
+
+  // ---- STATUS DE FUNDADOR ----
+  // IMPORTANTE (Wagner): isso espera uma tabela "profiles" no Supabase com colunas
+  // "id" (uuid, igual ao id do usuário em auth.users) e "is_founder" (bool).
+  // Se o webhook Stripe→Supabase que você já tem usa outro nome de tabela/coluna,
+  // me fala qual é que eu ajusto isso rapidinho.
+  function applyFounderUI(){
+    const badge = document.getElementById('founder-badge');
+    if(badge) badge.classList.toggle('show', !!isFounder);
+    if(typeof renderGrammar === 'function') renderGrammar();
+    if(typeof renderStreak === 'function') renderStreak();
+    if(typeof renderBonusWord === 'function') renderBonusWord();
+  }
+
+  async function checkFounderStatus(){
+    if(!currentUser || !supabaseClient){ isFounder = false; applyFounderUI(); return; }
+    try{
+      const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('is_founder')
+        .eq('id', currentUser.id)
+        .maybeSingle();
+      isFounder = !error && !!(data && data.is_founder);
+    }catch(e){
+      isFounder = false;
+    }
+    applyFounderUI();
+  }
 
   function collectLocalProgress(){
     const obj = {};
@@ -4069,7 +4318,7 @@
           if(error){ authError.textContent = error.message; return; }
           currentUser = data.user;
           updateAuthUI();
-          if(currentUser) syncToCloud();
+          if(currentUser){ syncToCloud(); checkFounderStatus(); }
           authOverlay.classList.remove('open');
         } else {
           const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
@@ -4078,6 +4327,7 @@
           updateAuthUI();
           authOverlay.classList.remove('open');
           downloadFromCloud();
+          checkFounderStatus();
         }
       } finally {
         submitBtn.disabled = false;
@@ -4090,6 +4340,8 @@
       if(supabaseClient) await supabaseClient.auth.signOut();
       currentUser = null;
       updateAuthUI();
+      isFounder = false;
+      applyFounderUI();
       authOverlay.classList.remove('open');
     });
   }
@@ -4101,6 +4353,7 @@
         currentUser = data.session.user;
         updateAuthUI();
         downloadFromCloud();
+        checkFounderStatus();
       }
     });
   }
