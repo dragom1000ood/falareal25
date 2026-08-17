@@ -530,6 +530,31 @@
   .dever-marked-txt{font-family:var(--mono); font-size:0.85rem; color:var(--amber); text-align:center; padding:12px;}
   .dever-streak-txt{font-family:var(--mono); font-size:0.78rem; color:rgba(244,239,230,0.45); margin-top:16px; text-align:center;}
   .dever-bonus{margin-top:18px; padding-top:18px; border-top:1px dashed var(--line);}
+  /* Conversa ao vivo — enquanto a IA não existe, um jeito real de marcar
+     uma conversa direto com quem criou o app */
+  .ao-vivo-card{
+    border:1px solid var(--line); border-radius:20px; background:var(--ink);
+    padding:32px; max-width:640px; margin:0 auto;
+  }
+  .ao-vivo-options{display:flex; flex-direction:column; gap:14px;}
+  .ao-vivo-option{
+    display:flex; align-items:center; gap:16px; text-align:left; width:100%;
+    background:var(--ink-soft); border:1px solid var(--line); border-radius:14px;
+    padding:16px 18px; color:var(--paper); text-decoration:none; cursor:pointer;
+    font-family:var(--body); transition:border-color .15s ease;
+  }
+  .ao-vivo-option:hover{border-color:rgba(240,166,58,0.4);}
+  .ao-vivo-icon{font-size:1.6rem; flex-shrink:0;}
+  .ao-vivo-option-title{font-weight:600; font-size:0.98rem;}
+  .ao-vivo-option-sub{font-size:0.8rem; color:rgba(244,239,230,0.5); margin-top:2px;}
+  .ao-vivo-form{display:flex; flex-direction:column; gap:12px; margin-top:18px;}
+  .ao-vivo-form input, .ao-vivo-form select, .ao-vivo-form textarea{
+    width:100%; background:var(--ink-soft); border:1px solid var(--line); border-radius:10px;
+    color:var(--paper); font-family:var(--body); font-size:0.92rem; padding:12px 14px;
+  }
+  .ao-vivo-form textarea{min-height:80px; resize:vertical;}
+  .ao-vivo-form-status{font-family:var(--mono); font-size:0.82rem; color:var(--amber); min-height:1.2em;}
+
   .dever-bonus-locked{
     font-size:0.85rem; color:rgba(244,239,230,0.6); padding:14px 16px;
     border:1px dashed rgba(240,166,58,0.4); border-radius:12px; cursor:pointer;
@@ -1631,6 +1656,49 @@
         <h4>Você recebe o retorno</h4>
         <p>O que você entendeu, o que passou batido, e o que treinar na próxima conversa.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="ao-vivo">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="kicker">Enquanto a IA não chega</span>
+      <h2>Treina uma conversa ao vivo comigo.</h2>
+      <p class="lede">A conversa por IA (passo 2 aí em cima) ainda está sendo construída. Enquanto isso, se quiser praticar de verdade, marca uma conversa comigo direto — sem robô nenhum no meio.</p>
+    </div>
+    <div class="ao-vivo-card" data-reveal>
+      <div class="ao-vivo-options" id="ao-vivo-options">
+        <button type="button" class="ao-vivo-option" id="ao-vivo-form-btn">
+          <span class="ao-vivo-icon">📅</span>
+          <div>
+            <div class="ao-vivo-option-title">Pedir um horário</div>
+            <div class="ao-vivo-option-sub">Preenche e eu confirmo por e-mail</div>
+          </div>
+        </button>
+        <a href="mailto:wagneralbu2@gmail.com?subject=Quero%20treinar%20ao%20vivo" class="ao-vivo-option">
+          <span class="ao-vivo-icon">✉️</span>
+          <div>
+            <div class="ao-vivo-option-title">E-mail direto</div>
+            <div class="ao-vivo-option-sub">wagneralbu2@gmail.com</div>
+          </div>
+        </a>
+      </div>
+
+      <form id="ao-vivo-form" class="ao-vivo-form" style="display:none;">
+        <input type="text" name="nome" placeholder="Seu nome" required>
+        <input type="email" name="email" placeholder="Seu e-mail" required>
+        <select name="idioma_treino" required>
+          <option value="" disabled selected>Quero treinar...</option>
+          <option value="Alemão">Alemão</option>
+          <option value="Inglês">Inglês</option>
+        </select>
+        <textarea name="horario" placeholder="Dias/horários que funcionam pra você (com fuso, se puder)" required></textarea>
+        <input type="hidden" name="tipo" value="Pedido de conversa ao vivo">
+        <input type="hidden" name="origem" value="FalaReal — seção ao vivo">
+        <button type="submit" class="btn-primary btn-full">Enviar pedido</button>
+        <div class="ao-vivo-form-status" id="ao-vivo-form-status"></div>
+      </form>
     </div>
   </div>
 </section>
@@ -4119,6 +4187,45 @@
         }
       }).catch(()=>{
         feedbackStatus.textContent = 'Ops, não consegui enviar. Tenta de novo.';
+      }).finally(()=>{
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      });
+    });
+  }
+
+  // ---- CONVERSA AO VIVO — pedido de horário, manda pro mesmo Formspree das outras seções ----
+  const aoVivoFormBtn = document.getElementById('ao-vivo-form-btn');
+  const aoVivoForm = document.getElementById('ao-vivo-form');
+  const aoVivoStatus = document.getElementById('ao-vivo-form-status');
+  if(aoVivoFormBtn && aoVivoForm){
+    aoVivoFormBtn.addEventListener('click', ()=>{
+      aoVivoForm.style.display = 'flex';
+      aoVivoFormBtn.style.display = 'none';
+    });
+    aoVivoForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const submitBtn = aoVivoForm.querySelector('button[type=submit]');
+      const originalText = submitBtn.textContent;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+      aoVivoStatus.textContent = '';
+
+      const formData = new FormData(aoVivoForm);
+
+      fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      }).then(res=>{
+        if(res.ok){
+          aoVivoStatus.textContent = '✓ Pedido enviado! Te respondo por e-mail pra combinar o horário.';
+          aoVivoForm.reset();
+        } else {
+          aoVivoStatus.textContent = 'Ops, não consegui enviar. Tenta de novo ou manda um e-mail direto.';
+        }
+      }).catch(()=>{
+        aoVivoStatus.textContent = 'Ops, não consegui enviar. Tenta de novo ou manda um e-mail direto.';
       }).finally(()=>{
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
