@@ -569,13 +569,49 @@
   }
   .streak-shield.show{display:block;}
 
-  /* TRILHA DE GRAMÁTICA — A1 a C2, com aula real e quiz de verificação */
+  /* TRILHA DE GRAMÁTICA — A1 a C2, com aula real, quiz e exercício de montar frase */
   .grammar-card{
-    margin-top:24px; border:1px solid var(--line); border-radius:20px; padding:32px;
-    background:var(--ink-soft);
+    margin-top:24px; border:1px solid rgba(240,166,58,0.35); border-radius:24px; padding:36px;
+    background:linear-gradient(165deg, rgba(240,166,58,0.07), var(--ink-soft) 40%);
+    box-shadow:0 20px 60px rgba(0,0,0,0.25);
   }
-  .grammar-head h3{font-family:var(--display); font-weight:600; font-size:1.3rem; margin-bottom:4px;}
-  .grammar-head p{color:rgba(244,239,230,0.6); font-size:0.88rem; margin-bottom:18px;}
+  .grammar-head{position:relative;}
+  .grammar-badge{
+    display:inline-flex; align-items:center; gap:8px; font-family:var(--mono); font-size:0.72rem;
+    text-transform:uppercase; letter-spacing:0.05em; color:var(--amber); background:rgba(240,166,58,0.12);
+    border:1px solid rgba(240,166,58,0.35); padding:6px 14px; border-radius:100px; margin-bottom:14px;
+  }
+  .grammar-head h3{font-family:var(--display); font-weight:600; font-size:1.5rem; margin-bottom:6px;}
+  .grammar-head p{color:rgba(244,239,230,0.65); font-size:0.92rem; margin-bottom:18px; max-width:640px;}
+
+  /* Revisão rápida — reforço espaçado de um tópico já estudado */
+  .grammar-review{
+    margin-bottom:26px; border:1px solid rgba(62,107,99,0.4); border-radius:16px; padding:20px 22px;
+    background:rgba(62,107,99,0.08);
+  }
+  .grammar-review-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+  .grammar-review-badge{font-family:var(--mono); font-size:0.75rem; color:#8fc9ba; text-transform:uppercase; letter-spacing:0.04em;}
+  .grammar-review-skip{background:none; border:none; color:rgba(244,239,230,0.4); font-size:0.78rem; cursor:pointer; text-decoration:underline;}
+  .grammar-review-topic{font-family:var(--display); font-weight:600; font-size:1.05rem; margin-bottom:14px;}
+  .grammar-review-status{font-size:0.85rem; min-height:1.3em; margin:10px 0;}
+  .grammar-review-status.ok{color:var(--amber);}
+  .grammar-review-status.bad{color:rgba(244,239,230,0.55);}
+
+  /* Exercício "monta a frase" — gerado a partir dos exemplos de cada tópico */
+  .grammar-reorder{margin-top:16px;}
+  .grammar-reorder-slot{
+    display:flex; flex-wrap:wrap; gap:8px; min-height:48px; padding:10px;
+    border:1px dashed rgba(244,239,230,0.25); border-radius:10px; margin-bottom:12px;
+  }
+  .grammar-reorder-placeholder{font-size:0.82rem; color:rgba(244,239,230,0.35); align-self:center;}
+  .grammar-reorder-bank{display:flex; flex-wrap:wrap; gap:8px;}
+  .grammar-reorder-chip{
+    font-family:var(--body); font-size:0.9rem; background:var(--ink); color:var(--paper);
+    border:1px solid var(--line); border-radius:8px; padding:8px 14px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .grammar-reorder-chip:hover{border-color:rgba(240,166,58,0.5);}
+  .grammar-reorder-chip.picked{background:rgba(240,166,58,0.16); border-color:rgba(240,166,58,0.5); color:var(--amber);}
   .grammar-overall-track{height:8px; border-radius:100px; background:rgba(244,239,230,0.08); overflow:hidden; margin-bottom:8px;}
   .grammar-overall-fill{height:100%; width:0%; background:linear-gradient(90deg, var(--teal), var(--amber)); border-radius:100px; transition:width .4s ease;}
   .grammar-levels{display:flex; flex-direction:column; gap:14px;}
@@ -1619,9 +1655,23 @@
 
     <div class="grammar-card" data-reveal>
       <div class="grammar-head">
+        <span class="grammar-badge">🧠 a mais completa do Fala Real</span>
         <h3>🧩 Trilha de gramática — A1 até C2</h3>
-        <p>Marca o que você já estudou. A trilha cresce com você, do básico até o nível nativo.</p>
+        <p>Aula de verdade, quiz e exercício de montar frase em cada tópico. Marca o que você já estudou — a trilha cresce com você, do básico até o nível quase nativo.</p>
       </div>
+
+      <div class="grammar-review" id="grammar-review" style="display:none;">
+        <div class="grammar-review-head">
+          <span class="grammar-review-badge">🔁 Revisão rápida</span>
+          <button type="button" class="grammar-review-skip" id="grammar-review-skip">trocar</button>
+        </div>
+        <div class="grammar-review-topic" id="grammar-review-topic-name"></div>
+        <div class="grammar-review-slot" id="grammar-review-slot"></div>
+        <div class="grammar-review-bank" id="grammar-review-bank"></div>
+        <div class="grammar-review-status" id="grammar-review-status"></div>
+        <button type="button" class="btn-primary" id="grammar-review-check-btn">Conferir</button>
+      </div>
+
       <div class="grammar-overall-track"><div class="grammar-overall-fill" id="grammar-overall-fill"></div></div>
       <div class="challenge-progress-txt" id="grammar-overall-txt" style="display:block; margin-bottom:20px;"></div>
       <div class="grammar-levels" id="grammar-levels"></div>
@@ -2101,6 +2151,9 @@
       if(typeof loadGrammar === 'function'){
         grammarData = loadGrammar(currentLang);
         if(typeof renderGrammar === 'function') renderGrammar();
+        if(typeof reviewTopicKey !== 'undefined') reviewTopicKey = null;
+        if(typeof grammarReorderState !== 'undefined') grammarReorderState = {};
+        if(typeof renderGrammarReview === 'function') renderGrammarReview();
       }
       if(typeof renderProgressSummary === 'function') renderProgressSummary();
     });
@@ -3428,6 +3481,10 @@
         {name:'Pronomes possessivos', explanation:'mein (meu), dein (seu/teu), sein (dele), ihr (dela) concordam com o gênero da coisa possuída, não com quem possui.', examples:['mein Auto (meu carro)', 'meine Tasche (minha bolsa)'], quiz:[
           {q:'"___ Buch" (meu livro — das Buch)', options:['mein','meine','meinen','meinem'], correct:0},
           {q:'Possessivo de "ela" (sie)?', options:['sein','ihr','dein','unser'], correct:1}
+        ]},
+        {name:'Imperativ (comandos)', explanation:'O imperativo muda de forma conforme quem você trata: com "du" perde o -st (mach!), com "ihr" usa a forma normal (macht!), e com "Sie" o pronome vem depois do verbo (machen Sie!).', examples:['Mach das Fenster zu! (Fecha a janela!)', 'Kommen Sie bitte herein! (Entre, por favor!)'], quiz:[
+          {q:'Imperativo de "gehen" (ir) com "du"?', options:['gehst','geh','gehen','geht'], correct:1},
+          {q:'Imperativo formal de "warten" (esperar) com "Sie"?', options:['Warte Sie!','Warten Sie!','Wartet Sie!','Gewartet Sie!'], correct:1}
         ]}
       ]},
       {code:'B1', topics:[
@@ -3446,6 +3503,10 @@
         {name:'Verbos reflexivos', explanation:'Verbos como "sich freuen" (se alegrar) precisam do pronome reflexivo que concorda com o sujeito.', examples:['Ich freue mich (Eu me alegro)', 'Er freut sich (Ele se alegra)'], quiz:[
           {q:'"Ich interessiere ___ für Musik."', options:['mich','dich','sich','uns'], correct:0},
           {q:'Pronome reflexivo pra "wir"?', options:['mich','euch','uns','sich'], correct:2}
+        ]},
+        {name:'Genitiv', explanation:'O Genitiv indica posse (equivalente ao "de" em português). Artigos mudam: der→des, die→der, das→des — e substantivos masculinos/neutros no singular geralmente ganham -s ou -es.', examples:['das Auto des Mannes (o carro do homem)', 'die Farbe der Wand (a cor da parede)'], quiz:[
+          {q:'"das Haus ___ Frau" (die Frau, no Genitiv)', options:['des','der','dem','den'], correct:1},
+          {q:'Substantivo masculino no Genitiv geralmente ganha:', options:['-en','-s/-es','-er','nada muda'], correct:1}
         ]}
       ]},
       {code:'B2', topics:[
@@ -3464,6 +3525,10 @@
         {name:'Orações relativas', explanation:'Conectam informação extra usando der/die/das como pronome relativo, concordando com o substantivo referido.', examples:['Der Mann, der dort steht, ist mein Vater (O homem que está lá é meu pai)'], quiz:[
           {q:'Pronome relativo pra "die Frau"?', options:['der','die','das','den'], correct:1},
           {q:'Onde vai o verbo na oração relativa?', options:['início','2ª posição','final','não aparece'], correct:2}
+        ]},
+        {name:'Finalsätze (um...zu / damit)', explanation:'Pra expressar finalidade ("para fazer algo"), use "um...zu" + infinitivo quando o sujeito é o mesmo nas duas partes, ou "damit" quando os sujeitos são diferentes.', examples:['Ich lerne Deutsch, um hier zu arbeiten (Eu aprendo alemão para trabalhar aqui)', 'Ich erkläre es langsam, damit du es verstehst (Eu explico devagar para que você entenda)'], quiz:[
+          {q:'Quando o sujeito das duas partes é o mesmo, usa-se:', options:['damit','um...zu','weil','obwohl'], correct:1},
+          {q:'"Ich rufe an, ___ ich Bescheid weiß." (sujeitos diferentes)', options:['um...zu','damit','trotzdem','dass'], correct:1}
         ]}
       ]},
       {code:'C1', topics:[
@@ -3482,6 +3547,10 @@
         {name:'Conectores avançados', explanation:'Conectores como obwohl (embora), trotzdem (apesar disso), dennoch (contudo) dão nuance a textos/falas formais.', examples:['Obwohl es regnete, gingen wir spazieren (Embora chovesse, saímos pra passear)'], quiz:[
           {q:'"Obwohl" introduz uma ideia de:', options:['causa','contraste','tempo','condição'], correct:1},
           {q:'Depois de "obwohl", o verbo vai:', options:['início','2ª posição','final','não muda'], correct:2}
+        ]},
+        {name:'Funktionsverbgefüge', explanation:'Construções de verbo + substantivo que juntas formam um significado fixo, muito comuns em textos formais/administrativos — em vez de um verbo simples, usa-se "in Kraft treten" (entrar em vigor) em vez de "gelten".', examples:['Das Gesetz tritt in Kraft (A lei entra em vigor)', 'Die Firma nimmt Kontakt auf (A empresa entra em contato)'], quiz:[
+          {q:'"in Kraft treten" significa:', options:['perder validade','entrar em vigor','ser cancelado','ser revisado'], correct:1},
+          {q:'Funktionsverbgefüge são mais comuns em:', options:['gírias','textos formais/administrativos','poesia','fala rápida'], correct:1}
         ]}
       ]},
       {code:'C2', topics:[
@@ -3500,6 +3569,10 @@
         {name:'Linguagem técnica/jurídica', explanation:'Textos técnicos e jurídicos usam nominalização extrema, voz passiva e vocabulário específico/latino.', examples:['Die Beantragung erfolgt schriftlich (O requerimento é feito por escrito)'], quiz:[
           {q:'Textos jurídicos/técnicos favorecem:', options:['gírias','nominalização e passiva','perguntas diretas','imperativo'], correct:1},
           {q:'"Die Beantragung erfolgt..." usa qual recurso?', options:['Konjunktiv II','nominalização','imperativo','comparativo'], correct:1}
+        ]},
+        {name:'Verschachtelte Sätze', explanation:'Textos formais alemães (jornalismo, leis) empilham atributos estendidos antes do substantivo — como "der von der Regierung vorgeschlagene Plan" (o plano proposto pelo governo), tudo isso antes de "Plan".', examples:['der von der Regierung vorgeschlagene Plan (o plano proposto pelo governo)', 'die schon lange erwartete Entscheidung (a decisão já há muito esperada)'], quiz:[
+          {q:'Num atributo estendido, o particípio/adjetivo fica:', options:['depois do substantivo','logo antes do substantivo','no início da frase','não aparece'], correct:1},
+          {q:'Esse tipo de construção é típico de:', options:['fala coloquial','textos formais/jornalísticos','gírias de rua','mensagens de texto'], correct:1}
         ]}
       ]}
     ],
@@ -3538,6 +3611,10 @@
         {name:'Countable/Uncountable nouns', explanation:'Substantivos contáveis têm plural (apple/apples); incontáveis não (water, information) e usam "much" em vez de "many".', examples:['How many apples? / How much water?'], quiz:[
           {q:'"How ___ water do you need?"', options:['many','much','few','several'], correct:1},
           {q:'Qual é incontável?', options:['apple','book','water','chair'], correct:2}
+        ]},
+        {name:'Prepositions of time & place', explanation:'"In" pra períodos maiores (meses, anos, partes do dia), "on" pra dias e datas, "at" pra horários e pontos específicos.', examples:['I was born in 1995 (Eu nasci em 1995)', 'The meeting is on Monday at 3pm (A reunião é na segunda às 15h)'], quiz:[
+          {q:'"I\'ll see you ___ Friday."', options:['in','on','at','by'], correct:1},
+          {q:'"The store closes ___ 9pm."', options:['in','on','at','since'], correct:2}
         ]}
       ]},
       {code:'B1', topics:[
@@ -3556,6 +3633,10 @@
         {name:'First Conditional', explanation:'If + presente, will + infinitivo — pra situações reais/prováveis no futuro.', examples:['If I have time, I will call you'], quiz:[
           {q:'"If it ___ (rain), I will stay home."', options:['rain','rains','rained','raining'], correct:1},
           {q:'First Conditional descreve:', options:['hipótese impossível','passado','situação real/provável no futuro','ordem'], correct:2}
+        ]},
+        {name:'Used to / Would', explanation:'"Used to" descreve hábitos ou estados no passado que não são mais verdade. "Would" também descreve hábitos passados repetidos, mas não funciona com estados (não se usa "would" com "live" ou "have").', examples:['I used to live in Berlin (Eu costumava morar em Berlim)', 'We would visit my grandma every summer (A gente costumava visitar minha avó todo verão)'], quiz:[
+          {q:'Qual frase está correta pra descrever um ESTADO passado?', options:['I would have a car','I used to have a car','I would having a car','I use to have a car'], correct:1},
+          {q:'"Used to" indica que a ação:', options:['ainda acontece','não acontece mais','vai acontecer','está acontecendo agora'], correct:1}
         ]}
       ]},
       {code:'B2', topics:[
@@ -3574,6 +3655,10 @@
         {name:'Relative clauses', explanation:'who/which/that conectam informação extra sobre um substantivo. who = pessoas, which = coisas.', examples:['The man who lives there is my friend'], quiz:[
           {q:'"The book ___ I read was great."', options:['who','which','whom','whose'], correct:1},
           {q:'Pronome relativo pra pessoas?', options:['which','that','who','whose'], correct:2}
+        ]},
+        {name:'Gerunds vs Infinitives', explanation:'Alguns verbos pedem gerúndio (verb+ing: enjoy, avoid, suggest), outros pedem infinitivo com "to" (want, decide, plan), e alguns mudam de sentido dependendo de qual você usa (remember to do vs. remember doing).', examples:['I enjoy learning German (Eu gosto de aprender alemão)', 'I remembered to lock the door (Eu lembrei de trancar a porta)'], quiz:[
+          {q:'"She suggested ___ (go) to the doctor."', options:['to go','going','go','went'], correct:1},
+          {q:'"I stopped ___ (smoke) last year." (parei de fumar)', options:['to smoke','smoking','smoke','smoked'], correct:1}
         ]}
       ]},
       {code:'C1', topics:[
@@ -3592,6 +3677,10 @@
         {name:'Advanced linking words', explanation:'Conectores como although, nevertheless, whereas dão nuance e contraste em textos/fala formais.', examples:['Although it was raining, we went out'], quiz:[
           {q:'"Although" introduz uma ideia de:', options:['causa','contraste','tempo','condição'], correct:1},
           {q:'"Whereas" é usado pra:', options:['comparar/contrastar','dar exemplo','concluir','adicionar informação'], correct:0}
+        ]},
+        {name:'Inversion for emphasis', explanation:'Pra dar ênfase formal, inverte-se sujeito e verbo depois de expressões negativas/restritivas no início da frase: Never, Not only, Rarely, Little.', examples:['Never have I seen such a mess (Nunca vi uma bagunça dessas)', 'Not only did she arrive late, she also forgot the documents (Ela não só chegou atrasada, como também esqueceu os documentos)'], quiz:[
+          {q:'"___ did I realize my mistake." (só percebi meu erro)', options:['Only when','I only when','When only','Only I when'], correct:0},
+          {q:'Inversão desse tipo é típica de:', options:['fala bem casual','registro formal/enfático','mensagens de texto','gírias'], correct:1}
         ]}
       ]},
       {code:'C2', topics:[
@@ -3610,6 +3699,10 @@
         {name:'Technical/legal language', explanation:'Textos técnicos/jurídicos usam voz passiva, nominalização e vocabulário formal/latino.', examples:['The application shall be submitted in writing'], quiz:[
           {q:'Textos jurídicos favorecem:', options:['gírias','voz passiva e nominalização','perguntas diretas','imperativo'], correct:1},
           {q:'"Shall be submitted" é um exemplo de:', options:['voz ativa informal','voz passiva formal','gíria','tempo presente simples'], correct:1}
+        ]},
+        {name:'Cleft sentences', explanation:'Frases clivadas (it-cleft e wh-cleft) reorganizam a frase pra colocar ênfase numa parte específica: "It was John who called" em vez de "John called", ou "What I need is time".', examples:['It was Maria who solved the problem (Foi a Maria quem resolveu o problema)', 'What I really want is more time (O que eu realmente quero é mais tempo)'], quiz:[
+          {q:'"It was the manager ___ approved the request."', options:['what','who','which is','whom is'], correct:1},
+          {q:'"What I really want ___ a coffee." (frase wh-cleft)', options:['are','is','be','was being'], correct:1}
         ]}
       ]}
     ]
@@ -3629,6 +3722,56 @@
 
   let grammarData = loadGrammar(currentLang);
   let grammarQuizFeedback = {}; // transiente: {topicKey: 'correct'|'wrong'|null}
+
+  // ---- EXERCÍCIO "MONTAR A FRASE" — gerado automaticamente a partir dos exemplos
+  // que cada tópico já tem, sem precisar escrever conteúdo novo pra cada um ----
+  function parseExample(ex){
+    const m = ex.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+    if(m) return { sentence: m[1].trim(), translation: m[2].trim() };
+    return { sentence: ex.trim(), translation: '' };
+  }
+  function pickReorderExample(topic){
+    let best = null, bestLen = 0;
+    (topic.examples || []).forEach(ex=>{
+      const { sentence } = parseExample(ex);
+      const words = sentence.split(/\s+/).filter(Boolean);
+      if(words.length > bestLen){ bestLen = words.length; best = { sentence, words }; }
+    });
+    return (best && best.words.length >= 3) ? best : null;
+  }
+  let grammarReorderState = {}; // transiente: {topicKey: {bank:[{id,text}], picked:[id,...]}}
+  function makeReorderState(words){
+    const bank = words.map((w,i)=>({ id: 'w' + i + '_' + Math.random().toString(36).slice(2,7), text: w }));
+    for(let i=bank.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [bank[i],bank[j]] = [bank[j],bank[i]];
+    }
+    return { bank, picked: [] };
+  }
+  function isReorderCorrect(key, words){
+    const state = grammarReorderState[key];
+    if(!state || state.picked.length !== words.length) return false;
+    const assembled = state.picked.map(id => (state.bank.find(w=>w.id===id) || {}).text).join(' ');
+    return assembled === words.join(' ');
+  }
+
+  // ---- REVISÃO RÁPIDA — pega um tópico já estudado e pede pra montar a frase de novo,
+  // reforço espaçado sem precisar de conteúdo extra ----
+  let reviewTopicKey = null;
+  function pickReviewTopic(){
+    const doneKeys = Object.keys(grammarData.done).filter(k => grammarData.done[k]);
+    if(!doneKeys.length) return null;
+    // evita repetir o mesmo tópico duas vezes seguidas, se der pra escolher outro
+    const pool = doneKeys.length > 1 ? doneKeys.filter(k => k !== reviewTopicKey) : doneKeys;
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+  function findTopicByKey(key){
+    if(!key) return null;
+    const levelCode = key.split(':')[0];
+    const topicName = key.split(':').slice(1).join(':');
+    const level = (GRAMMAR_LEVELS[currentLang] || []).find(l => l.code === levelCode);
+    return level ? level.topics.find(t => t.name === topicName) : null;
+  }
 
   function renderGrammar(){
     const container = document.getElementById('grammar-levels');
@@ -3708,8 +3851,30 @@
         const feedbackHTML = feedback === 'correct'
           ? `<div class="grammar-quiz-feedback ok">✓ Mandou bem! Tópico marcado como estudado (+8xp).</div>`
           : feedback === 'wrong'
-            ? `<div class="grammar-quiz-feedback bad">Quase — revê a explicação e tenta de novo.</div>`
+            ? `<div class="grammar-quiz-feedback bad">Quase — revê a explicação e tenta de novo (confere as respostas e a frase montada).</div>`
             : '';
+
+        // exercício extra "monta a frase", gerado a partir dos exemplos do próprio tópico
+        const reorderInfo = pickReorderExample(t);
+        let reorderHTML = '';
+        if(reorderInfo){
+          if(!grammarReorderState[key]) grammarReorderState[key] = makeReorderState(reorderInfo.words);
+          const rState = grammarReorderState[key];
+          const bankHTML = rState.bank.filter(w => !rState.picked.includes(w.id)).map(w =>
+            `<button type="button" class="grammar-reorder-chip" data-reorder-key="${key}" data-reorder-id="${w.id}" data-reorder-action="pick">${w.text}</button>`
+          ).join('');
+          const pickedHTML = rState.picked.map(id=>{
+            const w = rState.bank.find(x => x.id === id);
+            return `<button type="button" class="grammar-reorder-chip picked" data-reorder-key="${key}" data-reorder-id="${id}" data-reorder-action="unpick">${w ? w.text : ''}</button>`;
+          }).join('');
+          reorderHTML = `
+            <div class="grammar-reorder">
+              <div class="grammar-quiz-question">${t.quiz.length + 1}. Monta a frase na ordem certa:</div>
+              <div class="grammar-reorder-slot">${pickedHTML || '<span class="grammar-reorder-placeholder">toque nas palavras abaixo, na ordem</span>'}</div>
+              <div class="grammar-reorder-bank">${bankHTML}</div>
+            </div>
+          `;
+        }
 
         return `<div class="grammar-topic${done ? ' done' : ''}${isOpen ? ' open' : ''}" data-topic-key="${key}">
           <div class="grammar-topic-row" data-topic-toggle="${key}">
@@ -3720,8 +3885,9 @@
           <div class="grammar-lesson">
             <p class="grammar-explanation">${t.explanation}</p>
             <ul class="grammar-examples">${examplesHTML}</ul>
-            <div class="grammar-quiz-label">${done ? 'Você já dominou esse tópico:' : 'Responde certinho as duas pra marcar como estudado:'}</div>
+            <div class="grammar-quiz-label">${done ? 'Você já dominou esse tópico:' : 'Acerta tudo pra marcar como estudado:'}</div>
             ${quizHTML}
+            ${reorderHTML}
             ${feedbackHTML}
             ${!done ? `<button type="button" class="btn-primary grammar-check-btn" data-check-key="${key}">Conferir respostas</button>` : ''}
           </div>
@@ -3753,6 +3919,20 @@
         showFounderLock('🔒 A trilha ' + levelCode + ' é exclusiva de quem já garantiu a vaga de fundador.');
         return;
       }
+      // Escolher/remover uma palavra do exercício de montar frase
+      const reorderChip = e.target.closest('[data-reorder-action]');
+      if(reorderChip){
+        const rKey = reorderChip.dataset.reorderKey;
+        const rId = reorderChip.dataset.reorderId;
+        const action = reorderChip.dataset.reorderAction;
+        const state = grammarReorderState[rKey];
+        if(state){
+          if(action === 'pick' && !state.picked.includes(rId)) state.picked.push(rId);
+          if(action === 'unpick') state.picked = state.picked.filter(x => x !== rId);
+        }
+        renderGrammar();
+        return;
+      }
       // Selecionar uma opção de resposta
       const optBtn = e.target.closest('.grammar-quiz-opt');
       if(optBtn){
@@ -3770,13 +3950,17 @@
         const [levelCode, topicName] = [key.split(':')[0], key.split(':').slice(1).join(':')];
         const level = GRAMMAR_LEVELS[currentLang].find(l => l.code === levelCode);
         const topic = level.topics.find(t => t.name === topicName);
-        const allCorrect = topic.quiz.every((q, qi)=> grammarData.answers[key + '#' + qi] === q.correct);
+        const quizOk = topic.quiz.every((q, qi)=> grammarData.answers[key + '#' + qi] === q.correct);
+        const reorderInfo = pickReorderExample(topic);
+        const reorderOk = !reorderInfo || isReorderCorrect(key, reorderInfo.words);
+        const allCorrect = quizOk && reorderOk;
         if(allCorrect){
           grammarData.done[key] = true;
           saveGrammar(currentLang, grammarData);
           grammarQuizFeedback[key] = 'correct';
           addXP(8);
           confettiBurst();
+          if(typeof renderGrammarReview === 'function') renderGrammarReview();
         } else {
           grammarQuizFeedback[key] = 'wrong';
         }
@@ -3802,6 +3986,92 @@
   }
 
   renderGrammar();
+
+  // ---- REVISÃO RÁPIDA (render + interações) ----
+  function renderGrammarReview(){
+    const card = document.getElementById('grammar-review');
+    if(!card) return;
+
+    if(!reviewTopicKey || !grammarData.done[reviewTopicKey]){
+      reviewTopicKey = pickReviewTopic();
+    }
+    if(!reviewTopicKey){
+      card.style.display = 'none';
+      return;
+    }
+
+    const topic = findTopicByKey(reviewTopicKey);
+    const reorderInfo = topic ? pickReorderExample(topic) : null;
+    if(!topic || !reorderInfo){
+      // esse tópico não dá pra virar exercício de revisão — tenta outro, se existir
+      const doneKeys = Object.keys(grammarData.done).filter(k => grammarData.done[k] && k !== reviewTopicKey);
+      if(!doneKeys.length){ card.style.display = 'none'; reviewTopicKey = null; return; }
+      reviewTopicKey = doneKeys[Math.floor(Math.random() * doneKeys.length)];
+      renderGrammarReview();
+      return;
+    }
+
+    card.style.display = 'block';
+    document.getElementById('grammar-review-topic-name').textContent = reviewTopicKey.split(':').slice(1).join(':');
+
+    const rKey = '__review__';
+    if(!grammarReorderState[rKey] || grammarReorderState[rKey]._forKey !== reviewTopicKey){
+      grammarReorderState[rKey] = makeReorderState(reorderInfo.words);
+      grammarReorderState[rKey]._forKey = reviewTopicKey;
+    }
+    const state = grammarReorderState[rKey];
+    const bankHTML = state.bank.filter(w => !state.picked.includes(w.id)).map(w =>
+      `<button type="button" class="grammar-reorder-chip" data-review-id="${w.id}" data-review-action="pick">${w.text}</button>`
+    ).join('');
+    const pickedHTML = state.picked.map(id=>{
+      const w = state.bank.find(x => x.id === id);
+      return `<button type="button" class="grammar-reorder-chip picked" data-review-id="${id}" data-review-action="unpick">${w ? w.text : ''}</button>`;
+    }).join('');
+    document.getElementById('grammar-review-slot').innerHTML = pickedHTML || '<span class="grammar-reorder-placeholder">toque nas palavras abaixo, na ordem</span>';
+    document.getElementById('grammar-review-bank').innerHTML = bankHTML;
+  }
+
+  const grammarReviewEl = document.getElementById('grammar-review');
+  if(grammarReviewEl){
+    grammarReviewEl.addEventListener('click', (e)=>{
+      const chip = e.target.closest('[data-review-action]');
+      if(chip){
+        const id = chip.dataset.reviewId;
+        const action = chip.dataset.reviewAction;
+        const state = grammarReorderState['__review__'];
+        if(state){
+          if(action === 'pick' && !state.picked.includes(id)) state.picked.push(id);
+          if(action === 'unpick') state.picked = state.picked.filter(x => x !== id);
+        }
+        renderGrammarReview();
+        return;
+      }
+      if(e.target.id === 'grammar-review-skip'){
+        reviewTopicKey = null;
+        delete grammarReorderState['__review__'];
+        renderGrammarReview();
+        return;
+      }
+      if(e.target.id === 'grammar-review-check-btn'){
+        const topic = findTopicByKey(reviewTopicKey);
+        const reorderInfo = topic ? pickReorderExample(topic) : null;
+        const statusEl = document.getElementById('grammar-review-status');
+        if(reorderInfo && isReorderCorrect('__review__', reorderInfo.words)){
+          statusEl.textContent = '✓ Isso aí! +4xp de revisão.';
+          statusEl.className = 'grammar-review-status ok';
+          addXP(4);
+          confettiBurst();
+          reviewTopicKey = null;
+          delete grammarReorderState['__review__'];
+          setTimeout(renderGrammarReview, 1200);
+        } else {
+          statusEl.textContent = 'Quase — confere a ordem de novo.';
+          statusEl.className = 'grammar-review-status bad';
+        }
+      }
+    });
+  }
+  renderGrammarReview();
 
   // ---- Resumo unificado de progresso — consolida XP, sequência, dever,
   // gramática e melhor desconto já destravado, tudo num painel só ----
