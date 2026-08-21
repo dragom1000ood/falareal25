@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://falareal-site23-4.vercel.app/sitemap.xml
