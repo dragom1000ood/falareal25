@@ -536,6 +536,11 @@
     border:1px solid var(--line); border-radius:20px; background:var(--ink);
     padding:32px; max-width:640px; margin:0 auto;
   }
+  .ao-vivo-price-row{
+    display:flex; align-items:center; gap:18px; text-align:left;
+    background:var(--ink-soft); border:1px solid rgba(240,166,58,0.3); border-radius:14px;
+    padding:18px 20px; margin-bottom:18px;
+  }
   .ao-vivo-options{display:flex; flex-direction:column; gap:14px;}
   .ao-vivo-option{
     display:flex; align-items:center; gap:16px; text-align:left; width:100%;
@@ -547,13 +552,20 @@
   .ao-vivo-icon{font-size:1.6rem; flex-shrink:0;}
   .ao-vivo-option-title{font-weight:600; font-size:0.98rem;}
   .ao-vivo-option-sub{font-size:0.8rem; color:rgba(244,239,230,0.5); margin-top:2px;}
-  .ao-vivo-form{display:flex; flex-direction:column; gap:12px; margin-top:18px;}
+  .ao-vivo-step2{margin-top:22px; padding-top:22px; border-top:1px dashed var(--line);}
+  .ao-vivo-step2-label{font-size:0.85rem; color:rgba(244,239,230,0.6); margin-bottom:14px;}
+  .ao-vivo-form{display:flex; flex-direction:column; gap:12px;}
   .ao-vivo-form input, .ao-vivo-form select, .ao-vivo-form textarea{
     width:100%; background:var(--ink-soft); border:1px solid var(--line); border-radius:10px;
     color:var(--paper); font-family:var(--body); font-size:0.92rem; padding:12px 14px;
   }
   .ao-vivo-form textarea{min-height:80px; resize:vertical;}
   .ao-vivo-form-status{font-family:var(--mono); font-size:0.82rem; color:var(--amber); min-height:1.2em;}
+  .ao-vivo-contact-link{
+    display:block; text-align:center; margin-top:18px; font-family:var(--mono);
+    font-size:0.8rem; color:rgba(244,239,230,0.45); text-decoration:none;
+  }
+  .ao-vivo-contact-link:hover{color:rgba(244,239,230,0.7);}
 
   .dever-bonus-locked{
     font-size:0.85rem; color:rgba(244,239,230,0.6); padding:14px 16px;
@@ -988,7 +1000,7 @@
   }
 
   footer{padding:40px 0; border-top:1px solid var(--line);}
-  footer .wrap{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
+  .footer-top{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;}
   footer p{font-family:var(--mono); font-size:0.78rem; color:rgba(244,239,230,0.4);}
   .footer-links{display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:0.78rem;}
   .footer-links a{color:rgba(244,239,230,0.4); text-decoration:none;}
@@ -1000,6 +1012,20 @@
   }
   .footer-link-btn:hover{color:var(--amber);}
   .version-tag{font-family:var(--mono); font-size:0.68rem; color:rgba(244,239,230,0.3); font-weight:400; letter-spacing:0.02em;}
+
+  /* Selo de autenticidade — carimbo discreto no rodapé, pra reforçar que o site
+     é o canal oficial do Fala Real */
+  .authenticity-seal{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    margin-top:26px; padding-top:20px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:0.7rem; letter-spacing:0.09em;
+    color:rgba(244,239,230,0.35); text-transform:uppercase; text-align:center;
+  }
+  .seal-badge{
+    display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+    width:20px; height:20px; border-radius:50%; border:1px solid rgba(240,166,58,0.55);
+    color:var(--amber); font-size:0.66rem; line-height:1;
+  }
 
   [data-reveal]{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
   [data-reveal].in{opacity:1; transform:translateY(0);}
@@ -1718,37 +1744,35 @@
       <p class="lede">A conversa por IA (passo 2 aí em cima) ainda está sendo construída. Enquanto isso, se quiser praticar de verdade, marca uma conversa comigo direto — sem robô nenhum no meio.</p>
     </div>
     <div class="ao-vivo-card" data-reveal>
-      <div class="ao-vivo-options" id="ao-vivo-options">
-        <button type="button" class="ao-vivo-option" id="ao-vivo-form-btn">
-          <span class="ao-vivo-icon">📅</span>
-          <div>
-            <div class="ao-vivo-option-title">Pedir um horário</div>
-            <div class="ao-vivo-option-sub">Preenche e eu confirmo por e-mail</div>
-          </div>
-        </button>
-        <a href="mailto:wagneralbu2@gmail.com?subject=Quero%20treinar%20ao%20vivo" class="ao-vivo-option">
-          <span class="ao-vivo-icon">✉️</span>
-          <div>
-            <div class="ao-vivo-option-title">E-mail direto</div>
-            <div class="ao-vivo-option-sub">wagneralbu2@gmail.com</div>
-          </div>
-        </a>
+      <div class="ao-vivo-price-row">
+        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>15</div>
+        <div>
+          <div class="ao-vivo-option-title">30 minutos, só com você</div>
+          <div class="ao-vivo-option-sub">Preço fixo pra qualquer pessoa, fundador ou não — é o meu tempo real que tá sendo reservado.</div>
+        </div>
       </div>
 
-      <form id="ao-vivo-form" class="ao-vivo-form" style="display:none;">
-        <input type="text" name="nome" placeholder="Seu nome" required>
-        <input type="email" name="email" placeholder="Seu e-mail" required>
-        <select name="idioma_treino" required>
-          <option value="" disabled selected>Quero treinar...</option>
-          <option value="Alemão">Alemão</option>
-          <option value="Inglês">Inglês</option>
-        </select>
-        <textarea name="horario" placeholder="Dias/horários que funcionam pra você (com fuso, se puder)" required></textarea>
-        <input type="hidden" name="tipo" value="Pedido de conversa ao vivo">
-        <input type="hidden" name="origem" value="FalaReal — seção ao vivo">
-        <button type="submit" class="btn-primary btn-full">Enviar pedido</button>
-        <div class="ao-vivo-form-status" id="ao-vivo-form-status"></div>
-      </form>
+      <a href="https://buy.stripe.com/SUBSTITUA_PELO_SEU_LINK" target="_blank" rel="noopener" class="btn-primary btn-full" id="ao-vivo-pay-btn">Pagar e marcar minha conversa — €15</a>
+
+      <div class="ao-vivo-step2">
+        <p class="ao-vivo-step2-label">Depois de pagar, me conta seu horário aqui embaixo — eu confirmo por e-mail:</p>
+        <form id="ao-vivo-form" class="ao-vivo-form">
+          <input type="text" name="nome" placeholder="Seu nome" required>
+          <input type="email" name="email" placeholder="Seu e-mail (o mesmo do pagamento, se puder)" required>
+          <select name="idioma_treino" required>
+            <option value="" disabled selected>Quero treinar...</option>
+            <option value="Alemão">Alemão</option>
+            <option value="Inglês">Inglês</option>
+          </select>
+          <textarea name="horario" placeholder="Dias/horários que funcionam pra você (com fuso, se puder)" required></textarea>
+          <input type="hidden" name="tipo" value="Pedido de conversa ao vivo (pago)">
+          <input type="hidden" name="origem" value="FalaReal — seção ao vivo">
+          <button type="submit" class="btn-audio btn-full">Enviar horário</button>
+          <div class="ao-vivo-form-status" id="ao-vivo-form-status"></div>
+        </form>
+      </div>
+
+      <a href="mailto:wagneralbu2@gmail.com?subject=D%C3%BAvida%20sobre%20a%20conversa%20ao%20vivo" class="ao-vivo-contact-link">Dúvidas antes de pagar? wagneralbu2@gmail.com</a>
     </div>
   </div>
 </section>
@@ -2001,18 +2025,24 @@
 
 <footer>
   <div class="wrap">
-    <div class="logo">fala<span>real</span> <span class="version-tag">v11.23.0</span></div>
-    <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
-    <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
-    <div class="footer-links lang-de">
-      <a href="/reembolso.html">Política de reembolso</a>
-      <span class="footer-sep">·</span>
-      <button type="button" class="footer-link-btn footer-report-link">Reportar um problema</button>
+    <div class="footer-top">
+      <div class="logo">fala<span>real</span> <span class="version-tag">v11.24.0</span></div>
+      <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
+      <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
+      <div class="footer-links lang-de">
+        <a href="/reembolso.html">Política de reembolso</a>
+        <span class="footer-sep">·</span>
+        <button type="button" class="footer-link-btn footer-report-link">Reportar um problema</button>
+      </div>
+      <div class="footer-links lang-en">
+        <a href="/reembolso.html">Refund policy</a>
+        <span class="footer-sep">·</span>
+        <button type="button" class="footer-link-btn footer-report-link">Report a problem</button>
+      </div>
     </div>
-    <div class="footer-links lang-en">
-      <a href="/reembolso.html">Refund policy</a>
-      <span class="footer-sep">·</span>
-      <button type="button" class="footer-link-btn footer-report-link">Report a problem</button>
+    <div class="authenticity-seal">
+      <span class="seal-badge">✓</span>
+      <span>Fala Real · © 2026</span>
     </div>
   </div>
 </footer>
@@ -3451,128 +3481,215 @@
         {name:'Artigos (der/die/das)', explanation:'Todo substantivo em alemão tem um gênero gramatical (masculino=der, feminino=die, neutro=das) que precisa ser decorado junto com a palavra — não segue lógica do português.', examples:['der Tisch (a mesa)', 'die Lampe (a lâmpada)', 'das Buch (o livro)'], quiz:[
           {q:'Qual artigo combina com "Auto" (carro)?', options:['der','die','das','den'], correct:2},
           {q:'Qual artigo combina com "Frau" (mulher)?', options:['der','die','das','dem'], correct:1}
+        ,
+          {q:'Qual artigo combina com "Buch" (livro)?', options:['der','die','das','den'], correct:2},
+          {q:'Qual artigo combina com "Mann" (homem)?', options:['der','die','das','dem'], correct:0}
         ]},
         {name:'Presente (Präsens)', explanation:'O verbo no presente muda a terminação conforme a pessoa: ich -e, du -st, er/sie/es -t, wir -en, ihr -t, sie/Sie -en.', examples:['ich spiele (eu jogo)', 'du spielst (você joga)', 'er spielt (ele joga)'], quiz:[
           {q:'Como fica "wohnen" (morar) com "du"?', options:['wohne','wohnst','wohnt','wohnen'], correct:1},
           {q:'Como fica "arbeiten" (trabalhar) com "wir"?', options:['arbeite','arbeitest','arbeitet','arbeiten'], correct:3}
+        ,
+          {q:'Como fica "spielen" (jogar) com "ich"?', options:['spiele','spielst','spielt','spielen'], correct:0},
+          {q:'Como fica "machen" (fazer) com "er"?', options:['mache','machst','macht','machen'], correct:2}
         ]},
         {name:'Acusativo (Akkusativ)', explanation:'O Akkusativ marca o objeto direto da frase (quem recebe a ação). Só o artigo masculino muda: der → den.', examples:['Ich sehe den Mann (Eu vejo o homem)', 'Ich kaufe die Milch (Eu compro o leite)'], quiz:[
           {q:'"Ich habe ___ Hund." (der Hund)', options:['der','die','das','den'], correct:3},
           {q:'Qual pergunta identifica o objeto no Akkusativ?', options:['Wer?','Wen/Was?','Wo?','Wann?'], correct:1}
+        ,
+          {q:'"Ich sehe ___ Frau." (die Frau)', options:['der','die','das','den'], correct:1},
+          {q:'Qual artigo muda no Akkusativ (comparado ao Nominativ)?', options:['masculino (der→den)','feminino (die)','neutro (das)','nenhum'], correct:0}
         ]},
         {name:'Perguntas com W', explanation:'Palavras interrogativas (W-Fragen) vêm no início da frase, seguidas do verbo: Wer (quem), Was (o quê), Wo (onde), Wann (quando), Warum (por quê).', examples:['Wo wohnst du? (Onde você mora?)', 'Was machst du? (O que você faz?)'], quiz:[
           {q:'Qual pergunta significa "por quê"?', options:['Wo','Wann','Warum','Wer'], correct:2},
           {q:'"___ bist du?" (Quem é você?)', options:['Wo','Was','Wer','Wann'], correct:2}
+        ,
+          {q:'Qual pergunta significa "onde"?', options:['Wo','Wann','Was','Wer'], correct:0},
+          {q:'"___ machst du?" (o que você faz?)', options:['Wer','Was','Wo','Wann'], correct:1}
         ]}
       ]},
       {code:'A2', topics:[
         {name:'Perfekt', explanation:'O passado mais usado na fala é o Perfekt: verbo auxiliar (haben ou sein) + particípio no final da frase.', examples:['Ich habe gearbeitet (Eu trabalhei)', 'Ich bin gegangen (Eu fui/andei)'], quiz:[
           {q:'Qual auxiliar usa "gehen" (verbo de movimento)?', options:['haben','sein'], correct:1},
           {q:'Particípio de "machen" (fazer)?', options:['gemacht','gemachen','machte','gemachte'], correct:0}
+        ,
+          {q:'Qual auxiliar usa "machen" (verbo sem movimento)?', options:['haben','sein'], correct:0},
+          {q:'Particípio de "gehen" (ir)?', options:['gegeht','gegangen','ging','gehte'], correct:1}
         ]},
         {name:'Dativo (Dativ)', explanation:'O Dativ marca o objeto indireto (a quem a ação se dirige). Artigos mudam: der→dem, die→der, das→dem.', examples:['Ich gebe dem Mann das Buch (Eu dou o livro ao homem)', 'Ich helfe der Frau (Eu ajudo a mulher)'], quiz:[
           {q:'"Ich danke ___ Lehrer." (der Lehrer)', options:['der','die','das','dem'], correct:3},
           {q:'Qual pergunta identifica o objeto no Dativ?', options:['Wen?','Wem?','Wo?','Was?'], correct:1}
+        ,
+          {q:'"Ich helfe ___ Frau." (die Frau)', options:['der','die','das','den'], correct:0},
+          {q:'Artigo neutro (das) no Dativ vira:', options:['des','dem','der','das'], correct:1}
         ]},
         {name:'Verbos modais', explanation:'Verbos como können, müssen, wollen, dürfen vão conjugados na 2ª posição, e o verbo principal fica no infinitivo no final da frase.', examples:['Ich kann Deutsch sprechen (Eu consigo falar alemão)', 'Du musst arbeiten (Você precisa trabalhar)'], quiz:[
           {q:'"Ich ___ schwimmen." (eu sei nadar)', options:['kann','kannst','könnt','können'], correct:0},
           {q:'Onde fica o verbo principal com modal?', options:['no início','logo depois do modal','no final da frase','não aparece'], correct:2}
+        ,
+          {q:'"Du ___ das machen." (você deve)', options:['musst','muss','müsst','müssen'], correct:0},
+          {q:'"Wir ___ Deutsch sprechen." (nós queremos)', options:['will','wollt','wollen','willst'], correct:2}
         ]},
         {name:'Pronomes possessivos', explanation:'mein (meu), dein (seu/teu), sein (dele), ihr (dela) concordam com o gênero da coisa possuída, não com quem possui.', examples:['mein Auto (meu carro)', 'meine Tasche (minha bolsa)'], quiz:[
           {q:'"___ Buch" (meu livro — das Buch)', options:['mein','meine','meinen','meinem'], correct:0},
           {q:'Possessivo de "ela" (sie)?', options:['sein','ihr','dein','unser'], correct:1}
+        ,
+          {q:'"___ Tasche" (sua bolsa — dein, die Tasche)', options:['dein','deine','deinen','deinem'], correct:1},
+          {q:'Possessivo de "nós" (wir)?', options:['unser','euer','ihr','sein'], correct:0}
         ]},
         {name:'Imperativ (comandos)', explanation:'O imperativo muda de forma conforme quem você trata: com "du" perde o -st (mach!), com "ihr" usa a forma normal (macht!), e com "Sie" o pronome vem depois do verbo (machen Sie!).', examples:['Mach das Fenster zu! (Fecha a janela!)', 'Kommen Sie bitte herein! (Entre, por favor!)'], quiz:[
           {q:'Imperativo de "gehen" (ir) com "du"?', options:['gehst','geh','gehen','geht'], correct:1},
           {q:'Imperativo formal de "warten" (esperar) com "Sie"?', options:['Warte Sie!','Warten Sie!','Wartet Sie!','Gewartet Sie!'], correct:1}
+        ,
+          {q:'Imperativo de "machen" (fazer) com "ihr"?', options:['mach','macht','machen','machst'], correct:1},
+          {q:'Qual forma imperativa tem o pronome DEPOIS do verbo?', options:['du','ihr','Sie','nenhuma'], correct:2}
         ]}
       ]},
       {code:'B1', topics:[
         {name:'Präteritum', explanation:'Usado mais em textos escritos e em verbos comuns (sein, haben, modais). Ex: ich war (eu era/estava), ich hatte (eu tinha).', examples:['Ich war müde (Eu estava cansado)', 'Es gab keine Zeit (Não tinha tempo)'], quiz:[
           {q:'Präteritum de "haben" na 1ª pessoa?', options:['habe','hatte','hätte','gehabt'], correct:1},
           {q:'Präteritum de "sein" com "ich"?', options:['bin','war','wäre','gewesen'], correct:1}
+        ,
+          {q:'Präteritum de "können" (eu podia)?', options:['kann','konnte','gekonnt','könnte'], correct:1},
+          {q:'"Es ___ spät." (estava tarde — sein)', options:['ist','war','wäre','gewesen'], correct:1}
         ]},
         {name:'Orações com weil/dass', explanation:'Em orações subordinadas iniciadas por weil (porque) ou dass (que), o verbo vai para o FINAL da frase.', examples:['Ich bleibe zuhause, weil ich krank bin (Fico em casa porque estou doente)'], quiz:[
           {q:'Onde vai o verbo depois de "weil"?', options:['início','2ª posição','final','não muda'], correct:2},
           {q:'"Ich weiß, dass er ___." (kommen)', options:['kommt','kommen','kam','gekommen'], correct:0}
+        ,
+          {q:'"Ich lerne Deutsch, weil ich hier ___." (arbeiten)', options:['arbeite','arbeitet','arbeiten','arbeitest'], correct:0},
+          {q:'Qual conjunção também manda o verbo pro final?', options:['und','aber','dass','oder'], correct:2}
         ]},
         {name:'Comparativo e superlativo', explanation:'Comparativo: adjetivo + -er (schneller = mais rápido). Superlativo: am + adjetivo + -sten (am schnellsten = o mais rápido).', examples:['schnell → schneller → am schnellsten'], quiz:[
           {q:'Comparativo de "groß" (grande)?', options:['großer','größer','am größten','groß'], correct:1},
           {q:'Superlativo usa qual estrutura?', options:['mehr + adjetivo','am + adjetivo + -sten','adjetivo + -er','sehr + adjetivo'], correct:1}
+        ,
+          {q:'Comparativo de "gut" (bom, irregular)?', options:['guter','gutter','besser','am besten'], correct:2},
+          {q:'"Berlin ist ___ als München." (maior)', options:['groß','größer','am größten','größte'], correct:1}
         ]},
         {name:'Verbos reflexivos', explanation:'Verbos como "sich freuen" (se alegrar) precisam do pronome reflexivo que concorda com o sujeito.', examples:['Ich freue mich (Eu me alegro)', 'Er freut sich (Ele se alegra)'], quiz:[
           {q:'"Ich interessiere ___ für Musik."', options:['mich','dich','sich','uns'], correct:0},
           {q:'Pronome reflexivo pra "wir"?', options:['mich','euch','uns','sich'], correct:2}
+        ,
+          {q:'Pronome reflexivo pra "du"?', options:['mich','dich','sich','euch'], correct:1},
+          {q:'"Er freut ___ auf die Ferien."', options:['mich','dich','sich','uns'], correct:2}
         ]},
         {name:'Genitiv', explanation:'O Genitiv indica posse (equivalente ao "de" em português). Artigos mudam: der→des, die→der, das→des — e substantivos masculinos/neutros no singular geralmente ganham -s ou -es.', examples:['das Auto des Mannes (o carro do homem)', 'die Farbe der Wand (a cor da parede)'], quiz:[
           {q:'"das Haus ___ Frau" (die Frau, no Genitiv)', options:['des','der','dem','den'], correct:1},
           {q:'Substantivo masculino no Genitiv geralmente ganha:', options:['-en','-s/-es','-er','nada muda'], correct:1}
+        ,
+          {q:'"der Hund ___ Kindes" (do menino — das Kind)', options:['des','der','dem','den'], correct:0},
+          {q:'Genitiv é usado principalmente pra expressar:', options:['lugar','tempo','posse','modo'], correct:2}
         ]}
       ]},
       {code:'B2', topics:[
         {name:'Plusquamperfekt', explanation:'Descreve uma ação que aconteceu ANTES de outra ação passada. Verbo auxiliar no Präteritum + particípio.', examples:['Ich hatte schon gegessen, als er ankam (Eu já tinha comido quando ele chegou)'], quiz:[
           {q:'Plusquamperfekt usa auxiliar em qual tempo?', options:['Präsens','Präteritum','Perfekt','Futur'], correct:1},
           {q:'"Ich ___ das Buch gelesen, bevor ich schlief."', options:['habe','hatte','werde','würde'], correct:1}
+        ,
+          {q:'"Sie war schon abgereist, als wir ___." (ankommen, Präteritum)', options:['ankommen','ankamen','angekommen','ankam'], correct:1},
+          {q:'Plusquamperfekt descreve uma ação:', options:['no futuro','simultânea a outra','antes de outra ação passada','hipotética'], correct:2}
         ]},
         {name:'Konjunktiv II (condicional)', explanation:'Usado pra situações hipotéticas/condicionais. Forma comum: würde + infinitivo.', examples:['Wenn ich Zeit hätte, würde ich kommen (Se eu tivesse tempo, eu viria)'], quiz:[
           {q:'Konjunktiv II expressa:', options:['fato','hipótese/desejo','ordem','passado'], correct:1},
           {q:'"Ich ___ das gerne machen." (eu faria isso)', options:['werde','würde','war','hatte'], correct:1}
+        ,
+          {q:'"Wenn ich Geld ___, würde ich reisen." (ter)', options:['habe','hätte','hatte','haben'], correct:1},
+          {q:'Konjunktiv II de "sein" (eu seria)?', options:['bin','war','wäre','sei'], correct:2}
         ]},
         {name:'Voz passiva (Passiv)', explanation:'werden + particípio. Foca na ação, não em quem faz. Ex: Das Haus wird gebaut (A casa está sendo construída).', examples:['Der Brief wird geschrieben (A carta é escrita)'], quiz:[
           {q:'Qual verbo auxiliar forma o Passiv?', options:['haben','sein','werden','können'], correct:2},
           {q:'"Das Auto ___ repariert."', options:['wird','hat','ist','war'], correct:0}
+        ,
+          {q:'"Die Fenster ___ geputzt." (são limpas)', options:['werden','sind','haben','waren'], correct:0},
+          {q:'Voz passiva foca em:', options:['quem faz a ação','a ação/o objeto','o tempo verbal','o lugar'], correct:1}
         ]},
         {name:'Orações relativas', explanation:'Conectam informação extra usando der/die/das como pronome relativo, concordando com o substantivo referido.', examples:['Der Mann, der dort steht, ist mein Vater (O homem que está lá é meu pai)'], quiz:[
           {q:'Pronome relativo pra "die Frau"?', options:['der','die','das','den'], correct:1},
           {q:'Onde vai o verbo na oração relativa?', options:['início','2ª posição','final','não aparece'], correct:2}
+        ,
+          {q:'Pronome relativo pra "das Kind"?', options:['der','die','das','den'], correct:2},
+          {q:'"Der Film, ___ ich gesehen habe, war gut." (den Film — Akkusativ)', options:['der','die','das','den'], correct:3}
         ]},
         {name:'Finalsätze (um...zu / damit)', explanation:'Pra expressar finalidade ("para fazer algo"), use "um...zu" + infinitivo quando o sujeito é o mesmo nas duas partes, ou "damit" quando os sujeitos são diferentes.', examples:['Ich lerne Deutsch, um hier zu arbeiten (Eu aprendo alemão para trabalhar aqui)', 'Ich erkläre es langsam, damit du es verstehst (Eu explico devagar para que você entenda)'], quiz:[
           {q:'Quando o sujeito das duas partes é o mesmo, usa-se:', options:['damit','um...zu','weil','obwohl'], correct:1},
           {q:'"Ich rufe an, ___ ich Bescheid weiß." (sujeitos diferentes)', options:['um...zu','damit','trotzdem','dass'], correct:1}
+        ,
+          {q:'"Sie spart Geld, ___ ein Auto zu kaufen." (mesmo sujeito)', options:['damit','um','weil','obwohl'], correct:1},
+          {q:'"um...zu" é seguido de:', options:['verbo conjugado','infinitivo','substantivo','adjetivo'], correct:1}
         ]}
       ]},
       {code:'C1', topics:[
         {name:'Konjunktiv I (discurso indireto)', explanation:'Usado principalmente pra relatar o que outra pessoa disse, em textos formais/jornalísticos.', examples:['Er sagte, er sei müde (Ele disse que estava cansado)'], quiz:[
           {q:'Konjunktiv I é usado principalmente pra:', options:['hipótese','discurso indireto','ordem','passado'], correct:1},
           {q:'Forma de "sein" no Konjunktiv I, 3ª pessoa?', options:['ist','sei','wäre','war'], correct:1}
+        ,
+          {q:'"Er sagte, er ___ krank." (Konjunktiv I de sein)', options:['ist','sei','war','wäre'], correct:1},
+          {q:'Konjunktiv I é mais comum em:', options:['fala casual','jornalismo/textos formais','gírias','mensagens de texto'], correct:1}
         ]},
         {name:'Nominalização', explanation:'Transformar verbos em substantivos, comum em textos formais. Ex: lesen (ler) → das Lesen (a leitura).', examples:['das Lernen (o aprender)', 'die Verbesserung (a melhoria)'], quiz:[
           {q:'Substantivo derivado de "lesen"?', options:['der Lesung','das Lesen','die Lesen','gelesen'], correct:1},
           {q:'Nominalização é mais comum em:', options:['fala informal','textos formais','gírias','ordens'], correct:1}
+        ,
+          {q:'Substantivo derivado de "schreiben" (escrever)?', options:['der Schreiben','das Schreiben','die Schreibung','geschrieben'], correct:1},
+          {q:'Substantivos derivados de verbos no infinitivo são sempre:', options:['masculinos','femininos','neutros','plural'], correct:2}
         ]},
         {name:'Construções com particípio', explanation:'Particípios usados como adjetivos antes do substantivo, comuns em textos escritos formais. Ex: die geöffnete Tür (a porta aberta).', examples:['das gelesene Buch (o livro lido)'], quiz:[
           {q:'"die ___ Tür" (a porta fechada — schließen)', options:['schließende','geschlossene','schließte','schließen'], correct:1},
           {q:'Construções com particípio geralmente substituem:', options:['orações relativas','perguntas','o presente','artigos'], correct:0}
+        ,
+          {q:'"die ___ Aufgabe" (a tarefa concluída — beenden)', options:['beendende','beendete','beenden','beendet'], correct:1},
+          {q:'Particípios como adjetivo geralmente vêm:', options:['depois do substantivo','antes do substantivo','sozinhos','no final da frase'], correct:1}
         ]},
         {name:'Conectores avançados', explanation:'Conectores como obwohl (embora), trotzdem (apesar disso), dennoch (contudo) dão nuance a textos/falas formais.', examples:['Obwohl es regnete, gingen wir spazieren (Embora chovesse, saímos pra passear)'], quiz:[
           {q:'"Obwohl" introduz uma ideia de:', options:['causa','contraste','tempo','condição'], correct:1},
           {q:'Depois de "obwohl", o verbo vai:', options:['início','2ª posição','final','não muda'], correct:2}
+        ,
+          {q:'"Trotzdem" expressa uma ideia de:', options:['causa','contraste/apesar disso','condição','tempo'], correct:1},
+          {q:'"Dennoch" é sinônimo aproximado de:', options:['deshalb (por isso)','trotzdem (apesar disso)','weil (porque)','wenn (quando)'], correct:1}
         ]},
         {name:'Funktionsverbgefüge', explanation:'Construções de verbo + substantivo que juntas formam um significado fixo, muito comuns em textos formais/administrativos — em vez de um verbo simples, usa-se "in Kraft treten" (entrar em vigor) em vez de "gelten".', examples:['Das Gesetz tritt in Kraft (A lei entra em vigor)', 'Die Firma nimmt Kontakt auf (A empresa entra em contato)'], quiz:[
           {q:'"in Kraft treten" significa:', options:['perder validade','entrar em vigor','ser cancelado','ser revisado'], correct:1},
           {q:'Funktionsverbgefüge são mais comuns em:', options:['gírias','textos formais/administrativos','poesia','fala rápida'], correct:1}
+        ,
+          {q:'"Kontakt aufnehmen" significa:', options:['perder contato','entrar em contato','evitar contato','manter distância'], correct:1},
+          {q:'Funktionsverbgefüge combina normalmente:', options:['verbo + advérbio','verbo + substantivo fixo','dois verbos','substantivo + adjetivo'], correct:1}
         ]}
       ]},
       {code:'C2', topics:[
         {name:'Expressões idiomáticas', explanation:'Frases feitas cujo sentido não é literal. Ex: die Nase voll haben = estar de saco cheio.', examples:['Ich habe die Nase voll (Estou de saco cheio)', 'Das ist mir Wurst (Tanto faz pra mim)'], quiz:[
           {q:'"die Nase voll haben" significa:', options:['estar resfriado','estar de saco cheio','estar feliz','estar com fome'], correct:1},
           {q:'"Das ist mir Wurst" significa:', options:['isso é importante','tanto faz','isso é gostoso','estou com fome'], correct:1}
+        ,
+          {q:'"Ich drück dir die Daumen" significa:', options:['vou te machucar','estou torcendo por você','estou com raiva','não acredito em você'], correct:1},
+          {q:'"Das ist nicht mein Bier" significa:', options:['isso não é problema meu','eu não bebo cerveja','isso é ótimo','estou com sede'], correct:0}
         ]},
         {name:'Registro formal vs coloquial', explanation:'Alemão formal usa "Sie" e construções completas; coloquial usa "du", contrações e gírias regionais.', examples:['Formal: Könnten Sie mir helfen? / Coloquial: Kannst du mir helfen?'], quiz:[
           {q:'Pronome formal de tratamento?', options:['du','ihr','Sie','wir'], correct:2},
           {q:'Qual é mais formal?', options:['Kannst du...','Könnten Sie...','Haste...','Machste...'], correct:1}
+        ,
+          {q:'Qual soa mais coloquial?', options:['Könnten Sie mir helfen?','Kannste mir helfen?','Würden Sie mir helfen?','Dürfte ich Sie bitten?'], correct:1},
+          {q:'Gírias regionais são mais comuns em:', options:['textos jurídicos','fala coloquial cotidiana','discursos formais','e-mails de trabalho'], correct:1}
         ]},
         {name:'Ironia e subtexto', explanation:'Entender tom irônico depende de contexto e entonação, já que a estrutura da frase pode parecer neutra ou positiva.', examples:['"Na toll!" dito com sarcasmo = "que ótimo..." irônico'], quiz:[
           {q:'Ironia em alemão depende principalmente de:', options:['gramática especial','contexto e tom','tempo verbal','artigo usado'], correct:1},
           {q:'"Na toll!" dito com sarcasmo expressa:', options:['alegria genuína','irritação disfarçada de elogio','tristeza','surpresa positiva'], correct:1}
+        ,
+          {q:'Frases irônicas costumam ter estrutura:', options:['gramaticalmente incorreta','aparentemente neutra ou positiva','sempre no passado','sempre uma pergunta'], correct:1},
+          {q:'Entender ironia bem exige principalmente:', options:['vocabulário raro','prática de escuta e contexto cultural','gramática avançada','tempo verbal correto'], correct:1}
         ]},
         {name:'Linguagem técnica/jurídica', explanation:'Textos técnicos e jurídicos usam nominalização extrema, voz passiva e vocabulário específico/latino.', examples:['Die Beantragung erfolgt schriftlich (O requerimento é feito por escrito)'], quiz:[
           {q:'Textos jurídicos/técnicos favorecem:', options:['gírias','nominalização e passiva','perguntas diretas','imperativo'], correct:1},
           {q:'"Die Beantragung erfolgt..." usa qual recurso?', options:['Konjunktiv II','nominalização','imperativo','comparativo'], correct:1}
+        ,
+          {q:'"Der Antrag wird geprüft" (o requerimento é analisado) usa:', options:['Konjunktiv I','voz passiva','imperativo','comparativo'], correct:1},
+          {q:'Vocabulário jurídico costuma ter origem:', options:['inglesa','latina/erudita','só coloquial','apenas regional'], correct:1}
         ]},
         {name:'Verschachtelte Sätze', explanation:'Textos formais alemães (jornalismo, leis) empilham atributos estendidos antes do substantivo — como "der von der Regierung vorgeschlagene Plan" (o plano proposto pelo governo), tudo isso antes de "Plan".', examples:['der von der Regierung vorgeschlagene Plan (o plano proposto pelo governo)', 'die schon lange erwartete Entscheidung (a decisão já há muito esperada)'], quiz:[
           {q:'Num atributo estendido, o particípio/adjetivo fica:', options:['depois do substantivo','logo antes do substantivo','no início da frase','não aparece'], correct:1},
           {q:'Esse tipo de construção é típico de:', options:['fala coloquial','textos formais/jornalísticos','gírias de rua','mensagens de texto'], correct:1}
+        ,
+          {q:'"die von den Experten empfohlene Lösung" — o núcleo da frase (substantivo) é:', options:['Experten','empfohlene','Lösung','von'], correct:2},
+          {q:'Esse tipo de construção é mais raro em:', options:['leis e jornais','conversas do dia a dia','artigos científicos','discursos políticos'], correct:1}
         ]}
       ]}
     ],
@@ -3581,128 +3698,215 @@
         {name:'Verb "to be"', explanation:'O verbo "to be" (ser/estar) é irregular e muda com cada pessoa: I am, you are, he/she/it is, we are, they are.', examples:['I am tired (Estou cansado)', 'She is happy (Ela está feliz)'], quiz:[
           {q:'"They ___ students."', options:['am','is','are','be'], correct:2},
           {q:'"He ___ my brother."', options:['am','is','are','be'], correct:1}
+        ,
+          {q:'"I ___ from Brazil."', options:['am','is','are','be'], correct:0},
+          {q:'"We ___ happy."', options:['am','is','are','be'], correct:2}
         ]},
         {name:'Simple Present', explanation:'Usado pra hábitos e fatos. Na 3ª pessoa (he/she/it), adiciona -s ao verbo.', examples:['She works every day (Ela trabalha todo dia)', 'I live in Germany (Eu moro na Alemanha)'], quiz:[
           {q:'"He ___ (work) every day."', options:['work','works','working','worked'], correct:1},
           {q:'"I ___ (live) in Berlin."', options:['live','lives','living','lived'], correct:0}
+        ,
+          {q:'"She ___ (study) English."', options:['study','studies','studying','studied'], correct:1},
+          {q:'"They ___ (play) football on Sundays."', options:['play','plays','playing','played'], correct:0}
         ]},
         {name:'Articles (a/an/the)', explanation:'"a/an" pra algo não específico (an antes de som de vogal), "the" pra algo específico/já mencionado.', examples:['I saw a dog (Eu vi um cachorro)', 'The dog was brown (O cachorro era marrom)'], quiz:[
           {q:'"I need ___ umbrella."', options:['a','an','the','(nenhum)'], correct:1},
           {q:'"___ sun is bright today."', options:['a','an','the','(nenhum)'], correct:2}
+        ,
+          {q:'"She has ___ cat." (não específico)', options:['a','an','the','(nenhum)'], correct:0},
+          {q:'"I saw a movie yesterday. ___ movie was great."', options:['a','an','the','(nenhum)'], correct:2}
         ]},
         {name:'Wh-questions', explanation:'Palavras interrogativas (What, Where, When, Who, Why, How) vêm no início da pergunta.', examples:['Where do you live? (Onde você mora?)', 'What is your name? (Qual é seu nome?)'], quiz:[
           {q:'Qual pergunta significa "por quê"?', options:['What','Where','Why','Who'], correct:2},
           {q:'"___ is your birthday?" (quando)', options:['What','Who','When','Why'], correct:2}
+        ,
+          {q:'Qual pergunta significa "quem"?', options:['What','Who','Where','How'], correct:1},
+          {q:'"___ do you live?" (onde)', options:['What','Who','Where','When'], correct:2}
         ]}
       ]},
       {code:'A2', topics:[
         {name:'Simple Past', explanation:'Pra ações concluídas no passado. Verbos regulares ganham -ed; irregulares mudam de forma (go→went).', examples:['I worked yesterday (Eu trabalhei ontem)', 'She went home (Ela foi pra casa)'], quiz:[
           {q:'Passado de "go"?', options:['goed','went','gone','going'], correct:1},
           {q:'Passado de "work"?', options:['work','worked','working','works'], correct:1}
+        ,
+          {q:'Passado de "eat"?', options:['eated','ate','eaten','eating'], correct:1},
+          {q:'Passado de "study"?', options:['studyed','studied','studies','studying'], correct:1}
         ]},
         {name:'Present Continuous', explanation:'to be + verbo-ing, pra ações acontecendo agora.', examples:['She is studying now (Ela está estudando agora)'], quiz:[
           {q:'"I ___ (study) right now."', options:['study','studies','am studying','studied'], correct:2},
           {q:'Present Continuous usa qual estrutura?', options:['verbo + -ed','to be + verbo-ing','will + verbo','have + particípio'], correct:1}
+        ,
+          {q:'"They ___ (watch) a movie right now."', options:['watch','watches','are watching','watched'], correct:2},
+          {q:'Present Continuous é usado pra:', options:['hábitos','ações acontecendo agora','fatos gerais','passado concluído'], correct:1}
         ]},
         {name:'Comparatives/Superlatives', explanation:'Comparativo: adjetivo + -er (ou more + adjetivo). Superlativo: the + adjetivo + -est (ou the most + adjetivo).', examples:['faster (mais rápido)', 'the fastest (o mais rápido)'], quiz:[
           {q:'Comparativo de "big"?', options:['bigger','more big','biggest','big'], correct:0},
           {q:'Superlativo de "beautiful"?', options:['beautifuller','more beautiful','the most beautiful','beautifulest'], correct:2}
+        ,
+          {q:'Comparativo de "happy"?', options:['happier','more happy','happiest','happyer'], correct:0},
+          {q:'Superlativo de "fast"?', options:['faster','fastest','the fastest','more fast'], correct:2}
         ]},
         {name:'Countable/Uncountable nouns', explanation:'Substantivos contáveis têm plural (apple/apples); incontáveis não (water, information) e usam "much" em vez de "many".', examples:['How many apples? / How much water?'], quiz:[
           {q:'"How ___ water do you need?"', options:['many','much','few','several'], correct:1},
           {q:'Qual é incontável?', options:['apple','book','water','chair'], correct:2}
+        ,
+          {q:'"How ___ books do you have?"', options:['much','many','little','less'], correct:1},
+          {q:'Qual é contável?', options:['money','information','chair','advice'], correct:2}
         ]},
         {name:'Prepositions of time & place', explanation:'"In" pra períodos maiores (meses, anos, partes do dia), "on" pra dias e datas, "at" pra horários e pontos específicos.', examples:['I was born in 1995 (Eu nasci em 1995)', 'The meeting is on Monday at 3pm (A reunião é na segunda às 15h)'], quiz:[
           {q:'"I\'ll see you ___ Friday."', options:['in','on','at','by'], correct:1},
           {q:'"The store closes ___ 9pm."', options:['in','on','at','since'], correct:2}
+        ,
+          {q:'"I was born ___ July."', options:['in','on','at','by'], correct:0},
+          {q:'"We arrived ___ 6 o\'clock."', options:['in','on','at','by'], correct:2}
         ]}
       ]},
       {code:'B1', topics:[
         {name:'Present Perfect', explanation:'have/has + particípio, pra ações passadas com conexão ao presente.', examples:['She has finished her homework (Ela terminou o dever)'], quiz:[
           {q:'"I ___ (finish) my work already."', options:['finish','finished','have finished','finishing'], correct:2},
           {q:'Particípio de "eat"?', options:['ate','eaten','eating','eats'], correct:1}
+        ,
+          {q:'"She ___ (visit) Paris three times."', options:['visit','visited','has visited','visiting'], correct:2},
+          {q:'Particípio de "go"?', options:['went','gone','going','goes'], correct:1}
         ]},
         {name:'Past Continuous', explanation:'was/were + verbo-ing, pra ação em andamento no passado.', examples:['They were watching TV (Eles estavam assistindo TV)'], quiz:[
           {q:'"I ___ (sleep) when the phone rang."', options:['slept','was sleeping','sleep','have slept'], correct:1},
           {q:'Past Continuous usa qual estrutura?', options:['was/were + -ing','have + particípio','will + verbo','verbo + -ed'], correct:0}
+        ,
+          {q:'"They ___ (play) soccer when it started to rain."', options:['played','were playing','play','have played'], correct:1},
+          {q:'Past Continuous descreve:', options:['hábito atual','ação em andamento no passado','fato geral','plano futuro'], correct:1}
         ]},
         {name:'Modal verbs', explanation:'should (deveria), could (poderia), might (talvez) expressam sugestão, possibilidade e capacidade — seguidos de verbo no infinitivo sem "to".', examples:['You should rest (Você deveria descansar)'], quiz:[
           {q:'"You ___ see a doctor." (sugestão)', options:['should','must','can','will'], correct:0},
           {q:'Depois de modal verb, o próximo verbo vai:', options:['com -ing','com to','no infinitivo simples','no passado'], correct:2}
+        ,
+          {q:'"You ___ smoke here." (proibição)', options:['must not','should','could','might'], correct:0},
+          {q:'"It ___ rain later." (possibilidade)', options:['must','might','should','have to'], correct:1}
         ]},
         {name:'First Conditional', explanation:'If + presente, will + infinitivo — pra situações reais/prováveis no futuro.', examples:['If I have time, I will call you'], quiz:[
           {q:'"If it ___ (rain), I will stay home."', options:['rain','rains','rained','raining'], correct:1},
           {q:'First Conditional descreve:', options:['hipótese impossível','passado','situação real/provável no futuro','ordem'], correct:2}
+        ,
+          {q:'"If you study, you ___ pass the exam."', options:['pass','passed','will pass','would pass'], correct:2},
+          {q:'First Conditional usa qual estrutura na oração "if"?', options:['if + presente','if + passado','if + would','if + past perfect'], correct:0}
         ]},
         {name:'Used to / Would', explanation:'"Used to" descreve hábitos ou estados no passado que não são mais verdade. "Would" também descreve hábitos passados repetidos, mas não funciona com estados (não se usa "would" com "live" ou "have").', examples:['I used to live in Berlin (Eu costumava morar em Berlim)', 'We would visit my grandma every summer (A gente costumava visitar minha avó todo verão)'], quiz:[
           {q:'Qual frase está correta pra descrever um ESTADO passado?', options:['I would have a car','I used to have a car','I would having a car','I use to have a car'], correct:1},
           {q:'"Used to" indica que a ação:', options:['ainda acontece','não acontece mais','vai acontecer','está acontecendo agora'], correct:1}
+        ,
+          {q:'Qual verbo NÃO pode ser usado com "would" pra hábito passado?', options:['visit','play','have (estado)','call'], correct:2},
+          {q:'"Every winter, my grandfather ___ tell us stories by the fire." (hábito repetido, ação)', options:['used','would','use to','used to be'], correct:1}
         ]}
       ]},
       {code:'B2', topics:[
         {name:'Past Perfect', explanation:'had + particípio, pra ação anterior a outra ação passada.', examples:['She had finished before I came'], quiz:[
           {q:'"I ___ (finish) before he arrived."', options:['finished','have finished','had finished','finish'], correct:2},
           {q:'Past Perfect indica ação:', options:['futura','anterior a outra ação passada','presente contínua','hipotética'], correct:1}
+        ,
+          {q:'"By the time we arrived, the movie ___ (start)."', options:['started','has started','had started','starts'], correct:2},
+          {q:'Past Perfect é formado por:', options:['have + particípio','had + particípio','was + -ing','would + verbo'], correct:1}
         ]},
         {name:'Second Conditional', explanation:'If + passado, would + infinitivo — pra hipóteses improváveis/imaginárias no presente.', examples:['If I were you, I would rest'], quiz:[
           {q:'"If I ___ (have) time, I would help."', options:['have','has','had','having'], correct:2},
           {q:'Second Conditional expressa:', options:['fato real','hipótese improvável','passado','ordem'], correct:1}
+        ,
+          {q:'"If I ___ (be) rich, I would travel the world."', options:['am','was','were','be'], correct:2},
+          {q:'Second Conditional se refere a situações:', options:['reais no futuro','hipotéticas/improváveis no presente','passadas concluídas','habituais'], correct:1}
         ]},
         {name:'Passive Voice', explanation:'to be + particípio, foca na ação/objeto, não em quem faz.', examples:['The letter is written (A carta é escrita)'], quiz:[
           {q:'"The cake ___ (make) by my mother."', options:['make','made','is made','making'], correct:2},
           {q:'Passive Voice usa qual estrutura?', options:['have + particípio','to be + particípio','will + verbo','verbo + -ing'], correct:1}
+        ,
+          {q:'"The letters ___ (send) tomorrow."', options:['send','sent','are sent','will be sent'], correct:3},
+          {q:'Na voz passiva, o foco está em:', options:['quem pratica a ação','a ação/quem a recebe','o tempo verbal','o lugar'], correct:1}
         ]},
         {name:'Relative clauses', explanation:'who/which/that conectam informação extra sobre um substantivo. who = pessoas, which = coisas.', examples:['The man who lives there is my friend'], quiz:[
           {q:'"The book ___ I read was great."', options:['who','which','whom','whose'], correct:1},
           {q:'Pronome relativo pra pessoas?', options:['which','that','who','whose'], correct:2}
+        ,
+          {q:'"This is the house ___ I grew up." (onde)', options:['which','who','where','whose'], correct:2},
+          {q:'"whose" é usado pra indicar:', options:['lugar','posse','tempo','razão'], correct:1}
         ]},
         {name:'Gerunds vs Infinitives', explanation:'Alguns verbos pedem gerúndio (verb+ing: enjoy, avoid, suggest), outros pedem infinitivo com "to" (want, decide, plan), e alguns mudam de sentido dependendo de qual você usa (remember to do vs. remember doing).', examples:['I enjoy learning German (Eu gosto de aprender alemão)', 'I remembered to lock the door (Eu lembrei de trancar a porta)'], quiz:[
           {q:'"She suggested ___ (go) to the doctor."', options:['to go','going','go','went'], correct:1},
           {q:'"I stopped ___ (smoke) last year." (parei de fumar)', options:['to smoke','smoking','smoke','smoked'], correct:1}
+        ,
+          {q:'"I decided ___ (leave) early."', options:['leaving','to leave','leave','left'], correct:1},
+          {q:'"I enjoy ___ (read) before bed."', options:['to read','read','reading','reads'], correct:2}
         ]}
       ]},
       {code:'C1', topics:[
         {name:'Third Conditional', explanation:'If + past perfect, would have + particípio — pra hipóteses impossíveis sobre o passado.', examples:['If she had studied, she would have passed'], quiz:[
           {q:'"If I ___ (know), I would have called."', options:['know','knew','had known','have known'], correct:2},
           {q:'Third Conditional se refere a:', options:['futuro','presente','passado que não aconteceu','hábito'], correct:2}
+        ,
+          {q:'"If they ___ (arrive) earlier, they would have caught the train."', options:['arrived','had arrived','have arrived','arrive'], correct:1},
+          {q:'Third Conditional usa qual estrutura na parte principal?', options:['will + verbo','would + verbo','would have + particípio','had + particípio'], correct:2}
         ]},
         {name:'Reported Speech', explanation:'Ao relatar o que alguém disse, os tempos verbais "recuam" um passo (present→past, present perfect→past perfect).', examples:['She said she was tired (direto: "I am tired")'], quiz:[
           {q:'"I am hungry" reportado vira:', options:['She said she is hungry','She said she was hungry','She said she has hungry','She said she be hungry'], correct:1},
           {q:'Reported Speech geralmente:', options:['mantém o tempo verbal','recua o tempo verbal','usa só presente','usa só futuro'], correct:1}
+        ,
+          {q:'"I will call you" reportado vira:', options:['She said she will call me','She said she would call me','She said she calls me','She said she is calling me'], correct:1},
+          {q:'"I have finished" reportado vira:', options:['She said she finished','She said she has finished','She said she had finished','She said she finishes'], correct:2}
         ]},
         {name:'Subjunctive', explanation:'Usado em situações formais pra desejos/sugestões, com o verbo na forma base (sem -s).', examples:['I suggest that she come early'], quiz:[
           {q:'"It\'s essential that he ___ (be) present."', options:['is','be','was','being'], correct:1},
           {q:'Subjunctive usa o verbo:', options:['no passado','na forma base','no gerúndio','no particípio'], correct:1}
+        ,
+          {q:'"The teacher insists that he ___ (study) harder."', options:['studies','study','studied','studying'], correct:1},
+          {q:'"I recommend that she ___ (arrive) early."', options:['arrives','arrive','arrived','arriving'], correct:1}
         ]},
         {name:'Advanced linking words', explanation:'Conectores como although, nevertheless, whereas dão nuance e contraste em textos/fala formais.', examples:['Although it was raining, we went out'], quiz:[
           {q:'"Although" introduz uma ideia de:', options:['causa','contraste','tempo','condição'], correct:1},
           {q:'"Whereas" é usado pra:', options:['comparar/contrastar','dar exemplo','concluir','adicionar informação'], correct:0}
+        ,
+          {q:'"Nevertheless" é usado pra:', options:['dar exemplo','expressar contraste apesar de algo','concluir','adicionar informação'], correct:1},
+          {q:'"In spite of" é seguido de:', options:['oração completa','substantivo/gerúndio','verbo no infinitivo','adjetivo sozinho'], correct:1}
         ]},
         {name:'Inversion for emphasis', explanation:'Pra dar ênfase formal, inverte-se sujeito e verbo depois de expressões negativas/restritivas no início da frase: Never, Not only, Rarely, Little.', examples:['Never have I seen such a mess (Nunca vi uma bagunça dessas)', 'Not only did she arrive late, she also forgot the documents (Ela não só chegou atrasada, como também esqueceu os documentos)'], quiz:[
           {q:'"___ did I realize my mistake." (só percebi meu erro)', options:['Only when','I only when','When only','Only I when'], correct:0},
           {q:'Inversão desse tipo é típica de:', options:['fala bem casual','registro formal/enfático','mensagens de texto','gírias'], correct:1}
+        ,
+          {q:'"Not only ___ she a doctor, but also a writer."', options:['is','was','does','did'], correct:1},
+          {q:'Inversão com "Never" é seguida de:', options:['sujeito + verbo normal','verbo auxiliar + sujeito','só o verbo','substantivo'], correct:1}
         ]}
       ]},
       {code:'C2', topics:[
         {name:'Idiomatic expressions', explanation:'Expressões cujo sentido não é literal. Ex: break the ice = quebrar o gelo (iniciar conversa).', examples:['It\'s raining cats and dogs (Está chovendo muito)'], quiz:[
           {q:'"Break the ice" significa:', options:['quebrar algo','iniciar uma conversa/aliviar tensão','ficar com raiva','desistir'], correct:1},
           {q:'"It\'s raining cats and dogs" significa:', options:['está nevando','está chovendo muito','está fazendo sol','está ventando'], correct:1}
+        ,
+          {q:'"Once in a blue moon" significa:', options:['muito frequentemente','raramente','nunca','sempre à noite'], correct:1},
+          {q:'"Hit the books" significa:', options:['bater em alguém','estudar bastante','jogar fora livros','comprar livros'], correct:1}
         ]},
         {name:'Formal vs informal register', explanation:'Inglês formal evita contrações e gírias; informal usa "gonna", "wanna", frases curtas.', examples:['Formal: I would like to / Informal: I wanna'], quiz:[
           {q:'Qual é mais formal?', options:['I wanna go','I would like to go','Gonna go','I\'ma go'], correct:1},
           {q:'"Gonna" é uma forma:', options:['formal','informal/contração','gramática errada sempre','tempo verbal'], correct:1}
+        ,
+          {q:'Qual é mais informal?', options:['I would like to','Could you please','Wanna grab lunch?','I was wondering if'], correct:2},
+          {q:'Contrações como "gonna" e "wanna" são evitadas em:', options:['conversas casuais','textos acadêmicos/formais','mensagens de texto','músicas'], correct:1}
         ]},
         {name:'Irony & subtext', explanation:'Ironia depende de tom e contexto, não de gramática especial — a frase pode parecer positiva mas significar o oposto.', examples:['"Oh, fantastic..." dito com sarcasmo'], quiz:[
           {q:'Ironia em inglês depende principalmente de:', options:['gramática especial','tom e contexto','tempo verbal','vocabulário raro'], correct:1},
           {q:'"Oh, fantastic..." dito com sarcasmo expressa:', options:['alegria genuína','irritação/decepção','surpresa','indiferença'], correct:1}
+        ,
+          {q:'Pra perceber ironia em inglês, é essencial prestar atenção:', options:['apenas às palavras','ao tom de voz e contexto','à gramática usada','ao tempo verbal'], correct:1},
+          {q:'"Great, another Monday..." dito com sarcasmo expressa:', options:['animação genuína','desânimo/irritação disfarçada','surpresa','indiferença total'], correct:1}
         ]},
         {name:'Technical/legal language', explanation:'Textos técnicos/jurídicos usam voz passiva, nominalização e vocabulário formal/latino.', examples:['The application shall be submitted in writing'], quiz:[
           {q:'Textos jurídicos favorecem:', options:['gírias','voz passiva e nominalização','perguntas diretas','imperativo'], correct:1},
           {q:'"Shall be submitted" é um exemplo de:', options:['voz ativa informal','voz passiva formal','gíria','tempo presente simples'], correct:1}
+        ,
+          {q:'"Shall" em textos jurídicos geralmente expressa:', options:['possibilidade','obrigação formal','passado','pergunta'], correct:1},
+          {q:'Textos técnicos/jurídicos tendem a evitar:', options:['vocabulário formal','voz passiva','contrações e gírias','nominalização'], correct:2}
         ]},
         {name:'Cleft sentences', explanation:'Frases clivadas (it-cleft e wh-cleft) reorganizam a frase pra colocar ênfase numa parte específica: "It was John who called" em vez de "John called", ou "What I need is time".', examples:['It was Maria who solved the problem (Foi a Maria quem resolveu o problema)', 'What I really want is more time (O que eu realmente quero é mais tempo)'], quiz:[
           {q:'"It was the manager ___ approved the request."', options:['what','who','which is','whom is'], correct:1},
           {q:'"What I really want ___ a coffee." (frase wh-cleft)', options:['are','is','be','was being'], correct:1}
+        ,
+          {q:'"What surprised me was his reaction." é um exemplo de:', options:['it-cleft','wh-cleft','passive voice','reported speech'], correct:1},
+          {q:'It-cleft sentences geralmente começam com:', options:['What','It was/is','Who','Which'], correct:1}
         ]}
       ]}
     ]
@@ -3722,6 +3926,25 @@
 
   let grammarData = loadGrammar(currentLang);
   let grammarQuizFeedback = {}; // transiente: {topicKey: 'correct'|'wrong'|null}
+
+  // ---- VARIAÇÃO DE EXERCÍCIOS — cada tópico tem um banco de perguntas; toda vez
+  // que você reabre o tópico, sorteamos um par novo, pra não ser sempre as mesmas 2 ----
+  let grammarQuizSelection = {}; // transiente: {topicKey: [idxNoBanco, idxNoBanco]}
+  function pickQuizSelection(topic, count){
+    count = count || 2;
+    const n = topic.quiz.length;
+    if(n <= count) return topic.quiz.map((_, i) => i);
+    const idxs = Array.from({length: n}, (_, i) => i);
+    for(let i=idxs.length-1;i>0;i--){
+      const j = Math.floor(Math.random()*(i+1));
+      [idxs[i], idxs[j]] = [idxs[j], idxs[i]];
+    }
+    return idxs.slice(0, count).sort((a,b)=>a-b);
+  }
+  function getQuizSelection(key, topic){
+    if(!grammarQuizSelection[key]) grammarQuizSelection[key] = pickQuizSelection(topic, 2);
+    return grammarQuizSelection[key];
+  }
 
   // ---- EXERCÍCIO "MONTAR A FRASE" — gerado automaticamente a partir dos exemplos
   // que cada tópico já tem, sem precisar escrever conteúdo novo pra cada um ----
@@ -3830,7 +4053,9 @@
 
         const examplesHTML = t.examples.map(ex => `<li>${ex}</li>`).join('');
 
-        const quizHTML = t.quiz.map((q, qi)=>{
+        const quizSelection = getQuizSelection(key, t);
+        const quizHTML = quizSelection.map((qi, si)=>{
+          const q = t.quiz[qi];
           const answerKey = key + '#' + qi;
           const selected = grammarData.answers[answerKey];
           const optsHTML = q.options.map((opt, oi)=>{
@@ -3843,7 +4068,7 @@
             return `<button type="button" class="${cls}" data-answer-key="${answerKey}" data-opt-index="${oi}">${opt}</button>`;
           }).join('');
           return `<div class="grammar-quiz-q">
-            <div class="grammar-quiz-question">${qi+1}. ${q.q}</div>
+            <div class="grammar-quiz-question">${si+1}. ${q.q}</div>
             <div class="grammar-quiz-opts">${optsHTML}</div>
           </div>`;
         }).join('');
@@ -3869,7 +4094,7 @@
           }).join('');
           reorderHTML = `
             <div class="grammar-reorder">
-              <div class="grammar-quiz-question">${t.quiz.length + 1}. Monta a frase na ordem certa:</div>
+              <div class="grammar-quiz-question">${quizSelection.length + 1}. Monta a frase na ordem certa:</div>
               <div class="grammar-reorder-slot">${pickedHTML || '<span class="grammar-reorder-placeholder">toque nas palavras abaixo, na ordem</span>'}</div>
               <div class="grammar-reorder-bank">${bankHTML}</div>
             </div>
@@ -3950,7 +4175,8 @@
         const [levelCode, topicName] = [key.split(':')[0], key.split(':').slice(1).join(':')];
         const level = GRAMMAR_LEVELS[currentLang].find(l => l.code === levelCode);
         const topic = level.topics.find(t => t.name === topicName);
-        const quizOk = topic.quiz.every((q, qi)=> grammarData.answers[key + '#' + qi] === q.correct);
+        const quizSelection = getQuizSelection(key, topic);
+        const quizOk = quizSelection.every(qi => grammarData.answers[key + '#' + qi] === topic.quiz[qi].correct);
         const reorderInfo = pickReorderExample(topic);
         const reorderOk = !reorderInfo || isReorderCorrect(key, reorderInfo.words);
         const allCorrect = quizOk && reorderOk;
@@ -3971,8 +4197,20 @@
       const toggleEl = e.target.closest('[data-topic-toggle]');
       if(toggleEl){
         const key = toggleEl.dataset.topicToggle;
-        grammarData.openTopic = (grammarData.openTopic === key) ? null : key;
+        const isOpeningNow = grammarData.openTopic !== key;
+        grammarData.openTopic = isOpeningNow ? key : null;
         grammarQuizFeedback = {};
+        if(isOpeningNow){
+          // toda vez que reabre o tópico, sorteia um novo par de perguntas
+          const levelCode = key.split(':')[0];
+          const topicName = key.split(':').slice(1).join(':');
+          const level = GRAMMAR_LEVELS[currentLang].find(l => l.code === levelCode);
+          const topic = level && level.topics.find(t => t.name === topicName);
+          if(topic){
+            grammarQuizSelection[key] = pickQuizSelection(topic, 2);
+            delete grammarReorderState[key];
+          }
+        }
         saveGrammar(currentLang, grammarData);
         renderGrammar();
         return;
@@ -4464,15 +4702,11 @@
     });
   }
 
-  // ---- CONVERSA AO VIVO — pedido de horário, manda pro mesmo Formspree das outras seções ----
-  const aoVivoFormBtn = document.getElementById('ao-vivo-form-btn');
+  // ---- CONVERSA AO VIVO — agora é paga (Stripe); depois de pagar, a pessoa conta
+  // o horário aqui e manda pro mesmo Formspree das outras seções ----
   const aoVivoForm = document.getElementById('ao-vivo-form');
   const aoVivoStatus = document.getElementById('ao-vivo-form-status');
-  if(aoVivoFormBtn && aoVivoForm){
-    aoVivoFormBtn.addEventListener('click', ()=>{
-      aoVivoForm.style.display = 'flex';
-      aoVivoFormBtn.style.display = 'none';
-    });
+  if(aoVivoForm){
     aoVivoForm.addEventListener('submit', function(e){
       e.preventDefault();
       const submitBtn = aoVivoForm.querySelector('button[type=submit]');
@@ -4590,10 +4824,48 @@
 
     if(data && data.data && Object.keys(data.data).length > 0){
       applyCloudProgress(data.data);
-      location.reload();
+      refreshUIFromLocalStorage();
     } else {
       syncToCloud();
     }
+  }
+
+  // Atualiza a tela com o que acabou de vir da nuvem, sem dar reload na página
+  // (um location.reload() aqui causava um loop de recarregamento pra quem já
+  // estava logado com progresso salvo — toda vez que a sessão restaurava,
+  // baixava de novo e recarregava de novo, sem parar nunca).
+  function refreshUIFromLocalStorage(){
+    if(typeof stopAllAudio === 'function') stopAllAudio();
+    if(typeof loadStreak === 'function'){
+      streakData = loadStreak(currentLang);
+      if(typeof renderStreak === 'function') renderStreak();
+      if(typeof renderLegendTrail === 'function') renderLegendTrail();
+    }
+    if(typeof loadChallenges === 'function'){
+      challengeData = loadChallenges(currentLang);
+      if(typeof renderChallenges === 'function') renderChallenges();
+    }
+    if(typeof loadDever === 'function'){
+      deverData = loadDever(currentLang);
+      if(typeof renderDever === 'function') renderDever();
+    }
+    if(typeof loadDeverBonus === 'function'){
+      deverBonusData = loadDeverBonus(currentLang);
+      if(typeof renderBonusWord === 'function') renderBonusWord();
+    }
+    if(typeof loadGrammar === 'function'){
+      grammarData = loadGrammar(currentLang);
+      if(typeof grammarQuizSelection !== 'undefined') grammarQuizSelection = {};
+      if(typeof reviewTopicKey !== 'undefined') reviewTopicKey = null;
+      if(typeof grammarReorderState !== 'undefined') grammarReorderState = {};
+      if(typeof renderGrammar === 'function') renderGrammar();
+      if(typeof renderGrammarReview === 'function') renderGrammarReview();
+    }
+    if(typeof loadProfile === 'function'){
+      profileData = loadProfile();
+      if(typeof renderProfile === 'function') renderProfile();
+    }
+    if(typeof renderProgressSummary === 'function') renderProgressSummary();
   }
 
   function updateAuthUI(){
