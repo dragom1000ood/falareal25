@@ -91,7 +91,7 @@
     border-bottom:1px solid var(--line);
   }
   nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;}
-  .logo{font-family:var(--display);font-weight:600;font-size:1.25rem;letter-spacing:-0.02em;}
+  .logo{font-family:var(--display);font-weight:600;font-size:1.25rem;letter-spacing:-0.02em;text-decoration:none;color:inherit;cursor:pointer;}
   .logo span{color:var(--amber);}
   .nav-cta{
     font-family:var(--mono);font-size:0.8rem;letter-spacing:0.02em;
@@ -1184,7 +1184,7 @@
 
 <nav>
   <div class="wrap">
-    <div class="logo">fala<span>real</span></div>
+    <a href="#" class="logo" aria-label="Fala Real — voltar ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">fala<span>real</span></a>
     <div class="nav-right">
       <div class="lang-toggle" role="group" aria-label="Escolher idioma">
         <button type="button" class="active" data-lang-btn="de">🇩🇪 Alemão</button>
@@ -2048,7 +2048,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>real</span> <span class="version-tag">v11.28.0</span></div>
+      <div class="logo">fala<span>real</span> <span class="version-tag">v11.28.1</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
       <div class="footer-links lang-de">
