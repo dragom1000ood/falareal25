@@ -6,7 +6,7 @@
 <title>Fala Real — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     FalaReal PWA  v11.31.0
+     FalaReal PWA  v12.0.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -169,10 +169,20 @@
   }
   .lang-toggle button.active{background:var(--amber); color:var(--ink);}
   .nav-right{display:flex; align-items:center; gap:14px;}
+  /* v12: com 3 idiomas o toggle não cabia no celular — ali mostra só a bandeira */
+  @media (max-width: 640px){
+    .nav-right{gap:8px;}
+    .lang-toggle button{padding:6px 10px; font-size:1rem; line-height:1;}
+    .lang-toggle .lt-name{display:none;}
+    .site-lang-select{padding:6px 8px;}
+    .nav-cta{display:none;}
+  }
 
   /* language visibility: German is the flagship, shown by default */
   body.lang-en .lang-de{display:none;}
   body.lang-de .lang-en{display:none;}
+  body.lang-pt .lang-de, body.lang-pt .lang-en{display:none;}
+  body.lang-de .lang-pt, body.lang-en .lang-pt{display:none;}
 
   /* SITE INTERFACE LANGUAGE (separate from the German/English learning-track toggle above) */
   .site-lang-select{
@@ -835,6 +845,15 @@
     font-family:var(--body); font-size:0.85rem; color:rgba(244,239,230,0.85);
   }
   .founder-lock-toast.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
+  /* Aviso de erro ao salvar/baixar progresso da nuvem (v11.31.1) */
+  .sync-error-toast{
+    position:fixed; left:50%; top:calc(16px + env(safe-area-inset-top, 0px)); transform:translateX(-50%) translateY(-20px);
+    z-index:960; background:var(--ink-soft); border:1px solid rgba(179,58,46,0.7); border-radius:14px;
+    padding:12px 16px; max-width:calc(100vw - 44px); box-shadow:0 16px 48px rgba(0,0,0,0.45);
+    opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+    font-family:var(--body); font-size:0.85rem; color:rgba(244,239,230,0.9);
+  }
+  .sync-error-toast.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
   .founder-lock-toast-link{color:var(--amber); font-weight:600; text-decoration:none; white-space:nowrap;}
 
   /* Resumo unificado de progresso — consolida XP, sequência, dever, gramática, desconto */
@@ -1242,14 +1261,16 @@
   <div class="wrap">
     <a href="#" class="logo" aria-label="Fala Real — voltar ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">fala<span>real</span></a>
     <div class="nav-right">
-      <div class="lang-toggle" role="group" aria-label="Escolher idioma">
-        <button type="button" class="active" data-lang-btn="de">🇩🇪 Alemão</button>
-        <button type="button" data-lang-btn="en">🇬🇧 Inglês</button>
+      <div class="lang-toggle" role="group" aria-label="Escolher idioma" data-i18n-aria="langToggleAria">
+        <button type="button" class="active" data-lang-btn="de" data-i18n-html="langBtnDe" data-i18n-aria="langNameDe" data-i18n-title="langNameDe"><span class="lt-flag">🇩🇪</span> <span class="lt-name">Alemão</span></button>
+        <button type="button" data-lang-btn="en" data-i18n-html="langBtnEn" data-i18n-aria="langNameEn" data-i18n-title="langNameEn"><span class="lt-flag">🇬🇧</span> <span class="lt-name">Inglês</span></button>
+        <button type="button" data-lang-btn="pt" data-i18n-html="langBtnPt" data-i18n-aria="langNamePt" data-i18n-title="langNamePt"><span class="lt-flag">🇧🇷</span> <span class="lt-name">Português</span></button>
       </div>
       <select class="site-lang-select" id="site-lang-select" aria-label="Idioma do site / Site language" data-i18n-aria="siteLangSelectAria">
         <option value="pt">🇧🇷 Português</option>
         <option value="en">🇬🇧 English</option>
         <option value="es">🇪🇸 Español</option>
+        <option value="de">🇩🇪 Deutsch</option>
       </select>
       <a href="#comecar" class="nav-cta" data-i18n="navCta">Quero testar</a>
     </div>
@@ -1262,13 +1283,18 @@
       <div class="hero-text">
         <div class="lang-de">
           <span class="eyebrow" data-i18n="heroEyebrowDe">Pra brasileiro que vive (ou vai viver) na Alemanha</span>
-          <h1 data-i18n-html="heroTitleDe">O alemão que te ensinam pra prova. <em>Nicht was dir die Realität zeigt, sondern was dir die Wahrheit gibt.</em></h1>
+          <h1 data-i18n-html="heroTitleDe">O alemão que te ensinam pra prova. <em>Nicht das, was im Lehrbuch steht – sondern das, was dir im Alltag begegnet.</em></h1>
           <p class="sub" data-i18n="heroSubDe">A maioria dos cursos te ensina um alemão de sala de aula — devagar, claro, sempre educado. A vida aqui não é assim. Aqui você treina alemão de verdade: pra se envolver de verdade — no trabalho, na consulta médica, na entrevista de emprego — com sotaque bávaro, suábio ou suíço, barulho ao fundo e gente te cortando no meio da frase.</p>
         </div>
         <div class="lang-en">
           <span class="eyebrow" data-i18n="heroEyebrowEn">Prática de conversação em inglês</span>
-          <h1 data-i18n-html="heroTitleEn">O inglês que te preparam pra prova. <em>Not what shows you the reality, but what gives you the truth.</em></h1>
+          <h1 data-i18n-html="heroTitleEn">O inglês que te ensinam pra prova. <em>Not what the textbook says – but what real life throws at you.</em></h1>
           <p class="sub" data-i18n="heroSubEn">A maioria dos apps te ensina um inglês de laboratório — devagar, claro, sem interrupção. A vida real não é assim. Aqui você treina inglês de verdade: pra se envolver de verdade — no trabalho, viajando, ou vivendo fora — com sotaque, ruído e gente te cortando no meio da frase.</p>
+        </div>
+        <div class="lang-pt">
+          <span class="eyebrow" data-i18n="heroEyebrowPt">Prática de conversação em inglês</span>
+          <h1 data-i18n-html="heroTitlePt">O inglês que te ensinam pra prova. <em>Not what the textbook says – but what real life throws at you.</em></h1>
+          <p class="sub" data-i18n="heroSubPt">A maioria dos apps te ensina um inglês de laboratório — devagar, claro, sem interrupção. A vida real não é assim. Aqui você treina inglês de verdade: pra se envolver de verdade — no trabalho, viajando, ou vivendo fora — com sotaque, ruído e gente te cortando no meio da frase.</p>
         </div>
         <div class="hero-actions">
           <a href="#comecar" class="btn-primary" data-i18n="heroCtaPrimary">Quero testar agora</a>
@@ -1349,6 +1375,7 @@
       <div class="quiz-step active" data-step="1">
         <div class="lang-de"><p class="quiz-question" data-i18n="quizStep1QDe">Qual é o seu maior desafio hoje?</p></div>
         <div class="lang-en"><p class="quiz-question" data-i18n="quizStep1QEn">What's your biggest challenge right now?</p></div>
+        <div class="lang-pt"><p class="quiz-question" data-i18n="quizStep1QPt">What's your biggest challenge right now?</p></div>
 
         <div class="quiz-options lang-de">
           <button class="quiz-option" data-key="sotaque" data-label="Entender sotaque forte" data-i18n="quizOpt1SotaqueDe">Entender sotaque forte</button>
@@ -1362,12 +1389,19 @@
           <button class="quiz-option" data-key="entrevista" data-label="Job interviews" data-i18n="quizOpt1EntrevistaEn">Job interviews</button>
           <button class="quiz-option" data-key="trabalho" data-label="Everyday work conversation" data-i18n="quizOpt1TrabalhoEn">Everyday work conversation</button>
         </div>
+        <div class="quiz-options lang-pt">
+          <button class="quiz-option" data-key="sotaque" data-label="Understanding strong accents" data-i18n="quizOpt1SotaquePt">Understanding strong accents</button>
+          <button class="quiz-option" data-key="envolvimento" data-label="Getting truly involved (community, daily life)" data-i18n="quizOpt1EnvolvimentoPt">Getting truly involved (community, daily life)</button>
+          <button class="quiz-option" data-key="entrevista" data-label="Job interviews" data-i18n="quizOpt1EntrevistaPt">Job interviews</button>
+          <button class="quiz-option" data-key="trabalho" data-label="Everyday work conversation" data-i18n="quizOpt1TrabalhoPt">Everyday work conversation</button>
+        </div>
       </div>
 
       <!-- Passo 2 -->
       <div class="quiz-step" data-step="2">
         <div class="lang-de"><p class="quiz-question" data-i18n="quizStep2QDe">Como está seu alemão hoje?</p></div>
         <div class="lang-en"><p class="quiz-question" data-i18n="quizStep2QEn">How's your English today?</p></div>
+        <div class="lang-pt"><p class="quiz-question" data-i18n="quizStep2QPt">How's your English today?</p></div>
 
         <div class="quiz-options lang-de">
           <button class="quiz-option" data-key="1" data-label="Iniciante total" data-i18n="quizOpt2Level1De">Iniciante total</button>
@@ -1378,6 +1412,11 @@
           <button class="quiz-option" data-key="1" data-label="Total beginner" data-i18n="quizOpt2Level1En">Total beginner</button>
           <button class="quiz-option" data-key="2" data-label="I get by with the basics" data-i18n="quizOpt2Level2En">I get by with the basics</button>
           <button class="quiz-option" data-key="3" data-label="Intermediate, but accents trip me up" data-i18n="quizOpt2Level3En">Intermediate, but accents trip me up</button>
+        </div>
+        <div class="quiz-options lang-pt">
+          <button class="quiz-option" data-key="1" data-label="Total beginner" data-i18n="quizOpt2Level1Pt">Total beginner</button>
+          <button class="quiz-option" data-key="2" data-label="I get by with the basics" data-i18n="quizOpt2Level2Pt">I get by with the basics</button>
+          <button class="quiz-option" data-key="3" data-label="Intermediate, but accents trip me up" data-i18n="quizOpt2Level3Pt">Intermediate, but accents trip me up</button>
         </div>
       </div>
 
@@ -1391,6 +1430,10 @@
         <div class="lang-en">
           <p class="quiz-result-title"><span data-i18n="quizResultTitleEn">Suggested level for you:</span> <span id="quiz-level-en">2</span></p>
           <p class="quiz-result-desc" id="quiz-desc-en">Based on your answers, we'd suggest focusing on bureaucracy scenarios.</p>
+        </div>
+        <div class="lang-pt">
+          <p class="quiz-result-title"><span data-i18n="quizResultTitlePt">Suggested level for you:</span> <span id="quiz-level-pt">2</span></p>
+          <p class="quiz-result-desc" id="quiz-desc-pt">Based on your answers, we'd suggest focusing on bureaucracy scenarios.</p>
         </div>
         <a href="#preco" class="btn-primary" id="quiz-cta-btn" data-i18n="quizCtaBtn">Ver o plano ideal pra você ↓</a>
       </div>
@@ -1461,6 +1504,35 @@
             <li data-i18n="compRealLi3En">Rua, café, escritório, trânsito</li>
             <li data-i18n="compRealLi4En">Interrupções e sobreposição de fala</li>
             <li data-i18n="compRealLi5En">Cenário novo a cada conversa</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+        <div class="lang-pt">
+      <div class="section-head" data-reveal>
+        <span class="kicker" data-i18n="compKicker">O problema</span>
+        <h2 data-i18n="compTitle">Você já treinou isso. Só que nunca vai usar assim.</h2>
+        <p class="lede" data-i18n="compLedePt">Duolingo, Babbel e a maioria dos apps treinam pra um inglês que não existe fora do aplicativo. Aqui a diferença é o que acontece quando alguém fala rápido, corta sua frase, ou tem um sotaque que você nunca ouviu.</p>
+      </div>
+      <div class="compare" data-reveal>
+        <div class="lab">
+          <h3 data-i18n="compLabTitlePt">App de laboratório</h3>
+          <ul>
+            <li data-i18n="compLabLi1Pt">Voz sintética, ritmo perfeito</li>
+            <li data-i18n="compLabLi2Pt">Um sotaque só, sempre o mesmo</li>
+            <li data-i18n="compLabLi3Pt">Silêncio total ao fundo</li>
+            <li data-i18n="compLabLi4Pt">A pessoa espera você terminar</li>
+            <li data-i18n="compLabLi5Pt">Mesmo exercício se repete igual</li>
+          </ul>
+        </div>
+        <div class="real">
+          <h3 data-i18n="compRealTitle">Fala Real</h3>
+          <ul>
+            <li data-i18n="compRealLi1Pt">Fala humana, com hesitação e ritmo real</li>
+            <li data-i18n="compRealLi2Pt">Vários sotaques, à sua escolha</li>
+            <li data-i18n="compRealLi3Pt">Rua, café, escritório, trânsito</li>
+            <li data-i18n="compRealLi4Pt">Interrupções e sobreposição de fala</li>
+            <li data-i18n="compRealLi5Pt">Cenário novo a cada conversa</li>
           </ul>
         </div>
       </div>
@@ -1550,6 +1622,44 @@
           <p class="level-desc" data-i18n="level4DescEn">Interrupções, gente falando ao mesmo tempo, ruído de fundo forte. O mais perto que um app chega de uma conversa de verdade.</p>
           <div class="level-tags"><span data-i18n="level4Tag1En">interrupções</span><span data-i18n="level4Tag2En">ruído forte</span><span data-i18n="level4Tag3En">sotaques fortes</span></div>
           <button class="level-audio-btn" data-i18n="level4AudioBtnEn">🔊 Ouvir exemplo (com interrupção)</button>
+        </div>
+      </div>
+    </div>
+        <div class="levels lang-pt" data-reveal>
+      <div class="level-row" data-level="1">
+        <div class="level-num">01</div>
+        <div>
+          <div class="level-title" data-i18n="level1TitlePt">Devagar e claro</div>
+          <p class="level-desc" data-i18n="level1DescPt">Fala pausada, vocabulário direto, um sotaque neutro. Ideal pra quem está começando a treinar o ouvido de novo.</p>
+          <div class="level-tags"><span data-i18n="level1Tag1Pt">ritmo lento</span><span data-i18n="level1Tag2Pt">sem ruído</span><span data-i18n="level1Tag3Pt">1 sotaque</span></div>
+          <button class="level-audio-btn" data-i18n="level1AudioBtnPt">🔊 Ouvir exemplo</button>
+        </div>
+      </div>
+      <div class="level-row" data-level="2">
+        <div class="level-num">02</div>
+        <div>
+          <div class="level-title" data-i18n="level2TitlePt">Ritmo natural</div>
+          <p class="level-desc" data-i18n="level2DescPt">A conversa já flui em velocidade real, com contrações e gírias comuns do dia a dia.</p>
+          <div class="level-tags"><span data-i18n="level2Tag1Pt">ritmo normal</span><span data-i18n="level2Tag2Pt">gírias leves</span><span data-i18n="level2Tag3Pt">2 sotaques</span></div>
+          <button class="level-audio-btn" data-i18n="level2AudioBtnPt">🔊 Ouvir exemplo</button>
+        </div>
+      </div>
+      <div class="level-row" data-level="3">
+        <div class="level-num">03</div>
+        <div>
+          <div class="level-title" data-i18n="level3TitlePt">Sotaques e ambiente</div>
+          <p class="level-desc" data-i18n="level3DescPt">Sotaques variados entram em cena, com som de ambiente ao fundo — café, escritório, rua.</p>
+          <div class="level-tags"><span data-i18n="level3Tag1Pt">vários sotaques</span><span data-i18n="level3Tag2Pt">ruído leve</span></div>
+          <button class="level-audio-btn" data-i18n="level3AudioBtnPt">🔊 Ouvir exemplo</button>
+        </div>
+      </div>
+      <div class="level-row" data-level="4">
+        <div class="level-num">04</div>
+        <div>
+          <div class="level-title" data-i18n="level4TitlePt">Rua real</div>
+          <p class="level-desc" data-i18n="level4DescPt">Interrupções, gente falando ao mesmo tempo, ruído de fundo forte. O mais perto que um app chega de uma conversa de verdade.</p>
+          <div class="level-tags"><span data-i18n="level4Tag1Pt">interrupções</span><span data-i18n="level4Tag2Pt">ruído forte</span><span data-i18n="level4Tag3Pt">sotaques fortes</span></div>
+          <button class="level-audio-btn" data-i18n="level4AudioBtnPt">🔊 Ouvir exemplo (com interrupção)</button>
         </div>
       </div>
     </div>
@@ -1800,6 +1910,11 @@
         <h4 data-i18n="step1TitleEn">Você escolhe o cenário</h4>
         <p data-i18n="step1DescEn">Entrevista de emprego, pedido no restaurante, ligação de trabalho — o cenário nunca se repete igual.</p>
       </div>
+        <div class="step lang-pt">
+        <span class="n" data-i18n="step1">passo 1</span>
+        <h4 data-i18n="step1TitlePt">Você escolhe o cenário</h4>
+        <p data-i18n="step1DescPt">Entrevista de emprego, pedido no restaurante, ligação de trabalho — o cenário nunca se repete igual.</p>
+      </div>
       <div class="step">
         <span class="n" data-i18n="step2">passo 2</span>
         <h4 data-i18n="step2Title">Você conversa de verdade</h4>
@@ -1841,6 +1956,7 @@
             <option value="" disabled selected data-i18n="wantToTrain">Quero treinar...</option>
             <option value="Alemão" data-i18n="german">Alemão</option>
             <option value="Inglês" data-i18n="english">Inglês</option>
+            <option value="Português" data-i18n="portuguese">Português</option>
           </select>
           <textarea name="horario" placeholder="Dias/horários que funcionam pra você (com fuso, se puder)" required data-i18n-placeholder="scheduleAvailability"></textarea>
           <input type="hidden" name="tipo" value="Pedido de conversa ao vivo (pago)">
@@ -1860,8 +1976,10 @@
     <div class="section-head" data-reveal>
       <span class="kicker lang-de" data-i18n="faqKickerDe">Dúvidas comuns</span>
       <span class="kicker lang-en" data-i18n="faqKickerEn">Common questions</span>
+        <span class="kicker lang-pt" data-i18n="faqKickerPt">Common questions</span>
       <h2 class="lang-de" data-i18n="faqTitleDe">Antes de decidir, respondo o que todo mundo pergunta.</h2>
       <h2 class="lang-en" data-i18n="faqTitleEn">Before you decide, here's what everyone asks.</h2>
+        <h2 class="lang-pt" data-i18n="faqTitlePt">Before you decide, here's what everyone asks.</h2>
     </div>
 
     <div class="faq-list lang-de" data-reveal>
@@ -1939,6 +2057,43 @@
         <div class="faq-answer" data-i18n="faqA5En">Right now progress (XP, streaks, grammar studied) is saved in the browser on the device you're using — there's no account system syncing across devices yet. That's one of the next planned upgrades, alongside the AI chat.</div>
       </div>
     </div>
+        <div class="faq-list lang-pt" data-reveal>
+      <div class="faq-item">
+        <button class="faq-question" data-faq="1pt">
+          <span data-i18n="faqQ1Pt">Does the app actually exist yet, or is this just a landing page?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer" data-i18n="faqA1Pt">The site you're looking at is real and working right now — challenges, streaks, daily vocabulary, the grammar track, all of it runs live in your browser today. The AI conversation chat is still being built; when it ships, current subscribers get it first, at no extra cost.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" data-faq="2pt">
+          <span data-i18n="faqQ2Pt">Can I cancel anytime?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer" data-i18n-html="faqA2Pt">Yes, anytime, no penalty. You get a full 14-day guarantee (EU right of withdrawal), plus an extra guarantee: if development runs significantly behind, you get a refund even outside that window. Details in the <a href="/reembolso.html">refund policy</a>.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" data-faq="3pt">
+          <span data-i18n="faqQ3Pt">Why trust an app built by one person?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer" data-i18n="faqA3Pt">Because I live the exact problem FalaReal solves — I'm a Brazilian nurse, 6+ years in Germany, learned German the hard way. This isn't a distant company guessing at your struggle; I personally answer every email and ship updates weekly based on real feedback.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" data-faq="4pt">
+          <span data-i18n="faqQ4Pt">How is this different from Duolingo?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer" data-i18n="faqA4Pt">Duolingo teaches isolated grammar with no real-life context. FalaReal focuses on situations you'll actually face — government offices, doctor visits, work — with difficulty that genuinely ramps up (accents, noise, interruptions), not just green checkmarks.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question" data-faq="5pt">
+          <span data-i18n="faqQ5Pt">Does my progress sync across devices?</span>
+          <span class="faq-toggle">+</span>
+        </button>
+        <div class="faq-answer" data-i18n="faqA5Pt">Right now progress (XP, streaks, grammar studied) is saved in the browser on the device you're using — there's no account system syncing across devices yet. That's one of the next planned upgrades, alongside the AI chat.</div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1947,10 +2102,13 @@
     <div class="section-head" data-reveal>
       <span class="kicker lang-de" data-i18n="pricingKickerDe">Escolha seu plano</span>
       <span class="kicker lang-en" data-i18n="pricingKickerEn">Choose your plan</span>
+        <span class="kicker lang-pt" data-i18n="pricingKickerPt">Choose your plan</span>
       <h2 class="lang-de" data-i18n="pricingTitleDe">Não vamos cobrar de quem não pode pagar.</h2>
       <h2 class="lang-en" data-i18n="pricingTitleEn">We won't charge people who can't afford it.</h2>
+        <h2 class="lang-pt" data-i18n="pricingTitlePt">We won't charge people who can't afford it.</h2>
       <p class="lede lang-de" data-i18n="pricingLedeDe">Tem uma versão grátis de verdade — não é pegadinha de 3 dias. E tem opções pra quem já sabe que vai usar sério.</p>
       <p class="lede lang-en" data-i18n="pricingLedeEn">There's a real free version — not a 3-day trial trick. And there are options for people who already know they'll use this seriously.</p>
+        <p class="lede lang-pt" data-i18n="pricingLedePt">There's a real free version — not a 3-day trial trick. And there are options for people who already know they'll use this seriously.</p>
     </div>
 
     <div class="pricing-grid lang-de" data-reveal>
@@ -2040,6 +2198,49 @@
         <a href="https://buy.stripe.com/9B6cN4ayp42967Cbvp6oo01" target="_blank" rel="noopener" class="btn-audio btn-full" data-i18n="price3CtaEn">Get the annual plan</a>
       </div>
     </div>
+        <div class="pricing-grid lang-pt" data-reveal>
+      <div class="pricing-card">
+        <span class="kicker" data-i18n="price1KickerPt">Free</span>
+        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>0</div>
+        <p class="pricing-sub" data-i18n="price1SubPt">For people who want to try it out — or simply can't pay right now.</p>
+        <ul class="pricing-features">
+          <li data-i18n="price1Li1Pt">Levels 1 and 2 (slow & clear + everyday pace)</li>
+          <li data-i18n="price1Li2Pt">3 conversations per week</li>
+          <li data-i18n="price1Li3Pt">Daily streak and XP</li>
+          <li data-i18n="price1Li4Pt">1 neutral accent</li>
+        </ul>
+        <a href="#comecar" class="btn-audio btn-full" data-i18n="price1CtaPt">Start for free</a>
+      </div>
+
+      <div class="pricing-card featured">
+        <span class="featured-tag" data-i18n="price2FeaturedTagPt">Most popular</span>
+        <span class="kicker" data-i18n="price2KickerPt">Founder</span>
+        <div class="pricing-was" data-i18n-html="price2WasPt">from <span class="pricing-was-amount">€25</span>/month after launch</div>
+        <div class="pricing-amount"><span class="pricing-currency">€</span>15<span class="pricing-period" data-i18n="price2PeriodPt">/month</span></div>
+        <p class="pricing-sub" data-i18n="price2SubPt">Price locked in as long as you stay subscribed — it goes up for everyone joining after launch.</p>
+        <ul class="pricing-features">
+          <li data-i18n="price2Li1Pt">All 4 levels + endless infinite level</li>
+          <li data-i18n="price2Li2Pt">Unlimited conversations</li>
+          <li data-i18n="price2Li3Pt">All accents — Scottish, Indian, Irish, Southern US</li>
+          <li data-i18n="price2Li4Pt">A scenario that never repeats itself</li>
+        </ul>
+        <a href="https://buy.stripe.com/6oU4gybCt1U19jO5716oo00" target="_blank" rel="noopener" class="btn-primary btn-full" data-i18n="price2CtaPt">Lock in this price</a>
+      </div>
+
+      <div class="pricing-card">
+        <span class="kicker" data-i18n="price3KickerPt">Annual</span>
+        <div class="pricing-was" data-i18n-html="price3WasPt">from <span class="pricing-was-amount">€249</span>/year after launch</div>
+        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>149<span class="pricing-period" data-i18n="price3PeriodPt">/year</span></div>
+        <p class="pricing-sub" data-i18n="price3SubPt">Pay for 12 months, get the 13th free — works out to under €13/month. Renews automatically every year.</p>
+        <ul class="pricing-features">
+          <li data-i18n="price3Li1Pt">Everything in Founder</li>
+          <li data-i18n="price3Li2Pt">1 bonus month every year (13 months of access)</li>
+          <li data-i18n="price3Li3Pt">Access to all future updates</li>
+          <li data-i18n="price3Li4Pt">Top priority in the launch queue</li>
+        </ul>
+        <a href="https://buy.stripe.com/9B6cN4ayp42967Cbvp6oo01" target="_blank" rel="noopener" class="btn-audio btn-full" data-i18n="price3CtaPt">Get the annual plan</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -2123,15 +2324,42 @@
         </div>
       </div>
     </div>
+        <div class="cta-inner lang-pt" data-reveal>
+      <span class="kicker" data-i18n="ctaKickerPt">Still deciding?</span>
+      <h2 data-i18n="ctaTitlePt">Leave your email and get real German tips, no fluff.</h2>
+      <p class="lede" data-i18n="ctaLedePt">We'll send conversation phrases and exercises straight to your inbox — and you'll be the first to know when something big ships in the app.</p>
+      <p class="quiz-summary" id="quiz-summary-pt"></p>
+      <form class="email-form" id="waitlist-form-pt">
+        <input type="email" name="email" required placeholder="you@email.com" aria-label="Your email" data-i18n-placeholder="ctaEmailPlaceholderPt" data-i18n-aria="ctaEmailAriaPt">
+        <input type="hidden" name="desafio" id="quiz-desafio-pt">
+        <input type="hidden" name="nivel_percebido" id="quiz-nivel-pt">
+        <input type="hidden" name="indicado_por" id="ref-pt">
+        <button type="submit" class="btn-primary" data-i18n="ctaSubmitPt">Sign me up</button>
+      </form>
+      <p class="form-note" data-i18n="ctaFormNotePt">no spam — just content that actually helps</p>
+      <div class="thanks" id="thanks-msg-pt">
+        <p data-i18n="ctaThanksPPt">Done! You're on the list — keep an eye on your inbox.</p>
+        <div class="referral-box">
+          <p class="referral-title" data-i18n="ctaReferralTitlePt">🚀 Want priority access? Invite friends.</p>
+          <p class="referral-desc" data-i18n="ctaReferralDescPt">Whoever joins through your link — and you — both move up together.</p>
+          <div class="referral-link-row">
+            <input type="text" readonly id="referral-link-pt" class="referral-input">
+            <button class="btn-audio" id="copy-referral-pt" data-i18n="ctaCopyBtnPt">📋 Copy</button>
+          </div>
+          <button class="btn-share" id="whatsapp-referral-pt" data-i18n="ctaWhatsappBtnPt">📲 Invite on WhatsApp</button>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>real</span> <span class="version-tag">v11.31.0</span></div>
+      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
+        <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
       <div class="footer-links lang-de">
         <a href="/reembolso.html" data-i18n="refundPolicy">Política de reembolso</a>
         <span class="footer-sep">·</span>
@@ -2142,6 +2370,11 @@
         <span class="footer-sep">·</span>
         <button type="button" class="footer-link-btn footer-report-link">Report a problem</button>
       </div>
+        <div class="footer-links lang-pt">
+        <a href="/reembolso.html" data-i18n="refundPolicy">Refund policy</a>
+        <span class="footer-sep">·</span>
+        <button type="button" class="footer-link-btn footer-report-link" data-i18n="reportProblem">Report a problem</button>
+      </div>
     </div>
     <div class="authenticity-seal">
       <span class="seal-badge">✓</span>
@@ -2150,6 +2383,7 @@
   </div>
 </footer>
 
+<div class="sync-error-toast" id="sync-error-toast" role="alert"></div>
 <div class="founder-lock-toast" id="founder-lock-toast">
   <span id="founder-lock-toast-text"></span>
   <a href="#preco" class="founder-lock-toast-link" data-i18n="seePlans">Ver planos →</a>
@@ -2364,10 +2598,10 @@
       quizCtaBtn: 'Ver o plano ideal pra você ↓',
       // Hero
       heroEyebrowDe: 'Pra brasileiro que vive (ou vai viver) na Alemanha',
-      heroTitleDe: 'O alemão que te ensinam pra prova. <em>Nicht was dir die Realität zeigt, sondern was dir die Wahrheit gibt.</em>',
+      heroTitleDe: 'O alemão que te ensinam pra prova. <em>Nicht das, was im Lehrbuch steht – sondern das, was dir im Alltag begegnet.</em>',
       heroSubDe: 'A maioria dos cursos te ensina um alemão de sala de aula — devagar, claro, sempre educado. A vida aqui não é assim. Aqui você treina alemão de verdade: pra se envolver de verdade — no trabalho, na consulta médica, na entrevista de emprego — com sotaque bávaro, suábio ou suíço, barulho ao fundo e gente te cortando no meio da frase.',
       heroEyebrowEn: 'Prática de conversação em inglês',
-      heroTitleEn: 'O inglês que te preparam pra prova. <em>Not what shows you the reality, but what gives you the truth.</em>',
+      heroTitleEn: 'O inglês que te ensinam pra prova. <em>Not what the textbook says – but what real life throws at you.</em>',
       heroSubEn: 'A maioria dos apps te ensina um inglês de laboratório — devagar, claro, sem interrupção. A vida real não é assim. Aqui você treina inglês de verdade: pra se envolver de verdade — no trabalho, viajando, ou vivendo fora — com sotaque, ruído e gente te cortando no meio da frase.',
       heroCtaPrimary: 'Quero testar agora',
       heroCtaGhost: 'ver os 4 níveis ↓',
@@ -2611,6 +2845,62 @@
       dynSidebarSaved: '✓ Salvo',
       dynSidebarLogin: 'Entrar',
       dynAuthServiceDown: 'Serviço de login indisponível no momento.',
+      dynAuthConfirmEmail: 'Conta criada! Abre o e-mail que te mandamos, clica no link de confirmação e depois entra aqui.',
+      dynAuthBadLogin: 'E-mail ou senha incorretos.',
+      dynAuthNotConfirmed: 'Seu e-mail ainda não foi confirmado. Procura o link na sua caixa de entrada (e no spam).',
+      dynAuthAlreadyExists: 'Esse e-mail já tem conta. Usa a aba Entrar.',
+      dynAuthWeakPassword: 'A senha precisa ter pelo menos 6 caracteres.',
+      dynAuthRateLimit: 'Muitas tentativas seguidas. Espera um minuto e tenta de novo.',
+      dynAuthGeneric: 'Não deu pra entrar: {msg}',
+      dynSyncSaveError: 'Seu progresso não foi salvo na nuvem. Ele continua guardado neste aparelho. Detalhe: {msg}',
+      dynSyncLoadError: 'Não deu pra baixar seu progresso da nuvem. Detalhe: {msg}',
+      dynSyncSessionExpired: 'Sua sessão expirou. Entra de novo pra continuar salvando na nuvem.',
+      langToggleAria: "Escolher idioma",
+      langBtnDe: "<span class=\"lt-flag\">🇩🇪</span> <span class=\"lt-name\">Alemão</span>",
+      langBtnEn: "<span class=\"lt-flag\">🇬🇧</span> <span class=\"lt-name\">Inglês</span>",
+      langBtnPt: "<span class=\"lt-flag\">🇧🇷</span> <span class=\"lt-name\">Português</span>",
+      portuguese: "Português",
+      tier1: "iniciante",
+      tier2: "confortável",
+      tier3: "desafiador",
+      tier4: "intenso",
+      tier5: "brutal",
+      tier6: "insano",
+      tier7: "lendário",
+      dynLockLevels: "🔒 Níveis 3+ são exclusivos de quem já garantiu a vaga de fundador.",
+      dynLockBonus: "🎁 A palavra bônus do dia é exclusiva de quem já garantiu a vaga de fundador.",
+      dynLockGrammar: "🔒 A trilha {code} é exclusiva de quem já garantiu a vaga de fundador.",
+      grammarLockTag: "🔒 fundador",
+      dynFormError: "Ops, algo deu errado. Tenta de novo em alguns segundos.",
+      authSignupTitle: "Criar sua conta",
+      authSignupSub: "Seu progresso atual deste navegador vai ser guardado na sua conta nova.",
+      ch_d_anchor: "Marque sua sequência hoje",
+      ch_d_p1: "Suba 3 níveis no desafio infinito",
+      ch_d_p2: "Suba 5 níveis no desafio infinito",
+      ch_d_p3: "Ouça 2 áudios de exemplo",
+      ch_d_p4: "Ouça 3 áudios de exemplo",
+      ch_d_p5: "Suba pelo menos 2 níveis",
+      ch_w1: "Treine 5 dias essa semana",
+      ch_w2: "Alcance o nível 8 no desafio infinito",
+      ch_m1: "Treine 15 dias esse mês",
+      ch_m2: "Junte 500 xp esse mês",
+      dynShareDaysPt: "DIAS SEGUIDOS",
+      dynSharePhrasePt: "Treinando português de verdade.",
+      dynShareWhatsappPt: "🔥 {n} dias seguidos treinando português de verdade! {site}",
+      dynReferralWhatsappPt: "Tô treinando português de verdade no Fala Real. Entra pelo meu link: {link}",
+      footerTaglinePt: "Feito por um brasileiro que quer te mostrar o português de verdade.",
+      streakTrainedToday: "Treinado hoje ✓",
+      dynDeverStreak: "🔥 {n} dia(s) seguidos estudando uma palavra nova",
+      dynDeverStart: "Marca a palavra de hoje pra começar sua sequência de vocabulário",
+      dynComboDays: "{n} dias combo",
+      dynLockedShort: "🔒 bloqueado",
+      dynMonthlyDone: "os 2 desafios do mês completos",
+      dynMonthlyLocked: "complete os 2 desafios do mês pra destravar",
+      grammarAdvLabel: "🚀 Avançado — poucos chegam até aqui",
+      grammarAdvSub: "A maioria das pessoas para no B2, que já é suficiente pra viver bem no dia a dia. C1 e C2 são pra quem quer fluência de nível quase nativo — bem mais difícil, sem pressa nenhuma pra chegar lá.",
+      langNameDe: "Alemão",
+      langNameEn: "Inglês",
+      langNamePt: "Português",
     },
     en: {
       siteLangSelectAria: 'Site language',
@@ -2751,10 +3041,10 @@
       quizCtaBtn: 'See the ideal plan for you ↓',
       // Hero
       heroEyebrowDe: 'For Brazilians living (or about to live) in Germany',
-      heroTitleDe: 'The German they teach you for the test. <em>Nicht was dir die Realität zeigt, sondern was dir die Wahrheit gibt.</em>',
+      heroTitleDe: 'The German they teach you for the test. <em>Nicht das, was im Lehrbuch steht – sondern das, was dir im Alltag begegnet.</em>',
       heroSubDe: "Most courses teach you classroom German — slow, clear, always polite. Life here isn't like that. Here you train real German: to actually get by — at work, at the doctor's office, in a job interview — with Bavarian, Swabian or Swiss accents, background noise, and people cutting you off mid-sentence.",
       heroEyebrowEn: 'English conversation practice',
-      heroTitleEn: 'The English they prep you for the test with. <em>Not what shows you the reality, but what gives you the truth.</em>',
+      heroTitleEn: 'The English they teach you for the test. <em>Not what the textbook says – but what real life throws at you.</em>',
       heroSubEn: 'Most apps teach you lab English — slow, clear, no interruptions. Real life is not like that. Here you train real English: to actually get by — at work, traveling, or living abroad — with accents, noise, and people cutting you off mid-sentence.',
       heroCtaPrimary: 'Try it now',
       heroCtaGhost: 'see the 4 levels ↓',
@@ -2998,6 +3288,168 @@
       dynSidebarSaved: '✓ Saved',
       dynSidebarLogin: 'Log in',
       dynAuthServiceDown: 'Login service is unavailable right now.',
+      dynAuthConfirmEmail: 'Account created! Open the email we sent you, click the confirmation link, then log in here.',
+      dynAuthBadLogin: 'Wrong email or password.',
+      dynAuthNotConfirmed: "Your email hasn't been confirmed yet. Look for the link in your inbox (and spam).",
+      dynAuthAlreadyExists: 'This email already has an account. Use the Log in tab.',
+      dynAuthWeakPassword: 'Your password needs at least 6 characters.',
+      dynAuthRateLimit: 'Too many attempts in a row. Wait a minute and try again.',
+      dynAuthGeneric: "Couldn't log in: {msg}",
+      dynSyncSaveError: "Your progress wasn't saved to the cloud. It's still stored on this device. Details: {msg}",
+      dynSyncLoadError: "Couldn't download your progress from the cloud. Details: {msg}",
+      dynSyncSessionExpired: 'Your session expired. Log in again to keep saving to the cloud.',
+      langToggleAria: "Choose language",
+      langBtnDe: "<span class=\"lt-flag\">🇩🇪</span> <span class=\"lt-name\">German</span>",
+      langBtnEn: "<span class=\"lt-flag\">🇬🇧</span> <span class=\"lt-name\">English</span>",
+      langBtnPt: "<span class=\"lt-flag\">🇧🇷</span> <span class=\"lt-name\">Portuguese</span>",
+      portuguese: "Portuguese",
+      tier1: "beginner",
+      tier2: "comfortable",
+      tier3: "challenging",
+      tier4: "intense",
+      tier5: "brutal",
+      tier6: "insane",
+      tier7: "legendary",
+      dynLockLevels: "🔒 Levels 3+ are for founders only.",
+      dynLockBonus: "🎁 The daily bonus word is for founders only.",
+      dynLockGrammar: "🔒 The {code} track is for founders only.",
+      grammarLockTag: "🔒 founder",
+      dynFormError: "Oops, something went wrong. Try again in a few seconds.",
+      authSignupTitle: "Create your account",
+      authSignupSub: "Your current progress in this browser will be saved to your new account.",
+      ch_d_anchor: "Mark your streak today",
+      ch_d_p1: "Climb 3 levels in the infinite challenge",
+      ch_d_p2: "Climb 5 levels in the infinite challenge",
+      ch_d_p3: "Listen to 2 sample audios",
+      ch_d_p4: "Listen to 3 sample audios",
+      ch_d_p5: "Climb at least 2 levels",
+      ch_w1: "Practice 5 days this week",
+      ch_w2: "Reach level 8 in the infinite challenge",
+      ch_m1: "Practice 15 days this month",
+      ch_m2: "Earn 500 xp this month",
+      dynShareDaysPt: "DAYS IN A ROW",
+      dynSharePhrasePt: "Training real Portuguese.",
+      dynShareWhatsappPt: "🔥 {n} days in a row practicing real Portuguese! {site}",
+      dynReferralWhatsappPt: "I'm practicing real Brazilian Portuguese on Fala Real — real accents, real noise. Join through my link so we move up the list together: {link}",
+      footerTaglinePt: "Made by a Brazilian who wants to show you real Portuguese.",
+      streakTrainedToday: "Practiced today ✓",
+      dynDeverStreak: "🔥 {n} day(s) in a row learning a new word",
+      dynDeverStart: "Mark today's word to start your vocabulary streak",
+      dynComboDays: "{n}-day combo",
+      dynLockedShort: "🔒 locked",
+      dynMonthlyDone: "both of this month's challenges done",
+      dynMonthlyLocked: "complete both of this month's challenges to unlock",
+      grammarAdvLabel: "🚀 Advanced — few people make it this far",
+      grammarAdvSub: "Most people stop at B2, which is already enough to live well day to day. C1 and C2 are for near-native fluency — much harder, and there's no rush to get there.",
+      langNameDe: "German",
+      langNameEn: "English",
+      langNamePt: "Portuguese",
+      heroEyebrowPt: "Brazilian Portuguese conversation practice",
+      heroTitlePt: "The Portuguese from the textbook. <em>Não o que está no livro – mas o que a vida real te joga.</em>",
+      heroSubPt: "Most apps teach you slow, polite textbook Portuguese. Brazil doesn't sound like that. Here you train real Brazilian Portuguese — made by a Brazilian — for work, travel, family and friends: with carioca, paulista and northeastern accents, street noise and people cutting you off mid-sentence.",
+      quizStep1QPt: "What's your biggest challenge with Portuguese?",
+      quizOpt1SotaquePt: "Understanding Brazilian accents",
+      quizOpt1EnvolvimentoPt: "Talking with friends, family or a partner",
+      quizOpt1EntrevistaPt: "Working with Brazilians",
+      quizOpt1TrabalhoPt: "Traveling or moving to Brazil",
+      quizStep2QPt: "How's your Portuguese today?",
+      quizOpt2Level1Pt: "Total beginner",
+      quizOpt2Level2Pt: "I get by with the basics",
+      quizOpt2Level3Pt: "Intermediate, but fast speech loses me",
+      quizResultTitlePt: "Suggested level for you:",
+      dynQuizDescPt: "Based on your answers, we'd suggest focusing on {focus}.",
+      dynQuizFocusFallbackPt: "varied everyday scenarios",
+      dynQuizSummaryPt: "✓ Level {level} suggested — focus on {focus}",
+      compLedePt: "Most apps train you for a Portuguese that only exists inside the app — often European, always slow. The difference here is what happens when a Brazilian talks fast, drops half the syllables, or has an accent you've never heard.",
+      compLabTitlePt: "Lab app",
+      compLabLi1Pt: "Synthetic voice, perfect pacing",
+      compLabLi2Pt: "One accent, often from Portugal",
+      compLabLi3Pt: "Total silence in the background",
+      compLabLi4Pt: "\"Você está\" — never \"cê tá\"",
+      compLabLi5Pt: "Same exercise repeats identically",
+      compRealLi1Pt: "Real Brazilian speech, with slang and rhythm",
+      compRealLi2Pt: "Rio, São Paulo, Northeast, South — your choice",
+      compRealLi3Pt: "Bus, beach, bakery, family lunch",
+      compRealLi4Pt: "Interruptions and overlapping speech",
+      compRealLi5Pt: "A new scenario every conversation",
+      level1TitlePt: "Slow and clear",
+      level1DescPt: "Paced speech, simple vocabulary, a neutral Brazilian accent. Ideal for tuning your ear to Portuguese.",
+      level1Tag1Pt: "slow pace",
+      level1Tag2Pt: "no noise",
+      level1Tag3Pt: "1 accent",
+      level1AudioBtnPt: "🔊 Listen to example",
+      level2TitlePt: "Natural pace",
+      level2DescPt: "The conversation flows at real speed, with \"tô\", \"pra\", \"cê\" and everyday slang.",
+      level2Tag1Pt: "normal pace",
+      level2Tag2Pt: "light slang",
+      level2Tag3Pt: "2 accents",
+      level2AudioBtnPt: "🔊 Listen to example",
+      level3TitlePt: "Accents and ambience",
+      level3DescPt: "Regional accents come in — carioca, nordestino, gaúcho — with background sound: bakery, bus, street market.",
+      level3Tag1Pt: "multiple accents",
+      level3Tag2Pt: "light noise",
+      level3AudioBtnPt: "🔊 Listen to example",
+      level4TitlePt: "Real street",
+      level4DescPt: "Interruptions, everyone talking at once, loud background noise. As close as an app gets to a Brazilian family lunch.",
+      level4Tag1Pt: "interruptions",
+      level4Tag2Pt: "heavy noise",
+      level4Tag3Pt: "strong accents",
+      level4AudioBtnPt: "🔊 Listen to example (with interruption)",
+      step1TitlePt: "You pick the scenario",
+      step1DescPt: "Ordering at a padaria, chatting with your partner's family, a work call with a Brazilian team — the scenario is never quite the same twice.",
+      faqKickerPt: "Common questions",
+      faqTitlePt: "Before you decide, here's what everyone asks.",
+      faqQ1Pt: "Brazilian or European Portuguese?",
+      faqA1Pt: "Brazilian — the one spoken by over 200 million people. You'll hear a European accent now and then so it doesn't surprise you, but everything you learn here is how people actually talk in Brazil.",
+      faqQ2Pt: "Can I cancel anytime?",
+      faqA2Pt: "Yes, anytime, no penalty. You get a full 14-day guarantee (EU right of withdrawal), plus an extra guarantee: if development runs significantly behind, you get a refund even outside that window. Details in the <a href=\"/reembolso.html\">refund policy</a>.",
+      faqQ3Pt: "Who is behind this?",
+      faqA3Pt: "Me — Wagner, a Brazilian from João Pessoa who has lived in Switzerland, the UK, Spain, Portugal and now Germany. I learned languages the hard way, straight from real life. Now I want to show you Portuguese the way Brazilians really speak it. I personally answer every email.",
+      faqQ4Pt: "How is this different from Duolingo?",
+      faqA4Pt: "Duolingo teaches isolated sentences with no real-life context. FalaReal focuses on situations you'll actually face in Brazil — the bakery, the bus, the family barbecue, a work call — with difficulty that genuinely ramps up (accents, noise, interruptions).",
+      faqQ5Pt: "Does my progress sync across devices?",
+      faqA5Pt: "Yes — create a free account (the ☁️ button) and your XP, streak and grammar progress are saved to the cloud and available on any device.",
+      pricingKickerPt: "Choose your plan",
+      pricingTitlePt: "We won't charge people who can't afford it.",
+      pricingLedePt: "There's a real free version — not a 3-day trial trick. And there are options for people who already know they'll use this seriously.",
+      price1KickerPt: "Free",
+      price1SubPt: "For people who want to try it out — or simply can't pay right now.",
+      price1Li1Pt: "Levels 1 and 2 (slow & clear + everyday pace)",
+      price1Li2Pt: "Grammar track A1–B2",
+      price1Li3Pt: "Daily streak, XP and a word a day",
+      price1Li4Pt: "1 neutral Brazilian accent",
+      price1CtaPt: "Start for free",
+      price2FeaturedTagPt: "Most popular",
+      price2KickerPt: "Founder",
+      price2WasPt: "from <span class=\"pricing-was-amount\">€25</span>/month after launch",
+      price2PeriodPt: "/month",
+      price2SubPt: "Price locked in as long as you stay subscribed — it goes up for everyone joining after launch.",
+      price2Li1Pt: "All 4 levels + endless infinite level",
+      price2Li2Pt: "Full grammar track up to C2 + bonus slang word every day",
+      price2Li3Pt: "All accents — carioca, paulista, nordestino, gaúcho",
+      price2Li4Pt: "A scenario that never repeats itself",
+      price2CtaPt: "Lock in this price",
+      price3KickerPt: "Annual",
+      price3WasPt: "from <span class=\"pricing-was-amount\">€249</span>/year after launch",
+      price3PeriodPt: "/year",
+      price3SubPt: "Pay for 12 months, get the 13th free — works out to under €13/month. Renews automatically every year.",
+      price3Li1Pt: "Everything in Founder",
+      price3Li2Pt: "1 bonus month every year (13 months of access)",
+      price3Li3Pt: "Access to all future updates",
+      price3Li4Pt: "Top priority in the launch queue",
+      price3CtaPt: "Get the annual plan",
+      ctaKickerPt: "Still deciding?",
+      ctaTitlePt: "Leave your email and get real Brazilian Portuguese tips, no fluff.",
+      ctaLedePt: "We'll send you everyday phrases, slang and exercises — and you'll be the first to know when something big ships in the app.",
+      ctaEmailPlaceholderPt: "you@email.com",
+      ctaEmailAriaPt: "Your email",
+      ctaSubmitPt: "Sign me up",
+      ctaFormNotePt: "no spam — just content that actually helps",
+      ctaThanksPPt: "Done! You're on the list — keep an eye on your inbox.",
+      ctaReferralTitlePt: "🚀 Want priority access? Invite friends.",
+      ctaReferralDescPt: "Whoever joins through your link — and you — both move up together.",
+      ctaCopyBtnPt: "📋 Copy",
+      ctaWhatsappBtnPt: "📲 Invite on WhatsApp",
     },
     es: {
       siteLangSelectAria: 'Idioma del sitio',
@@ -3138,10 +3590,10 @@
       quizCtaBtn: 'Ver el plan ideal para ti ↓',
       // Hero
       heroEyebrowDe: 'Para quien vive (o va a vivir) en Alemania',
-      heroTitleDe: 'El alemán que te enseñan para el examen. <em>Nicht was dir die Realität zeigt, sondern was dir die Wahrheit gibt.</em>',
+      heroTitleDe: 'El alemán que te enseñan para el examen. <em>Nicht das, was im Lehrbuch steht – sondern das, was dir im Alltag begegnet.</em>',
       heroSubDe: 'La mayoría de los cursos te enseña un alemán de salón de clases — lento, claro, siempre educado. La vida aquí no es así. Aquí entrenas alemán de verdad: para involucrarte de verdad — en el trabajo, en la consulta médica, en la entrevista de trabajo — con acento bávaro, suabo o suizo, ruido de fondo y gente que te interrumpe a media frase.',
       heroEyebrowEn: 'Práctica de conversación en inglés',
-      heroTitleEn: 'El inglés que te preparan para el examen. <em>Not what shows you the reality, but what gives you the truth.</em>',
+      heroTitleEn: 'El inglés que te preparan para el examen. <em>Not what the textbook says – but what real life throws at you.</em>',
       heroSubEn: 'La mayoría de las apps te enseña un inglés de laboratorio — lento, claro, sin interrupciones. La vida real no es así. Aquí entrenas inglés de verdad: para involucrarte de verdad — en el trabajo, viajando, o viviendo en el extranjero — con acento, ruido y gente que te interrumpe a media frase.',
       heroCtaPrimary: 'Quiero probar ahora',
       heroCtaGhost: 'ver los 4 niveles ↓',
@@ -3385,6 +3837,393 @@
       dynSidebarSaved: '✓ Guardado',
       dynSidebarLogin: 'Entrar',
       dynAuthServiceDown: 'El servicio de inicio de sesión no está disponible en este momento.',
+      dynAuthConfirmEmail: '¡Cuenta creada! Abre el correo que te enviamos, haz clic en el enlace de confirmación y luego inicia sesión aquí.',
+      dynAuthBadLogin: 'Correo o contraseña incorrectos.',
+      dynAuthNotConfirmed: 'Tu correo aún no está confirmado. Busca el enlace en tu bandeja de entrada (y en spam).',
+      dynAuthAlreadyExists: 'Este correo ya tiene una cuenta. Usa la pestaña Entrar.',
+      dynAuthWeakPassword: 'La contraseña necesita al menos 6 caracteres.',
+      dynAuthRateLimit: 'Demasiados intentos seguidos. Espera un minuto y vuelve a intentarlo.',
+      dynAuthGeneric: 'No se pudo iniciar sesión: {msg}',
+      dynSyncSaveError: 'Tu progreso no se guardó en la nube. Sigue guardado en este dispositivo. Detalle: {msg}',
+      dynSyncLoadError: 'No se pudo descargar tu progreso de la nube. Detalle: {msg}',
+      dynSyncSessionExpired: 'Tu sesión expiró. Inicia sesión de nuevo para seguir guardando en la nube.',
+      langToggleAria: "Elegir idioma",
+      langBtnDe: "<span class=\"lt-flag\">🇩🇪</span> <span class=\"lt-name\">Alemán</span>",
+      langBtnEn: "<span class=\"lt-flag\">🇬🇧</span> <span class=\"lt-name\">Inglés</span>",
+      langBtnPt: "<span class=\"lt-flag\">🇧🇷</span> <span class=\"lt-name\">Portugués</span>",
+      portuguese: "Portugués",
+      tier1: "principiante",
+      tier2: "cómodo",
+      tier3: "desafiante",
+      tier4: "intenso",
+      tier5: "brutal",
+      tier6: "demencial",
+      tier7: "legendario",
+      dynLockLevels: "🔒 Los niveles 3+ son exclusivos para fundadores.",
+      dynLockBonus: "🎁 La palabra extra del día es exclusiva para fundadores.",
+      dynLockGrammar: "🔒 La ruta {code} es exclusiva para fundadores.",
+      grammarLockTag: "🔒 fundador",
+      dynFormError: "Ups, algo salió mal. Inténtalo de nuevo en unos segundos.",
+      authSignupTitle: "Crea tu cuenta",
+      authSignupSub: "Tu progreso actual en este navegador se guardará en tu nueva cuenta.",
+      ch_d_anchor: "Marca tu racha hoy",
+      ch_d_p1: "Sube 3 niveles en el desafío infinito",
+      ch_d_p2: "Sube 5 niveles en el desafío infinito",
+      ch_d_p3: "Escucha 2 audios de ejemplo",
+      ch_d_p4: "Escucha 3 audios de ejemplo",
+      ch_d_p5: "Sube al menos 2 niveles",
+      ch_w1: "Practica 5 días esta semana",
+      ch_w2: "Llega al nivel 8 en el desafío infinito",
+      ch_m1: "Practica 15 días este mes",
+      ch_m2: "Consigue 500 xp este mes",
+      dynShareDaysPt: "DÍAS SEGUIDOS",
+      dynSharePhrasePt: "Entrenando portugués de verdad.",
+      dynShareWhatsappPt: "🔥 ¡{n} días seguidos practicando portugués de verdad! {site}",
+      dynReferralWhatsappPt: "Estoy practicando portugués de Brasil de verdad en Fala Real. Entra con mi enlace y subimos juntos en la lista: {link}",
+      footerTaglinePt: "Hecho por un brasileño que quiere mostrarte el portugués de verdad.",
+      streakTrainedToday: "Entrenado hoy ✓",
+      dynDeverStreak: "🔥 {n} día(s) seguidos estudiando una palabra nueva",
+      dynDeverStart: "Marca la palabra de hoy para empezar tu racha de vocabulario",
+      dynComboDays: "{n} días de combo",
+      dynLockedShort: "🔒 bloqueado",
+      dynMonthlyDone: "los 2 desafíos del mes completados",
+      dynMonthlyLocked: "completa los 2 desafíos del mes para desbloquear",
+      grammarAdvLabel: "🚀 Avanzado — pocos llegan hasta aquí",
+      grammarAdvSub: "La mayoría se queda en B2, que ya basta para vivir bien en el día a día. C1 y C2 son para una fluidez casi nativa: mucho más difícil, sin ninguna prisa por llegar.",
+      langNameDe: "Alemán",
+      langNameEn: "Inglés",
+      langNamePt: "Portugués",
+    },
+    de: {
+      // v12.0.0 — interface em alemão (pra alemães que aprendem português).
+      // Chaves das trilhas DE/EN que faltarem aqui caem no inglês.
+      siteLangSelectAria: "Sprache der Website",
+      navCta: "Jetzt ausprobieren",
+      enter: "Anmelden",
+      yourAccount: "Dein Konto",
+      editAvatar: "Avatar bearbeiten",
+      avatar: "Avatar",
+      close: "Schließen",
+      face: "Gesicht",
+      accessory: "Accessoire",
+      bgColor: "Hintergrundfarbe",
+      diagKicker: "30 Sekunden",
+      diagTitle: "Bevor du weitermachst, verrat mir eine Sache.",
+      diagLede: "Zwei kurze Fragen, damit ich dir zeigen kann, wo du anfangen solltest – ganz unverbindlich.",
+      tryKicker: "Nur erzählen wäre unfair",
+      tryTitle: "Probier es hier aus. Die Level hören nie auf.",
+      tryLede: "In der echten App steigt der Schwierigkeitsgrad immer weiter, und fürs tägliche Üben bekommst du Belohnungen. Zwei kurze Kostproben, wie es funktioniert:",
+      nicknamePlaceholder: "Dein Spitzname",
+      saveCloud: "☁️ Fortschritt in der Cloud speichern",
+      totalXp: "XP gesamt",
+      streakDays: "Serientage",
+      vocabDays: "Vokabeltage",
+      grammarStudied: "Grammatik gelernt",
+      discountUnlocked: "Rabatt freigeschaltet",
+      infiniteLevel: "Endlos-Level",
+      infiniteLevelDesc: "Jeder Klick fügt eine neue Schwierigkeitsebene hinzu – Akzent, Lärm, Unterbrechung. Es geht so weit, wie du kommst.",
+      listenLevel: "🔊 Dieses Level anhören",
+      levelUp: "Level aufsteigen ↑",
+      dailyStreak: "Tägliche Serie",
+      dailyStreakDesc: "Übe jeden Tag, halte deine Serie am Leben und schalte Belohnungen frei. Dein Fortschritt wird hier schon gespeichert.",
+      daysInRow: "Tage in Folge",
+      streakShielded: "🛡️ Serie geschützt – als Gründungsmitglied bricht ein verpasster Tag deine Serie nicht.",
+      markToday: "Heute abhaken ✓",
+      shareStreak: "🎉 Meine Serie teilen",
+      downloadImage: "📥 Bild herunterladen",
+      sendWhatsapp: "📲 Per WhatsApp senden",
+      challengesTitle: "Challenges, die die Gewohnheit festigen",
+      challengesDesc: "Abschließen und XP einlösen. Täglich um Mitternacht, wöchentlich am Montag, monatlich am 1. zurückgesetzt.",
+      comboIndicator: "Combo aus <span class=\"combo-num\">0</span> perfekten Tagen – der Bonus wächst",
+      today: "🗓️ Heute",
+      thisWeek: "📅 Diese Woche",
+      thisMonth: "🏆 Dieser Monat",
+      rewardsTitle: "🎟️ Echte Belohnungen – echte Rabatte",
+      rewardsDesc: "Nicht nur XP. Erreiche diese Ziele und bekomm einen echten Rabattcode für den Checkout.",
+      comboTrackLabel: "Combo-Pfad – je mehr perfekte Tage in Folge, desto größer der Rabatt (einmal freigeschaltet, bleibt er für immer)",
+      monthlyTrackLabel: "Monats-Pfad – schließe diesen Monat beide Challenges ab",
+      legendTrackLabel: "👑 Legenden-Pfad – eine ununterbrochene Serie, ein lebenslanger Rabatt, der fast bis gratis wächst",
+      noLifetimeYet: "Noch kein lebenslanger Rabatt freigeschaltet",
+      homeworkTitle: "📔 Hausaufgabe",
+      homeworkDesc: "Ein Wort pro Tag. Am nächsten Tag testen wir, ob es hängen geblieben ist.",
+      rememberYesterday: "Erinnerst du dich an das Wort von gestern?",
+      reveal: "Aufdecken",
+      remembered: "✓ Gewusst",
+      forgot: "Vergessen",
+      todaysWord: "Wort des Tages",
+      markStudied: "Als gelernt markieren +5xp",
+      studiedToday: "✓ Heute gelernt",
+      founderBonusLocked: "🎁 Gründungsmitglieder bekommen <strong>jeden Tag ein zweites Wort</strong> – doppelt so schnell Vokabeln lernen. <a href=\"#preco\">Pläne ansehen</a>",
+      founderBonusWord: "🎁 Bonuswort für Gründer",
+      markStudiedAlt: "Als gelernt markieren +5xp",
+      studiedTodayAlt: "✓ Heute gelernt",
+      grammarBadge: "🧠 Der umfangreichste Pfad von Fala Real",
+      grammarTitle: "🧩 Grammatikpfad – von A1 bis C2",
+      grammarDesc: "Echte Lektionen, Quizze und Satzbau-Übungen zu jedem Thema. Markiere, was du schon gelernt hast – der Pfad wächst mit dir, von den Grundlagen bis fast zum Muttersprachniveau.",
+      quickReview: "🔁 Schnelle Wiederholung",
+      swap: "tauschen",
+      check: "Prüfen",
+      howKicker: "So funktioniert es",
+      howTitle: "Leicht anzufangen, unmöglich auswendig zu lernen.",
+      step1: "Schritt 1",
+      step2: "Schritt 2",
+      step2Title: "Du führst ein echtes Gespräch",
+      step2Desc: "Sprich in Echtzeit mit der KI, auf dem Schwierigkeitsgrad, den du gewählt hast.",
+      step3: "Schritt 3",
+      step3Title: "Du bekommst Feedback",
+      step3Desc: "Was du verstanden hast, was dir entgangen ist und was du beim nächsten Mal üben solltest.",
+      liveKicker: "Solange die KI noch nicht fertig ist",
+      liveTitle: "Übe ein Live-Gespräch mit mir.",
+      liveLede: "Das KI-Gespräch (Schritt 2 oben) ist noch in Arbeit. Bis dahin kannst du, wenn du wirklich üben willst, direkt ein Gespräch mit mir buchen – ohne Bot dazwischen.",
+      liveOptionTitle: "30 Minuten, nur du und ich",
+      liveOptionSub: "Fester Preis für alle, Gründer oder nicht – hier wird meine echte Zeit gebucht.",
+      livePayBtn: "Bezahlen und Gespräch buchen – 15 €",
+      liveStep2Label: "Nach der Zahlung sag mir unten, wann du Zeit hast – ich bestätige per E-Mail:",
+      yourName: "Dein Name",
+      yourEmailPayment: "Deine E-Mail (möglichst dieselbe wie bei der Zahlung)",
+      wantToTrain: "Ich möchte üben…",
+      german: "Deutsch",
+      english: "Englisch",
+      scheduleAvailability: "Tage/Uhrzeiten, die dir passen (möglichst mit Zeitzone)",
+      sendSchedule: "Verfügbarkeit senden",
+      liveContactLink: "Fragen vor der Zahlung? wagneralbu2@gmail.com",
+      refundPolicy: "Erstattungsrichtlinie",
+      reportProblem: "Problem melden",
+      seePlans: "Pläne ansehen →",
+      reportBugSuggestion: "Fehler oder Vorschlag melden",
+      feedbackTitle: "Einen Fehler gefunden? Eine Idee?",
+      feedbackSub: "Schick es mir – ich lese jede Nachricht persönlich, und es hilft FalaReal wirklich weiter.",
+      fbBug: "🐞 Fehler / etwas kaputt",
+      fbSuggestion: "💡 Verbesserungsvorschlag",
+      fbPraise: "🎉 Lob",
+      fbOther: "📝 Sonstiges",
+      feedbackPlaceholder: "Beschreib, was passiert ist oder was du dir wünschst…",
+      emailOptional: "Deine E-Mail (optional, damit ich antworten kann)",
+      send: "Senden",
+      createAccount: "Konto erstellen",
+      enterYourAccount: "In dein Konto einloggen",
+      saveProgressAnyDevice: "Speichert deinen Fortschritt und synchronisiert ihn auf jedem Gerät.",
+      passwordMin6: "Passwort (mindestens 6 Zeichen)",
+      alreadyLoggedIn: "Du bist bereits angemeldet",
+      progressSavedCloud: "Dein Fortschritt wird automatisch in der Cloud gespeichert.",
+      logout: "Abmelden",
+      quizCtaBtn: "Den passenden Plan für dich ansehen ↓",
+      heroCtaPrimary: "Jetzt ausprobieren",
+      heroCtaGhost: "die 4 Level ansehen ↓",
+      waveLabel1: "Level 1 – langsam & deutlich",
+      waveLabel2: "Level 2",
+      waveLabel3: "Level 3",
+      waveLabel4: "Level 4 – echt",
+      waveCaption: "↑ jedes Level bringt mehr Akzent, Tempo und Hintergrundlärm – genau wie im echten Leben",
+      compKicker: "Das Problem",
+      compTitle: "Du hast das schon geübt. Nur nie so, wie du es wirklich brauchst.",
+      compRealTitle: "Fala Real",
+      levelsKicker: "Das Herzstück",
+      levelsTitle: "Vier Level. Jedes holt dich ein Stück weiter aus deiner Komfortzone.",
+      levelsLede: "Du entscheidest, wo du anfängst, und steigst in deinem Tempo auf. Es geht nicht um Schwierigkeit um ihrer selbst willen – sondern um einen Weg, der dich im echten Alltag ankommen lässt.",
+      ebookKicker: "Gratis-Geschenk",
+      ebookTitle: "Das kostenlose E-Book, um jede Sprache selbst zu lernen",
+      ebookLede: "Geschrieben von jemandem, der Deutsch bei null angefangen hat – allein, direkt im echten Leben, ohne Klassenzimmer und ohne teuren Kurs.",
+      ebookLi1: "7 Kapitel mit Strategien, die im echten Leben getestet wurden – keine Klassenzimmer-Theorie",
+      ebookLi2: "Tägliche Checkliste + 10 motivierende Zitate, damit du dranbleibst",
+      ebookLi3: "Geschrieben vom Gründer von FalaReal, aus seinem eigenen Weg zu fließendem Deutsch",
+      ebookEmailPlaceholder: "du@email.de",
+      ebookEmailAria: "Deine E-Mail",
+      ebookSubmit: "Mein kostenloses E-Book holen",
+      ebookFormNote: "nur deine E-Mail – kein Spam",
+      ebookThanksP: "Fertig! Dein E-Book ist bereit:",
+      ebookDownloadBtn: "📖 E-Book jetzt herunterladen",
+      dynLevelBadge: "Level {n}",
+      dynPlaying: "🔊 Läuft…",
+      dynNoAudioSupportHere: "dein Browser unterstützt hier kein Audio",
+      dynNoAudioSupport: "keine Audio-Unterstützung",
+      dynLegendaryUnlock: "👑 LEGENDÄR! {days} Tage ohne Aussetzer – lebenslanger Rabatt von {pct}% (Code {code})",
+      dynLegendProgress: "{streak} / {days} Tage bis zur nächsten Stufe ({pct}%)",
+      dynLegendMaxed: "Höchste Stufe erreicht – 95 % für immer. Absolute Legende.",
+      dynLegendHeadline: "Dein aktueller lebenslanger Rabatt: {pct}% – Code {code}",
+      dynStreakShieldedToast: "🛡️ Serie geschützt – als Gründungsmitglied bricht ein verpasster Tag deine Serie nicht.",
+      dynStreakXpTomorrow: "+10 xp – komm morgen wieder, um deine Serie zu halten",
+      dynLeagueBadge: "{icon} Liga {name}",
+      dynLeagueProgress: "{total} / {min} xp bis zur Liga {name} {icon}",
+      dynLeagueMaxed: "Höchste Liga erreicht – du bist absolut {name} 👑",
+      dynCouponUnlocked: "🎟️ Gutschein freigeschaltet: {pct}% Rabatt – Code {code}",
+      dynCopiedShort: "✓ kopiert!",
+      dynPerfectDayCombo: "⚡ Perfekter Tag! Combo {combo} – Bonus +{bonus}xp",
+      dynGrammarOverall: "{done} / {total} Themen gelernt ({pct}%)",
+      dynReviewCorrect: "✓ Genau! +4xp für die Wiederholung.",
+      dynReviewWrong: "Fast – prüf die Reihenfolge noch mal.",
+      dynCopiedFull: "✓ Kopiert",
+      dynSending: "Wird gesendet…",
+      dynFeedbackSent: "✓ Gesendet! Danke, dass du FalaReal besser machst.",
+      dynFeedbackError: "Ups, das konnte nicht gesendet werden. Versuch es noch einmal.",
+      dynAoVivoSent: "✓ Anfrage gesendet! Ich antworte per E-Mail, um die Uhrzeit abzustimmen.",
+      dynAoVivoError: "Ups, das konnte nicht gesendet werden. Versuch es noch einmal oder schreib mir direkt eine E-Mail.",
+      dynCloudSaved: "☁️ Fortschritt gespeichert ({email})",
+      dynSidebarSaved: "✓ Gespeichert",
+      dynSidebarLogin: "Anmelden",
+      dynAuthServiceDown: "Die Anmeldung ist gerade nicht verfügbar.",
+      dynAuthConfirmEmail: "Konto erstellt! Öffne die E-Mail, die wir dir geschickt haben, klick auf den Bestätigungslink und melde dich dann hier an.",
+      dynAuthBadLogin: "E-Mail oder Passwort falsch.",
+      dynAuthNotConfirmed: "Deine E-Mail ist noch nicht bestätigt. Such den Link in deinem Posteingang (und im Spam).",
+      dynAuthAlreadyExists: "Für diese E-Mail gibt es schon ein Konto. Nutze den Tab „Anmelden“.",
+      dynAuthWeakPassword: "Dein Passwort braucht mindestens 6 Zeichen.",
+      dynAuthRateLimit: "Zu viele Versuche hintereinander. Warte eine Minute und versuch es erneut.",
+      dynAuthGeneric: "Anmeldung nicht möglich: {msg}",
+      dynSyncSaveError: "Dein Fortschritt wurde nicht in der Cloud gespeichert. Er ist weiterhin auf diesem Gerät gespeichert. Details: {msg}",
+      dynSyncLoadError: "Dein Fortschritt konnte nicht aus der Cloud geladen werden. Details: {msg}",
+      dynSyncSessionExpired: "Deine Sitzung ist abgelaufen. Melde dich erneut an, um weiter in der Cloud zu speichern.",
+      langToggleAria: "Sprache wählen",
+      langBtnDe: "<span class=\"lt-flag\">🇩🇪</span> <span class=\"lt-name\">Deutsch</span>",
+      langBtnEn: "<span class=\"lt-flag\">🇬🇧</span> <span class=\"lt-name\">Englisch</span>",
+      langBtnPt: "<span class=\"lt-flag\">🇧🇷</span> <span class=\"lt-name\">Portugiesisch</span>",
+      portuguese: "Portugiesisch",
+      tier1: "Anfänger",
+      tier2: "entspannt",
+      tier3: "anspruchsvoll",
+      tier4: "intensiv",
+      tier5: "brutal",
+      tier6: "wahnsinnig",
+      tier7: "legendär",
+      dynLockLevels: "🔒 Level 3+ sind nur für Gründungsmitglieder.",
+      dynLockBonus: "🎁 Das Bonuswort des Tages gibt es nur für Gründungsmitglieder.",
+      dynLockGrammar: "🔒 Der {code}-Pfad ist nur für Gründungsmitglieder.",
+      grammarLockTag: "🔒 Gründer",
+      dynFormError: "Ups, da ist etwas schiefgelaufen. Versuch es in ein paar Sekunden noch einmal.",
+      authSignupTitle: "Konto erstellen",
+      authSignupSub: "Dein aktueller Fortschritt in diesem Browser wird in deinem neuen Konto gespeichert.",
+      ch_d_anchor: "Markiere heute deine Serie",
+      ch_d_p1: "Steig 3 Level in der Endlos-Challenge auf",
+      ch_d_p2: "Steig 5 Level in der Endlos-Challenge auf",
+      ch_d_p3: "Hör dir 2 Beispiel-Audios an",
+      ch_d_p4: "Hör dir 3 Beispiel-Audios an",
+      ch_d_p5: "Steig mindestens 2 Level auf",
+      ch_w1: "Übe diese Woche an 5 Tagen",
+      ch_w2: "Erreiche Level 8 in der Endlos-Challenge",
+      ch_m1: "Übe diesen Monat an 15 Tagen",
+      ch_m2: "Sammle diesen Monat 500 XP",
+      dynShareDaysPt: "TAGE IN FOLGE",
+      dynSharePhrasePt: "Ich trainiere echtes Portugiesisch.",
+      dynShareWhatsappPt: "🔥 {n} Tage in Folge echtes Portugiesisch geübt! {site}",
+      dynReferralWhatsappPt: "Ich übe echtes brasilianisches Portugiesisch mit Fala Real – echte Akzente, echter Lärm. Melde dich über meinen Link an, dann rücken wir beide in der Liste nach oben: {link}",
+      footerTaglinePt: "Gemacht von einem Brasilianer, der dir echtes Portugiesisch zeigen will.",
+      streakTrainedToday: "Heute trainiert ✓",
+      dynDeverStreak: "🔥 {n} Tag(e) in Folge ein neues Wort gelernt",
+      dynDeverStart: "Markiere das heutige Wort, um deine Vokabel-Serie zu starten",
+      dynComboDays: "{n} Tage Combo",
+      dynLockedShort: "🔒 gesperrt",
+      dynMonthlyDone: "beide Monats-Challenges geschafft",
+      dynMonthlyLocked: "schließ beide Monats-Challenges ab, um es freizuschalten",
+      grammarAdvLabel: "🚀 Fortgeschritten – nur wenige kommen so weit",
+      grammarAdvSub: "Die meisten hören bei B2 auf – das reicht schon, um im Alltag gut zurechtzukommen. C1 und C2 sind für fast muttersprachliche Sicherheit – viel schwieriger, und es gibt keine Eile.",
+      langNameDe: "Deutsch",
+      langNameEn: "Englisch",
+      langNamePt: "Portugiesisch",
+      heroEyebrowPt: "Brasilianisches Portugiesisch für echte Gespräche",
+      heroTitlePt: "Das Portugiesisch aus dem Lehrbuch. <em>Não o que está no livro – mas o que a vida real te joga.</em>",
+      heroSubPt: "Die meisten Apps bringen dir langsames, höfliches Lehrbuch-Portugiesisch bei. So klingt Brasilien nicht. Hier trainierst du echtes brasilianisches Portugiesisch – gemacht von einem Brasilianer – für Arbeit, Reisen, Familie und Freunde: mit Akzenten aus Rio, São Paulo und dem Nordosten, Straßenlärm und Leuten, die dir ins Wort fallen.",
+      quizStep1QPt: "Was ist deine größte Herausforderung mit Portugiesisch?",
+      quizOpt1SotaquePt: "Brasilianische Akzente verstehen",
+      quizOpt1EnvolvimentoPt: "Mit Freunden, Familie oder Partner reden",
+      quizOpt1EntrevistaPt: "Mit Brasilianern arbeiten",
+      quizOpt1TrabalhoPt: "Nach Brasilien reisen oder ziehen",
+      quizStep2QPt: "Wie gut ist dein Portugiesisch heute?",
+      quizOpt2Level1Pt: "Absoluter Anfänger",
+      quizOpt2Level2Pt: "Ich komme mit den Grundlagen zurecht",
+      quizOpt2Level3Pt: "Mittelstufe, aber schnelles Sprechen hängt mich ab",
+      quizResultTitlePt: "Empfohlenes Level für dich:",
+      dynQuizDescPt: "Nach deinen Antworten empfehlen wir dir, dich auf {focus} zu konzentrieren.",
+      dynQuizFocusFallbackPt: "verschiedene Alltagsszenarien",
+      dynQuizSummaryPt: "✓ Level {level} empfohlen – Fokus auf {focus}",
+      compLedePt: "Die meisten Apps trainieren ein Portugiesisch, das es nur in der App gibt – oft europäisch, immer langsam. Der Unterschied hier: Was passiert, wenn ein Brasilianer schnell redet, Silben verschluckt oder einen Akzent hat, den du nie gehört hast.",
+      compLabTitlePt: "Labor-App",
+      compLabLi1Pt: "Synthetische Stimme, perfektes Tempo",
+      compLabLi2Pt: "Ein Akzent, oft aus Portugal",
+      compLabLi3Pt: "Absolute Stille im Hintergrund",
+      compLabLi4Pt: "„Você está“ – nie „cê tá“",
+      compLabLi5Pt: "Dieselbe Übung wiederholt sich immer gleich",
+      compRealLi1Pt: "Echtes brasilianisches Sprechen, mit Slang und Rhythmus",
+      compRealLi2Pt: "Rio, São Paulo, Nordosten, Süden – du wählst",
+      compRealLi3Pt: "Bus, Strand, Bäckerei, Familienessen",
+      compRealLi4Pt: "Unterbrechungen und durcheinander reden",
+      compRealLi5Pt: "Bei jedem Gespräch ein neues Szenario",
+      level1TitlePt: "Langsam und deutlich",
+      level1DescPt: "Ruhiges Tempo, einfacher Wortschatz, ein neutraler brasilianischer Akzent. Ideal, um dein Ohr an Portugiesisch zu gewöhnen.",
+      level1Tag1Pt: "langsames Tempo",
+      level1Tag2Pt: "kein Lärm",
+      level1Tag3Pt: "1 Akzent",
+      level1AudioBtnPt: "🔊 Beispiel anhören",
+      level2TitlePt: "Natürliches Tempo",
+      level2DescPt: "Das Gespräch läuft in echtem Tempo, mit „tô“, „pra“, „cê“ und Alltagsslang.",
+      level2Tag1Pt: "normales Tempo",
+      level2Tag2Pt: "etwas Slang",
+      level2Tag3Pt: "2 Akzente",
+      level2AudioBtnPt: "🔊 Beispiel anhören",
+      level3TitlePt: "Akzente und Umgebung",
+      level3DescPt: "Regionale Akzente kommen dazu – Carioca, Nordestino, Gaúcho – mit Hintergrundgeräuschen: Bäckerei, Bus, Markt.",
+      level3Tag1Pt: "mehrere Akzente",
+      level3Tag2Pt: "leichter Lärm",
+      level3AudioBtnPt: "🔊 Beispiel anhören",
+      level4TitlePt: "Echte Straße",
+      level4DescPt: "Unterbrechungen, alle reden gleichzeitig, lauter Hintergrund. So nah, wie eine App an ein brasilianisches Familienessen kommt.",
+      level4Tag1Pt: "Unterbrechungen",
+      level4Tag2Pt: "starker Lärm",
+      level4Tag3Pt: "starke Akzente",
+      level4AudioBtnPt: "🔊 Beispiel anhören (mit Unterbrechung)",
+      step1TitlePt: "Du wählst das Szenario",
+      step1DescPt: "Bestellen in der Padaria, Plaudern mit der Familie deines Partners, ein Call mit einem brasilianischen Team – kein Szenario ist zweimal gleich.",
+      faqKickerPt: "Häufige Fragen",
+      faqTitlePt: "Bevor du dich entscheidest: Das fragen alle.",
+      faqQ1Pt: "Brasilianisches oder europäisches Portugiesisch?",
+      faqA1Pt: "Brasilianisch – das Portugiesisch von über 200 Millionen Menschen. Ab und zu hörst du auch einen europäischen Akzent, damit er dich nicht überrascht, aber alles hier ist so, wie man in Brasilien wirklich spricht.",
+      faqQ2Pt: "Kann ich jederzeit kündigen?",
+      faqA2Pt: "Ja, jederzeit und ohne Strafe. Du hast die vollen 14 Tage Widerrufsrecht (EU) und zusätzlich eine Garantie: Wenn sich die Entwicklung deutlich verzögert, bekommst du dein Geld auch danach zurück. Details in der <a href=\"/reembolso.html\">Erstattungsrichtlinie</a>.",
+      faqQ3Pt: "Wer steckt dahinter?",
+      faqA3Pt: "Ich – Wagner, Brasilianer aus João Pessoa, habe in der Schweiz, in Großbritannien, Spanien, Portugal und jetzt in Deutschland gelebt. Ich habe Sprachen auf die harte Tour gelernt, direkt im echten Leben. Jetzt zeige ich dir Portugiesisch so, wie Brasilianer es wirklich sprechen. Jede E-Mail beantworte ich persönlich.",
+      faqQ4Pt: "Was ist anders als bei Duolingo?",
+      faqA4Pt: "Duolingo bringt dir einzelne Sätze ohne Alltagsbezug bei. FalaReal konzentriert sich auf Situationen, die du in Brasilien wirklich erlebst – Bäckerei, Bus, Familien-Churrasco, Arbeitscall – mit einem Schwierigkeitsgrad, der wirklich steigt (Akzente, Lärm, Unterbrechungen).",
+      faqQ5Pt: "Wird mein Fortschritt zwischen Geräten synchronisiert?",
+      faqA5Pt: "Ja – erstelle ein kostenloses Konto (der ☁️-Button), dann werden XP, Serie und Grammatik-Fortschritt in der Cloud gespeichert und sind auf jedem Gerät verfügbar.",
+      pricingKickerPt: "Wähle deinen Plan",
+      pricingTitlePt: "Wer nicht zahlen kann, zahlt nichts.",
+      pricingLedePt: "Es gibt eine echte Gratisversion – kein 3-Tage-Testtrick. Und es gibt Optionen für alle, die schon wissen, dass sie es ernsthaft nutzen.",
+      price1KickerPt: "Gratis",
+      price1SubPt: "Für alle, die es ausprobieren wollen – oder gerade einfach nicht zahlen können.",
+      price1Li1Pt: "Level 1 und 2 (langsam & deutlich + Alltagstempo)",
+      price1Li2Pt: "Grammatikpfad A1–B2",
+      price1Li3Pt: "Tägliche Serie, XP und ein Wort pro Tag",
+      price1Li4Pt: "1 neutraler brasilianischer Akzent",
+      price1CtaPt: "Kostenlos starten",
+      price2FeaturedTagPt: "Am beliebtesten",
+      price2KickerPt: "Gründer",
+      price2WasPt: "ab <span class=\"pricing-was-amount\">25 €</span>/Monat nach dem Launch",
+      price2PeriodPt: "/Monat",
+      price2SubPt: "Der Preis bleibt fix, solange du dabei bleibst – für alle, die nach dem Launch kommen, wird es teurer.",
+      price2Li1Pt: "Alle 4 Level + endloses Endlos-Level",
+      price2Li2Pt: "Kompletter Grammatikpfad bis C2 + täglich ein Bonus-Slangwort",
+      price2Li3Pt: "Alle Akzente – Carioca, Paulista, Nordestino, Gaúcho",
+      price2Li4Pt: "Ein Szenario, das sich nie wiederholt",
+      price2CtaPt: "Diesen Preis sichern",
+      price3KickerPt: "Jährlich",
+      price3WasPt: "ab <span class=\"pricing-was-amount\">249 €</span>/Jahr nach dem Launch",
+      price3PeriodPt: "/Jahr",
+      price3SubPt: "Zahl 12 Monate, bekomm den 13. gratis – das sind unter 13 €/Monat. Verlängert sich automatisch jedes Jahr.",
+      price3Li1Pt: "Alles aus dem Gründer-Plan",
+      price3Li2Pt: "Jedes Jahr 1 Bonusmonat (13 Monate Zugang)",
+      price3Li3Pt: "Zugang zu allen zukünftigen Updates",
+      price3Li4Pt: "Höchste Priorität in der Launch-Warteliste",
+      price3CtaPt: "Jahresplan holen",
+      ctaKickerPt: "Noch unentschlossen?",
+      ctaTitlePt: "Hinterlass deine E-Mail und bekomm echte Tipps für brasilianisches Portugiesisch – ohne Blabla.",
+      ctaLedePt: "Wir schicken dir Alltagssätze, Slang und Übungen – und du erfährst als Erstes, wenn etwas Großes in der App erscheint.",
+      ctaEmailPlaceholderPt: "du@email.de",
+      ctaEmailAriaPt: "Deine E-Mail",
+      ctaSubmitPt: "Eintragen",
+      ctaFormNotePt: "kein Spam – nur Inhalte, die wirklich helfen",
+      ctaThanksPPt: "Erledigt! Du stehst auf der Liste – behalte dein Postfach im Blick.",
+      ctaReferralTitlePt: "🚀 Früher Zugang? Lade Freunde ein.",
+      ctaReferralDescPt: "Wer über deinen Link kommt – und du – rückt gemeinsam nach oben.",
+      ctaCopyBtnPt: "📋 Kopieren",
+      ctaWhatsappBtnPt: "📲 Per WhatsApp einladen",
     },
   };
 
@@ -3394,7 +4233,7 @@
   let currentSiteLang = 'pt';
   function t(key, vars) {
     const dict = I18N_STRINGS[currentSiteLang] || I18N_STRINGS.pt;
-    let str = dict[key] ?? I18N_STRINGS.pt[key] ?? key;
+    let str = dict[key] ?? I18N_STRINGS.en[key] ?? I18N_STRINGS.pt[key] ?? key;
     if (vars) for (const k in vars) str = str.split(`{${k}}`).join(vars[k]);
     return str;
   }
@@ -3403,34 +4242,35 @@
     if (!I18N_STRINGS[lang]) lang = 'pt';
     currentSiteLang = lang;
     const dict = I18N_STRINGS[lang];
-    const fallback = I18N_STRINGS.pt;
+    const fallbackEn = I18N_STRINGS.en;
+    const fallbackPt = I18N_STRINGS.pt;
 
     document.documentElement.setAttribute('lang', lang);
     document.documentElement.setAttribute('dir', RTL_LANGS.includes(lang) ? 'rtl' : 'ltr');
 
     document.querySelectorAll('[data-i18n]').forEach((el) => {
       const key = el.getAttribute('data-i18n');
-      const str = dict[key] ?? fallback[key];
+      const str = dict[key] ?? fallbackEn[key] ?? fallbackPt[key];
       if (str != null) el.textContent = str;
     });
     document.querySelectorAll('[data-i18n-html]').forEach((el) => {
       const key = el.getAttribute('data-i18n-html');
-      const str = dict[key] ?? fallback[key];
+      const str = dict[key] ?? fallbackEn[key] ?? fallbackPt[key];
       if (str != null) el.innerHTML = str;
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
       const key = el.getAttribute('data-i18n-placeholder');
-      const str = dict[key] ?? fallback[key];
+      const str = dict[key] ?? fallbackEn[key] ?? fallbackPt[key];
       if (str != null) el.setAttribute('placeholder', str);
     });
     document.querySelectorAll('[data-i18n-title]').forEach((el) => {
       const key = el.getAttribute('data-i18n-title');
-      const str = dict[key] ?? fallback[key];
+      const str = dict[key] ?? fallbackEn[key] ?? fallbackPt[key];
       if (str != null) el.setAttribute('title', str);
     });
     document.querySelectorAll('[data-i18n-aria]').forEach((el) => {
       const key = el.getAttribute('data-i18n-aria');
-      const str = dict[key] ?? fallback[key];
+      const str = dict[key] ?? fallbackEn[key] ?? fallbackPt[key];
       if (str != null) el.setAttribute('aria-label', str);
     });
 
@@ -3438,6 +4278,9 @@
     if (select) select.value = lang;
 
     try { localStorage.setItem(SITE_LANG_KEY, lang); } catch (e) {}
+    if (window.__falarealReady) {
+      try { refreshDynamicTexts(); } catch (e) {}
+    }
   }
 
   (function initSiteLang() {
@@ -3500,13 +4343,415 @@
   }
   animate();
 
+
+  // ==== v12.0.0 — TRILHA DE PORTUGUÊS (pra gringos: alemão→PT-BR e inglês→PT-BR) ====
+  // Os textos de apoio (tradução, explicação) seguem o idioma da interface:
+  // interface 'de' → alemão; qualquer outra → inglês. O conteúdo em si é PT-BR.
+  function Lz(v){
+    if(v && typeof v === 'object' && !Array.isArray(v)){
+      return v[currentSiteLang] || v.en || v.de || '';
+    }
+    return v;
+  }
+  function ptGlossIdx(){ return currentSiteLang === 'de' ? 1 : 2; }
+
+  const PT_SCENARIO_SRC = {
+    accents: [
+      {de:'Carioca-Akzent mit „sch“ überall', en:'Carioca accent with "sh" everywhere'},
+      {de:'schneller Paulistano-Akzent', en:'fast São Paulo accent'},
+      {de:'Nordost-Akzent (Paraíba, Pernambuco)', en:'Northeastern accent (Paraíba, Pernambuco)'},
+      {de:'Gaúcho-Akzent aus dem Süden mit „tu“', en:'Southern gaúcho accent using "tu"'},
+      {de:'Mineiro-Akzent, der Silben verschluckt', en:'Minas Gerais accent that swallows syllables'},
+      {de:'Bahia-Akzent, langsam und melodisch', en:'slow, melodic Bahia accent'},
+      {de:'europäisches Portugiesisch (Lissabon)', en:'European Portuguese (Lisbon)'},
+      {de:'Amazonas-Akzent aus Manaus', en:'Amazon accent from Manaus'}
+    ],
+    noises: [
+      {de:'voller Bus in der Rushhour', en:'packed bus at rush hour'},
+      {de:'Straßenmarkt mit rufenden Händlern', en:'street market with vendors shouting'},
+      {de:'Bar mit Pagode-Musik im Hintergrund', en:'bar with pagode music in the background'},
+      {de:'Strand mit Wind und Verkäufern', en:'beach with wind and vendors'},
+      {de:'volle Bäckerei am Morgen', en:'crowded bakery in the morning'},
+      {de:'Fußballspiel im Fernsehen, alle schreien', en:'football on TV, everyone shouting'},
+      {de:'Hupen im Stau von São Paulo', en:'honking in São Paulo traffic'},
+      {de:'Familienessen, alle reden gleichzeitig', en:'family lunch, everyone talking at once'}
+    ],
+    interrupts: [
+      {de:'der Verkäufer unterbricht dich mit einem Angebot', en:'the vendor cuts in with an offer'},
+      {de:'jemand erzählt nebenbei einen Witz', en:'someone cracks a joke mid-sentence'},
+      {de:'zwei Leute reden gleichzeitig mit dir', en:'two people talk to you at once'},
+      {de:'der Anruf bricht im wichtigsten Moment ab', en:'the call drops at the key moment'},
+      {de:'die Kellnerin fragt dazwischen „mais alguma coisa?“', en:'the waitress cuts in with "mais alguma coisa?"'},
+      {de:'jemand wechselt mitten im Satz das Thema', en:'someone switches topic mid-sentence'}
+    ],
+    phrases: [
+      'Oi, tudo bem? Em que posso te ajudar?',
+      'Eu queria marcar um horário pra semana que vem, se der.',
+      'Desculpa, você pode repetir mais devagar?',
+      'Então, a gente ainda precisa daquele documento, tá?',
+      'Peraí, não entendi direito o que você falou.',
+      'Hoje não dá mais, o próximo horário é só em março.'
+    ],
+    voiceLocales: ['pt-BR','pt-BR','pt-BR','pt-PT','pt-BR','pt-BR']
+  };
+  function ptScenarioContent(){
+    return {
+      accents: PT_SCENARIO_SRC.accents.map(Lz),
+      noises: PT_SCENARIO_SRC.noises.map(Lz),
+      interrupts: PT_SCENARIO_SRC.interrupts.map(Lz),
+      phrases: PT_SCENARIO_SRC.phrases,
+      voiceLocales: PT_SCENARIO_SRC.voiceLocales
+    };
+  }
+
+  // [palavra, alemão, inglês, exemplo]
+  const PT_WORD_SRC = [
+    ['a saudade','die Sehnsucht, das Vermissen','longing, missing someone','Tô com saudade da minha família.'],
+    ['a conta','die Rechnung','the bill','Pode trazer a conta, por favor?'],
+    ['o horário','der Termin, die Uhrzeit','the appointment, the time slot','Tenho horário no médico amanhã.'],
+    ['a fila','die Warteschlange','the queue, the line','A fila do banco tá enorme.'],
+    ['resolver','erledigen, lösen','to sort out, to solve','Preciso resolver isso hoje.'],
+    ['a gente','wir (umgangssprachlich)','we (colloquial)','A gente se vê amanhã.'],
+    ['combinar','verabreden, ausmachen','to arrange, to agree on','Combinado! Às oito, então.'],
+    ['o boleto','der Zahlschein (Brasilien)','the payment slip (Brazil)','Vou pagar o boleto no aplicativo.'],
+    ['a padaria','die Bäckerei','the bakery','Vou na padaria comprar pão.'],
+    ['o trânsito','der Verkehr, der Stau','the traffic','Cheguei atrasado por causa do trânsito.'],
+    ['cansado','müde','tired','Tô muito cansado hoje.'],
+    ['a vaga','die Stelle, der Platz','the job opening, the spot','Tem vaga pra enfermeiro nesse hospital.'],
+    ['o aluguel','die Miete','the rent','O aluguel aqui é caro.'],
+    ['a feira','der Wochenmarkt','the street market','Todo domingo tem feira na praça.'],
+    ['esquecer','vergessen','to forget','Esqueci a chave em casa.'],
+    ['a carteira de identidade','der Personalausweis','the ID card','Precisa mostrar a carteira de identidade.'],
+    ['o jeito','die Art, der Weg','the way, the knack','Não tem jeito, vai ter que esperar.'],
+    ['atrasado','verspätet','late','Desculpa, tô um pouco atrasado.'],
+    ['o troco','das Wechselgeld','the change (money)','Pode ficar com o troco.'],
+    ['a consulta','die Sprechstunde, der Arzttermin','the (doctor) appointment','A consulta é às três.'],
+    ['ligar','anrufen; einschalten','to call; to switch on','Te ligo mais tarde.'],
+    ['o vizinho','der Nachbar','the neighbor','O vizinho faz churrasco todo sábado.'],
+    ['dar certo','klappen, funktionieren','to work out','Vai dar certo, relaxa.'],
+    ['o almoço','das Mittagessen','lunch','O almoço é a refeição principal no Brasil.'],
+    ['a pressa','die Eile','the hurry','Não precisa ter pressa.'],
+    ['a chuva','der Regen','the rain','Com essa chuva, o trânsito para.'],
+    ['perguntar','fragen','to ask','Posso te perguntar uma coisa?'],
+    ['o ônibus','der Bus','the bus','O ônibus passa de vinte em vinte minutos.']
+  ];
+  const PT_BONUS_WORD_SRC = [
+    ['beleza','alles klar, geht klar','cool, all good','— A gente se vê às oito? — Beleza!'],
+    ['cara','Alter, Typ (umgangssprachlich)','dude, man','Cara, que dia difícil!'],
+    ['valeu','danke, passt','thanks, cheers','Valeu pela ajuda!'],
+    ['bora','los geht’s, lass uns','let’s go','Bora tomar um café?'],
+    ['de boa','entspannt, kein Stress','chill, no stress','Tô de boa, pode vir.'],
+    ['dar um jeitinho','eine kreative Lösung finden','to find a (creative) workaround','A gente dá um jeitinho.'],
+    ['mó','mega, voll (Slang, von „maior“)','super, really (slang)','Tá mó calor hoje.'],
+    ['rolê','Ausflug, Unternehmung','outing, hangout','Vamos fazer um rolê no sábado?'],
+    ['tá ligado?','verstehst du? (Slang)','you know? get it? (slang)','É complicado, tá ligado?'],
+    ['pagar mico','sich blamieren','to embarrass yourself','Paguei o maior mico na festa.']
+  ];
+  function ptWordList(src){
+    const i = ptGlossIdx();
+    return src.map(w => ({ word: w[0], translation: w[i], example: w[3] }));
+  }
+
+  // Gramática PT-BR: name fica em português (é a chave do progresso e é o próprio termo que a pessoa aprende)
+  // ex: [frase PT, alemão, inglês]
+  const PT_GRAMMAR_SRC = [
+    {code:'A1', topics:[
+      {name:'Ser e estar', exp:{
+        de:'Portugiesisch hat zwei Verben für „sein“: SER für Dauerhaftes (Identität, Herkunft, Beruf) und ESTAR für Zustände, Gefühle und Orte. „Ich bin müde“ ist also „Eu estou cansado“.',
+        en:'Portuguese has two verbs for "to be": SER for permanent things (identity, origin, job) and ESTAR for states, feelings and location. So "I am tired" is "Eu estou cansado".'},
+        ex:[['Eu sou enfermeiro','Ich bin Krankenpfleger','I am a nurse'],['Ela está em casa agora','Sie ist gerade zu Hause','She is at home now']],
+        quiz:[
+          {q:'Eu ___ do Brasil.', options:['sou','estou','é','está'], correct:0},
+          {q:'Hoje eu ___ muito cansado.', options:['sou','estou','é','somos'], correct:1},
+          {q:'O café ___ quente.', options:['é','está','sou','estou'], correct:1},
+          {q:'Ela ___ médica.', options:['está','estou','é','sou'], correct:2}
+        ]},
+      {name:'Artigos e gênero (o, a, os, as)', exp:{
+        de:'Jedes Substantiv ist männlich (o) oder weiblich (a). Meistens enden männliche Wörter auf -o und weibliche auf -a, aber es gibt Ausnahmen wie „o dia“ oder „a mão“.',
+        en:'Every noun is masculine (o) or feminine (a). Masculine words usually end in -o and feminine in -a, but there are exceptions like "o dia" or "a mão".'},
+        ex:[['o carro e a casa','das Auto und das Haus','the car and the house'],['os amigos e as amigas','die Freunde und die Freundinnen','the (male) friends and the (female) friends']],
+        quiz:[
+          {q:'___ mesa é grande.', options:['O','A','Os','Um'], correct:1},
+          {q:'___ livro é novo.', options:['O','A','As','Uma'], correct:0},
+          {q:'___ dia está bonito.', options:['A','O','As','Uma'], correct:1},
+          {q:'___ casas são antigas.', options:['Os','O','As','A'], correct:2}
+        ]},
+      {name:'Presente (-ar, -er, -ir)', exp:{
+        de:'Regelmäßige Verben ändern die Endung je nach Person. Für falar: eu falo, você fala, a gente fala, nós falamos, vocês/eles falam. -er und -ir folgen einem ähnlichen Muster (como, come, comemos…).',
+        en:'Regular verbs change their ending by person. For falar: eu falo, você fala, a gente fala, nós falamos, vocês/eles falam. -er and -ir verbs follow a similar pattern (como, come, comemos…).'},
+        ex:[['Eu moro em São Paulo','Ich wohne in São Paulo','I live in São Paulo'],['Vocês trabalham aos sábados','Ihr arbeitet samstags','You (all) work on Saturdays']],
+        quiz:[
+          {q:'Eu ___ (falar) português.', options:['falo','fala','falamos','falam'], correct:0},
+          {q:'Ela ___ (comer) muito arroz.', options:['como','come','comem','comemos'], correct:1},
+          {q:'Nós ___ (morar) aqui.', options:['moro','mora','moramos','moram'], correct:2},
+          {q:'Eles ___ (abrir) a loja às nove.', options:['abro','abre','abrimos','abrem'], correct:3}
+        ]},
+      {name:'Você, a gente e tu', exp:{
+        de:'Im brasilianischen Alltag sagt man „você“ statt „tu“ und „a gente“ statt „nós“. Beide nehmen das Verb in der 3. Person Singular: „a gente vai“, „você quer“.',
+        en:'In everyday Brazilian Portuguese people say "você" instead of "tu" and "a gente" instead of "nós". Both take the verb in the 3rd person singular: "a gente vai", "você quer".'},
+        ex:[['A gente vai no mercado','Wir gehen in den Supermarkt','We are going to the supermarket'],['Você quer um café?','Willst du einen Kaffee?','Do you want a coffee?']],
+        quiz:[
+          {q:'A gente ___ amanhã.', options:['viajamos','viaja','viajam','viajo'], correct:1},
+          {q:'Você ___ onde?', options:['mora','moro','moramos','moram'], correct:0},
+          {q:'Nós ___ cansados.', options:['está','estamos','estão','estou'], correct:1},
+          {q:'A gente ___ muito.', options:['trabalhamos','trabalham','trabalha','trabalho'], correct:2}
+        ]}
+    ]},
+    {code:'A2', topics:[
+      {name:'Pretérito perfeito', exp:{
+        de:'Für abgeschlossene Handlungen in der Vergangenheit. falar → falei, falou, falamos, falaram; comer → comi, comeu; ir und ser teilen die Form: fui, foi, fomos, foram.',
+        en:'For finished actions in the past. falar → falei, falou, falamos, falaram; comer → comi, comeu; ir and ser share the same forms: fui, foi, fomos, foram.'},
+        ex:[['Ontem eu comi feijoada','Gestern habe ich Feijoada gegessen','Yesterday I ate feijoada'],['A gente foi à praia no domingo','Wir sind am Sonntag an den Strand gefahren','We went to the beach on Sunday']],
+        quiz:[
+          {q:'Ontem eu ___ (falar) com ela.', options:['falo','falei','falou','falava'], correct:1},
+          {q:'Ele ___ (comer) tudo.', options:['comeu','comi','comemos','come'], correct:0},
+          {q:'Nós ___ (ir) ao cinema.', options:['foram','fui','fomos','vamos'], correct:2},
+          {q:'Elas ___ (chegar) tarde.', options:['chegou','cheguei','chegamos','chegaram'], correct:3}
+        ]},
+      {name:'Ir + infinitivo (futuro)', exp:{
+        de:'Die Zukunft bildet man im Alltag fast immer mit „ir“ + Infinitiv: „Eu vou viajar“ (Ich werde reisen). Das echte Futur („viajarei“) klingt im Gespräch sehr förmlich.',
+        en:'In everyday speech the future is almost always "ir" + infinitive: "Eu vou viajar" (I\'m going to travel). The simple future ("viajarei") sounds very formal in conversation.'},
+        ex:[['Amanhã eu vou trabalhar cedo','Morgen werde ich früh arbeiten','Tomorrow I\'m going to work early'],['A gente vai comer fora hoje','Wir gehen heute auswärts essen','We\'re going to eat out today']],
+        quiz:[
+          {q:'Amanhã eu ___ estudar.', options:['vou','vai','vamos','vão'], correct:0},
+          {q:'Eles ___ viajar em julho.', options:['vai','vou','vão','vamos'], correct:2},
+          {q:'A gente ___ sair às oito.', options:['vamos','vai','vão','vou'], correct:1},
+          {q:'Você vai ___ o documento?', options:['traz','trouxe','trazer','trazendo'], correct:2}
+        ]},
+      {name:'Contrações (do, na, pelo)', exp:{
+        de:'Präpositionen verschmelzen mit dem Artikel: de + o = do, em + a = na, por + o = pelo, a + a = à. Das ist Pflicht, nicht optional.',
+        en:'Prepositions merge with the article: de + o = do, em + a = na, por + o = pelo, a + a = à. This is mandatory, not optional.'},
+        ex:[['Eu moro na cidade','Ich wohne in der Stadt','I live in the city'],['O carro do meu pai','Das Auto meines Vaters','My father\'s car']],
+        quiz:[
+          {q:'Ele está ___ escritório. (em + o)', options:['em o','no','na','do'], correct:1},
+          {q:'A casa ___ Maria. (de + a)', options:['do','de a','da','na'], correct:2},
+          {q:'Passei ___ parque. (por + o)', options:['pelo','pela','por o','do'], correct:0},
+          {q:'Ela mora ___ Alemanha. (em + a)', options:['no','em a','da','na'], correct:3}
+        ]},
+      {name:'Possessivos (meu, seu, dele)', exp:{
+        de:'Das Possessivpronomen richtet sich nach dem Besitz, nicht nach der Person: „minha casa“, „meu carro“. Weil „seu“ zweideutig ist, sagt man für „sein/ihr“ oft „dele/dela“ nach dem Nomen: „o carro dele“.',
+        en:'The possessive agrees with the thing owned, not the owner: "minha casa", "meu carro". Since "seu" is ambiguous, Brazilians often say "dele/dela" after the noun for "his/her": "o carro dele".'},
+        ex:[['Essa é a minha irmã','Das ist meine Schwester','This is my sister'],['O celular dela quebrou','Ihr Handy ist kaputtgegangen','Her phone broke']],
+        quiz:[
+          {q:'___ casa é pequena. (eu)', options:['Meu','Minha','Meus','Minhas'], correct:1},
+          {q:'O carro ___ é azul. (ele)', options:['dela','deles','dele','seu'], correct:2},
+          {q:'___ filhos moram longe. (eu)', options:['Meus','Minhas','Meu','Minha'], correct:0},
+          {q:'A bolsa ___ sumiu. (ela)', options:['dele','dela','delas','sua'], correct:1}
+        ]}
+    ]},
+    {code:'B1', topics:[
+      {name:'Imperfeito vs. perfeito', exp:{
+        de:'Das Imperfeito (falava, comia) beschreibt Gewohnheiten und Hintergründe in der Vergangenheit, das Perfeito (falei, comi) einzelne abgeschlossene Ereignisse. „Eu dormia quando ele ligou.“',
+        en:'The imperfeito (falava, comia) describes habits and background in the past; the perfeito (falei, comi) describes single completed events. "Eu dormia quando ele ligou."'},
+        ex:[['Quando eu era criança, eu jogava bola todo dia','Als Kind habe ich jeden Tag Fußball gespielt','When I was a kid, I played ball every day'],['Eu estava em casa quando você chegou','Ich war zu Hause, als du angekommen bist','I was at home when you arrived']],
+        quiz:[
+          {q:'Quando eu era pequeno, eu ___ na praia.', options:['morei','morava','moro','morarei'], correct:1},
+          {q:'Ontem eu ___ o filme inteiro.', options:['vi','via','vejo','veria'], correct:0},
+          {q:'Eu ___ banho quando o telefone tocou.', options:['tomei','tomo','tomava','tomarei'], correct:2},
+          {q:'Antigamente ela ___ muito.', options:['viajou','viajava','viaja','viajará'], correct:1}
+        ]},
+      {name:'Ter que / precisar de', exp:{
+        de:'„Ter que“ + Infinitiv = müssen. „Precisar“ + Infinitiv = brauchen/müssen; vor einem Nomen braucht es „de“: „preciso de ajuda“.',
+        en:'"Ter que" + infinitive = to have to. "Precisar" + infinitive = to need to; before a noun it needs "de": "preciso de ajuda".'},
+        ex:[['Eu tenho que trabalhar amanhã','Ich muss morgen arbeiten','I have to work tomorrow'],['A gente precisa de mais tempo','Wir brauchen mehr Zeit','We need more time']],
+        quiz:[
+          {q:'Eu tenho ___ sair agora.', options:['de a','que','para','por'], correct:1},
+          {q:'Ela precisa ___ um médico.', options:['que','de','a','por'], correct:1},
+          {q:'Você ___ que assinar aqui.', options:['tem','precisa','deve de','é'], correct:0},
+          {q:'Eles precisam ___ mais.', options:['de estudar','estudar','que estudar','estudam'], correct:1}
+        ]},
+      {name:'Pronomes na fala (te, me, ele)', exp:{
+        de:'Im gesprochenen Brasilianisch stehen Objektpronomen vor dem Verb („me ajuda?“) und „ele/ela“ wird oft als Objekt benutzt („eu vi ele“). Im formellen Schreiben: „eu o vi“.',
+        en:'In spoken Brazilian Portuguese object pronouns go before the verb ("me ajuda?") and "ele/ela" is often used as an object ("eu vi ele"). In formal writing: "eu o vi".'},
+        ex:[['Me passa o sal?','Gibst du mir das Salz?','Can you pass me the salt?'],['Eu te ligo amanhã','Ich rufe dich morgen an','I\'ll call you tomorrow']],
+        quiz:[
+          {q:'Eu ___ ligo mais tarde. (você)', options:['te','se','lhe','ti'], correct:0},
+          {q:'___ ajuda aqui, por favor? (eu)', options:['Mim','Me','Eu','Comigo'], correct:1},
+          {q:'Na fala: "Ontem eu vi ___ no mercado."', options:['ela','lhe','la','sua'], correct:0},
+          {q:'Na escrita formal: "Eu ___ conheço."', options:['ele','o','lhe','dele'], correct:1}
+        ]},
+      {name:'Estar + gerúndio', exp:{
+        de:'Für Dinge, die gerade passieren: „estar“ + Gerundium auf -ando/-endo/-indo. „Tô trabalhando“ = Ich arbeite gerade. (In Portugal sagt man stattdessen „estou a trabalhar“.)',
+        en:'For things happening right now: "estar" + gerund in -ando/-endo/-indo. "Tô trabalhando" = I\'m working. (In Portugal they say "estou a trabalhar" instead.)'},
+        ex:[['Eu tô estudando agora','Ich lerne gerade','I\'m studying right now'],['Eles estavam dormindo','Sie haben gerade geschlafen','They were sleeping']],
+        quiz:[
+          {q:'Ela está ___ (comer).', options:['comendo','comindo','comando','come'], correct:0},
+          {q:'A gente tá ___ (sair).', options:['saendo','saindo','saído','sai'], correct:1},
+          {q:'Eu estava ___ (falar) com ele.', options:['falendo','falindo','falando','falado'], correct:2},
+          {q:'Vocês estão ___ (ver) o jogo?', options:['vendo','veindo','vindo','visto'], correct:0}
+        ]}
+    ]},
+    {code:'B2', topics:[
+      {name:'Presente do subjuntivo', exp:{
+        de:'Nach Ausdrücken von Wunsch, Zweifel oder Gefühl (espero que, é bom que, talvez) steht der Subjuntivo: falar → fale, comer → coma, ir → vá, ser → seja.',
+        en:'After expressions of wish, doubt or emotion (espero que, é bom que, talvez) you use the subjunctive: falar → fale, comer → coma, ir → vá, ser → seja.'},
+        ex:[['Espero que você goste','Ich hoffe, es gefällt dir','I hope you like it'],['Talvez ela venha amanhã','Vielleicht kommt sie morgen','Maybe she\'ll come tomorrow']],
+        quiz:[
+          {q:'Espero que você ___ bem.', options:['está','esteja','estava','estará'], correct:1},
+          {q:'É importante que a gente ___ cedo.', options:['chegue','chega','chegou','chegar'], correct:0},
+          {q:'Talvez eles ___ razão.', options:['têm','tinham','tenham','terão'], correct:2},
+          {q:'Quero que você ___ comigo.', options:['vai','vá','ir','foi'], correct:1}
+        ]},
+      {name:'Futuro do subjuntivo (quando, se)', exp:{
+        de:'Eine Besonderheit des Portugiesischen: nach „quando“ und „se“ mit Zukunftsbezug steht der Futuro do subjuntivo: „quando eu tiver tempo“, „se você puder“.',
+        en:'A Portuguese specialty: after "quando" and "se" referring to the future you use the future subjunctive: "quando eu tiver tempo", "se você puder".'},
+        ex:[['Quando eu chegar, te aviso','Wenn ich ankomme, sage ich dir Bescheid','When I arrive, I\'ll let you know'],['Se você puder, me liga','Wenn du kannst, ruf mich an','If you can, call me']],
+        quiz:[
+          {q:'Quando eu ___ (ter) dinheiro, vou viajar.', options:['tenho','tiver','tenha','tive'], correct:1},
+          {q:'Se você ___ (poder), me ajuda.', options:['puder','pode','possa','podia'], correct:0},
+          {q:'Quando vocês ___ (chegar), me liguem.', options:['chegam','cheguem','chegarem','chegaram'], correct:2},
+          {q:'Se ela ___ (querer), pode vir.', options:['quer','queira','queria','quiser'], correct:3}
+        ]},
+      {name:'Por vs. para', exp:{
+        de:'PARA zeigt Ziel, Zweck oder Empfänger („para você“, „para aprender“). POR zeigt Ursache, Weg, Tausch oder Zeitraum („por causa de“, „pela rua“, „obrigado por tudo“).',
+        en:'PARA shows destination, purpose or recipient ("para você", "para aprender"). POR shows cause, route, exchange or duration ("por causa de", "pela rua", "obrigado por tudo").'},
+        ex:[['Esse presente é para você','Dieses Geschenk ist für dich','This gift is for you'],['Obrigado por tudo','Danke für alles','Thanks for everything']],
+        quiz:[
+          {q:'Estudo ___ passar na prova.', options:['por','para','pelo','pela'], correct:1},
+          {q:'Obrigado ___ ajuda.', options:['para a','pela','para','por o'], correct:1},
+          {q:'Vou ___ casa agora.', options:['por','pelo','para','pela'], correct:2},
+          {q:'Cheguei atrasado ___ causa do trânsito.', options:['por','para','pelo','pra'], correct:0}
+        ]},
+      {name:'Mais-que-perfeito (tinha feito)', exp:{
+        de:'Für eine Handlung vor einer anderen in der Vergangenheit: „ter“ im Imperfeito + Partizip. „Quando cheguei, o ônibus já tinha saído.“',
+        en:'For an action before another past action: "ter" in the imperfeito + participle. "Quando cheguei, o ônibus já tinha saído."'},
+        ex:[['Eu já tinha comido','Ich hatte schon gegessen','I had already eaten'],['Ela nunca tinha visto neve','Sie hatte noch nie Schnee gesehen','She had never seen snow']],
+        quiz:[
+          {q:'Quando cheguei, eles já ___ saído.', options:['têm','tinham','tiveram','terão'], correct:1},
+          {q:'Eu nunca ___ visto isso.', options:['tinha','tenho','tive','terei'], correct:0},
+          {q:'Ela já tinha ___ (fazer) o jantar.', options:['fazido','feito','faz','fazendo'], correct:1},
+          {q:'Nós já tínhamos ___ (abrir) a porta.', options:['abrido','abrindo','aberto','abre'], correct:2}
+        ]}
+    ]},
+    {code:'C1', topics:[
+      {name:'Infinitivo pessoal', exp:{
+        de:'Einzigartig im Portugiesischen: der Infinitiv kann konjugiert werden, um die Person klarzumachen: „para nós fazermos“, „antes de eles saírem“.',
+        en:'Unique to Portuguese: the infinitive can be conjugated to make the subject clear: "para nós fazermos", "antes de eles saírem".'},
+        ex:[['É melhor vocês saírem cedo','Es ist besser, wenn ihr früh losgeht','It\'s better for you (all) to leave early'],['Trouxe isso para nós estudarmos','Ich habe das mitgebracht, damit wir lernen','I brought this for us to study']],
+        quiz:[
+          {q:'É importante nós ___ (chegar) cedo.', options:['chegar','chegarmos','chegamos','cheguemos'], correct:1},
+          {q:'Antes de eles ___ (sair), liguei.', options:['saírem','saíram','saiam','sair'], correct:0},
+          {q:'Para vocês ___ (entender), vou repetir.', options:['entender','entendem','entenderem','entendam'], correct:2},
+          {q:'Depois de ___ (comer), a gente saiu.', options:['comermos','comer','comemos','comamos'], correct:1}
+        ]},
+      {name:'Se eu tivesse… eu faria', exp:{
+        de:'Irreale Bedingungen: „se“ + Imperfeito do subjuntivo (tivesse, fosse, pudesse), danach Konditional (faria, iria) – im Alltag oft auch das Imperfeito: „eu ia“.',
+        en:'Unreal conditions: "se" + imperfect subjunctive (tivesse, fosse, pudesse), then the conditional (faria, iria) — in everyday speech the imperfeito is also common: "eu ia".'},
+        ex:[['Se eu tivesse tempo, eu viajaria','Wenn ich Zeit hätte, würde ich reisen','If I had time, I would travel'],['Se fosse você, eu aceitava','An deiner Stelle würde ich zusagen','If I were you, I\'d accept']],
+        quiz:[
+          {q:'Se eu ___ (ter) dinheiro, compraria uma casa.', options:['tenho','tiver','tivesse','tenha'], correct:2},
+          {q:'Se ela pudesse, ___ (vir).', options:['viria','vem','venha','vier'], correct:0},
+          {q:'Se nós ___ (saber), teríamos ajudado.', options:['sabemos','soubéssemos','soubermos','saibamos'], correct:1},
+          {q:'Se fosse você, eu ___ (falar) com ele.', options:['falo','fale','falaria','falasse'], correct:2}
+        ]},
+      {name:'Voz passiva e "se"', exp:{
+        de:'Das Passiv bildet man mit „ser“ + Partizip („foi construído“). Sehr häufig ist das unpersönliche „se“ auf Schildern: „aluga-se“ (zu vermieten), „vende-se“ (zu verkaufen).',
+        en:'The passive uses "ser" + participle ("foi construído"). The impersonal "se" is very common on signs: "aluga-se" (for rent), "vende-se" (for sale).'},
+        ex:[['A ponte foi construída em 1974','Die Brücke wurde 1974 gebaut','The bridge was built in 1974'],['Aqui se fala português','Hier wird Portugiesisch gesprochen','Portuguese is spoken here']],
+        quiz:[
+          {q:'A carta foi ___ ontem.', options:['escrevida','escrita','escrevendo','escreveu'], correct:1},
+          {q:'Placa na janela: "___-se apartamento".', options:['Aluga','Aluguei','Alugam','Alugar'], correct:0},
+          {q:'Os prédios ___ construídos em 1990.', options:['foi','foram','estiveram','eram sido'], correct:1},
+          {q:'"Vendem-se casas" significa que as casas ___.', options:['compram algo','estão à venda','foram vendidas','vendem algo'], correct:1}
+        ]},
+      {name:'Falado vs. escrito (tá, pra, cê)', exp:{
+        de:'Gesprochenes Brasilianisch kürzt stark: está → tá, estou → tô, para → pra, você → cê, para o → pro. In E-Mails und Formularen schreibt man die vollen Formen.',
+        en:'Spoken Brazilian Portuguese shortens a lot: está → tá, estou → tô, para → pra, você → cê, para o → pro. In emails and forms you write the full forms.'},
+        ex:[['Cê tá bem?','Geht’s dir gut?','Are you OK?'],['Vou pro trabalho agora','Ich gehe jetzt zur Arbeit','I\'m going to work now']],
+        quiz:[
+          {q:'"Tô" é a forma falada de:', options:['todo','estou','tomo','tenho'], correct:1},
+          {q:'"Pro" é a forma falada de:', options:['para o','por o','pelo','próprio'], correct:0},
+          {q:'Num e-mail formal, "cê" vira:', options:['você','cê mesmo','o senhor sempre','tu'], correct:0},
+          {q:'"Tá bom" significa:', options:['está mal','estou bem','está bem / ok','tarde'], correct:2}
+        ]}
+    ]},
+    {code:'C2', topics:[
+      {name:'Colocação pronominal formal', exp:{
+        de:'In förmlichen Texten folgt das Pronomen strengen Regeln: nach dem Verb mit Bindestrich (Ênclise: „diga-me“), vor dem Verb nach Verneinung (Próclise: „não me diga“), und selten mitten im Futur (Mesóclise: „dir-se-ia“).',
+        en:'In formal writing pronoun placement follows strict rules: after the verb with a hyphen (ênclise: "diga-me"), before the verb after negation (próclise: "não me diga"), and rarely inside the future (mesóclise: "dir-se-ia").'},
+        ex:[['Não me diga isso','Sag mir das nicht','Don\'t tell me that'],['Far-lhe-ei uma proposta','Ich werde Ihnen ein Angebot machen','I shall make you an offer']],
+        quiz:[
+          {q:'Formal, após negação: "Não ___ disse nada."',options:['me','-me','mim','eu'], correct:0},
+          {q:'Formal, início de frase: "___, por favor."', options:['Me ajude','Ajude-me','Ajude eu','Mim ajude'], correct:1},
+          {q:'Mesóclise correta:', options:['farei-lhe','lhe farei-o','far-lhe-ei','fa-lhe-rei'], correct:2},
+          {q:'Formal, com "nunca": "Ele nunca ___ esqueceu."', options:['se','-se','si','lhe-se'], correct:0}
+        ]},
+      {name:'Futuro composto e hipóteses', exp:{
+        de:'„Terá feito“ (wird gemacht haben) drückt Abschluss in der Zukunft oder eine Vermutung aus: „Ele terá esquecido?“ – Ob er es wohl vergessen hat?',
+        en:'"Terá feito" (will have done) expresses completion in the future or a guess about the past: "Ele terá esquecido?" — Could he have forgotten?'},
+        ex:[['Até sexta, eu terei terminado','Bis Freitag werde ich fertig sein','By Friday I will have finished'],['Onde terá ido o meu celular?','Wo mag mein Handy nur hingekommen sein?','Where could my phone have gone?']],
+        quiz:[
+          {q:'Até dezembro, nós ___ terminado.', options:['teremos','tínhamos','tivemos','temos'], correct:0},
+          {q:'"Ela terá saído?" expressa:', options:['uma ordem','uma dúvida/suposição','um hábito','um desejo'], correct:1},
+          {q:'Em 2030 eles já ___ se mudado.', options:['tinham','terão','tiveram','têm'], correct:1},
+          {q:'Até amanhã eu terei ___ (ler) o livro.', options:['lendo','lido','leio','lerei'], correct:1}
+        ]},
+      {name:'Haver impessoal', exp:{
+        de:'„Haver“ im Sinne von „es gibt“ ist unpersönlich und bleibt immer im Singular: „houve problemas“, nicht „houveram“. Im Alltag sagt man meist „ter“: „tem muita gente aqui“.',
+        en:'"Haver" meaning "there is/are" is impersonal and always stays singular: "houve problemas", not "houveram". In everyday speech people usually say "ter": "tem muita gente aqui".'},
+        ex:[['Houve muitos problemas ontem','Gestern gab es viele Probleme','There were many problems yesterday'],['Havia pessoas por toda parte','Überall waren Leute','There were people everywhere']],
+        quiz:[
+          {q:'___ muitas reclamações ontem.', options:['Houveram','Houve','Haviam','Tiveram'], correct:1},
+          {q:'___ três pessoas na fila.', options:['Haviam','Havia','Houveram','Hão'], correct:1},
+          {q:'Na fala do dia a dia: "___ muita gente aqui."', options:['Há-se','Tem','Têm','Haviam'], correct:1},
+          {q:'Pode ___ erros no documento.', options:['haver','haverem','houverem','hão'], correct:0}
+        ]},
+      {name:'Crase (à, às)', exp:{
+        de:'Crase ist die Verschmelzung von Präposition „a“ und Artikel „a“: a + a = à. Typisch vor weiblichen Nomen nach Verben wie „ir a“: „vou à praia“, und bei Uhrzeiten: „às oito“.',
+        en:'Crase is the merger of the preposition "a" with the article "a": a + a = à. Typical before feminine nouns after verbs like "ir a": "vou à praia", and with clock times: "às oito".'},
+        ex:[['Vou à farmácia','Ich gehe zur Apotheke','I\'m going to the pharmacy'],['A reunião é às três','Das Meeting ist um drei','The meeting is at three']],
+        quiz:[
+          {q:'Vou ___ escola.', options:['a','à','á','há'], correct:1},
+          {q:'A aula começa ___ nove.', options:['as','às','ás','há'], correct:1},
+          {q:'Vou ___ pé.', options:['à','a','ao','á'], correct:1},
+          {q:'Entreguei o livro ___ professora.', options:['a','à','há','ao'], correct:1}
+        ]}
+    ]}
+  ];
+  function ptGrammarLevels(){
+    const i = ptGlossIdx();
+    return PT_GRAMMAR_SRC.map(l => ({
+      code: l.code,
+      topics: l.topics.map(tp => ({
+        name: tp.name,
+        explanation: Lz(tp.exp),
+        examples: tp.ex.map(e => `${e[0]} (${e[i]})`),
+        quiz: tp.quiz
+      }))
+    }));
+  }
+
   // ---- IDIOMA ----
   let currentLang = 'de';
   const langButtons = document.querySelectorAll('[data-lang-btn]');
+  // v12: trilha PT pra gringos. Quem escolhe Português com a interface em PT
+  // ganha a interface em alemão (navegador em alemão), espanhol ou inglês; ao voltar
+  // pra Alemão/Inglês, a interface PT volta sozinha.
+  const LEARN_LANG_KEY = 'falareal_learn_lang';
+  let ptAutoSwitchedInterface = false;
+  let keepInterfaceOnce = false;
+  function selectLearningLang(lang, opts){
+    if(!['de','en','pt'].includes(lang)) lang = 'de';
+    keepInterfaceOnce = !!(opts && opts.keepInterface);
+    const btn = document.querySelector(`[data-lang-btn="${lang}"]`);
+    if(btn) btn.click();
+    keepInterfaceOnce = false;
+  }
   langButtons.forEach(btn=>{
     btn.addEventListener('click', ()=>{
       currentLang = btn.getAttribute('data-lang-btn');
-      document.body.classList.remove('lang-de','lang-en');
+      try{ localStorage.setItem(LEARN_LANG_KEY, currentLang); }catch(e){}
+      if(!keepInterfaceOnce){
+        if(currentLang === 'pt' && currentSiteLang === 'pt'){
+          const nav = (navigator.language || '').toLowerCase();
+          applyInterfaceLanguage(nav.startsWith('de') ? 'de' : nav.startsWith('es') ? 'es' : 'en');
+          ptAutoSwitchedInterface = true;
+        } else if(currentLang !== 'pt' && ptAutoSwitchedInterface){
+          applyInterfaceLanguage('pt');
+          ptAutoSwitchedInterface = false;
+        }
+      }
+      document.body.classList.remove('lang-de','lang-en','lang-pt');
       document.body.classList.add('lang-' + currentLang);
       langButtons.forEach(b=>b.classList.toggle('active', b === btn));
       if(typeof stopAllAudio === 'function') stopAllAudio();
@@ -3559,6 +4804,7 @@
     }
   };
   const tiers = ['iniciante','confortável','desafiador','intenso','brutal','insano','lendário'];
+  Object.defineProperty(contentByLang, 'pt', { enumerable:true, get: ptScenarioContent });
 
   // ---- CONTROLE DE ACESSO FUNDADOR ----
   // isFounder é atualizado depois do login (ver checkFounderStatus, lá embaixo, perto do bloco de auth).
@@ -3588,7 +4834,7 @@
   function renderLevel(n){
     levelBadge.textContent = t('dynLevelBadge', {n});
     const tierIndex = Math.min(Math.floor((n-1)/3), tiers.length-1);
-    levelTier.textContent = tiers[tierIndex] + (n > tiers.length*3 ? ' +' : '');
+    levelTier.textContent = t('tier' + (tierIndex+1)) + (n > tiers.length*3 ? ' +' : '');
 
     const elementCount = n <= 3 ? 1 : n <= 7 ? 2 : n <= 15 ? 3 : 4;
     const lists = contentByLang[currentLang];
@@ -3617,7 +4863,7 @@
 
   levelUpBtn.addEventListener('click', ()=>{
     if(!isFounder && currentLevel >= FREE_LEVEL_CAP){
-      showFounderLock('🔒 Níveis 3+ são exclusivos de quem já garantiu a vaga de fundador.');
+      showFounderLock(t('dynLockLevels'));
       return;
     }
     if(typeof stopAllAudio === 'function') stopAllAudio();
@@ -3817,6 +5063,12 @@
       2: { phrase:'I need an appointment for next week if possible.', locale:'en-US', rate:1.0, chaos:0.3 },
       3: { phrase:"So you'll need to fill out that form again, yeah?", locale:'en-GB', rate:1.1, chaos:0.6 },
       4: { phrase:"No wait, hold on, that document's still missing!", locale:'en-US', rate:1.3, chaos:0.95 }
+    },
+    pt: {
+      1: { phrase:'Oi, tudo bem? Em que posso te ajudar?', locale:'pt-BR', rate:0.8, chaos:0 },
+      2: { phrase:'Eu queria marcar um horário pra semana que vem, se der.', locale:'pt-BR', rate:1.0, chaos:0.3 },
+      3: { phrase:'Então, cê vai ter que preencher esse formulário de novo, tá?', locale:'pt-BR', rate:1.1, chaos:0.6 },
+      4: { phrase:'Não, peraí, peraí, ainda tá faltando o documento!', locale:'pt-BR', rate:1.3, chaos:0.95 }
     }
   };
 
@@ -3837,7 +5089,8 @@
     btn.addEventListener('click', ()=>{
       stopAllAudio();
 
-      const lang = btn.closest('.levels').classList.contains('lang-de') ? 'de' : 'en';
+      const levelsBox = btn.closest('.levels');
+      const lang = levelsBox.classList.contains('lang-de') ? 'de' : levelsBox.classList.contains('lang-pt') ? 'pt' : 'en';
       const levelNum = parseInt(btn.closest('.level-row').getAttribute('data-level'), 10);
       const realUrl = REAL_AUDIO[lang] && REAL_AUDIO[lang][levelNum];
 
@@ -3902,7 +5155,7 @@
   animateMini();
 
   // ---- SEQUÊNCIA DIÁRIA (separada por idioma — alemão e inglês são hábitos independentes) ----
-  const STREAK_KEYS = { de: 'falareal_streak_de_v1', en: 'falareal_streak_en_v1' };
+  const STREAK_KEYS = { de: 'falareal_streak_de_v1', en: 'falareal_streak_en_v1', pt: 'falareal_streak_pt_v1' };
   function todayStr(){ return new Date().toISOString().slice(0,10); }
   function daysBetween(a,b){ return Math.round((new Date(b) - new Date(a)) / 86400000); }
 
@@ -4045,7 +5298,7 @@
     xpLabelEl.textContent = streakData.xp + ' xp';
 
     const markedToday = streakData.lastDate === todayStr();
-    streakBtn.textContent = markedToday ? 'Treinado hoje ✓' : 'Marcar hoje ✓';
+    streakBtn.textContent = markedToday ? t('streakTrainedToday') : t('markToday');
     streakBtn.disabled = markedToday;
     streakBtn.style.opacity = markedToday ? '0.55' : '1';
     streakBtn.style.cursor = markedToday ? 'default' : 'pointer';
@@ -4135,7 +5388,8 @@
   function totalXPAllLangs(){
     const de = loadStreak('de').xp || 0;
     const en = loadStreak('en').xp || 0;
-    return de + en;
+    const pt = loadStreak('pt').xp || 0;
+    return de + en + pt;
   }
 
   function renderLeague(){
@@ -4252,7 +5506,7 @@
   renderProfile();
 
   // ---- DESAFIOS diário / semanal / mensal (separados por idioma, presos ao progresso real) ----
-  const CHALLENGE_KEYS = { de: 'falareal_challenges_de_v1', en: 'falareal_challenges_en_v1' };
+  const CHALLENGE_KEYS = { de: 'falareal_challenges_de_v1', en: 'falareal_challenges_en_v1', pt: 'falareal_challenges_pt_v1' };
 
   function mondayOf(dateStr){
     const d = new Date(dateStr + 'T00:00:00');
@@ -4284,6 +5538,10 @@
     {id:'d_p4', title:'Ouça 3 áudios de exemplo', target:3, xp:14, key:'listens'},
     {id:'d_p5', title:'Suba pelo menos 2 níveis', target:2, xp:8, key:'levelUps'}
   ];
+  function chTitle(ch){
+    const k = 'ch_' + ch.id;
+    return (I18N_STRINGS.pt[k] != null) ? t(k) : ch.title;
+  }
   function todaysDailyChallenges(dateStr){
     const doy = dayOfYear(dateStr);
     const i1 = doy % DAILY_POOL.length;
@@ -4407,7 +5665,7 @@
           : `${progressTxt}<span class="xp-tag">+${ch.xp}xp</span>`;
 
       item.innerHTML = `
-        <div class="challenge-item-top"><span class="title">${ch.title}</span></div>
+        <div class="challenge-item-top"><span class="title">${chTitle(ch)}</span></div>
         <div class="challenge-bar-track"><div class="challenge-bar-fill" style="width:${pct}%"></div></div>
         <div class="challenge-bottom">${bottomHTML}</div>
       `;
@@ -4445,8 +5703,8 @@
       const chip = document.createElement('div');
       chip.className = 'reward-chip' + (unlocked ? ' unlocked' : '');
       chip.innerHTML = unlocked
-        ? `<div class="pct">${tier.pct}%</div><div class="cond">${tier.days} dias combo</div><button class="code-btn" data-copy="${tier.code}">📋 ${tier.code}</button>`
-        : `<div class="pct">${tier.pct}%</div><div class="cond">${tier.days} dias combo</div><div class="locked-txt">🔒 bloqueado</div>`;
+        ? `<div class="pct">${tier.pct}%</div><div class="cond">${t('dynComboDays', {n: tier.days})}</div><button class="code-btn" data-copy="${tier.code}">📋 ${tier.code}</button>`
+        : `<div class="pct">${tier.pct}%</div><div class="cond">${t('dynComboDays', {n: tier.days})}</div><div class="locked-txt">${t('dynLockedShort')}</div>`;
       el.appendChild(chip);
     });
 
@@ -4454,8 +5712,8 @@
     if(!monthlyEl) return;
     const monthlyUnlocked = !!challengeData.claimed['m1'] && !!challengeData.claimed['m2'];
     monthlyEl.innerHTML = monthlyUnlocked
-      ? `<div class="reward-chip unlocked" style="flex:1;"><div class="pct">${MONTHLY_REWARD.pct}%</div><div class="cond">os 2 desafios do mês completos</div><button class="code-btn" data-copy="${MONTHLY_REWARD.code}">📋 ${MONTHLY_REWARD.code}</button></div>`
-      : `<div class="reward-chip" style="flex:1;"><div class="pct">${MONTHLY_REWARD.pct}%</div><div class="cond">complete os 2 desafios do mês pra destravar</div><div class="locked-txt">🔒 bloqueado</div></div>`;
+      ? `<div class="reward-chip unlocked" style="flex:1;"><div class="pct">${MONTHLY_REWARD.pct}%</div><div class="cond">${t('dynMonthlyDone')}</div><button class="code-btn" data-copy="${MONTHLY_REWARD.code}">📋 ${MONTHLY_REWARD.code}</button></div>`
+      : `<div class="reward-chip" style="flex:1;"><div class="pct">${MONTHLY_REWARD.pct}%</div><div class="cond">${t('dynMonthlyLocked')}</div><div class="locked-txt">${t('dynLockedShort')}</div></div>`;
   }
 
   function checkComboRewardUnlock(){
@@ -4573,8 +5831,8 @@
       showFloatingXP(totalXpWon, e.clientX, e.clientY);
 
       rewardToast.textContent = gotBonus
-        ? `🎉 Bônus surpresa! +${totalXpWon}xp — ${ch.title}`
-        : `🎁 +${ch.xp}xp — ${ch.title}`;
+        ? `🎉 Bônus surpresa! +${totalXpWon}xp — ${chTitle(ch)}`
+        : `🎁 +${ch.xp}xp — ${chTitle(ch)}`;
       rewardToast.classList.add('show');
       confettiBurst();
       setTimeout(()=> rewardToast.classList.remove('show'), 3200);
@@ -4633,7 +5891,8 @@
       {word:'by the way', translation:'a propósito', example:'By the way, thanks for that.'}
     ]
   };
-  const DEVER_KEYS = { de: 'falareal_dever_de_v1', en: 'falareal_dever_en_v1' };
+  Object.defineProperty(WORD_POOL, 'pt', { enumerable:true, get: ()=> ptWordList(PT_WORD_SRC) });
+  const DEVER_KEYS = { de: 'falareal_dever_de_v1', en: 'falareal_dever_en_v1', pt: 'falareal_dever_pt_v1' };
 
   // ---- PALAVRA BÔNUS DO FUNDADOR — segunda palavra por dia, mais coloquial/gíria,
   // exclusiva de quem já garantiu a vaga de fundador ----
@@ -4663,7 +5922,8 @@
       {word:'ghost someone', translation:'sumir sem explicação (de alguém)', example:'She totally ghosted me.'}
     ]
   };
-  const DEVER_BONUS_KEYS = { de: 'falareal_dever_bonus_de_v1', en: 'falareal_dever_bonus_en_v1' };
+  Object.defineProperty(BONUS_WORD_POOL, 'pt', { enumerable:true, get: ()=> ptWordList(PT_BONUS_WORD_SRC) });
+  const DEVER_BONUS_KEYS = { de: 'falareal_dever_bonus_de_v1', en: 'falareal_dever_bonus_en_v1', pt: 'falareal_dever_bonus_pt_v1' };
 
   function bonusWordForDate(dateStr){
     const pool = BONUS_WORD_POOL[currentLang];
@@ -4710,7 +5970,7 @@
   const deverBonusLockedEl = document.getElementById('dever-bonus-locked');
   if(deverBonusLockedEl){
     deverBonusLockedEl.addEventListener('click', ()=>{
-      showFounderLock('🎁 A palavra bônus do dia é exclusiva de quem já garantiu a vaga de fundador.');
+      showFounderLock(t('dynLockBonus'));
     });
   }
   const deverBonusMarkBtn = document.getElementById('dever-bonus-mark-btn');
@@ -4777,8 +6037,8 @@
 
     const streakTxt = document.getElementById('dever-streak-txt');
     streakTxt.textContent = deverData.streakStudied > 0
-      ? `🔥 ${deverData.streakStudied} dia(s) seguidos estudando uma palavra nova`
-      : 'Marca a palavra de hoje pra começar sua sequência de vocabulário';
+      ? t('dynDeverStreak', {n: deverData.streakStudied})
+      : t('dynDeverStart');
   }
 
   const deverRevealBtn = document.getElementById('dever-reveal-btn');
@@ -5261,7 +6521,8 @@
       ]}
     ]
   };
-  const GRAMMAR_KEY = { de: 'falareal_gramatica_de_v1', en: 'falareal_gramatica_en_v1' };
+  Object.defineProperty(GRAMMAR_LEVELS, 'pt', { enumerable:true, get: ptGrammarLevels });
+  const GRAMMAR_KEY = { de: 'falareal_gramatica_de_v1', en: 'falareal_gramatica_en_v1', pt: 'falareal_gramatica_pt_v1' };
 
   function loadGrammar(lang){
     try{
@@ -5358,8 +6619,8 @@
         dividerEl.className = 'grammar-advanced-divider';
         dividerEl.innerHTML = `
           <div class="grammar-advanced-line"></div>
-          <div class="grammar-advanced-label">🚀 Avançado — poucos chegam até aqui</div>
-          <p class="grammar-advanced-sub">A maioria das pessoas para no B2, que já é suficiente pra viver bem no dia a dia. C1 e C2 são pra quem quer fluência de nível quase nativo — bem mais difícil, sem pressa nenhuma pra chegar lá.</p>
+          <div class="grammar-advanced-label">${t('grammarAdvLabel')}</div>
+          <p class="grammar-advanced-sub">${t('grammarAdvSub')}</p>
         `;
         container.appendChild(dividerEl);
       }
@@ -5383,12 +6644,12 @@
         ).join('');
         levelEl.innerHTML = `
           <div class="grammar-level-top" data-level-code="${level.code}">
-            <div><span class="grammar-level-name">${level.code}</span><span class="grammar-level-tag">🔒 fundador</span></div>
+            <div><span class="grammar-level-name">${level.code}</span><span class="grammar-level-tag">${t('grammarLockTag')}</span></div>
             <span class="grammar-level-pct"></span>
           </div>
           <div class="grammar-topics">
             ${lockedTopicsHTML}
-            <div class="grammar-founder-lock-note" data-founder-lock="1">🔒 A trilha ${level.code} é exclusiva de quem já garantiu a vaga de fundador. <a href="#preco">Ver planos</a></div>
+            <div class="grammar-founder-lock-note" data-founder-lock="1">${t('dynLockGrammar', {code: level.code})} <a href="#preco">${t('seePlans')}</a></div>
           </div>
         `;
         container.appendChild(levelEl);
@@ -5491,7 +6752,7 @@
       const lockEl = e.target.closest('[data-founder-lock]');
       if(lockEl){
         const levelCode = lockEl.closest('.grammar-level')?.querySelector('[data-level-code]')?.dataset.levelCode || '';
-        showFounderLock('🔒 A trilha ' + levelCode + ' é exclusiva de quem já garantiu a vaga de fundador.');
+        showFounderLock(t('dynLockGrammar', {code: levelCode}));
         return;
       }
       // Escolher/remover uma palavra do exercício de montar frase
@@ -5755,13 +7016,13 @@
 
     ctx.font = '500 40px monospace';
     ctx.fillStyle = 'rgba(244,239,230,0.7)';
-    const dayLabel = currentLang === 'de' ? 'TAGE IN FOLGE' : 'DIAS SEGUIDOS';
+    const dayLabel = currentLang === 'pt' ? t('dynShareDaysPt') : currentLang === 'de' ? 'TAGE IN FOLGE' : 'DIAS SEGUIDOS';
     ctx.fillText(dayLabel, 92, 560);
 
     // frase
     ctx.font = '38px monospace';
     ctx.fillStyle = '#f4efe6';
-    const phrase = currentLang === 'de'
+    const phrase = currentLang === 'pt' ? t('dynSharePhrasePt') : currentLang === 'de'
       ? 'Ich trainiere echtes Deutsch.'
       : 'Treinando alemão de verdade.';
     ctx.fillText(phrase, 92, 680);
@@ -5805,7 +7066,7 @@
 
   whatsappShareBtn.addEventListener('click', ()=>{
     const site = window.location.href;
-    const text = currentLang === 'de'
+    const text = currentLang === 'pt' ? t('dynShareWhatsappPt', {n: streakData.streak, site}) : currentLang === 'de'
       ? `🔥 ${streakData.streak} Tage in Folge echtes Deutsch geübt! ${site}`
       : `🔥 Bati ${streakData.streak} dias seguidos treinando alemão de verdade! ${site}`;
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
@@ -5836,12 +7097,18 @@
       envolvimento: { pt: 'really getting involved in life here — community, neighbors, daily life', en: 'really getting involved in life here — community, neighbors, daily life' },
       entrevista: { pt: 'job interview scenarios', en: 'job interview scenarios' },
       trabalho: { pt: 'everyday work conversations', en: 'everyday work conversations' }
+    },
+    pt: {
+      sotaque: { en: 'regional Brazilian accents (levels 3 and 4)', de: 'regionale brasilianische Akzente (Level 3 und 4)', es: 'acentos regionales de Brasil (niveles 3 y 4)' },
+      envolvimento: { en: 'fast, casual conversation with friends and family', de: 'schnelle, lockere Gespräche mit Freunden und Familie', es: 'conversación rápida e informal con amigos y familia' },
+      entrevista: { en: 'work conversations with Brazilian colleagues', de: 'Gespräche mit brasilianischen Kollegen', es: 'conversaciones de trabajo con colegas brasileños' },
+      trabalho: { en: 'travel and everyday life in Brazil', de: 'Reisen und Alltag in Brasilien', es: 'viajes y vida diaria en Brasil' }
     }
   };
   function challengeFocusText(learningLang, key){
     const entry = CHALLENGE_TEXT[learningLang] && CHALLENGE_TEXT[learningLang][key];
     if(!entry) return null;
-    return entry[currentSiteLang] || entry.pt || entry.en || null;
+    return entry[currentSiteLang] || (currentSiteLang !== 'pt' && entry.en) || entry.pt || entry.en || null;
   }
   const LEVEL_BY_SELF = { '1':1, '2':2, '3':3 };
 
@@ -5861,11 +7128,14 @@
     const level = LEVEL_BY_SELF[quizAnswers.nivel] || 2;
     const focusDe = challengeFocusText('de', quizAnswers.desafio) || t('dynQuizFocusFallbackDe');
     const focusEn = challengeFocusText('en', quizAnswers.desafio) || t('dynQuizFocusFallbackEn');
+    const focusPt = challengeFocusText('pt', quizAnswers.desafio) || t('dynQuizFocusFallbackPt');
 
     document.getElementById('quiz-level-de').textContent = level;
     document.getElementById('quiz-level-en').textContent = level;
+    document.getElementById('quiz-level-pt').textContent = level;
     document.getElementById('quiz-desc-de').textContent = t('dynQuizDescDe', {focus: focusDe});
     document.getElementById('quiz-desc-en').textContent = t('dynQuizDescEn', {focus: focusEn});
+    document.getElementById('quiz-desc-pt').textContent = t('dynQuizDescPt', {focus: focusPt});
 
     // leva as respostas junto pro formulário de e-mail, e mostra um resuminho ali também
     const desafioBtnDe = document.querySelector(`.quiz-options.lang-de .quiz-option[data-key="${quizAnswers.desafio}"]`);
@@ -5874,6 +7144,12 @@
     document.getElementById('quiz-desafio-en').value = desafioBtnEn ? desafioBtnEn.dataset.label : '';
     document.getElementById('quiz-nivel-de').value = quizAnswers.nivel;
     document.getElementById('quiz-nivel-en').value = quizAnswers.nivel;
+    const desafioBtnPt = document.querySelector(`.quiz-options.lang-pt .quiz-option[data-key="${quizAnswers.desafio}"]`);
+    document.getElementById('quiz-desafio-pt').value = desafioBtnPt ? desafioBtnPt.dataset.label : '';
+    document.getElementById('quiz-nivel-pt').value = quizAnswers.nivel;
+    const summaryPt = document.getElementById('quiz-summary-pt');
+    summaryPt.textContent = t('dynQuizSummaryPt', {level, focus: focusPt});
+    summaryPt.classList.add('show');
 
     const summaryDe = document.getElementById('quiz-summary-de');
     const summaryEn = document.getElementById('quiz-summary-en');
@@ -5930,6 +7206,8 @@
     const refEn = document.getElementById('ref-en');
     if(refDe) refDe.value = storedReferrer;
     if(refEn) refEn.value = storedReferrer;
+    const refPt = document.getElementById('ref-pt');
+    if(refPt) refPt.value = storedReferrer;
   }
 
   // monta o link pessoal de cada um, sem o parâmetro ref antigo (se houver)
@@ -5940,6 +7218,8 @@
   const referralLinkEn = document.getElementById('referral-link-en');
   if(referralLinkDe) referralLinkDe.value = myReferralLink;
   if(referralLinkEn) referralLinkEn.value = myReferralLink;
+  const referralLinkPt = document.getElementById('referral-link-pt');
+  if(referralLinkPt) referralLinkPt.value = myReferralLink;
 
   function copyReferralLink(){
     navigator.clipboard.writeText(myReferralLink).catch(()=>{});
@@ -5951,6 +7231,12 @@
     copyDeBtn.textContent = t('dynCopiedFull');
     setTimeout(()=> copyDeBtn.textContent = t('ctaCopyBtnDe'), 1800);
   });
+  const copyPtBtn = document.getElementById('copy-referral-pt');
+  if(copyPtBtn) copyPtBtn.addEventListener('click', ()=>{
+    copyReferralLink();
+    copyPtBtn.textContent = t('dynCopiedFull');
+    setTimeout(()=> copyPtBtn.textContent = t('ctaCopyBtnPt'), 1800);
+  });
   if(copyEnBtn) copyEnBtn.addEventListener('click', ()=>{
     copyReferralLink();
     copyEnBtn.textContent = t('dynCopiedFull');
@@ -5958,7 +7244,7 @@
   });
 
   function shareReferralWhatsapp(lang){
-    const text = lang === 'de'
+    const text = lang === 'pt' ? t('dynReferralWhatsappPt', {link: myReferralLink}) : lang === 'de'
       ? `Tô treinando alemão de verdade no Fala Real — sotaque, ruído, tudo real. Entra pelo meu link que a gente sobe junto na fila: ${myReferralLink}`
       : `I'm practicing real German/English on Fala Real — real accents, real noise. Join through my link so we move up the list together: ${myReferralLink}`;
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
@@ -5967,10 +7253,12 @@
   const whatsappRefEn = document.getElementById('whatsapp-referral-en');
   if(whatsappRefDe) whatsappRefDe.addEventListener('click', ()=> shareReferralWhatsapp('de'));
   if(whatsappRefEn) whatsappRefEn.addEventListener('click', ()=> shareReferralWhatsapp('en'));
+  const whatsappRefPt = document.getElementById('whatsapp-referral-pt');
+  if(whatsappRefPt) whatsappRefPt.addEventListener('click', ()=> shareReferralWhatsapp('pt'));
 
   // Waitlist forms — envia de verdade pro Formspree, mantendo a experiência inline
   const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xeeywzdd';
-  ['de','en'].forEach(lang=>{
+  ['de','en','pt'].forEach(lang=>{
     const form = document.getElementById('waitlist-form-' + lang);
     if(!form) return;
     form.addEventListener('submit', function(e){
@@ -5982,7 +7270,7 @@
       submitBtn.textContent = t('dynSending');
 
       const formData = new FormData(form);
-      formData.append('idioma', lang === 'de' ? 'alemão' : 'inglês');
+      formData.append('idioma', lang === 'de' ? 'alemão' : lang === 'pt' ? 'português (gringo)' : 'inglês');
       formData.append('origem', 'FalaReal landing page');
 
       fetch(FORMSPREE_ENDPOINT, {
@@ -5994,10 +7282,10 @@
           document.getElementById('thanks-msg-' + lang).style.display = 'block';
           form.reset();
         } else {
-          alert('Ops, algo deu errado. Tenta de novo em alguns segundos.');
+          alert(t('dynFormError'));
         }
       }).catch(()=>{
-        alert('Ops, algo deu errado. Tenta de novo em alguns segundos.');
+        alert(t('dynFormError'));
       }).finally(()=>{
         submitBtn.disabled = false;
         submitBtn.textContent = originalBtnText;
@@ -6026,10 +7314,10 @@
           document.getElementById('ebook-thanks').style.display = 'block';
           ebookForm.style.display = 'none';
         } else {
-          alert('Ops, algo deu errado. Tenta de novo em alguns segundos.');
+          alert(t('dynFormError'));
         }
       }).catch(()=>{
-        alert('Ops, algo deu errado. Tenta de novo em alguns segundos.');
+        alert(t('dynFormError'));
       }).finally(()=>{
         submitBtn.disabled = false;
         submitBtn.textContent = originalBtnText;
@@ -6072,7 +7360,7 @@
 
       const formData = new FormData(feedbackForm);
       formData.append('origem', 'FalaReal — widget de feedback');
-      formData.append('idioma_atual', typeof currentLang !== 'undefined' ? (currentLang === 'de' ? 'alemão' : 'inglês') : '');
+      formData.append('idioma_atual', typeof currentLang !== 'undefined' ? (currentLang === 'de' ? 'alemão' : currentLang === 'pt' ? 'português' : 'inglês') : '');
       const versionEl = document.querySelector('.version-tag');
       formData.append('versao_site', versionEl ? versionEl.textContent : '');
 
@@ -6145,6 +7433,8 @@
     'falareal_dever_de_v1', 'falareal_dever_en_v1',
     'falareal_dever_bonus_de_v1', 'falareal_dever_bonus_en_v1',
     'falareal_gramatica_de_v1', 'falareal_gramatica_en_v1',
+    'falareal_streak_pt_v1', 'falareal_challenges_pt_v1', 'falareal_dever_pt_v1',
+    'falareal_dever_bonus_pt_v1', 'falareal_gramatica_pt_v1', 'falareal_learn_lang',
     'falareal_profile_v1'
   ];
 
@@ -6203,8 +7493,28 @@
         id: currentUser.id,
         data: payload,
         updated_at: new Date().toISOString()
-      }).then(()=>{});
+      }).then(({ error })=>{
+        if(error) handleSyncError(error, 'dynSyncSaveError');
+      }).catch(err=> handleSyncError(err, 'dynSyncSaveError'));
     }, 800);
+  }
+
+  // Mostra na tela quando o salvamento/download na nuvem falha (antes falhava em silêncio)
+  let syncErrorTimer = null;
+  let lastSyncErrorAt = 0;
+  function handleSyncError(error, key){
+    const msg = (error && (error.message || error.error_description)) || String(error);
+    console.error('[FalaReal sync]', error);
+    const now = Date.now();
+    if(now - lastSyncErrorAt < 15000) return; // não fica repetindo o aviso a cada clique
+    lastSyncErrorAt = now;
+    const expired = /jwt|token|expired|not authenticated|401/i.test(msg);
+    const el = document.getElementById('sync-error-toast');
+    if(!el) return;
+    el.textContent = expired ? t('dynSyncSessionExpired') : t(key, {msg});
+    el.classList.add('show');
+    clearTimeout(syncErrorTimer);
+    syncErrorTimer = setTimeout(()=> el.classList.remove('show'), 8000);
   }
 
   async function downloadFromCloud(){
@@ -6215,7 +7525,7 @@
       .eq('id', currentUser.id)
       .maybeSingle();
 
-    if(error) return;
+    if(error){ handleSyncError(error, 'dynSyncLoadError'); return; }
 
     if(data && data.data && Object.keys(data.data).length > 0){
       applyCloudProgress(data.data);
@@ -6333,15 +7643,26 @@
     authMode = mode;
     authTabLogin.classList.toggle('active', mode === 'login');
     authTabSignup.classList.toggle('active', mode === 'signup');
-    document.getElementById('auth-modal-title').textContent = mode === 'login' ? 'Entrar na sua conta' : 'Criar sua conta';
+    document.getElementById('auth-modal-title').textContent = mode === 'login' ? t('enterYourAccount') : t('authSignupTitle');
     document.getElementById('auth-modal-sub').textContent = mode === 'login'
-      ? 'Salva seu progresso e acessa de qualquer aparelho.'
-      : 'Seu progresso atual deste navegador vai ser guardado na sua conta nova.';
-    document.getElementById('auth-submit-btn').textContent = mode === 'login' ? 'Entrar' : 'Criar conta';
+      ? t('saveProgressAnyDevice')
+      : t('authSignupSub');
+    document.getElementById('auth-submit-btn').textContent = mode === 'login' ? t('enter') : t('createAccount');
     authError.textContent = '';
   }
   if(authTabLogin) authTabLogin.addEventListener('click', ()=> setAuthMode('login'));
   if(authTabSignup) authTabSignup.addEventListener('click', ()=> setAuthMode('signup'));
+
+  // Traduz as mensagens do Supabase (que vêm em inglês) pro idioma da interface
+  function friendlyAuthError(error){
+    const m = (error && error.message) || '';
+    if(/invalid login credentials/i.test(m)) return t('dynAuthBadLogin');
+    if(/email not confirmed/i.test(m)) return t('dynAuthNotConfirmed');
+    if(/already registered|already exists/i.test(m)) return t('dynAuthAlreadyExists');
+    if(/password should be at least|weak password/i.test(m)) return t('dynAuthWeakPassword');
+    if(/rate limit|too many/i.test(m)) return t('dynAuthRateLimit');
+    return t('dynAuthGeneric', {msg: m});
+  }
 
   if(authForm){
     authForm.addEventListener('submit', async function(e){
@@ -6359,14 +7680,21 @@
       try{
         if(authMode === 'signup'){
           const { data, error } = await supabaseClient.auth.signUp({ email, password });
-          if(error){ authError.textContent = error.message; return; }
+          if(error){ authError.textContent = friendlyAuthError(error); return; }
+          // Com confirmação de e-mail ligada, o Supabase cria a conta mas não abre sessão.
+          // Antes o site tratava como logado e tentava salvar sem sessão -> erro ao salvar.
+          if(!data.session){
+            setAuthMode('login');
+            authError.textContent = t('dynAuthConfirmEmail');
+            return;
+          }
           currentUser = data.user;
           updateAuthUI();
           if(currentUser){ syncToCloud(); checkFounderStatus(); }
           authOverlay.classList.remove('open');
         } else {
           const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-          if(error){ authError.textContent = error.message; return; }
+          if(error){ authError.textContent = friendlyAuthError(error); return; }
           currentUser = data.user;
           updateAuthUI();
           authOverlay.classList.remove('open');
@@ -6389,6 +7717,34 @@
       authOverlay.classList.remove('open');
     });
   }
+
+
+  // ---- v12: quando o idioma da interface muda, tudo que é gerado por JS
+  // (e os textos da trilha PT, que dependem da interface) é redesenhado na hora ----
+  function refreshDynamicTexts(){
+    if(typeof renderLevel === 'function') renderLevel(currentLevel);
+    [()=>renderStreak(), ()=>renderLeague(), ()=>renderLegendTrail(), ()=>renderRewardLadder(),
+     ()=>renderCombo(), ()=>renderProgressSummary()].forEach(fn=>{ try{ fn(); }catch(e){} });
+    if(typeof renderDever === 'function') renderDever();
+    if(typeof renderBonusWord === 'function') renderBonusWord();
+    if(typeof renderGrammar === 'function') renderGrammar();
+    if(typeof renderGrammarReview === 'function') renderGrammarReview();
+    if(typeof renderChallenges === 'function') renderChallenges();
+  }
+
+  // ---- v12: idioma de aprendizado inicial ----
+  // Links de divulgação: ?learn=pt (trilha de português) e ?lang=de|en|es|pt (interface)
+  (function initLearningLang(){
+    const params = new URLSearchParams(window.location.search);
+    const langParam = params.get('lang');
+    if(langParam && I18N_STRINGS[langParam]) applyInterfaceLanguage(langParam);
+    let learn = params.get('learn');
+    if(!learn){ try{ learn = localStorage.getItem(LEARN_LANG_KEY); }catch(e){} }
+    window.__falarealReady = true;
+    if(learn && learn !== 'de' && ['en','pt'].includes(learn)){
+      selectLearningLang(learn, { keepInterface: !!langParam || learn !== 'pt' });
+    }
+  })();
 
   // Ao carregar a página, confere se já tem sessão ativa
   if(supabaseClient){
