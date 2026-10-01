@@ -6,7 +6,7 @@
 <title>Fala Real — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     FalaReal PWA  v12.0.3
+     FalaReal PWA  v12.0.4
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -1275,6 +1275,31 @@
     .hero-visual{max-width:220px;}
     .feedback-fab, .mobile-account-fab{width:44px; height:44px; font-size:1.1rem;}
   }
+  /* v12.0.4 — idiomas dentro do menu ☰ */
+  nav{position:sticky;}
+  .menu-btn{
+    display:flex; align-items:center; gap:8px; cursor:pointer;
+    background:var(--ink-soft); color:var(--paper); border:1px solid var(--line);
+    border-radius:100px; padding:7px 14px; font-size:1.05rem; line-height:1;
+  }
+  .menu-btn:hover, .menu-btn[aria-expanded="true"]{border-color:var(--amber);}
+  .menu-btn-icon{font-size:1.15rem;}
+  .nav-menu{
+    position:absolute; top:100%; right:16px; z-index:60; width:250px; max-width:calc(100vw - 32px);
+    margin-top:8px; padding:14px; border-radius:16px;
+    background:var(--ink-soft); border:1px solid var(--line); box-shadow:0 18px 48px rgba(0,0,0,0.5);
+  }
+  .nav-menu[hidden]{display:none;}
+  html[dir="rtl"] .nav-menu{right:auto; left:16px;}
+  .nav-menu-label{
+    font-family:var(--mono); font-size:0.72rem; text-transform:uppercase; letter-spacing:0.08em;
+    color:rgba(244,239,230,0.55); margin:2px 2px 8px;
+  }
+  .nav-menu .lang-toggle{display:flex; flex-direction:column; gap:4px; padding:4px; border-radius:12px; margin-bottom:16px; width:100%;}
+  .nav-menu .lang-toggle button{width:100%; text-align:left; padding:10px 12px; border-radius:9px; font-size:0.95rem;}
+  html[dir="rtl"] .nav-menu .lang-toggle button{text-align:right;}
+  .nav-menu .lang-toggle .lt-name{display:inline;}
+  .nav-menu .site-lang-select{width:100%; max-width:none; padding:10px 12px;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -1284,19 +1309,26 @@
   <div class="wrap">
     <a href="#" class="logo" aria-label="Fala Real — voltar ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">fala<span>real</span></a>
     <div class="nav-right">
-      <div class="lang-toggle" role="group" aria-label="Escolher idioma" data-i18n-aria="langToggleAria">
+      <a href="#comecar" class="nav-cta" data-i18n="navCta">Quero testar</a>
+      <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu" data-i18n-aria="menuAria">
+        <span class="menu-btn-flag" id="menu-btn-flag" aria-hidden="true">🇩🇪</span><span class="menu-btn-icon" aria-hidden="true">☰</span>
+      </button>
+    </div>
+  </div>
+  <div class="nav-menu" id="nav-menu" hidden>
+    <div class="nav-menu-label" data-i18n="menuLearnLabel">Quero aprender</div>
+    <div class="lang-toggle" role="group" aria-label="Escolher idioma" data-i18n-aria="langToggleAria">
         <button type="button" class="active" data-lang-btn="de" data-i18n-html="langBtnDe" data-i18n-aria="langNameDe" data-i18n-title="langNameDe"><span class="lt-flag">🇩🇪</span> <span class="lt-name">Alemão</span></button>
         <button type="button" data-lang-btn="en" data-i18n-html="langBtnEn" data-i18n-aria="langNameEn" data-i18n-title="langNameEn"><span class="lt-flag">🇬🇧</span> <span class="lt-name">Inglês</span></button>
         <button type="button" data-lang-btn="pt" data-i18n-html="langBtnPt" data-i18n-aria="langNamePt" data-i18n-title="langNamePt"><span class="lt-flag">🇧🇷</span> <span class="lt-name">Português</span></button>
       </div>
-      <select class="site-lang-select" id="site-lang-select" aria-label="Idioma do site / Site language" data-i18n-aria="siteLangSelectAria">
+    <div class="nav-menu-label" data-i18n="menuSiteLangLabel">Idioma do site</div>
+    <select class="site-lang-select" id="site-lang-select" aria-label="Idioma do site / Site language" data-i18n-aria="siteLangSelectAria">
         <option value="pt">🇧🇷 Português</option>
         <option value="en">🇬🇧 English</option>
         <option value="es">🇪🇸 Español</option>
         <option value="de">🇩🇪 Deutsch</option>
       </select>
-      <a href="#comecar" class="nav-cta" data-i18n="navCta">Quero testar</a>
-    </div>
   </div>
 </nav>
 
@@ -2379,7 +2411,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.3</span></div>
+      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.4</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2936,6 +2968,9 @@
       grammarQuizDone: "Você já dominou esse tópico:",
       grammarQuizTodo: "Acerta tudo pra marcar como estudado:",
       dynSurpriseBonus: "🎉 Bônus surpresa! +{xp}xp — {title}",
+      menuAria: "Menu: idiomas",
+      menuLearnLabel: "Quero aprender",
+      menuSiteLangLabel: "Idioma do site",
     },
     en: {
       siteLangSelectAria: 'Site language',
@@ -3497,6 +3532,9 @@
       grammarQuizDone: "You've already mastered this topic:",
       grammarQuizTodo: "Get them all right to mark it as studied:",
       dynSurpriseBonus: "🎉 Surprise bonus! +{xp}xp — {title}",
+      menuAria: "Menu: languages",
+      menuLearnLabel: "I want to learn",
+      menuSiteLangLabel: "Site language",
     },
     es: {
       siteLangSelectAria: 'Idioma del sitio',
@@ -3952,6 +3990,9 @@
       grammarQuizDone: "Ya dominas este tema:",
       grammarQuizTodo: "Acierta todo para marcarlo como estudiado:",
       dynSurpriseBonus: "🎉 ¡Bono sorpresa! +{xp}xp — {title}",
+      menuAria: "Menú: idiomas",
+      menuLearnLabel: "Quiero aprender",
+      menuSiteLangLabel: "Idioma del sitio",
     },
     de: {
       // v12.0.0 — interface em alemão (pra alemães que aprendem português).
@@ -4295,6 +4336,9 @@
       grammarQuizDone: "Dieses Thema beherrschst du schon:",
       grammarQuizTodo: "Beantworte alles richtig, um es als gelernt zu markieren:",
       dynSurpriseBonus: "🎉 Überraschungsbonus! +{xp}xp – {title}",
+      menuAria: "Menü: Sprachen",
+      menuLearnLabel: "Ich will lernen",
+      menuSiteLangLabel: "Sprache der Website",
     },
   };
 
@@ -7868,6 +7912,35 @@
     if(typeof renderChallenges === 'function') renderChallenges();
   }
 
+
+  // ---- v12.0.4: menu ☰ com os idiomas ----
+  (function initNavMenu(){
+    const btn = document.getElementById('menu-btn');
+    const menu = document.getElementById('nav-menu');
+    const flag = document.getElementById('menu-btn-flag');
+    if(!btn || !menu) return;
+    const FLAGS = { de:'🇩🇪', en:'🇬🇧', pt:'🇧🇷' };
+    function setOpen(open){
+      menu.hidden = !open;
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+    function updateFlag(){ if(flag) flag.textContent = FLAGS[currentLang] || '🇩🇪'; }
+    btn.addEventListener('click', (e)=>{ e.stopPropagation(); setOpen(menu.hidden); });
+    menu.addEventListener('click', (e)=>{
+      const lb = e.target.closest('[data-lang-btn]');
+      if(lb){ setTimeout(()=>{ updateFlag(); setOpen(false); }, 0); }
+    }, true); // captura: o botão é redesenhado pela troca de idioma logo depois
+    const sel = document.getElementById('site-lang-select');
+    if(sel) sel.addEventListener('change', ()=> setTimeout(()=> setOpen(false), 0));
+    document.addEventListener('click', (e)=>{
+      if(!menu.hidden && !menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
+    });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !menu.hidden){ setOpen(false); btn.focus(); } });
+    window.addEventListener('scroll', ()=>{ if(!menu.hidden) setOpen(false); }, { passive:true });
+    updateFlag();
+    window.__updateMenuFlag = updateFlag;
+  })();
+
   // ---- v12: idioma de aprendizado inicial ----
   // Links de divulgação: ?learn=pt (trilha de português) e ?lang=de|en|es|pt (interface)
   const siteLangSelectEl = document.getElementById('site-lang-select');
@@ -7880,6 +7953,7 @@
     let learn = params.get('learn');
     if(!learn){ try{ learn = localStorage.getItem(LEARN_LANG_KEY); }catch(e){} }
     window.__falarealReady = true;
+    setTimeout(()=>{ if(window.__updateMenuFlag) window.__updateMenuFlag(); }, 0);
     if(learn && learn !== 'de' && ['en','pt'].includes(learn)){
       selectLearningLang(learn, { keepInterface: !!langParam || learn !== 'pt' });
     }
