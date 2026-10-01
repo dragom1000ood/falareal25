@@ -6,7 +6,7 @@
 <title>Fala Real — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     FalaReal PWA  v12.0.5
+     FalaReal PWA  v12.0.6
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -2379,7 +2379,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.5</span></div>
+      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.6</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2511,7 +2511,7 @@
       listenLevel: '🔊 Ouvir este nível',
       levelUp: 'Subir de nível ↑',
       dailyStreak: 'Sequência diária',
-      dailyStreakDesc: 'Treina todo dia, mantém a sequência viva e destrava recompensas. Isso aqui já guarda seu progresso.',
+      dailyStreakDesc: 'Treina todo dia, mantém a sequência viva e destrava recompensas. Qualquer estudo do dia (palavra, gramática, revisão, subir nível) já conta — ou toca em Marcar hoje.',
       daysInRow: 'dias seguidos',
       streakShielded: '🛡️ Sequência protegida — como fundador, faltar 1 dia não derruba sua sequência.',
       markToday: 'Marcar hoje ✓',
@@ -2966,7 +2966,7 @@
       listenLevel: '🔊 Listen to this level',
       levelUp: 'Level up ↑',
       dailyStreak: 'Daily streak',
-      dailyStreakDesc: "Practice every day, keep your streak alive and unlock rewards. This one already saves your progress.",
+      dailyStreakDesc: "Practice every day, keep your streak alive and unlock rewards. Any study today (word, grammar, review, leveling up) counts automatically — or tap Mark today.",
       daysInRow: 'days in a row',
       streakShielded: "🛡️ Streak protected — as a founder, missing 1 day won't break your streak.",
       markToday: 'Mark today ✓',
@@ -3527,7 +3527,7 @@
       listenLevel: '🔊 Escuchar este nivel',
       levelUp: 'Subir de nivel ↑',
       dailyStreak: 'Racha diaria',
-      dailyStreakDesc: 'Entrena todos los días, mantén la racha viva y desbloquea recompensas. Esto ya guarda tu progreso.',
+      dailyStreakDesc: 'Entrena todos los días, mantén la racha viva y desbloquea recompensas. Cualquier estudio del día (palabra, gramática, repaso, subir de nivel) ya cuenta — o toca Marcar hoy.',
       daysInRow: 'días seguidos',
       streakShielded: '🛡️ Racha protegida — como fundador, faltar 1 día no rompe tu racha.',
       markToday: 'Marcar hoy ✓',
@@ -3984,7 +3984,7 @@
       listenLevel: "🔊 Dieses Level anhören",
       levelUp: "Level aufsteigen ↑",
       dailyStreak: "Tägliche Serie",
-      dailyStreakDesc: "Übe jeden Tag, halte deine Serie am Leben und schalte Belohnungen frei. Dein Fortschritt wird hier schon gespeichert.",
+      dailyStreakDesc: "Übe jeden Tag, halte deine Serie am Leben und schalte Belohnungen frei. Jedes Lernen am Tag (Wort, Grammatik, Wiederholung, Level-Aufstieg) zählt automatisch – oder tippe auf Heute abhaken.",
       daysInRow: "Tage in Folge",
       streakShielded: "🛡️ Serie geschützt – als Gründungsmitglied bricht ein verpasster Tag deine Serie nicht.",
       markToday: "Heute abhaken ✓",
@@ -4943,6 +4943,7 @@
     if(typeof stopAllAudio === 'function') stopAllAudio();
     currentLevel += 1;
     renderLevel(currentLevel);
+    autoMarkStreak();
     if(typeof trackChallenge === 'function'){
       trackChallenge('levelUps', 1);
       trackChallenge('maxLevelWeek', currentLevel, true);
@@ -5389,7 +5390,9 @@
     if(shieldEl) shieldEl.classList.toggle('show', !!isFounder);
   }
 
-  streakBtn.addEventListener('click', (e)=>{
+  // v12.0.6: marcar o dia virou função — o botão usa, e qualquer estudo do dia
+  // (palavra, gramática, revisão, subir nível) também conta sozinho pro 🔥.
+  function markStreakToday(e){
     const today = todayStr();
     if(streakData.lastDate === today) return;
 
@@ -5404,7 +5407,7 @@
     }
     streakData.lastDate = today;
     streakData.xp += 10;
-    if(typeof showFloatingXP === 'function') showFloatingXP(10, e.clientX, e.clientY);
+    if(e && typeof showFloatingXP === 'function') showFloatingXP(10, e.clientX, e.clientY);
     saveStreak(currentLang, streakData);
     renderStreak();
     if(typeof trackChallenge === 'function'){
@@ -5431,7 +5434,11 @@
     checkLegendUnlock();
     if(typeof renderLeague === 'function') renderLeague();
     if(typeof renderProgressSummary === 'function') renderProgressSummary();
-  });
+  }
+  function autoMarkStreak(){
+    if(streakData && streakData.lastDate !== todayStr()) markStreakToday(null);
+  }
+  streakBtn.addEventListener('click', (e)=> markStreakToday(e));
 
   renderStreak();
   if(typeof renderLegendTrail === 'function') renderLegendTrail();
@@ -5716,6 +5723,7 @@
     renderChallenges();
     if(typeof renderLeague === 'function') renderLeague();
     if(typeof renderProgressSummary === 'function') renderProgressSummary();
+    autoMarkStreak(); // estudou hoje = dia contado na sequência
   }
 
   function renderChallengeGroup(containerId, list){
