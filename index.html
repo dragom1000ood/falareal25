@@ -6,7 +6,7 @@
 <title>Fala Real — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     FalaReal PWA  v12.0.1
+     FalaReal PWA  v12.0.3
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -1258,6 +1258,23 @@
     40%{ transform:scale(1.35); color:var(--paper); }
     100%{ transform:scale(1); }
   }
+  /* v12.0.3 — app instalado (PWA) no iPhone: a barra de status (hora, bateria) ficava
+     por cima do menu e não dava pra tocar nos idiomas. Agora tudo respeita as áreas
+     seguras da tela (notch em cima, barra de gestos embaixo). */
+  nav{padding-top:env(safe-area-inset-top, 0px);}
+  .feedback-fab, .mobile-account-fab{bottom:calc(22px + env(safe-area-inset-bottom, 0px));}
+  .feedback-panel{bottom:calc(86px + env(safe-area-inset-bottom, 0px));}
+  .founder-lock-toast{bottom:calc(24px + env(safe-area-inset-bottom, 0px));}
+  .profile-sidebar{top:calc(120px + env(safe-area-inset-top, 0px));}
+  .avatar-drawer{padding-top:env(safe-area-inset-top, 0px); padding-bottom:env(safe-area-inset-bottom, 0px);}
+  @media (max-width: 640px){
+    /* menu mais baixo no celular */
+    nav .wrap{height:56px;}
+    /* menos espaço vazio no topo do celular */
+    header.hero{padding:28px 0 48px;}
+    .hero-visual{max-width:220px;}
+    .feedback-fab, .mobile-account-fab{width:44px; height:44px; font-size:1.1rem;}
+  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -2362,7 +2379,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.1</span></div>
+      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.3</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -5213,7 +5230,11 @@
 
   // ---- SEQUÊNCIA DIÁRIA (separada por idioma — alemão e inglês são hábitos independentes) ----
   const STREAK_KEYS = { de: 'falareal_streak_de_v1', en: 'falareal_streak_en_v1', pt: 'falareal_streak_pt_v1' };
-  function todayStr(){ return new Date().toISOString().slice(0,10); }
+  // v12.0.2: datas sempre no fuso local (antes era UTC — na Alemanha isso quebrava a sequência)
+  function localDateStr(d){
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+  }
+  function todayStr(){ return localDateStr(new Date()); }
   function daysBetween(a,b){ return Math.round((new Date(b) - new Date(a)) / 86400000); }
 
   function loadStreak(lang){
@@ -5571,7 +5592,7 @@
     const day = d.getDay(); // 0=domingo
     const diff = (day === 0 ? -6 : 1) - day;
     d.setDate(d.getDate() + diff);
-    return d.toISOString().slice(0,10);
+    return localDateStr(d);
   }
   function monthKeyOf(dateStr){ return dateStr.slice(0,7); }
   function dayOfYear(dateStr){
@@ -5582,7 +5603,7 @@
   function prevDayStr(dateStr){
     const d = new Date(dateStr + 'T00:00:00');
     d.setDate(d.getDate() - 1);
-    return d.toISOString().slice(0,10);
+    return localDateStr(d);
   }
 
   // desafio-âncora: aparece todo dia, é o hábito principal que não pode sumir
@@ -7493,7 +7514,7 @@
     'falareal_gramatica_de_v1', 'falareal_gramatica_en_v1',
     'falareal_streak_pt_v1', 'falareal_challenges_pt_v1', 'falareal_dever_pt_v1',
     'falareal_dever_bonus_pt_v1', 'falareal_gramatica_pt_v1', 'falareal_learn_lang',
-    'falareal_profile_v1'
+    'falareal_profile_v1', 'falareal_saved_at'
   ];
 
   let currentUser = null;
@@ -7535,17 +7556,73 @@
     return obj;
   }
 
+  // v12.0.2: junta nuvem + aparelho em vez de sobrescrever às cegas.
+  // Antes, se o salvamento na nuvem não chegava (app fechado logo depois de marcar,
+  // ou o erro silencioso de antes da v11.31.1), cada abertura baixava a sequência
+  // velha da nuvem por cima da nova — e a ofensiva voltava pro dia 1.
+  function parseJSONSafe(v){ try{ return v ? JSON.parse(v) : null; }catch(e){ return null; } }
+  function newerByDate(l, c, dateField, countField){
+    if(!l) return c; if(!c) return l;
+    const ld = l[dateField] || '', cd = c[dateField] || '';
+    if(ld !== cd) return ld > cd ? l : c;
+    return (l[countField] || 0) >= (c[countField] || 0) ? l : c;
+  }
+  function mergeProgressKey(k, localRaw, cloudRaw, localNewer){
+    if(localRaw == null) return cloudRaw;
+    if(cloudRaw == null) return localRaw;
+    const l = parseJSONSafe(localRaw), c = parseJSONSafe(cloudRaw);
+    if(/^falareal_streak_/.test(k) && l && c){
+      const pick = newerByDate(l, c, 'lastDate', 'streak');
+      return JSON.stringify(Object.assign({}, pick, {
+        xp: Math.max(l.xp || 0, c.xp || 0),
+        bestStreakTier: Math.max(l.bestStreakTier ?? -1, c.bestStreakTier ?? -1)
+      }));
+    }
+    if(/^falareal_dever_(de|en|pt)_v1$/.test(k) && l && c){
+      return JSON.stringify(newerByDate(l, c, 'markedDate', 'streakStudied'));
+    }
+    if(/^falareal_gramatica_/.test(k) && l && c){
+      const base = localNewer ? l : c;
+      return JSON.stringify(Object.assign({}, base, { done: Object.assign({}, c.done || {}, l.done || {}) }));
+    }
+    return localNewer ? localRaw : cloudRaw;
+  }
   function applyCloudProgress(data){
-    if(!data) return;
+    if(!data) return false;
+    let localAt = 0;
+    try{ localAt = parseInt(localStorage.getItem('falareal_saved_at') || '0', 10) || 0; }catch(e){}
+    const cloudAt = parseInt(data['falareal_saved_at'] || '0', 10) || 0;
+    const localNewer = localAt > cloudAt;
+    let keptLocal = false;
     Object.keys(data).forEach(k=>{
-      try{ localStorage.setItem(k, data[k]); }catch(e){}
+      if(k === 'falareal_saved_at') return;
+      try{
+        const localRaw = localStorage.getItem(k);
+        const merged = mergeProgressKey(k, localRaw, data[k], localNewer);
+        if(merged !== data[k]) keptLocal = true;
+        if(merged != null) localStorage.setItem(k, merged);
+      }catch(e){}
     });
+    return keptLocal || localNewer;
   }
 
   function syncToCloud(){
+    try{ localStorage.setItem('falareal_saved_at', String(Date.now())); }catch(e){}
     if(!currentUser || !supabaseClient) return;
     clearTimeout(syncDebounceTimer);
-    syncDebounceTimer = setTimeout(()=>{
+    syncDebounceTimer = setTimeout(uploadProgressNow, 800);
+  }
+  function flushCloudSync(){
+    if(!syncDebounceTimer) return;
+    clearTimeout(syncDebounceTimer);
+    uploadProgressNow();
+  }
+  window.addEventListener('pagehide', flushCloudSync);
+  document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState === 'hidden') flushCloudSync(); });
+  function uploadProgressNow(){
+    syncDebounceTimer = null;
+    if(!currentUser || !supabaseClient) return;
+    {
       const payload = collectLocalProgress();
       supabaseClient.from('user_progress').upsert({
         id: currentUser.id,
@@ -7554,7 +7631,7 @@
       }).then(({ error })=>{
         if(error) handleSyncError(error, 'dynSyncSaveError');
       }).catch(err=> handleSyncError(err, 'dynSyncSaveError'));
-    }, 800);
+    }
   }
 
   // Mostra na tela quando o salvamento/download na nuvem falha (antes falhava em silêncio)
@@ -7586,8 +7663,9 @@
     if(error){ handleSyncError(error, 'dynSyncLoadError'); return; }
 
     if(data && data.data && Object.keys(data.data).length > 0){
-      applyCloudProgress(data.data);
+      const needsUpload = applyCloudProgress(data.data);
       refreshUIFromLocalStorage();
+      if(needsUpload) syncToCloud(); // o aparelho tinha coisa mais nova: manda pra nuvem
     } else {
       syncToCloud();
     }
