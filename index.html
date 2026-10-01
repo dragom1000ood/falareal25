@@ -6,7 +6,7 @@
 <title>Fala Real — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     FalaReal PWA  v12.0.0
+     FalaReal PWA  v12.0.1
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -176,6 +176,12 @@
     .lang-toggle .lt-name{display:none;}
     .site-lang-select{padding:6px 8px;}
     .nav-cta{display:none;}
+  }
+  @media (max-width: 400px){
+    .logo{font-size:1.05rem;}
+    .lang-toggle{gap:2px; padding:3px;}
+    .lang-toggle button{padding:6px 8px;}
+    .site-lang-select{padding:6px 4px; max-width:112px;}
   }
 
   /* language visibility: German is the flagship, shown by default */
@@ -2356,7 +2362,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.0</span></div>
+      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.1</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2901,6 +2907,18 @@
       langNameDe: "Alemão",
       langNameEn: "Inglês",
       langNamePt: "Português",
+      leagueBronze: "Bronze",
+      leaguePrata: "Prata",
+      leagueOuro: "Ouro",
+      leaguePlatina: "Platina",
+      leagueDiamante: "Diamante",
+      milestone3: "Sequência de bronze desbloqueada",
+      milestone7: "Sequência de prata desbloqueada",
+      milestone14: "Sequência de ouro desbloqueada",
+      milestone30: "Sequência lendária desbloqueada",
+      grammarQuizDone: "Você já dominou esse tópico:",
+      grammarQuizTodo: "Acerta tudo pra marcar como estudado:",
+      dynSurpriseBonus: "🎉 Bônus surpresa! +{xp}xp — {title}",
     },
     en: {
       siteLangSelectAria: 'Site language',
@@ -3450,6 +3468,18 @@
       ctaReferralDescPt: "Whoever joins through your link — and you — both move up together.",
       ctaCopyBtnPt: "📋 Copy",
       ctaWhatsappBtnPt: "📲 Invite on WhatsApp",
+      leagueBronze: "Bronze",
+      leaguePrata: "Silver",
+      leagueOuro: "Gold",
+      leaguePlatina: "Platinum",
+      leagueDiamante: "Diamond",
+      milestone3: "Bronze streak unlocked",
+      milestone7: "Silver streak unlocked",
+      milestone14: "Gold streak unlocked",
+      milestone30: "Legendary streak unlocked",
+      grammarQuizDone: "You've already mastered this topic:",
+      grammarQuizTodo: "Get them all right to mark it as studied:",
+      dynSurpriseBonus: "🎉 Surprise bonus! +{xp}xp — {title}",
     },
     es: {
       siteLangSelectAria: 'Idioma del sitio',
@@ -3893,6 +3923,18 @@
       langNameDe: "Alemán",
       langNameEn: "Inglés",
       langNamePt: "Portugués",
+      leagueBronze: "Bronce",
+      leaguePrata: "Plata",
+      leagueOuro: "Oro",
+      leaguePlatina: "Platino",
+      leagueDiamante: "Diamante",
+      milestone3: "Racha de bronce desbloqueada",
+      milestone7: "Racha de plata desbloqueada",
+      milestone14: "Racha de oro desbloqueada",
+      milestone30: "Racha legendaria desbloqueada",
+      grammarQuizDone: "Ya dominas este tema:",
+      grammarQuizTodo: "Acierta todo para marcarlo como estudiado:",
+      dynSurpriseBonus: "🎉 ¡Bono sorpresa! +{xp}xp — {title}",
     },
     de: {
       // v12.0.0 — interface em alemão (pra alemães que aprendem português).
@@ -4224,6 +4266,18 @@
       ctaReferralDescPt: "Wer über deinen Link kommt – und du – rückt gemeinsam nach oben.",
       ctaCopyBtnPt: "📋 Kopieren",
       ctaWhatsappBtnPt: "📲 Per WhatsApp einladen",
+      leagueBronze: "Bronze",
+      leaguePrata: "Silber",
+      leagueOuro: "Gold",
+      leaguePlatina: "Platin",
+      leagueDiamante: "Diamant",
+      milestone3: "Bronze-Serie freigeschaltet",
+      milestone7: "Silber-Serie freigeschaltet",
+      milestone14: "Gold-Serie freigeschaltet",
+      milestone30: "Legendäre Serie freigeschaltet",
+      grammarQuizDone: "Dieses Thema beherrschst du schon:",
+      grammarQuizTodo: "Beantworte alles richtig, um es als gelernt zu markieren:",
+      dynSurpriseBonus: "🎉 Überraschungsbonus! +{xp}xp – {title}",
     },
   };
 
@@ -4237,6 +4291,9 @@
     if (vars) for (const k in vars) str = str.split(`{${k}}`).join(vars[k]);
     return str;
   }
+
+  // t() 'blindado': usar dentro de funções onde a variável local t é um tópico
+  function tt(key, vars){ return t(key, vars); }
 
   function applyInterfaceLanguage(lang) {
     if (!I18N_STRINGS[lang]) lang = 'pt';
@@ -5338,7 +5395,7 @@
 
     const hit = milestones.find(m => m.days === streakData.streak);
     if(hit){
-      rewardToast.textContent = '🏅 ' + hit.label;
+      rewardToast.textContent = '🏅 ' + t('milestone' + hit.days);
       rewardToast.classList.add('show');
       confettiBurst();
     } else if(graceUsed){
@@ -5384,6 +5441,7 @@
     {name:'Diamante', min:2000, icon:'👑'}
   ];
 
+  function leagueName(l){ return t('league' + l.name); }
   // XP das duas línguas somado — o perfil representa a pessoa, não um idioma só
   function totalXPAllLangs(){
     const de = loadStreak('de').xp || 0;
@@ -5403,20 +5461,20 @@
     const txtEl = document.getElementById('league-progress-txt');
     if(!badgeEl) return;
 
-    badgeEl.textContent = t('dynLeagueBadge', {icon: current.icon, name: current.name});
+    badgeEl.textContent = t('dynLeagueBadge', {icon: current.icon, name: leagueName(current)});
     if(next){
       const span = next.min - current.min;
       const pct = Math.min(100, Math.round(((total - current.min) / span) * 100));
       fillEl.style.width = Math.max(0,pct) + '%';
-      txtEl.textContent = t('dynLeagueProgress', {total, min: next.min, name: next.name, icon: next.icon});
+      txtEl.textContent = t('dynLeagueProgress', {total, min: next.min, name: leagueName(next), icon: next.icon});
     } else {
       fillEl.style.width = '100%';
-      txtEl.textContent = t('dynLeagueMaxed', {name: current.name});
+      txtEl.textContent = t('dynLeagueMaxed', {name: leagueName(current)});
     }
 
     const sbLeague = document.getElementById('sidebar-league-badge');
     const sbXp = document.getElementById('sidebar-xp');
-    if(sbLeague) sbLeague.textContent = `${current.icon} ${current.name}`;
+    if(sbLeague) sbLeague.textContent = `${current.icon} ${leagueName(current)}`;
     if(sbXp) sbXp.textContent = total + ' xp';
   }
 
@@ -5831,7 +5889,7 @@
       showFloatingXP(totalXpWon, e.clientX, e.clientY);
 
       rewardToast.textContent = gotBonus
-        ? `🎉 Bônus surpresa! +${totalXpWon}xp — ${chTitle(ch)}`
+        ? t('dynSurpriseBonus', {xp: totalXpWon, title: chTitle(ch)})
         : `🎁 +${ch.xp}xp — ${chTitle(ch)}`;
       rewardToast.classList.add('show');
       confettiBurst();
@@ -6721,7 +6779,7 @@
           <div class="grammar-lesson">
             <p class="grammar-explanation">${t.explanation}</p>
             <ul class="grammar-examples">${examplesHTML}</ul>
-            <div class="grammar-quiz-label">${done ? 'Você já dominou esse tópico:' : 'Acerta tudo pra marcar como estudado:'}</div>
+            <div class="grammar-quiz-label">${done ? tt('grammarQuizDone') : tt('grammarQuizTodo')}</div>
             ${quizHTML}
             ${reorderHTML}
             ${feedbackHTML}
@@ -7024,7 +7082,7 @@
     ctx.fillStyle = '#f4efe6';
     const phrase = currentLang === 'pt' ? t('dynSharePhrasePt') : currentLang === 'de'
       ? 'Ich trainiere echtes Deutsch.'
-      : 'Treinando alemão de verdade.';
+      : 'Treinando inglês de verdade.';
     ctx.fillText(phrase, 92, 680);
 
     // waveform decorativa
@@ -7068,7 +7126,7 @@
     const site = window.location.href;
     const text = currentLang === 'pt' ? t('dynShareWhatsappPt', {n: streakData.streak, site}) : currentLang === 'de'
       ? `🔥 ${streakData.streak} Tage in Folge echtes Deutsch geübt! ${site}`
-      : `🔥 Bati ${streakData.streak} dias seguidos treinando alemão de verdade! ${site}`;
+      : `🔥 Bati ${streakData.streak} dias seguidos treinando inglês de verdade! ${site}`;
     window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
   });
 
@@ -7734,6 +7792,9 @@
 
   // ---- v12: idioma de aprendizado inicial ----
   // Links de divulgação: ?learn=pt (trilha de português) e ?lang=de|en|es|pt (interface)
+  const siteLangSelectEl = document.getElementById('site-lang-select');
+  if(siteLangSelectEl) siteLangSelectEl.addEventListener('change', ()=>{ ptAutoSwitchedInterface = false; });
+
   (function initLearningLang(){
     const params = new URLSearchParams(window.location.search);
     const langParam = params.get('lang');
