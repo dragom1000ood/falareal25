@@ -6,7 +6,7 @@
 <title>Fala Real — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     FalaReal PWA  v12.0.6
+     FalaReal PWA  v12.0.7
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -2379,7 +2379,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.6</span></div>
+      <div class="logo">fala<span>real</span> <span class="version-tag">v12.0.7</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2936,6 +2936,12 @@
       grammarQuizDone: "Você já dominou esse tópico:",
       grammarQuizTodo: "Acerta tudo pra marcar como estudado:",
       dynSurpriseBonus: "🎉 Bônus surpresa! +{xp}xp — {title}",
+      dynAuthNetwork: "Não deu pra falar com o servidor de login (Failed to fetch). Confere sua internet e tenta de novo. Se continuar, o servidor está fora do ar — me avisa pelo 🐞.",
+      dynAuthEmailSend: "A conta não foi criada porque o e-mail de confirmação não conseguiu ser enviado agora (limite de envios do servidor). Tenta de novo daqui a 1 hora.",
+      dynAuthInvalidEmail: "Esse e-mail não parece válido. Confere se digitou certinho.",
+      dynAuthSignupDisabled: "O cadastro de contas novas está desativado no servidor no momento.",
+      dynAuthSignupGeneric: "Não deu pra criar a conta: {msg}",
+      dynAuthLoading: "Aguarde…",
     },
     en: {
       siteLangSelectAria: 'Site language',
@@ -3497,6 +3503,12 @@
       grammarQuizDone: "You've already mastered this topic:",
       grammarQuizTodo: "Get them all right to mark it as studied:",
       dynSurpriseBonus: "🎉 Surprise bonus! +{xp}xp — {title}",
+      dynAuthNetwork: "Couldn't reach the login server (Failed to fetch). Check your connection and try again. If it keeps happening, the server is down — let me know via 🐞.",
+      dynAuthEmailSend: "The account wasn't created because the confirmation email couldn't be sent right now (server sending limit). Try again in an hour.",
+      dynAuthInvalidEmail: "That email doesn't look valid. Check the spelling.",
+      dynAuthSignupDisabled: "New account signups are disabled on the server right now.",
+      dynAuthSignupGeneric: "Couldn't create the account: {msg}",
+      dynAuthLoading: "One moment…",
     },
     es: {
       siteLangSelectAria: 'Idioma del sitio',
@@ -3952,6 +3964,12 @@
       grammarQuizDone: "Ya dominas este tema:",
       grammarQuizTodo: "Acierta todo para marcarlo como estudiado:",
       dynSurpriseBonus: "🎉 ¡Bono sorpresa! +{xp}xp — {title}",
+      dynAuthNetwork: "No se pudo conectar con el servidor de inicio de sesión (Failed to fetch). Revisa tu conexión e inténtalo de nuevo. Si sigue pasando, el servidor está caído — avísame con 🐞.",
+      dynAuthEmailSend: "La cuenta no se creó porque el correo de confirmación no se pudo enviar ahora (límite de envíos del servidor). Inténtalo de nuevo en 1 hora.",
+      dynAuthInvalidEmail: "Ese correo no parece válido. Revisa que esté bien escrito.",
+      dynAuthSignupDisabled: "El registro de cuentas nuevas está desactivado en el servidor ahora mismo.",
+      dynAuthSignupGeneric: "No se pudo crear la cuenta: {msg}",
+      dynAuthLoading: "Un momento…",
     },
     de: {
       // v12.0.0 — interface em alemão (pra alemães que aprendem português).
@@ -4295,6 +4313,12 @@
       grammarQuizDone: "Dieses Thema beherrschst du schon:",
       grammarQuizTodo: "Beantworte alles richtig, um es als gelernt zu markieren:",
       dynSurpriseBonus: "🎉 Überraschungsbonus! +{xp}xp – {title}",
+      dynAuthNetwork: "Der Anmeldeserver ist nicht erreichbar (Failed to fetch). Prüf deine Verbindung und versuch es erneut. Wenn es weiter passiert, ist der Server down – sag mir über 🐞 Bescheid.",
+      dynAuthEmailSend: "Das Konto wurde nicht erstellt, weil die Bestätigungs-E-Mail gerade nicht verschickt werden konnte (Versandlimit des Servers). Versuch es in einer Stunde noch einmal.",
+      dynAuthInvalidEmail: "Diese E-Mail sieht nicht gültig aus. Prüf die Schreibweise.",
+      dynAuthSignupDisabled: "Neue Registrierungen sind auf dem Server gerade deaktiviert.",
+      dynAuthSignupGeneric: "Konto konnte nicht erstellt werden: {msg}",
+      dynAuthLoading: "Einen Moment…",
     },
   };
 
@@ -7798,14 +7822,19 @@
   if(authTabSignup) authTabSignup.addEventListener('click', ()=> setAuthMode('signup'));
 
   // Traduz as mensagens do Supabase (que vêm em inglês) pro idioma da interface
-  function friendlyAuthError(error){
-    const m = (error && error.message) || '';
+  function friendlyAuthError(error, mode){
+    const m = (error && (error.message || error.error_description)) || String(error || '');
+    console.error('[FalaReal auth]', error);
+    if(/failed to fetch|network|load failed|fetch failed|networkerror|timeout/i.test(m) || (error && error.status === 0)) return t('dynAuthNetwork');
+    if(/error sending confirmation|sending.*email|email rate limit/i.test(m)) return t('dynAuthEmailSend');
+    if(/invalid format|unable to validate email|email address .* is invalid|invalid email/i.test(m)) return t('dynAuthInvalidEmail');
+    if(/signups not allowed|signup.*disabled/i.test(m)) return t('dynAuthSignupDisabled');
     if(/invalid login credentials/i.test(m)) return t('dynAuthBadLogin');
     if(/email not confirmed/i.test(m)) return t('dynAuthNotConfirmed');
     if(/already registered|already exists/i.test(m)) return t('dynAuthAlreadyExists');
     if(/password should be at least|weak password/i.test(m)) return t('dynAuthWeakPassword');
     if(/rate limit|too many/i.test(m)) return t('dynAuthRateLimit');
-    return t('dynAuthGeneric', {msg: m});
+    return mode === 'signup' ? t('dynAuthSignupGeneric', {msg: m}) : t('dynAuthGeneric', {msg: m});
   }
 
   if(authForm){
@@ -7815,16 +7844,18 @@
         authError.textContent = t('dynAuthServiceDown');
         return;
       }
-      const email = document.getElementById('auth-email').value.trim();
+      const email = document.getElementById('auth-email').value.trim().toLowerCase();
       const password = document.getElementById('auth-password').value;
       const submitBtn = document.getElementById('auth-submit-btn');
       submitBtn.disabled = true;
+      const submitLabel = submitBtn.textContent;
+      submitBtn.textContent = t('dynAuthLoading');
       authError.textContent = '';
 
       try{
         if(authMode === 'signup'){
           const { data, error } = await supabaseClient.auth.signUp({ email, password });
-          if(error){ authError.textContent = friendlyAuthError(error); return; }
+          if(error){ authError.textContent = friendlyAuthError(error, 'signup'); return; }
           // Com confirmação de e-mail ligada, o Supabase cria a conta mas não abre sessão.
           // Antes o site tratava como logado e tentava salvar sem sessão -> erro ao salvar.
           if(!data.session){
@@ -7845,8 +7876,12 @@
           downloadFromCloud();
           checkFounderStatus();
         }
+      } catch(err){
+        // supabase-js às vezes lança em vez de devolver {error} (ex.: sem internet no app instalado)
+        authError.textContent = friendlyAuthError(err, authMode);
       } finally {
         submitBtn.disabled = false;
+        if(submitBtn.textContent === t('dynAuthLoading')) submitBtn.textContent = submitLabel;
       }
     });
   }
