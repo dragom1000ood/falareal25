@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bem-vindo à fase fundadora — Fala Real</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/favicon-32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12181f; --ink-soft:#1c2530; --paper:#f4efe6;
+    --amber:#f0a63a; --teal:#3e6b63; --rust:#c1483d;
+    --line: rgba(244,239,230,0.14);
+    --mono:'IBM Plex Mono', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    background:var(--ink); color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif; line-height:1.55;
+    min-height:100vh; display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .card{
+    max-width:560px; width:100%;
+    border:1px solid rgba(240,166,58,0.35); border-radius:24px;
+    background:linear-gradient(180deg, rgba(240,166,58,0.08), var(--ink-soft));
+    padding:48px 36px;
+  }
+  .lang-toggle{
+    display:flex; gap:4px; background:var(--ink-soft); border:1px solid var(--line);
+    padding:4px; border-radius:100px; width:fit-content; margin:0 auto 28px;
+  }
+  .lang-toggle button{
+    font-family:var(--mono); font-size:0.76rem; letter-spacing:0.02em;
+    background:transparent; border:none; color:rgba(244,239,230,0.5);
+    padding:7px 14px; border-radius:100px; cursor:pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .lang-toggle button.active{background:var(--amber); color:var(--ink);}
+  /* idioma: alemão é o padrão, igual ao site principal */
+  body.lang-en .lang-de{display:none;}
+  body.lang-de .lang-en{display:none;}
+  .emoji{font-size:2.6rem; margin-bottom:16px;}
+  h1{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.9rem;
+    line-height:1.2; margin-bottom:14px;
+  }
+  .lede{color:rgba(244,239,230,0.75); font-size:1rem; margin-bottom:32px;}
+  h2{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.1rem;
+    margin:28px 0 14px;
+  }
+  ol{padding-left:20px; margin-bottom:8px;}
+  ol li{margin-bottom:12px; font-size:0.95rem; color:rgba(244,239,230,0.85);}
+  .whatsapp-btn{
+    display:block; text-align:center; margin:0 0 14px;
+    font-family:'IBM Plex Sans', sans-serif; font-weight:600; font-size:0.98rem;
+    background:var(--amber); color:var(--ink); padding:15px 24px; border-radius:100px;
+    text-decoration:none;
+  }
+  .refund-box{
+    margin-top:28px; padding:16px 20px; border:1px dashed rgba(244,239,230,0.25);
+    border-radius:12px; font-size:0.85rem; color:rgba(244,239,230,0.6);
+  }
+  .refund-box strong{color:var(--paper);}
+  .contact{margin-top:24px; font-family:'IBM Plex Mono', monospace; font-size:0.85rem; color:rgba(244,239,230,0.55);}
+  .contact a{color:var(--amber); text-decoration:none;}
+  .logo{
+    font-family:'Fraunces', serif; font-weight:600; font-size:1.1rem; margin-top:36px;
+    text-align:center; color:rgba(244,239,230,0.4);
+  }
+  .logo span{color:var(--amber);}
+</style>
+</head>
+<body class="lang-de">
+
+<div class="card">
+  <div class="lang-toggle" role="group" aria-label="Escolher idioma">
+    <button type="button" class="active" data-lang-btn="de">🇩🇪 Alemão</button>
+    <button type="button" data-lang-btn="en">🇬🇧 Inglês</button>
+  </div>
+
+  <div class="lang-de">
+    <div class="emoji">🎉</div>
+    <h1>Bem-vindo(a) à fase fundadora!</h1>
+    <p class="lede">Seu pagamento foi confirmado — muito obrigado pela confiança. Isso significa muito nessa fase inicial.</p>
+
+    <h2>O que acontece agora</h2>
+    <ol>
+      <li><strong>O app ainda está em construção.</strong> Hoje você garantiu seu preço e sua vaga como fundador(a) — não o acesso imediato ao app. Ele ainda não existe de verdade, só essa fase de validação.</li>
+      <li>Assim que a primeira versão estiver pronta pra testar, eu entro em contato direto com você pelo e-mail usado no pagamento.</li>
+      <li>Enquanto isso, você pode entrar no grupo exclusivo de fundadores, pra acompanhar de perto o que está sendo construído e dar sua opinião.</li>
+    </ol>
+
+    <p style="font-size:0.85rem; color:rgba(244,239,230,0.55); margin:24px 0 12px;">Escolha o grupo do seu foco:</p>
+    <a href="https://chat.whatsapp.com/IcLGGrxhBo8Lfyy9O9datY" class="whatsapp-btn">🇩🇪 Grupo — Alemão</a>
+    <a href="https://chat.whatsapp.com/ECudbucghDhJa6C2SS0slm" class="whatsapp-btn">🇬🇧 Grupo — Inglês</a>
+
+    <div class="refund-box">
+      <strong>Direito de arrependimento:</strong> você pode pedir reembolso total em até 14 dias, sem precisar justificar — é só mandar um e-mail. Se o desenvolvimento demorar muito mais do que o esperado, também garanto reembolso, mesmo fora desse prazo.
+    </div>
+
+    <p class="contact">Dúvidas? <a href="mailto:wagneralbu2@gmail.com">wagneralbu2@gmail.com</a></p>
+  </div>
+
+  <div class="lang-en">
+    <div class="emoji">🎉</div>
+    <h1>Welcome to the founder phase!</h1>
+    <p class="lede">Your payment was confirmed — thank you so much for trusting us. That means a lot at this early stage.</p>
+
+    <h2>What happens now</h2>
+    <ol>
+      <li><strong>The app is still being built.</strong> Today you locked in your price and your spot as a founder — not immediate access to the app. It doesn't really exist yet, only this validation phase.</li>
+      <li>As soon as the first testable version is ready, I'll reach out to you directly at the email you used at checkout.</li>
+      <li>In the meantime, you can join the exclusive founders' group to follow what's being built up close and share your feedback.</li>
+    </ol>
+
+    <p style="font-size:0.85rem; color:rgba(244,239,230,0.55); margin:24px 0 12px;">Pick the group for your track:</p>
+    <a href="https://chat.whatsapp.com/IcLGGrxhBo8Lfyy9O9datY" class="whatsapp-btn">🇩🇪 German group</a>
+    <a href="https://chat.whatsapp.com/ECudbucghDhJa6C2SS0slm" class="whatsapp-btn">🇬🇧 English group</a>
+
+    <div class="refund-box">
+      <strong>Right to a refund:</strong> you can request a full refund within 14 days, no questions asked — just send an email. If development ends up taking much longer than expected, I'll also guarantee a refund, even outside that window.
+    </div>
+
+    <p class="contact">Questions? <a href="mailto:wagneralbu2@gmail.com">wagneralbu2@gmail.com</a></p>
+  </div>
+
+  <div class="logo">fala<span>real</span></div>
+</div>
+
+<script>
+  var TITLES = { de: 'Bem-vindo à fase fundadora — Fala Real', en: 'Welcome to the founder phase — Fala Real' };
+  var langButtons = document.querySelectorAll('[data-lang-btn]');
+  langButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var lang = btn.getAttribute('data-lang-btn');
+      document.body.classList.remove('lang-de', 'lang-en');
+      document.body.classList.add('lang-' + lang);
+      langButtons.forEach(function(b){ b.classList.toggle('active', b === btn); });
+      document.title = TITLES[lang] || TITLES.de;
+      document.documentElement.lang = (lang === 'en') ? 'en' : 'pt-BR';
+    });
+  });
+</script>
+
+</body>
+</html>
