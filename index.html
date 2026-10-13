@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.1.0
+     Falaut PWA  v13.1.1
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -2389,7 +2389,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.1.0</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.1.1</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -7609,19 +7609,44 @@
     if(ld !== cd) return ld > cd ? l : c;
     return (l[countField] || 0) >= (c[countField] || 0) ? l : c;
   }
+  // v13.1.1: o "mais novo ganha" sozinho zerava a sequência. Se um aparelho marcava o dia
+  // com dados velhos (sem internet, logou depois de estudar, app instalado x Safari, ou
+  // o iPhone apagou o armazenamento), ele gravava sequência 1 com a data de HOJE — e
+  // essa data mais nova passava por cima da sequência certa da nuvem, todo dia.
+  // Agora, se as duas sequências se encostam no calendário, elas são somadas.
+  function dayDiff(a, b){
+    const pa = String(a).slice(0,10).split('-').map(Number);
+    const pb = String(b).slice(0,10).split('-').map(Number);
+    if(pa.length < 3 || pb.length < 3 || pa.some(isNaN) || pb.some(isNaN)) return NaN;
+    return Math.round((Date.UTC(pb[0], pb[1]-1, pb[2]) - Date.UTC(pa[0], pa[1]-1, pa[2])) / 86400000);
+  }
+  function mergeRun(l, c, dateField, countField){
+    const pick = newerByDate(l, c, dateField, countField);
+    const other = pick === l ? c : l;
+    const pickN = pick[countField] || 0, otherN = other[countField] || 0;
+    if(!pick[dateField] || !other[dateField] || pickN < 1 || otherN < 1) return pick;
+    if(pick[dateField] === other[dateField]) return pick; // mesmo dia: newerByDate já pegou o maior
+    // dias entre o começo da sequência mais nova e o último dia da mais velha
+    const gap = dayDiff(other[dateField], pick[dateField]) - (pickN - 1);
+    const tolerance = (typeof isFounder !== 'undefined' && isFounder) ? 2 : 1;
+    if(isNaN(gap) || gap > tolerance) return pick; // não se encostam: a velha realmente quebrou
+    const overlap = gap <= 0 ? (1 - gap) : 0;     // dias contados nos dois aparelhos
+    const merged = Math.max(pickN, otherN, pickN + otherN - overlap);
+    return Object.assign({}, pick, { [countField]: merged });
+  }
   function mergeProgressKey(k, localRaw, cloudRaw, localNewer){
     if(localRaw == null) return cloudRaw;
     if(cloudRaw == null) return localRaw;
     const l = parseJSONSafe(localRaw), c = parseJSONSafe(cloudRaw);
     if(/^falareal_streak_/.test(k) && l && c){
-      const pick = newerByDate(l, c, 'lastDate', 'streak');
+      const pick = mergeRun(l, c, 'lastDate', 'streak');
       return JSON.stringify(Object.assign({}, pick, {
         xp: Math.max(l.xp || 0, c.xp || 0),
         bestStreakTier: Math.max(l.bestStreakTier ?? -1, c.bestStreakTier ?? -1)
       }));
     }
     if(/^falareal_dever_(de|en|pt)_v1$/.test(k) && l && c){
-      return JSON.stringify(newerByDate(l, c, 'markedDate', 'streakStudied'));
+      return JSON.stringify(mergeRun(l, c, 'markedDate', 'streakStudied'));
     }
     if(/^falareal_gramatica_/.test(k) && l && c){
       const base = localNewer ? l : c;
