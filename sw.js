@@ -1,5 +1,5 @@
 /* ============================================================
-   Falaut — Service Worker  (v13.1.1)
+   Falaut — Service Worker  (v13.2.0)
    ============================================================
 
    ÚNICA COISA QUE VOCÊ PRECISA MEXER A CADA DEPLOY:
@@ -28,7 +28,7 @@
    embaixo do usuário no meio de um exercício.
    ============================================================ */
 
-const CACHE_VERSION = 'falaut-v13.1.1';
+const CACHE_VERSION = 'falaut-v13.2.0';
 const OFFLINE_URL   = '/offline.html';
 const NAV_TIMEOUT   = 4000;
 
@@ -133,4 +133,64 @@ self.addEventListener('fetch', (event) => {
     return;
   }
   event.respondWith(handleAsset(req));
+});
+
+/* ---------- v13.2.0: lembrete diário (Web Push) ----------
+   O servidor (/api/push-cron) manda um JSON criptografado:
+   { title, body, url, tag }. Se vier vazio, mostra o texto padrão. */
+self.addEventListener('push', (event) => {
+  let data = {};
+  try { data = event.data ? event.data.json() : {}; } catch (e) {
+    data = { body: event.data ? event.data.text() : '' };
+  }
+  const title = data.title || 'Falaut 🔥';
+  const options = {
+    body: data.body || 'Ainda dá tempo de treinar hoje e manter sua sequência!',
+    icon: '/icons/icon-192.png',
+    badge: '/icons/icon-192.png',
+    tag: data.tag || 'falaut-daily',
+    renotify: true,
+    data: { url: data.url || '/#experimente' }
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const target = new URL((event.notification.data && event.notification.data.url) || '/', self.location.origin).href;
+  event.waitUntil(
+    (async () => {
+      const all = await self.clients.matchAll({ type: 'window', includeUncontrolled: true });
+      for (const c of all) {
+        if (new URL(c.url).origin === self.location.origin) {
+          await c.focus();
+          if ('navigate' in c) { try { await c.navigate(target); } catch (e) {} }
+          return;
+        }
+      }
+      await self.clients.openWindow(target);
+    })()
+  );
+});
+
+/* se o navegador trocar a inscrição sozinho, avisa o servidor */
+self.addEventListener('pushsubscriptionchange', (event) => {
+  event.waitUntil(
+    (async () => {
+      try {
+        const sub = event.newSubscription ||
+          (event.oldSubscription && await self.registration.pushManager.subscribe(event.oldSubscription.options));
+        if (!sub) return;
+        await fetch('/api/push-subscribe', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'resubscribe',
+            oldEndpoint: event.oldSubscription ? event.oldSubscription.endpoint : null,
+            subscription: sub.toJSON()
+          })
+        });
+      } catch (e) {}
+    })()
+  );
 });

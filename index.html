@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.1.1
+     Falaut PWA  v13.2.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -457,6 +457,39 @@
     transition: background .2s ease, border-color .2s ease;
   }
   .streak-dots .dot.filled{background:var(--amber); border-color:var(--amber);}
+  /* v13.2.0: semana real + calendário do mês + congelar + lembrete */
+  .streak-dots.week{gap:6px; margin-bottom:14px; max-width:340px;}
+  .wk-day{flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; min-width:0;}
+  .wk-day .wk-l{font-family:var(--mono); font-size:0.66rem; color:rgba(244,239,230,0.45); text-transform:uppercase;}
+  .wk-day .dot{width:100%; max-width:30px; height:auto; aspect-ratio:1; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.72rem;}
+  .wk-day.today .wk-l{color:var(--amber);}
+  .wk-day.today .dot{border-color:var(--amber); border-width:2px;}
+  .dot.frozen, .cal-cell.frozen{background:rgba(127,179,213,0.22); border-color:#7fb3d5;}
+  .dot.future{opacity:0.35;}
+  .streak-tools{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;}
+  .streak-tool{
+    font-family:var(--body); font-size:0.82rem; color:var(--cream, #f4efe6); background:transparent;
+    border:1px solid var(--line); border-radius:100px; padding:7px 13px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+  }
+  .streak-tool:hover{border-color:rgba(240,166,58,0.6);}
+  .streak-tool.on{border-color:var(--amber); color:var(--amber);}
+  .streak-tool:disabled{opacity:0.5; cursor:default;}
+  .freeze-info{font-family:var(--mono); font-size:0.72rem; color:rgba(244,239,230,0.45); margin-bottom:16px; min-height:1em;}
+  .month-cal{border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:18px; background:rgba(0,0,0,0.12);}
+  .month-cal[hidden]{display:none;}
+  .month-cal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
+  .month-title{font-family:var(--display); font-size:1.05rem; text-transform:capitalize;}
+  .month-nav{background:none; border:1px solid var(--line); color:inherit; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:1.1rem; line-height:1;}
+  .month-nav:disabled{opacity:0.3; cursor:default;}
+  .month-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:5px;}
+  .cal-h{font-family:var(--mono); font-size:0.64rem; text-align:center; color:rgba(244,239,230,0.45); text-transform:uppercase; padding-bottom:2px;}
+  .cal-cell{aspect-ratio:1; border-radius:8px; border:1px solid transparent; display:flex; align-items:center; justify-content:center; font-family:var(--mono); font-size:0.74rem; color:rgba(244,239,230,0.6);}
+  .cal-cell.in{border-color:var(--line);}
+  .cal-cell.done{background:var(--amber); border-color:var(--amber); color:#1b1408; font-weight:600;}
+  .cal-cell.today{outline:2px solid var(--amber); outline-offset:1px;}
+  .cal-cell.future{opacity:0.35;}
+  .month-foot{font-family:var(--mono); font-size:0.72rem; color:rgba(244,239,230,0.55); margin-top:10px; display:flex; flex-wrap:wrap; gap:4px 14px;}
   .xp-row{display:flex; align-items:center; gap:12px; margin-bottom:22px;}
   .xp-bar-track{flex:1; height:8px; border-radius:100px; background:var(--ink); border:1px solid var(--line); overflow:hidden;}
   .xp-bar-fill{height:100%; width:0%; background:var(--teal); border-radius:100px; transition:width .4s ease;}
@@ -1782,7 +1815,22 @@
           </div>
         </div>
 
-        <div class="streak-dots" id="streak-dots"></div>
+        <div class="streak-dots week" id="streak-dots"></div>
+        <div class="streak-tools" id="streak-tools">
+          <button type="button" class="streak-tool" id="cal-toggle-btn" aria-expanded="false"></button>
+          <button type="button" class="streak-tool" id="freeze-btn"></button>
+          <button type="button" class="streak-tool" id="reminder-btn"></button>
+        </div>
+        <div class="freeze-info" id="freeze-info"></div>
+        <div class="month-cal" id="month-cal" hidden>
+          <div class="month-cal-head">
+            <button type="button" class="month-nav" id="cal-prev" aria-label="‹">‹</button>
+            <div class="month-title" id="cal-title"></div>
+            <button type="button" class="month-nav" id="cal-next" aria-label="›">›</button>
+          </div>
+          <div class="month-grid" id="cal-grid"></div>
+          <div class="month-foot" id="cal-foot"></div>
+        </div>
         <div class="streak-shield" id="streak-shield" data-i18n="streakShielded">🛡️ Sequência protegida — como fundador, faltar 1 dia não derruba sua sequência.</div>
 
         <div class="xp-row">
@@ -2389,7 +2437,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.1.1</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.2.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -4332,6 +4380,76 @@
     },
   };
 
+  // v13.2.0: textos do calendário, congelador e lembrete — nos 4 idiomas da interface
+  Object.assign(I18N_STRINGS.pt, {
+    calShow: '📅 Ver mês', calHide: '📅 Fechar mês',
+    calMonthDone: '🔥 {n} dia(s) treinados', calMonthFrozen: '❄️ {n} congelado(s)',
+    freezeBuy: '❄️ Congelar série · {cost} xp ({n}/{max})', freezeFull: '❄️ {n}/{max} congeladores prontos',
+    freezeInfo: 'Congelador salva 1 dia perdido sozinho · {xp} xp pra gastar',
+    dynFreezeBought: '❄️ Congelador comprado! Você tem {n}/{max}. Se faltar um dia, ele salva sua sequência.',
+    dynFreezeNoXp: 'Faltou XP: um congelador custa {cost} xp e você tem {xp} pra gastar. Treina mais um pouco!',
+    dynFreezeUsed: '❄️ Congelador usado ({n}) — sua sequência continua viva!',
+    reminderOff: '🔔 Lembrete diário', reminderOn: '🔔 Lembrete ligado',
+    dynReminderEnabled: '🔔 Pronto! Se você não treinar, te lembro à noite (~20h).',
+    dynReminderDisabled: '🔕 Lembrete desligado.',
+    dynReminderIosInstall: 'No iPhone o lembrete só funciona com o app instalado: adiciona o Falaut à Tela de Início e abre por lá.',
+    dynReminderUnsupported: 'Este navegador não aceita notificações. Tenta pelo Chrome ou pelo app instalado.',
+    dynReminderBlocked: 'As notificações estão bloqueadas. Libera nas configurações do navegador/celular e tenta de novo.',
+    dynReminderError: 'Não deu pra ligar o lembrete agora. Tenta de novo daqui a pouco.',
+    dynReminderUpdateApp: '🔔 Lembrete ligado — toca em "Atualizar" quando aparecer o aviso de nova versão.'
+  });
+  Object.assign(I18N_STRINGS.en, {
+    calShow: '📅 View month', calHide: '📅 Close month',
+    calMonthDone: '🔥 {n} day(s) practiced', calMonthFrozen: '❄️ {n} frozen',
+    freezeBuy: '❄️ Streak freeze · {cost} xp ({n}/{max})', freezeFull: '❄️ {n}/{max} freezes ready',
+    freezeInfo: 'A freeze saves 1 missed day automatically · {xp} xp to spend',
+    dynFreezeBought: "❄️ Freeze bought! You have {n}/{max}. If you miss a day, it saves your streak.",
+    dynFreezeNoXp: "Not enough XP: a freeze costs {cost} xp and you have {xp} to spend. Keep practicing!",
+    dynFreezeUsed: '❄️ Freeze used ({n}) — your streak is still alive!',
+    reminderOff: '🔔 Daily reminder', reminderOn: '🔔 Reminder on',
+    dynReminderEnabled: "🔔 Done! If you haven't practiced, I'll remind you in the evening (~8 pm).",
+    dynReminderDisabled: '🔕 Reminder turned off.',
+    dynReminderIosInstall: 'On iPhone, reminders only work in the installed app: add Falaut to your Home Screen and open it from there.',
+    dynReminderUnsupported: "This browser doesn't support notifications. Try Chrome or the installed app.",
+    dynReminderBlocked: 'Notifications are blocked. Allow them in your browser/phone settings and try again.',
+    dynReminderError: "Couldn't turn on the reminder right now. Try again in a moment.",
+    dynReminderUpdateApp: '🔔 Reminder on — tap "Atualizar" on the new-version notice shows up.'
+  });
+  Object.assign(I18N_STRINGS.es, {
+    calShow: '📅 Ver mes', calHide: '📅 Cerrar mes',
+    calMonthDone: '🔥 {n} día(s) entrenados', calMonthFrozen: '❄️ {n} congelado(s)',
+    freezeBuy: '❄️ Congelar racha · {cost} xp ({n}/{max})', freezeFull: '❄️ {n}/{max} congeladores listos',
+    freezeInfo: 'Un congelador salva 1 día perdido solo · {xp} xp para gastar',
+    dynFreezeBought: '❄️ ¡Congelador comprado! Tienes {n}/{max}. Si faltas un día, salva tu racha.',
+    dynFreezeNoXp: 'Te falta XP: un congelador cuesta {cost} xp y tienes {xp} para gastar. ¡Sigue entrenando!',
+    dynFreezeUsed: '❄️ Congelador usado ({n}) — ¡tu racha sigue viva!',
+    reminderOff: '🔔 Recordatorio diario', reminderOn: '🔔 Recordatorio activo',
+    dynReminderEnabled: '🔔 ¡Listo! Si no entrenas, te aviso por la noche (~20 h).',
+    dynReminderDisabled: '🔕 Recordatorio desactivado.',
+    dynReminderIosInstall: 'En iPhone el recordatorio solo funciona con la app instalada: añade Falaut a la pantalla de inicio y ábrela desde ahí.',
+    dynReminderUnsupported: 'Este navegador no admite notificaciones. Prueba con Chrome o con la app instalada.',
+    dynReminderBlocked: 'Las notificaciones están bloqueadas. Actívalas en los ajustes del navegador/móvil y vuelve a intentarlo.',
+    dynReminderError: 'No se pudo activar el recordatorio ahora. Inténtalo de nuevo en un rato.',
+    dynReminderUpdateApp: '🔔 Recordatorio activo — toca "Atualizar" cuando aparezca el aviso de nueva versión.'
+  });
+  Object.assign(I18N_STRINGS.de, {
+    calShow: '📅 Monat ansehen', calHide: '📅 Monat schließen',
+    calMonthDone: '🔥 {n} Tag(e) trainiert', calMonthFrozen: '❄️ {n} eingefroren',
+    freezeBuy: '❄️ Serie einfrieren · {cost} xp ({n}/{max})', freezeFull: '❄️ {n}/{max} Freezes bereit',
+    freezeInfo: 'Ein Freeze rettet automatisch 1 verpassten Tag · {xp} xp verfügbar',
+    dynFreezeBought: '❄️ Freeze gekauft! Du hast {n}/{max}. Verpasst du einen Tag, rettet er deine Serie.',
+    dynFreezeNoXp: 'Zu wenig XP: Ein Freeze kostet {cost} xp, du hast {xp} verfügbar. Weiter üben!',
+    dynFreezeUsed: '❄️ Freeze eingesetzt ({n}) – deine Serie lebt weiter!',
+    reminderOff: '🔔 Tägliche Erinnerung', reminderOn: '🔔 Erinnerung an',
+    dynReminderEnabled: '🔔 Fertig! Wenn du nicht trainiert hast, erinnere ich dich abends (~20 Uhr).',
+    dynReminderDisabled: '🔕 Erinnerung ausgeschaltet.',
+    dynReminderIosInstall: 'Auf dem iPhone funktioniert die Erinnerung nur in der installierten App: Falaut zum Home-Bildschirm hinzufügen und von dort öffnen.',
+    dynReminderUnsupported: 'Dieser Browser unterstützt keine Benachrichtigungen. Versuch es mit Chrome oder der installierten App.',
+    dynReminderBlocked: 'Benachrichtigungen sind blockiert. Erlaube sie in den Browser-/Handy-Einstellungen und versuch es erneut.',
+    dynReminderError: 'Die Erinnerung konnte gerade nicht eingeschaltet werden. Versuch es gleich noch einmal.',
+    dynReminderUpdateApp: '🔔 Erinnerung an – tippe auf „Atualizar“, wenn der Hinweis zur neuen Version erscheint.'
+  });
+
   // currentSiteLang mirrors whatever applyInterfaceLanguage() last applied, so
   // dynamic (JS-generated) UI text built with t() below is locale-correct at
   // the moment it runs.
@@ -5271,14 +5389,46 @@
   }
   function todayStr(){ return localDateStr(new Date()); }
   function daysBetween(a,b){ return Math.round((new Date(b) - new Date(a)) / 86400000); }
+  // v13.2.0: soma dias numa data "AAAA-MM-DD" sem passar por fuso/horário de verão
+  function shiftDateStr(dateStr, n){
+    const p = String(dateStr).split('-').map(Number);
+    return localDateStr(new Date(p[0], p[1]-1, p[2] + n));
+  }
+
+  // v13.2.0: histórico de dias treinados (calendário), dias congelados (❄️),
+  // congeladores guardados e XP já gasto em congeladores.
+  const FREEZE_COST = 100;   // xp por congelador
+  const FREEZE_MAX = 2;      // quantos dá pra guardar ao mesmo tempo
+  const DAYS_KEEP = 400;     // quanto histórico guardar no aparelho
+  function normalizeStreak(data){
+    if(!data || typeof data !== 'object') data = {};
+    if(typeof data.streak !== 'number') data.streak = 0;
+    if(typeof data.xp !== 'number') data.xp = 0;
+    if(data.lastDate === undefined) data.lastDate = null;
+    if(data.bestStreakTier === undefined) data.bestStreakTier = -1;
+    if(typeof data.freezes !== 'number') data.freezes = 0;
+    if(typeof data.xpSpent !== 'number') data.xpSpent = 0;
+    if(!Array.isArray(data.frozen)) data.frozen = [];
+    if(!Array.isArray(data.days)){
+      // quem já tinha sequência antes da v13.2.0: reconstrói os últimos N dias
+      data.days = [];
+      if(data.lastDate && data.streak > 0){
+        for(let i = Math.min(data.streak, DAYS_KEEP) - 1; i >= 0; i--) data.days.push(shiftDateStr(data.lastDate, -i));
+      }
+    }
+    return data;
+  }
+  function addDay(list, day){
+    if(!list.includes(day)) list.push(day);
+    list.sort();
+    while(list.length > DAYS_KEEP) list.shift();
+  }
 
   function loadStreak(lang){
     try{
       const raw = localStorage.getItem(STREAK_KEYS[lang]);
-      const data = raw ? JSON.parse(raw) : {streak:0, xp:0, lastDate:null, bestStreakTier:-1};
-      if(data.bestStreakTier === undefined) data.bestStreakTier = -1;
-      return data;
-    }catch(e){ return {streak:0, xp:0, lastDate:null, bestStreakTier:-1}; }
+      return normalizeStreak(raw ? JSON.parse(raw) : null);
+    }catch(e){ return normalizeStreak(null); }
   }
   function saveStreak(lang, data){
     try{ localStorage.setItem(STREAK_KEYS[lang], JSON.stringify(data)); }catch(e){}
@@ -5296,7 +5446,7 @@
     if(seed !== null){
       const n = parseInt(seed, 10);
       if(!isNaN(n) && n >= 0){
-        const seeded = { streak: n, xp: n * 10, lastDate: todayStr(), bestStreakTier: -1 };
+        const seeded = normalizeStreak({ streak: n, xp: n * 10, lastDate: todayStr(), bestStreakTier: -1 });
         saveStreak('de', seeded);
         saveStreak('en', seeded);
         streakData = seeded;
@@ -5394,17 +5544,264 @@
     }
   }
 
+  // ---- v13.2.0: SEMANA, CALENDÁRIO DO MÊS, CONGELADOR ❄️ ----
+  var calendarOpen = false;
+  var calendarMonth = null; // {y, m} mostrado no calendário
+  function weekdayNames(){
+    // seg → dom, no idioma da interface, sem precisar de tradução manual
+    const base = new Date(2024, 0, 1); // 1/1/2024 foi segunda-feira
+    let fmt;
+    try{ fmt = new Intl.DateTimeFormat(currentSiteLang, {weekday:'narrow'}); }catch(e){ fmt = new Intl.DateTimeFormat('pt', {weekday:'narrow'}); }
+    return Array.from({length:7}, (_, i)=> fmt.format(new Date(base.getFullYear(), 0, 1 + i)));
+  }
+  function mondayOf(dateStr){
+    const p = dateStr.split('-').map(Number);
+    const d = new Date(p[0], p[1]-1, p[2]);
+    const dow = (d.getDay() + 6) % 7; // 0 = segunda
+    return shiftDateStr(dateStr, -dow);
+  }
+  function dayState(day, today){
+    if(day > today) return 'future';
+    if(streakData.days.includes(day)) return 'done';
+    if(streakData.frozen.includes(day)) return 'frozen';
+    return 'empty';
+  }
+  function renderWeekDots(){
+    const today = todayStr();
+    const monday = mondayOf(today);
+    const names = weekdayNames();
+    streakDotsEl.innerHTML = '';
+    for(let i = 0; i < 7; i++){
+      const day = shiftDateStr(monday, i);
+      const st = dayState(day, today);
+      const wrap = document.createElement('div');
+      wrap.className = 'wk-day' + (day === today ? ' today' : '');
+      const dot = document.createElement('div');
+      dot.className = 'dot' + (st === 'done' ? ' filled' : st === 'frozen' ? ' frozen' : st === 'future' ? ' future' : '');
+      if(st === 'frozen') dot.textContent = '❄';
+      dot.title = day;
+      const l = document.createElement('span');
+      l.className = 'wk-l';
+      l.textContent = names[i];
+      wrap.appendChild(l); wrap.appendChild(dot);
+      streakDotsEl.appendChild(wrap);
+    }
+  }
+  function renderMonthCalendar(){
+    const grid = document.getElementById('cal-grid');
+    const title = document.getElementById('cal-title');
+    const foot = document.getElementById('cal-foot');
+    if(!grid) return;
+    const today = todayStr();
+    const tp = today.split('-').map(Number);
+    if(!calendarMonth) calendarMonth = {y: tp[0], m: tp[1]-1};
+    const {y, m} = calendarMonth;
+    let fmt;
+    try{ fmt = new Intl.DateTimeFormat(currentSiteLang, {month:'long', year:'numeric'}); }catch(e){ fmt = new Intl.DateTimeFormat('pt', {month:'long', year:'numeric'}); }
+    title.textContent = fmt.format(new Date(y, m, 1));
+    grid.innerHTML = '';
+    weekdayNames().forEach(n=>{ const h = document.createElement('div'); h.className = 'cal-h'; h.textContent = n; grid.appendChild(h); });
+    const lead = (new Date(y, m, 1).getDay() + 6) % 7;
+    const daysInMonth = new Date(y, m + 1, 0).getDate();
+    for(let i = 0; i < lead; i++) grid.appendChild(document.createElement('div'));
+    let done = 0, frozen = 0;
+    for(let d = 1; d <= daysInMonth; d++){
+      const day = localDateStr(new Date(y, m, d));
+      const st = dayState(day, today);
+      if(st === 'done') done++;
+      if(st === 'frozen') frozen++;
+      const c = document.createElement('div');
+      c.className = 'cal-cell in ' + st + (day === today ? ' today' : '');
+      c.textContent = st === 'frozen' ? '❄' : d;
+      c.title = day;
+      grid.appendChild(c);
+    }
+    foot.innerHTML = '';
+    const a = document.createElement('span'); a.textContent = t('calMonthDone', {n: done}); foot.appendChild(a);
+    if(frozen){ const b = document.createElement('span'); b.textContent = t('calMonthFrozen', {n: frozen}); foot.appendChild(b); }
+    // não deixa ir pro futuro, nem antes do primeiro dia registrado
+    const first = streakData.days[0] || today;
+    const fp = first.split('-').map(Number);
+    document.getElementById('cal-next').disabled = (y > tp[0]) || (y === tp[0] && m >= tp[1]-1);
+    document.getElementById('cal-prev').disabled = (y < fp[0]) || (y === fp[0] && m <= fp[1]-1);
+  }
+  function freezeAvailableXp(){ return Math.max(0, (streakData.xp || 0) - (streakData.xpSpent || 0)); }
+  function renderStreakTools(){
+    const calBtn = document.getElementById('cal-toggle-btn');
+    const frzBtn = document.getElementById('freeze-btn');
+    const info = document.getElementById('freeze-info');
+    if(calBtn){
+      calBtn.textContent = calendarOpen ? t('calHide') : t('calShow');
+      calBtn.setAttribute('aria-expanded', calendarOpen ? 'true' : 'false');
+      calBtn.classList.toggle('on', calendarOpen);
+    }
+    if(frzBtn){
+      const n = streakData.freezes || 0;
+      frzBtn.textContent = n >= FREEZE_MAX ? t('freezeFull', {n, max: FREEZE_MAX}) : t('freezeBuy', {n, max: FREEZE_MAX, cost: FREEZE_COST});
+      frzBtn.disabled = n >= FREEZE_MAX;
+      frzBtn.classList.toggle('on', n > 0);
+    }
+    if(info) info.textContent = t('freezeInfo', {xp: freezeAvailableXp()});
+    if(typeof renderReminderBtn === 'function') renderReminderBtn();
+  }
+  function buyFreeze(e){
+    if((streakData.freezes || 0) >= FREEZE_MAX) return;
+    if(freezeAvailableXp() < FREEZE_COST){
+      rewardToast.textContent = t('dynFreezeNoXp', {cost: FREEZE_COST, xp: freezeAvailableXp()});
+    } else {
+      streakData.freezes = (streakData.freezes || 0) + 1;
+      streakData.xpSpent = (streakData.xpSpent || 0) + FREEZE_COST;
+      saveStreak(currentLang, streakData);
+      rewardToast.textContent = t('dynFreezeBought', {n: streakData.freezes, max: FREEZE_MAX});
+      renderStreakTools();
+    }
+    rewardToast.classList.add('show');
+    setTimeout(()=> rewardToast.classList.remove('show'), 3600);
+  }
+  (function wireStreakTools(){
+    const calBtn = document.getElementById('cal-toggle-btn');
+    const cal = document.getElementById('month-cal');
+    if(calBtn && cal) calBtn.addEventListener('click', ()=>{
+      calendarOpen = !calendarOpen;
+      cal.hidden = !calendarOpen;
+      if(calendarOpen){ calendarMonth = null; renderMonthCalendar(); }
+      renderStreakTools();
+    });
+    const step = (dir)=>{
+      if(!calendarMonth) return;
+      let {y, m} = calendarMonth; m += dir;
+      if(m < 0){ m = 11; y--; } if(m > 11){ m = 0; y++; }
+      calendarMonth = {y, m};
+      renderMonthCalendar();
+    };
+    const prev = document.getElementById('cal-prev'), next = document.getElementById('cal-next');
+    if(prev) prev.addEventListener('click', ()=> step(-1));
+    if(next) next.addEventListener('click', ()=> step(1));
+    const frzBtn = document.getElementById('freeze-btn');
+    if(frzBtn) frzBtn.addEventListener('click', buyFreeze);
+  })();
+
+  // ---- v13.2.0: LEMBRETE DIÁRIO (Web Push) ----
+  // Fluxo: botão 🔔 → permissão → inscrição no push → /api/push-subscribe guarda no Supabase.
+  // Todo dia (cron da Vercel, ~20h na Alemanha) /api/push-cron manda o lembrete só pra quem
+  // ainda não treinou hoje. Cada vez que o dia é marcado, avisamos o servidor (pushReportTrained).
+  const VAPID_PUBLIC_KEY = 'BE6pi0P0r1ddKx_TIX_0cbjVvi13CEZpf-bG-AWfeV-wbAGwKtG4rlJsWvvliEA0bm-UcfGw3LAuIm4iu_UA7Qs';
+  const PUSH_KEY = 'falaut_push_endpoint_v1';
+  function pushSupported(){
+    return ('serviceWorker' in navigator) && ('PushManager' in window) && ('Notification' in window);
+  }
+  function isIOSDevice(){
+    return /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+  function isStandaloneApp(){
+    return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+  }
+  function reminderOn(){
+    try{ return !!localStorage.getItem(PUSH_KEY) && window.Notification && Notification.permission === 'granted'; }catch(e){ return false; }
+  }
+  function renderReminderBtn(){
+    const b = document.getElementById('reminder-btn');
+    if(!b) return;
+    const on = reminderOn();
+    b.textContent = on ? t('reminderOn') : t('reminderOff');
+    b.classList.toggle('on', on);
+  }
+  function b64urlToUint8(b64){
+    const pad = '='.repeat((4 - b64.length % 4) % 4);
+    const raw = atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
+    return Uint8Array.from(raw, ch => ch.charCodeAt(0));
+  }
+  function userTimeZone(){
+    try{ return Intl.DateTimeFormat().resolvedOptions().timeZone || 'Europe/Berlin'; }catch(e){ return 'Europe/Berlin'; }
+  }
+  function bestStreakAllLangs(){
+    try{ return Math.max(...['de','en','pt'].map(l => loadStreak(l)).filter(d => d.lastDate).map(d => d.streak), 0); }catch(e){ return 0; }
+  }
+  function lastTrainedAllLangs(){
+    try{ return ['de','en','pt'].map(l => loadStreak(l).lastDate).filter(Boolean).sort().pop() || null; }catch(e){ return null; }
+  }
+  function postPush(body){
+    return fetch('/api/push-subscribe', {
+      method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(body), keepalive: true
+    });
+  }
+  function reminderToast(key, vars){
+    rewardToast.textContent = t(key, vars);
+    rewardToast.classList.add('show');
+    setTimeout(()=> rewardToast.classList.remove('show'), 5200);
+  }
+  async function toggleReminder(){
+    const btn = document.getElementById('reminder-btn');
+    if(reminderOn()){
+      // desligar
+      try{
+        const reg = await navigator.serviceWorker.ready;
+        const sub = await reg.pushManager.getSubscription();
+        const endpoint = localStorage.getItem(PUSH_KEY);
+        if(sub) await sub.unsubscribe();
+        if(endpoint) postPush({action: 'unsubscribe', endpoint}).catch(()=>{});
+      }catch(e){}
+      try{ localStorage.removeItem(PUSH_KEY); }catch(e){}
+      renderReminderBtn();
+      reminderToast('dynReminderDisabled');
+      return;
+    }
+    if(isIOSDevice() && !isStandaloneApp()){
+      reminderToast('dynReminderIosInstall');
+      if(typeof window.falautOpenInstallTutorial === 'function') window.falautOpenInstallTutorial('ios');
+      return;
+    }
+    if(!pushSupported()){ reminderToast('dynReminderUnsupported'); return; }
+    if(Notification.permission === 'denied'){ reminderToast('dynReminderBlocked'); return; }
+    if(btn) btn.disabled = true;
+    try{
+      const perm = await Notification.requestPermission();
+      if(perm !== 'granted'){ reminderToast('dynReminderBlocked'); return; }
+      const reg = await navigator.serviceWorker.ready;
+      let sub = await reg.pushManager.getSubscription();
+      if(!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64urlToUint8(VAPID_PUBLIC_KEY) });
+      const res = await postPush({
+        action: 'subscribe',
+        subscription: sub.toJSON(),
+        tz: userTimeZone(),
+        lang: currentSiteLang,
+        lastTrained: lastTrainedAllLangs(),
+        streak: bestStreakAllLangs()
+      });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      try{ localStorage.setItem(PUSH_KEY, sub.endpoint); }catch(e){}
+      reminderToast('dynReminderEnabled');
+      if(reg.waiting) reminderToast('dynReminderUpdateApp');
+    }catch(err){
+      console.error('[Falaut push]', err);
+      reminderToast('dynReminderError');
+    }finally{
+      if(btn) btn.disabled = false;
+      renderReminderBtn();
+    }
+  }
+  // avisa o servidor que hoje já treinou (assim o lembrete das 20h não vai)
+  function pushReportTrained(){
+    let endpoint = null;
+    try{ endpoint = localStorage.getItem(PUSH_KEY); }catch(e){}
+    if(!endpoint) return;
+    setTimeout(()=>{
+      postPush({ action: 'trained', endpoint, lastTrained: todayStr(), streak: bestStreakAllLangs(), lang: currentSiteLang, tz: userTimeZone() }).catch(()=>{});
+    }, 0);
+  }
+  (function wireReminder(){
+    const b = document.getElementById('reminder-btn');
+    if(b) b.addEventListener('click', toggleReminder);
+  })();
+
   function renderStreak(){
     streakNumEl.textContent = streakData.streak;
     flameEl.classList.toggle('lit', streakData.streak > 0);
 
-    streakDotsEl.innerHTML = '';
-    const filled = Math.min(streakData.streak, 7);
-    for(let i=0;i<7;i++){
-      const d = document.createElement('div');
-      d.className = 'dot' + (i < filled ? ' filled' : '');
-      streakDotsEl.appendChild(d);
-    }
+    // v13.2.0: os 7 quadradinhos são a semana de verdade (seg → dom)
+    renderWeekDots();
+    renderStreakTools();
+    if(calendarOpen) renderMonthCalendar();
 
     const xpForBar = streakData.xp % 100;
     xpFillEl.style.width = xpForBar + '%';
@@ -5431,15 +5828,28 @@
     if(streakData.lastDate === today) return;
 
     // Fundadores têm proteção de sequência: faltar exatamente 1 dia não zera o progresso.
-    let graceUsed = false;
+    // v13.2.0: depois disso, congeladores ❄️ cobrem os dias perdidos (1 por dia).
+    let graceUsed = false, freezesUsed = 0;
     if(streakData.lastDate){
       const gap = daysBetween(streakData.lastDate, today);
+      const missed = gap - 1;
       graceUsed = isFounder && gap === 2;
-      streakData.streak = (gap === 1 || graceUsed) ? streakData.streak + 1 : 1;
+      if(gap === 1 || graceUsed){
+        streakData.streak += 1;
+      } else if(missed >= 1 && missed <= (streakData.freezes || 0)){
+        for(let i = 1; i <= missed; i++) addDay(streakData.frozen, shiftDateStr(streakData.lastDate, i));
+        streakData.freezes -= missed;
+        freezesUsed = missed;
+        streakData.streak += 1;
+      } else {
+        streakData.streak = 1;
+      }
     } else {
       streakData.streak = 1;
     }
     streakData.lastDate = today;
+    addDay(streakData.days, today);
+    if(typeof pushReportTrained === 'function') pushReportTrained();
     streakData.xp += 10;
     if(e && typeof showFloatingXP === 'function') showFloatingXP(10, e.clientX, e.clientY);
     saveStreak(currentLang, streakData);
@@ -5458,6 +5868,9 @@
       confettiBurst();
     } else if(graceUsed){
       rewardToast.textContent = t('dynStreakShieldedToast');
+      rewardToast.classList.add('show');
+    } else if(freezesUsed){
+      rewardToast.textContent = t('dynFreezeUsed', {n: freezesUsed});
       rewardToast.classList.add('show');
     } else {
       rewardToast.textContent = t('dynStreakXpTomorrow');
@@ -7640,9 +8053,14 @@
     const l = parseJSONSafe(localRaw), c = parseJSONSafe(cloudRaw);
     if(/^falareal_streak_/.test(k) && l && c){
       const pick = mergeRun(l, c, 'lastDate', 'streak');
+      const union = (a, b)=> Array.from(new Set([].concat(a || [], b || []))).sort().slice(-400);
       return JSON.stringify(Object.assign({}, pick, {
         xp: Math.max(l.xp || 0, c.xp || 0),
-        bestStreakTier: Math.max(l.bestStreakTier ?? -1, c.bestStreakTier ?? -1)
+        bestStreakTier: Math.max(l.bestStreakTier ?? -1, c.bestStreakTier ?? -1),
+        // v13.2.0: calendário e congeladores juntam os dois aparelhos
+        days: (Array.isArray(l.days) || Array.isArray(c.days)) ? union(l.days, c.days) : undefined,
+        frozen: union(l.frozen, c.frozen),
+        xpSpent: Math.max(l.xpSpent || 0, c.xpSpent || 0)
       }));
     }
     if(/^falareal_dever_(de|en|pt)_v1$/.test(k) && l && c){
