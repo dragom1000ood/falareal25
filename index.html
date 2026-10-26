@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.2.0
+     Falaut PWA  v13.2.1
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -2437,7 +2437,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.2.0</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.2.1</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2965,6 +2965,12 @@
       ch_w2: "Alcance o nível 8 no desafio infinito",
       ch_m1: "Treine 15 dias esse mês",
       ch_m2: "Junte 500 xp esse mês",
+      ch_d_p6: "Faça a palavra do dia (dever de casa)",
+      ch_d_p7: "Acerte 1 exercício de gramática",
+      ch_w2f: "Ouça 10 áudios essa semana",
+      chClaimBtn: "🎁 Abrir recompensa",
+      chClaimed: "✓ resgatado",
+      chNearMiss: "quase lá 🔥",
       dynShareDaysPt: "DIAS SEGUIDOS",
       dynSharePhrasePt: "Treinando português de verdade.",
       dynShareWhatsappPt: "🔥 {n} dias seguidos treinando português de verdade! {site}",
@@ -3426,6 +3432,12 @@
       ch_w2: "Reach level 8 in the infinite challenge",
       ch_m1: "Practice 15 days this month",
       ch_m2: "Earn 500 xp this month",
+      ch_d_p6: "Do the word of the day (homework)",
+      ch_d_p7: "Get 1 grammar exercise right",
+      ch_w2f: "Listen to 10 audios this week",
+      chClaimBtn: "🎁 Open reward",
+      chClaimed: "✓ claimed",
+      chNearMiss: "almost there 🔥",
       dynShareDaysPt: "DAYS IN A ROW",
       dynSharePhrasePt: "Training real Portuguese.",
       dynShareWhatsappPt: "🔥 {n} days in a row practicing real Portuguese! {site}",
@@ -3993,6 +4005,12 @@
       ch_w2: "Llega al nivel 8 en el desafío infinito",
       ch_m1: "Practica 15 días este mes",
       ch_m2: "Consigue 500 xp este mes",
+      ch_d_p6: "Haz la palabra del día (tarea)",
+      ch_d_p7: "Acierta 1 ejercicio de gramática",
+      ch_w2f: "Escucha 10 audios esta semana",
+      chClaimBtn: "🎁 Abrir recompensa",
+      chClaimed: "✓ canjeado",
+      chNearMiss: "casi lo logras 🔥",
       dynShareDaysPt: "DÍAS SEGUIDOS",
       dynSharePhrasePt: "Entrenando portugués de verdad.",
       dynShareWhatsappPt: "🔥 ¡{n} días seguidos practicando portugués de verdad! {site}",
@@ -4236,6 +4254,12 @@
       ch_w2: "Erreiche Level 8 in der Endlos-Challenge",
       ch_m1: "Übe diesen Monat an 15 Tagen",
       ch_m2: "Sammle diesen Monat 500 XP",
+      ch_d_p6: "Mach das Wort des Tages (Hausaufgabe)",
+      ch_d_p7: "Löse 1 Grammatikübung richtig",
+      ch_w2f: "Hör dir diese Woche 10 Audios an",
+      chClaimBtn: "🎁 Belohnung öffnen",
+      chClaimed: "✓ eingelöst",
+      chNearMiss: "fast geschafft 🔥",
       dynShareDaysPt: "TAGE IN FOLGE",
       dynSharePhrasePt: "Ich trainiere echtes Portugiesisch.",
       dynShareWhatsappPt: "🔥 {n} Tage in Folge echtes Portugiesisch geübt! {site}",
@@ -5217,7 +5241,7 @@
   listenBtn.dataset.defaultLabel = t('listenLevel');
   listenBtn.addEventListener('click', ()=>{
     stopAllAudio();
-    if(typeof trackChallenge === 'function') trackChallenge('listens', 1);
+    if(typeof trackChallenge === 'function'){ trackChallenge('listens', 1); trackChallenge('listensWeek', 1); }
 
     const n = currentLevel;
     const lists = contentByLang[currentLang];
@@ -5794,9 +5818,20 @@
     if(b) b.addEventListener('click', toggleReminder);
   })();
 
+  // v13.2.1: mostra a sequência que vale HOJE. Antes, depois de faltar, o número velho
+  // ficava na tela até o próximo treino e aí "pulava" pra 1 — parecia que nunca contava.
+  function liveStreak(){
+    if(!streakData.lastDate || !streakData.streak) return streakData.streak || 0;
+    const gap = daysBetween(streakData.lastDate, todayStr());
+    if(gap <= 1) return streakData.streak;
+    if(isFounder && gap === 2) return streakData.streak;
+    if((gap - 1) <= (streakData.freezes || 0)) return streakData.streak;
+    return 0;
+  }
   function renderStreak(){
-    streakNumEl.textContent = streakData.streak;
-    flameEl.classList.toggle('lit', streakData.streak > 0);
+    const shown = liveStreak();
+    streakNumEl.textContent = shown;
+    flameEl.classList.toggle('lit', shown > 0);
 
     // v13.2.0: os 7 quadradinhos são a semana de verdade (seg → dom)
     renderWeekDots();
@@ -5824,6 +5859,7 @@
   // v12.0.6: marcar o dia virou função — o botão usa, e qualquer estudo do dia
   // (palavra, gramática, revisão, subir nível) também conta sozinho pro 🔥.
   function markStreakToday(e){
+    if(typeof checkDayRollover === 'function') checkDayRollover();
     const today = todayStr();
     if(streakData.lastDate === today) return;
 
@@ -6069,23 +6105,37 @@
     {id:'d_p2', title:'Suba 5 níveis no desafio infinito', target:5, xp:22, key:'levelUps'},
     {id:'d_p3', title:'Ouça 2 áudios de exemplo', target:2, xp:10, key:'listens'},
     {id:'d_p4', title:'Ouça 3 áudios de exemplo', target:3, xp:14, key:'listens'},
-    {id:'d_p5', title:'Suba pelo menos 2 níveis', target:2, xp:8, key:'levelUps'}
+    {id:'d_p5', title:'Suba pelo menos 2 níveis', target:2, xp:8, key:'levelUps'},
+    // v13.2.1: desafios que todo mundo consegue cumprir (inclusive plano free)
+    {id:'d_p6', title:'Faça a palavra do dia (dever de casa)', target:1, xp:10, key:'homework'},
+    {id:'d_p7', title:'Acerte 1 exercício de gramática', target:1, xp:12, key:'grammar'}
   ];
+  // v13.2.1: no plano free o nível para no 2, então "suba 3/5 níveis" era impossível —
+  // o dia perfeito (e o combo dos cupons) nunca fechava. Free só recebe desafios possíveis.
+  function dailyPoolFor(){
+    return (typeof isFounder !== 'undefined' && isFounder) ? DAILY_POOL : DAILY_POOL.filter(c=> c.key !== 'levelUps');
+  }
   function chTitle(ch){
     const k = 'ch_' + ch.id;
     return (I18N_STRINGS.pt[k] != null) ? t(k) : ch.title;
   }
   function todaysDailyChallenges(dateStr){
     const doy = dayOfYear(dateStr);
-    const i1 = doy % DAILY_POOL.length;
-    const i2 = (doy + 2) % DAILY_POOL.length;
-    return [DAILY_ANCHOR, DAILY_POOL[i1], DAILY_POOL[i2]];
+    const pool = dailyPoolFor();
+    const i1 = doy % pool.length;
+    const i2 = (doy + 2) % pool.length;
+    return [DAILY_ANCHOR, pool[i1], pool[i2]];
   }
 
   const WEEKLY_CHALLENGES = [
     {id:'w1', title:'Treine 5 dias essa semana', target:5, xp:50, key:'daysTrainedWeek'},
     {id:'w2', title:'Alcance o nível 8 no desafio infinito', target:8, xp:30, key:'maxLevelWeek'}
   ];
+  // v13.2.1: "nível 8" é impossível no free (nível máx. 2) — troca por um desafio de áudio
+  const WEEKLY_FREE_ALT = {id:'w2f', title:'Ouça 10 áudios essa semana', target:10, xp:30, key:'listensWeek'};
+  function weeklyChallenges(){
+    return (typeof isFounder !== 'undefined' && isFounder) ? WEEKLY_CHALLENGES : [WEEKLY_CHALLENGES[0], WEEKLY_FREE_ALT];
+  }
   const MONTHLY_CHALLENGES = [
     {id:'m1', title:'Treine 15 dias esse mês', target:15, xp:150, key:'daysTrainedMonth'},
     {id:'m2', title:'Junte 500 xp esse mês', target:500, xp:100, key:'xpMonth'}
@@ -6097,7 +6147,7 @@
       dailyDate: today,
       weekStart: mondayOf(today),
       monthKey: monthKeyOf(today),
-      progress: { markStreak:0, levelUps:0, listens:0, daysTrainedWeek:0, maxLevelWeek:0, daysTrainedMonth:0, xpMonth:0 },
+      progress: { markStreak:0, levelUps:0, listens:0, homework:0, grammar:0, daysTrainedWeek:0, maxLevelWeek:0, listensWeek:0, daysTrainedMonth:0, xpMonth:0 },
       claimed: {},
       perfectDayClaimed: false,
       comboStreak: 0,
@@ -6128,14 +6178,14 @@
         data.comboStreak = 0;
       }
       data.dailyDate = today;
-      data.progress.markStreak = 0; data.progress.levelUps = 0; data.progress.listens = 0;
+      data.progress.markStreak = 0; data.progress.levelUps = 0; data.progress.listens = 0; data.progress.homework = 0; data.progress.grammar = 0;
       Object.keys(data.claimed).filter(id=>id.startsWith('d_')).forEach(id=> delete data.claimed[id]);
       data.perfectDayClaimed = false;
     }
     if(data.weekStart !== week){
       data.weekStart = week;
-      data.progress.daysTrainedWeek = 0; data.progress.maxLevelWeek = 0;
-      ['w1','w2'].forEach(id=> delete data.claimed[id]);
+      data.progress.daysTrainedWeek = 0; data.progress.maxLevelWeek = 0; data.progress.listensWeek = 0;
+      ['w1','w2','w2f'].forEach(id=> delete data.claimed[id]);
     }
     if(data.monthKey !== month){
       data.monthKey = month;
@@ -6152,6 +6202,7 @@
   let challengeData = loadChallenges(currentLang);
 
   function trackChallenge(key, amount, isMax){
+    if(typeof checkDayRollover === 'function') checkDayRollover();
     if(isMax){
       challengeData.progress[key] = Math.max(challengeData.progress[key] || 0, amount);
     } else {
@@ -6162,6 +6213,7 @@
   }
 
   function addXP(amount){
+    if(typeof checkDayRollover === 'function') checkDayRollover();
     streakData.xp += amount;
     challengeData.progress.xpMonth += amount;
     saveStreak(currentLang, streakData);
@@ -6187,15 +6239,15 @@
       item.className = 'challenge-item' + (isComplete ? ' done' : '');
 
       const progressTxt = nearMiss
-        ? `<span class="challenge-progress-txt near">${Math.min(value, ch.target)} / ${ch.target} · quase lá 🔥</span>`
+        ? `<span class="challenge-progress-txt near">${Math.min(value, ch.target)} / ${ch.target} · ${t('chNearMiss')}</span>`
         : `<span class="challenge-progress-txt">${Math.min(value, ch.target)} / ${ch.target}</span>`;
 
       // a recompensa some ser um valor fixo — vira "misteriosa" quando o desafio já pode
       // ser resgatado, pra criar aquele suspense de abrir e ver quanto veio (recompensa variável)
       const bottomHTML = isClaimed
-        ? `${progressTxt}<span class="challenge-done-txt">✓ resgatado</span>`
+        ? `${progressTxt}<span class="challenge-done-txt">${t('chClaimed')}</span>`
         : isComplete
-          ? `${progressTxt}<button class="challenge-claim-btn mystery" data-claim="${ch.id}">🎁 Abrir recompensa</button>`
+          ? `${progressTxt}<button class="challenge-claim-btn mystery" data-claim="${ch.id}">${t('chClaimBtn')}</button>`
           : `${progressTxt}<span class="xp-tag">+${ch.xp}xp</span>`;
 
       item.innerHTML = `
@@ -6220,11 +6272,13 @@
 
   // ---- RECOMPENSAS REAIS — cupons de desconto (Wagner: crie esses cupons no Stripe com
   // esses mesmos códigos e ative "Allow promotion codes" nos Payment Links) ----
+  // v13.2.1: FALA2–FALA5 viraram FALAREAL2–FALAREAL5 no Stripe; o site ainda mostrava os
+  // nomes antigos, e o código copiado era recusado no checkout.
   const COMBO_REWARD_TIERS = [
-    {days:3,  pct:2, code:'FALA2'},
-    {days:7,  pct:3, code:'FALA3'},
-    {days:14, pct:4, code:'FALA4'},
-    {days:30, pct:5, code:'FALA5'}
+    {days:3,  pct:2, code:'FALAREAL2'},
+    {days:7,  pct:3, code:'FALAREAL3'},
+    {days:14, pct:4, code:'FALAREAL4'},
+    {days:30, pct:5, code:'FALAREAL5'}
   ];
   const MONTHLY_REWARD = {pct:5, code:'FALAMES5'};
 
@@ -6282,7 +6336,7 @@
 
   function renderChallenges(){
     renderChallengeGroup('challenges-daily', todaysDailyChallenges(challengeData.dailyDate));
-    renderChallengeGroup('challenges-weekly', WEEKLY_CHALLENGES);
+    renderChallengeGroup('challenges-weekly', weeklyChallenges());
     renderChallengeGroup('challenges-monthly', MONTHLY_CHALLENGES);
     renderCombo();
     renderRewardLadder();
@@ -6348,8 +6402,9 @@
     container.addEventListener('click', (e)=>{
       const btn = e.target.closest('[data-claim]');
       if(!btn) return;
+      if(typeof checkDayRollover === 'function' && checkDayRollover()) return; // virou o dia: a tela já foi atualizada
       const id = btn.dataset.claim;
-      const all = [...todaysDailyChallenges(challengeData.dailyDate), ...WEEKLY_CHALLENGES, ...MONTHLY_CHALLENGES];
+      const all = [...todaysDailyChallenges(challengeData.dailyDate), ...weeklyChallenges(), ...MONTHLY_CHALLENGES];
       const ch = all.find(c=> c.id === id);
       if(!ch || challengeData.claimed[id]) return;
 
@@ -6610,6 +6665,7 @@
       deverData.markedDate = today;
       saveDever(currentLang, deverData);
       addXP(5);
+      trackChallenge('homework', 1);
       renderDever();
     });
   }
@@ -7330,6 +7386,7 @@
           saveGrammar(currentLang, grammarData);
           grammarQuizFeedback[key] = 'correct';
           addXP(8);
+          trackChallenge('grammar', 1);
           confettiBurst();
           if(typeof renderGrammarReview === 'function') renderGrammarReview();
         } else {
@@ -7443,6 +7500,7 @@
           statusEl.textContent = t('dynReviewCorrect');
           statusEl.className = 'grammar-review-status ok';
           addXP(4);
+          trackChallenge('grammar', 1);
           confettiBurst();
           reviewTopicKey = null;
           delete grammarReorderState['__review__'];
@@ -7986,6 +8044,7 @@
     if(typeof renderGrammar === 'function') renderGrammar();
     if(typeof renderStreak === 'function') renderStreak();
     if(typeof renderBonusWord === 'function') renderBonusWord();
+    if(typeof renderChallenges === 'function') renderChallenges(); // v13.2.1: desafios dependem do plano
   }
 
   async function checkFounderStatus(){
@@ -8363,6 +8422,35 @@
     if(typeof renderGrammarReview === 'function') renderGrammarReview();
     if(typeof renderChallenges === 'function') renderChallenges();
   }
+
+  // ---- v13.2.1: VIRADA DO DIA COM O APP ABERTO ----
+  // O app instalado (e a aba do navegador) ficam semanas "dormindo" em segundo plano sem
+  // recarregar. Antes, ao voltar no dia seguinte, tudo continuava preso no dia anterior:
+  // botão "Treinou hoje ✓" travado, desafios já "✓ resgatado" sem poder resgatar de novo,
+  // e no outro dia a sequência quebrava e voltava pro 1. Agora a virada é detectada.
+  let lastSeenDay = todayStr();
+  let hiddenAt = 0;
+  function checkDayRollover(){
+    const today = todayStr();
+    if(today === lastSeenDay) return false;
+    lastSeenDay = today;
+    refreshUIFromLocalStorage();  // recarrega e reseta desafios do dia/semana/mês + botão da sequência
+    if(typeof renderLeague === 'function') renderLeague();
+    return true;
+  }
+  document.addEventListener('visibilitychange', ()=>{
+    if(document.visibilityState === 'hidden'){ hiddenAt = Date.now(); return; }
+    const rolled = checkDayRollover();
+    // voltou depois de um tempo: puxa o progresso feito em outro aparelho
+    if(currentUser && supabaseClient && (rolled || (hiddenAt && Date.now() - hiddenAt > 5*60*1000))) downloadFromCloud();
+  });
+  window.addEventListener('pageshow', (e)=>{
+    if(!e.persisted) return;
+    checkDayRollover();
+    if(currentUser && supabaseClient) downloadFromCloud();
+  });
+  window.addEventListener('focus', checkDayRollover);
+  setInterval(checkDayRollover, 60 * 1000);
 
   // ---- v12: idioma de aprendizado inicial ----
   // Links de divulgação: ?learn=pt (trilha de português) e ?lang=de|en|es|pt (interface)
