@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.2.1
+     Falaut PWA  v13.3.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -548,6 +548,34 @@
     border-radius:16px; border:1px solid var(--line);
   }
   .share-actions{display:flex; gap:10px; flex-wrap:wrap; justify-content:center;}
+
+  /* v13.3.0: missão de divulgação + janela de compartilhar (Stories / Post) */
+  .share-mission{border:1px dashed rgba(240,166,58,0.45); border-radius:16px; padding:12px 14px; margin-bottom:14px; background:rgba(240,166,58,0.06);}
+  .sm-head{display:flex; justify-content:space-between; align-items:center; gap:8px; font-family:var(--body); font-weight:600; font-size:0.9rem; margin-bottom:6px;}
+  .sm-best{font-family:var(--mono); font-weight:400; font-size:0.72rem; color:rgba(244,239,230,0.55); white-space:nowrap;}
+  .sm-today{font-size:0.84rem; color:rgba(244,239,230,0.8); margin-bottom:8px;}
+  .sm-today.done{color:var(--amber);}
+  .sm-week{display:flex; align-items:center; gap:6px; font-family:var(--mono); font-size:0.72rem; color:rgba(244,239,230,0.6);}
+  .sm-pip{width:12px; height:12px; border-radius:50%; border:1px solid var(--line); flex:0 0 auto;}
+  .sm-pip.on{background:var(--amber); border-color:var(--amber);}
+  .sm-week .sm-txt{margin-left:4px;}
+  .share-modal{position:fixed; inset:0; z-index:1000; background:rgba(8,11,15,0.84); -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+    display:flex; align-items:center; justify-content:center; padding:16px;}
+  .share-modal[hidden]{display:none;}
+  .share-sheet{position:relative; width:100%; max-width:420px; max-height:94vh; overflow:auto; background:var(--ink); color:var(--paper, #f4efe6);
+    border:1px solid var(--line); border-radius:22px; padding:20px 16px 18px;}
+  .share-sheet h4{font-family:var(--display); font-weight:600; font-size:1.25rem; margin:0 32px 6px 2px; line-height:1.25;}
+  .share-sheet .share-hint{font-size:0.82rem; color:rgba(244,239,230,0.65); margin:0 2px 12px;}
+  .share-close{position:absolute; top:12px; right:12px; width:34px; height:34px; border-radius:50%; border:1px solid var(--line);
+    background:transparent; color:inherit; font-size:1rem; cursor:pointer;}
+  .share-fmt{display:flex; gap:8px; justify-content:center; margin-bottom:12px;}
+  .share-fmt button{font-family:var(--mono); font-size:0.75rem; padding:6px 12px; border-radius:100px; border:1px solid var(--line); background:transparent; color:inherit; cursor:pointer;}
+  .share-fmt button.on{border-color:var(--amber); color:var(--amber);}
+  .share-sheet canvas{display:block; margin:0 auto 14px; width:auto; max-width:100%; max-height:50vh; border-radius:14px; border:1px solid var(--line);}
+  .share-sheet .share-actions{display:grid; grid-template-columns:1fr 1fr; gap:8px;}
+  .share-sheet .share-actions .btn-share{grid-column:1 / -1; margin-top:0;}
+  .share-sheet .share-actions .btn-audio{width:100%; margin:0;}
+  .share-sheet .share-reward{font-family:var(--mono); font-size:0.74rem; color:var(--amber); text-align:center; margin-top:10px; min-height:1em;}
 
   /* confetti burst */
   .confetti-piece{
@@ -1841,14 +1869,12 @@
         <button class="btn-primary btn-full" id="streak-btn" data-i18n="markToday">Marcar hoje ✓</button>
         <div class="reward-toast" id="reward-toast"></div>
 
-        <button class="btn-share" id="share-btn" style="display:none;" data-i18n="shareStreak">🎉 Compartilhar minha sequência</button>
-        <div class="share-preview" id="share-preview" style="display:none;">
-          <canvas id="share-canvas" width="1080" height="1080"></canvas>
-          <div class="share-actions">
-            <button class="btn-audio" id="download-share-btn" data-i18n="downloadImage">📥 Baixar imagem</button>
-            <button class="btn-audio" id="whatsapp-share-btn" data-i18n="sendWhatsapp">📲 Mandar no WhatsApp</button>
-          </div>
+        <div class="share-mission" id="share-mission">
+          <div class="sm-head"><span data-i18n="smTitle">📣 Missão de divulgação</span><span class="sm-best" id="sm-best"></span></div>
+          <div class="sm-today" id="sm-today"></div>
+          <div class="sm-week" id="sm-week"></div>
         </div>
+        <button class="btn-share" id="share-btn" data-i18n="shareStreak">📣 Divulgar minha ofensiva</button>
       </div>
     </div>
 
@@ -2437,7 +2463,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.2.1</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.3.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2518,6 +2544,25 @@
   </div>
 </div>
 
+<div class="share-modal" id="share-modal" hidden role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+  <div class="share-sheet">
+    <button type="button" class="share-close" id="share-close" aria-label="✕">✕</button>
+    <h4 id="share-modal-title"></h4>
+    <p class="share-hint" id="share-modal-hint"></p>
+    <div class="share-fmt">
+      <button type="button" data-fmt="story" class="on" data-i18n="shareFmtStory">Stories 9:16</button>
+      <button type="button" data-fmt="post" data-i18n="shareFmtPost">Post 1:1</button>
+    </div>
+    <canvas id="share-canvas" width="1080" height="1920"></canvas>
+    <div class="share-actions">
+      <button type="button" class="btn-share" id="native-share-btn" data-i18n="shareNative">📤 Compartilhar</button>
+      <button type="button" class="btn-audio" id="whatsapp-share-btn" data-i18n="sendWhatsapp">📲 Mandar no WhatsApp</button>
+      <button type="button" class="btn-audio" id="download-share-btn" data-i18n="downloadImage">📥 Baixar imagem</button>
+      <button type="button" class="btn-audio" id="copy-caption-btn" data-i18n="shareCopyCaption" style="grid-column:1 / -1;">📋 Copiar legenda</button>
+    </div>
+    <div class="share-reward" id="share-reward"></div>
+  </div>
+</div>
 <script>
   // ============================================================
   // SITE INTERFACE I18N — idioma da interface (nav, botões, cards
@@ -4474,6 +4519,13 @@
     dynReminderUpdateApp: '🔔 Erinnerung an – tippe auf „Atualizar“, wenn der Hinweis zur neuen Version erscheint.'
   });
 
+
+  // v13.3.0: ofensiva social — missão de divulgação, card Stories/Post, recorde
+  Object.assign(I18N_STRINGS.pt, {"shareStreak": "📣 Divulgar minha ofensiva", "smTitle": "📣 Missão de divulgação", "smBest": "🏆 recorde {n}", "smToday": "Divulgue sua ofensiva hoje: +{xp} xp", "smTodayDone": "✓ Divulgou hoje (+{xp} xp). Volta amanhã!", "smWeek": "{n}/{goal} dias na semana → ❄️ congelador grátis", "smWeekDone": "❄️ Congelador da semana garantido!", "shareModalTitle": "Mostra tua ofensiva 🔥", "shareMilestoneTitle": "🏅 {n} dias seguidos! Mostra pro mundo", "shareModalHint": "Posta no Stories e marca @falautoficial. Quem entrar pelo teu link chega com teu código.", "shareFmtStory": "Stories 9:16", "shareFmtPost": "Post 1:1", "shareNative": "📤 Compartilhar", "shareCopyCaption": "📋 Copiar legenda", "dynCaptionCopied": "✓ Legenda copiada, é só colar!", "dynShareReward": "📣 Valeu por divulgar! +{xp} xp", "dynShareFreeze": "❄️ {goal} dias divulgando na semana: ganhou 1 congelador grátis!", "dynShareFreezeFullXp": "❄️ Congeladores cheios, então virou +{xp} xp!", "dynShareAlready": "Você já ganhou o bônus de hoje. Pode divulgar à vontade!", "dynNewRecord": "🏆 Novo recorde: {n} dias seguidos!", "cardDays": "DIAS SEGUIDOS", "cardRecord": "Recorde", "cardJoin": "Treina comigo 👇", "cardCode": "código {code}", "cardMilestone": "CONQUISTA · {n} DIAS", "cardTrackDe": "ALEMÃO DE VERDADE", "cardTrackEn": "INGLÊS DE VERDADE", "cardTrackPt": "PORTUGUÊS DE VERDADE", "langNameDe": "alemão", "langNameEn": "inglês", "langNamePt": "português", "shareCaption": "🔥 {n} dias seguidos treinando {lang} de verdade no @falautoficial! Bora treinar junto: {link}"});
+  Object.assign(I18N_STRINGS.en, {"shareStreak": "📣 Share my streak", "smTitle": "📣 Share mission", "smBest": "🏆 best {n}", "smToday": "Share your streak today: +{xp} xp", "smTodayDone": "✓ Shared today (+{xp} xp). Come back tomorrow!", "smWeek": "{n}/{goal} days this week → ❄️ free freeze", "smWeekDone": "❄️ This week's freeze is yours!", "shareModalTitle": "Show off your streak 🔥", "shareMilestoneTitle": "🏅 {n} days in a row! Show the world", "shareModalHint": "Post it to your Stories and tag @falautoficial. Anyone joining through your link comes in with your code.", "shareFmtStory": "Stories 9:16", "shareFmtPost": "Post 1:1", "shareNative": "📤 Share", "shareCopyCaption": "📋 Copy caption", "dynCaptionCopied": "✓ Caption copied, just paste it!", "dynShareReward": "📣 Thanks for sharing! +{xp} xp", "dynShareFreeze": "❄️ Shared {goal} days this week: you earned 1 free freeze!", "dynShareFreezeFullXp": "❄️ Freezes are full, so you got +{xp} xp!", "dynShareAlready": "You already got today's bonus. Share as much as you like!", "dynNewRecord": "🏆 New record: {n} days in a row!", "cardDays": "DAYS IN A ROW", "cardRecord": "Best", "cardJoin": "Practice with me 👇", "cardCode": "code {code}", "cardMilestone": "MILESTONE · {n} DAYS", "cardTrackDe": "REAL GERMAN", "cardTrackEn": "REAL ENGLISH", "cardTrackPt": "REAL PORTUGUESE", "langNameDe": "German", "langNameEn": "English", "langNamePt": "Portuguese", "shareCaption": "🔥 {n} days in a row practicing real {lang} on @falautoficial! Practice with me: {link}"});
+  Object.assign(I18N_STRINGS.es, {"shareStreak": "📣 Compartir mi racha", "smTitle": "📣 Misión de difusión", "smBest": "🏆 récord {n}", "smToday": "Comparte tu racha hoy: +{xp} xp", "smTodayDone": "✓ Compartiste hoy (+{xp} xp). ¡Vuelve mañana!", "smWeek": "{n}/{goal} días esta semana → ❄️ congelador gratis", "smWeekDone": "❄️ ¡Congelador de la semana asegurado!", "shareModalTitle": "Muestra tu racha 🔥", "shareMilestoneTitle": "🏅 ¡{n} días seguidos! Muéstralo al mundo", "shareModalHint": "Publícalo en tus Stories y etiqueta a @falautoficial. Quien entre por tu enlace llega con tu código.", "shareFmtStory": "Stories 9:16", "shareFmtPost": "Post 1:1", "shareNative": "📤 Compartir", "shareCopyCaption": "📋 Copiar texto", "dynCaptionCopied": "✓ Texto copiado, ¡solo pégalo!", "dynShareReward": "📣 ¡Gracias por compartir! +{xp} xp", "dynShareFreeze": "❄️ {goal} días compartiendo esta semana: ¡ganaste 1 congelador gratis!", "dynShareFreezeFullXp": "❄️ Congeladores llenos, ¡así que ganaste +{xp} xp!", "dynShareAlready": "Ya ganaste el bono de hoy. ¡Comparte cuanto quieras!", "dynNewRecord": "🏆 Nuevo récord: ¡{n} días seguidos!", "cardDays": "DÍAS SEGUIDOS", "cardRecord": "Récord", "cardJoin": "Entrena conmigo 👇", "cardCode": "código {code}", "cardMilestone": "LOGRO · {n} DÍAS", "cardTrackDe": "ALEMÁN DE VERDAD", "cardTrackEn": "INGLÉS DE VERDAD", "cardTrackPt": "PORTUGUÉS DE VERDAD", "langNameDe": "alemán", "langNameEn": "inglés", "langNamePt": "portugués", "shareCaption": "🔥 ¡{n} días seguidos entrenando {lang} de verdad en @falautoficial! Entrena conmigo: {link}"});
+  Object.assign(I18N_STRINGS.de, {"shareStreak": "📣 Meine Serie teilen", "smTitle": "📣 Teilen-Mission", "smBest": "🏆 Rekord {n}", "smToday": "Teile heute deine Serie: +{xp} xp", "smTodayDone": "✓ Heute geteilt (+{xp} xp). Bis morgen!", "smWeek": "{n}/{goal} Tage diese Woche → ❄️ Gratis-Freeze", "smWeekDone": "❄️ Freeze der Woche gesichert!", "shareModalTitle": "Zeig deine Serie 🔥", "shareMilestoneTitle": "🏅 {n} Tage in Folge! Zeig es der Welt", "shareModalHint": "Poste es in deiner Story und markiere @falautoficial. Wer über deinen Link kommt, bringt deinen Code mit.", "shareFmtStory": "Story 9:16", "shareFmtPost": "Post 1:1", "shareNative": "📤 Teilen", "shareCopyCaption": "📋 Text kopieren", "dynCaptionCopied": "✓ Text kopiert, einfach einfügen!", "dynShareReward": "📣 Danke fürs Teilen! +{xp} xp", "dynShareFreeze": "❄️ {goal} Tage geteilt diese Woche: 1 Gratis-Freeze verdient!", "dynShareFreezeFullXp": "❄️ Freezes voll, dafür +{xp} xp!", "dynShareAlready": "Den Bonus für heute hast du schon. Teile so viel du willst!", "dynNewRecord": "🏆 Neuer Rekord: {n} Tage in Folge!", "cardDays": "TAGE IN FOLGE", "cardRecord": "Rekord", "cardJoin": "Trainier mit mir 👇", "cardCode": "Code {code}", "cardMilestone": "MEILENSTEIN · {n} TAGE", "cardTrackDe": "ECHTES DEUTSCH", "cardTrackEn": "ECHTES ENGLISCH", "cardTrackPt": "ECHTES PORTUGIESISCH", "langNameDe": "Deutsch", "langNameEn": "Englisch", "langNamePt": "Portugiesisch", "shareCaption": "🔥 {n} Tage in Folge echtes {lang} geübt mit @falautoficial! Trainier mit mir: {link}"});
+
   // currentSiteLang mirrors whatever applyInterfaceLanguage() last applied, so
   // dynamic (JS-generated) UI text built with t() below is locale-correct at
   // the moment it runs.
@@ -5433,6 +5485,7 @@
     if(typeof data.freezes !== 'number') data.freezes = 0;
     if(typeof data.xpSpent !== 'number') data.xpSpent = 0;
     if(!Array.isArray(data.frozen)) data.frozen = [];
+    if(typeof data.best !== 'number') data.best = data.streak || 0; // v13.3.0: recorde
     if(!Array.isArray(data.days)){
       // quem já tinha sequência antes da v13.2.0: reconstrói os últimos N dias
       data.days = [];
@@ -5473,6 +5526,7 @@
         const seeded = normalizeStreak({ streak: n, xp: n * 10, lastDate: todayStr(), bestStreakTier: -1 });
         saveStreak('de', seeded);
         saveStreak('en', seeded);
+        saveStreak('pt', seeded);
         streakData = seeded;
       }
       const cleanUrl = new URL(window.location.href);
@@ -5848,9 +5902,12 @@
     streakBtn.style.opacity = markedToday ? '0.55' : '1';
     streakBtn.style.cursor = markedToday ? 'default' : 'pointer';
 
-    if(streakData.streak > 0){
-      document.getElementById('share-btn').style.display = 'block';
-    }
+    // v13.3.0: botão de divulgar + missão só com ofensiva viva
+    const shareBtnEl = document.getElementById('share-btn');
+    const missionEl = document.getElementById('share-mission');
+    if(shareBtnEl) shareBtnEl.style.display = shown > 0 ? 'block' : 'none';
+    if(missionEl) missionEl.style.display = shown > 0 ? 'block' : 'none';
+    if(typeof renderShareMission === 'function') renderShareMission();
 
     const shieldEl = document.getElementById('streak-shield');
     if(shieldEl) shieldEl.classList.toggle('show', !!isFounder);
@@ -5885,6 +5942,10 @@
     }
     streakData.lastDate = today;
     addDay(streakData.days, today);
+    // v13.3.0: recorde pessoal
+    const prevBest = streakData.best || 0;
+    const isNewRecord = streakData.streak > prevBest && prevBest >= 3;
+    streakData.best = Math.max(prevBest, streakData.streak);
     if(typeof pushReportTrained === 'function') pushReportTrained();
     streakData.xp += 10;
     if(e && typeof showFloatingXP === 'function') showFloatingXP(10, e.clientX, e.clientY);
@@ -5898,10 +5959,17 @@
     }
 
     const hit = milestones.find(m => m.days === streakData.streak);
+    // v13.3.0: marco de ofensiva abre o card pronto pra postar
+    if(typeof isShareMilestone === 'function' && isShareMilestone(streakData.streak)){
+      setTimeout(()=> openShareModal({ milestone: streakData.streak }), 1500);
+    }
     if(hit){
       rewardToast.textContent = '🏅 ' + t('milestone' + hit.days);
       rewardToast.classList.add('show');
       confettiBurst();
+    } else if(isNewRecord){
+      rewardToast.textContent = t('dynNewRecord', {n: streakData.streak});
+      rewardToast.classList.add('show');
     } else if(graceUsed){
       rewardToast.textContent = t('dynStreakShieldedToast');
       rewardToast.classList.add('show');
@@ -7571,100 +7639,342 @@
     }
   }
 
-  // ---- Card de compartilhamento (Canvas, gerado na hora) ----
-  const shareBtn = document.getElementById('share-btn');
-  const sharePreview = document.getElementById('share-preview');
+  // ---- v13.3.0: OFENSIVA SOCIAL — card Stories/Post + missão de divulgação ----
+  // Antes: card quadrado com a marca antiga ("falareal"), número velho da sequência
+  // mesmo depois de quebrar, link sem código de indicação e "Baixar" que não funciona
+  // no app do iPhone. Agora: card 9:16 pro Stories (ou 1:1 pro feed) com a semana,
+  // recorde e código de convite; botão nativo de compartilhar (Instagram, TikTok,
+  // WhatsApp…) e recompensa por divulgar.
+  // var (não const): renderStreak() roda antes deste bloco no carregamento
+  var shareReady = false;
+  const SOCIAL_KEY = 'falaut_social_v1';          // por pessoa, não por idioma
+  const SHARE_XP = 15;                            // 1x por dia
+  const SHARE_WEEK_GOAL = 3;                      // dias divulgando na semana → ❄️ grátis
+  const SHARE_FREEZE_FULL_XP = 30;                // se os congeladores já estão cheios
+  const SHARE_MILESTONES = [3, 7, 14, 21, 30, 50, 75, 100, 150, 200, 250, 300, 365];
+  function isShareMilestone(n){ if(!shareReady) return false; return SHARE_MILESTONES.includes(n) || (n > 365 && n % 100 === 0); }
+
+  function loadSocial(){
+    let d = null;
+    try{ d = JSON.parse(localStorage.getItem(SOCIAL_KEY) || 'null'); }catch(e){}
+    if(!d || typeof d !== 'object') d = {};
+    if(!Array.isArray(d.shareDays)) d.shareDays = [];
+    if(typeof d.totalShares !== 'number') d.totalShares = 0;
+    if(d.freezeWeek === undefined) d.freezeWeek = null;
+    return d;
+  }
+  function saveSocial(d){
+    d.shareDays = Array.from(new Set(d.shareDays)).sort().slice(-60);
+    try{ localStorage.setItem(SOCIAL_KEY, JSON.stringify(d)); }catch(e){}
+    if(typeof syncToCloud === 'function') syncToCloud();
+  }
+  function shareDaysThisWeek(d){
+    const mon = mondayOf(todayStr());
+    const sun = shiftDateStr(mon, 6);
+    return d.shareDays.filter(x => x >= mon && x <= sun).length;
+  }
+  function myInviteCode(){
+    try{
+      let code = localStorage.getItem('falareal_ref_code');
+      if(!code){ code = Math.random().toString(36).slice(2, 8).toUpperCase(); localStorage.setItem('falareal_ref_code', code); }
+      return code;
+    }catch(e){ return ''; }
+  }
+  function myInviteLink(){
+    const code = myInviteCode();
+    return window.location.origin + window.location.pathname + (code ? '?ref=' + code : '');
+  }
+  function trackKey(){ return currentLang === 'en' ? 'En' : currentLang === 'pt' ? 'Pt' : 'De'; }
+  function shareCaption(){
+    const tags = { De: '#alemao #alemaodeverdade #brasileirosnaalemanha #falaut', En: '#ingles #inglesdeverdade #falaut', Pt: '#portugiesisch #brasilien #falaut' };
+    return t('shareCaption', { n: liveStreak(), lang: t('langName' + trackKey()), link: myInviteLink() }) + '\n\n' + tags[trackKey()];
+  }
+
+  function renderShareMission(){
+    if(!shareReady) return;
+    const todayEl = document.getElementById('sm-today');
+    const weekEl = document.getElementById('sm-week');
+    const bestEl = document.getElementById('sm-best');
+    if(!todayEl || !weekEl) return;
+    const d = loadSocial();
+    const done = d.shareDays.includes(todayStr());
+    todayEl.textContent = done ? t('smTodayDone', {xp: SHARE_XP}) : t('smToday', {xp: SHARE_XP});
+    todayEl.classList.toggle('done', done);
+    const n = Math.min(shareDaysThisWeek(d), SHARE_WEEK_GOAL);
+    const gotFreeze = d.freezeWeek === mondayOf(todayStr());
+    let pips = '';
+    for(let i = 0; i < SHARE_WEEK_GOAL; i++) pips += `<span class="sm-pip${i < n ? ' on' : ''}"></span>`;
+    weekEl.innerHTML = pips + `<span class="sm-txt">${gotFreeze ? t('smWeekDone') : t('smWeek', {n, goal: SHARE_WEEK_GOAL})}</span>`;
+    if(bestEl) bestEl.textContent = (streakData.best || 0) > 0 ? t('smBest', {n: streakData.best}) : '';
+  }
+
+  // recompensa: 1x por dia (+xp, sem contar como dia de estudo) e ❄️ grátis na 3ª divulgação da semana
+  function rewardShare(){
+    if(typeof checkDayRollover === 'function') checkDayRollover();
+    const d = loadSocial();
+    const today = todayStr();
+    d.totalShares += 1;
+    const rewardEl = document.getElementById('share-reward');
+    if(d.shareDays.includes(today)){
+      saveSocial(d);
+      if(rewardEl) rewardEl.textContent = t('dynShareAlready');
+      return;
+    }
+    d.shareDays.push(today);
+    let bonusXp = SHARE_XP;
+    const msgs = [t('dynShareReward', {xp: SHARE_XP})];
+    const week = mondayOf(today);
+    if(shareDaysThisWeek(d) >= SHARE_WEEK_GOAL && d.freezeWeek !== week){
+      d.freezeWeek = week;
+      if((streakData.freezes || 0) < FREEZE_MAX){
+        streakData.freezes = (streakData.freezes || 0) + 1;
+        msgs.push(t('dynShareFreeze', {goal: SHARE_WEEK_GOAL}));
+      } else {
+        bonusXp += SHARE_FREEZE_FULL_XP;
+        msgs.push(t('dynShareFreezeFullXp', {xp: SHARE_FREEZE_FULL_XP}));
+      }
+    }
+    saveSocial(d);
+    // xp direto (não usa addXP de propósito: divulgar não conta como dia de estudo)
+    streakData.xp += bonusXp;
+    saveStreak(currentLang, streakData);
+    if(challengeData && challengeData.progress){
+      challengeData.progress.xpMonth = (challengeData.progress.xpMonth || 0) + bonusXp;
+      saveChallenges(currentLang, challengeData);
+      if(typeof renderChallenges === 'function') renderChallenges();
+    }
+    renderStreak();
+    if(typeof renderLeague === 'function') renderLeague();
+    if(typeof renderProgressSummary === 'function') renderProgressSummary();
+    if(rewardEl) rewardEl.textContent = msgs.join(' · ');
+    confettiBurst();
+  }
+
+  // ---- desenho do card ----
+  const shareModal = document.getElementById('share-modal');
   const shareCanvas = document.getElementById('share-canvas');
-  const downloadShareBtn = document.getElementById('download-share-btn');
-  const whatsappShareBtn = document.getElementById('whatsapp-share-btn');
+  let shareFormat = 'story';
+  let shareMilestone = null;
+  const C = { ink:'#12181f', ink2:'#1c2530', paper:'#f4efe6', amber:'#f0a63a', teal:'#3e6b63', rust:'#c1483d', ice:'#7fb3d5' };
+
+  function fitText(ctx, text, maxW, font, startPx, minPx){
+    let px = startPx;
+    do { ctx.font = font.replace('{px}', px); if(ctx.measureText(text).width <= maxW) break; px -= 2; } while(px > minPx);
+    return px;
+  }
+  function roundRect(ctx, x, y, w, h, r){
+    ctx.beginPath();
+    if(ctx.roundRect) ctx.roundRect(x, y, w, h, r);
+    else { ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+  }
 
   function drawShareCard(){
+    const W = 1080, H = shareFormat === 'story' ? 1920 : 1080;
+    shareCanvas.width = W; shareCanvas.height = H;
     const ctx = shareCanvas.getContext('2d');
-    const S = 1080;
+    const story = shareFormat === 'story';
+    const k = story ? 1 : 0.62;                    // escala vertical do layout no formato post
+    const n = liveStreak();
+    const serif = "'Fraunces', Georgia, serif", mono = "'IBM Plex Mono', ui-monospace, monospace", sans = "'IBM Plex Sans', system-ui, sans-serif";
 
-    // fundo
-    const grad = ctx.createLinearGradient(0,0,0,S);
-    grad.addColorStop(0, '#1c2530');
-    grad.addColorStop(1, '#12181f');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0,0,S,S);
+    // fundo + brilho atrás da chama
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0, C.ink2); bg.addColorStop(1, C.ink);
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+    const glowY = story ? 640 : 380;
+    const glow = ctx.createRadialGradient(W/2, glowY, 20, W/2, glowY, story ? 560 : 420);
+    glow.addColorStop(0, 'rgba(240,166,58,0.30)'); glow.addColorStop(1, 'rgba(240,166,58,0)');
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, W, H);
+    // faixa de selo (estilo passaporte) em cima e embaixo
+    for(let i = 0; i < 18; i++){
+      ctx.fillStyle = i % 2 ? C.rust : C.teal;
+      ctx.fillRect(i * W/18, 0, W/18, 10);
+      ctx.fillRect(i * W/18, H - 10, W/18, 10);
+    }
 
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
     // marca
-    ctx.textBaseline = 'alphabetic';
-    ctx.font = '600 64px Georgia, serif';
-    ctx.fillStyle = '#f4efe6';
-    ctx.fillText('fala', 90, 150);
-    const falaWidth = ctx.measureText('fala').width;
-    ctx.fillStyle = '#f0a63a';
-    ctx.fillText('real', 90 + falaWidth, 150);
+    const top = story ? 150 : 110;
+    ctx.font = `600 ${story ? 78 : 64}px ${serif}`;
+    ctx.fillStyle = C.paper; ctx.fillText('fala', 80, top);
+    const fw = ctx.measureText('fala').width;
+    ctx.fillStyle = C.amber; ctx.fillText('ut', 80 + fw, top);
+    // trilha
+    ctx.textAlign = 'right';
+    ctx.font = `500 ${story ? 30 : 26}px ${mono}`;
+    ctx.fillStyle = 'rgba(244,239,230,0.75)';
+    const flag = { De:'🇩🇪', En:'🇬🇧', Pt:'🇧🇷' }[trackKey()];
+    ctx.fillText(t('cardTrack' + trackKey()) + '  ' + flag, W - 80, top - 8);
+
+    // selo de conquista
+    let y = story ? 300 : 175;
+    ctx.textAlign = 'center';
+    if(shareMilestone){
+      const label = t('cardMilestone', {n: shareMilestone});
+      ctx.font = `600 ${story ? 34 : 28}px ${mono}`;
+      const lw = ctx.measureText(label).width + 60;
+      roundRect(ctx, (W - lw)/2, y - (story ? 50 : 42), lw, story ? 70 : 58, 40);
+      ctx.fillStyle = C.amber; ctx.fill();
+      ctx.fillStyle = C.ink; ctx.fillText(label, W/2, y - (story ? 4 : 3));
+    }
 
     // chama + número
-    ctx.font = '260px sans-serif';
-    ctx.fillText('🔥', 90, 480);
+    y = story ? 620 : 395;
+    ctx.font = `${story ? 300 : 190}px sans-serif`;
+    ctx.fillText('🔥', W/2, y);
+    y += story ? 300 : 190;
+    const numPx = fitText(ctx, String(n), W - 160, `700 {px}px ${serif}`, story ? 300 : 190, 80);
+    ctx.font = `700 ${numPx}px ${serif}`;
+    ctx.fillStyle = C.paper; ctx.fillText(String(n), W/2, y);
+    y += story ? 80 : 58;
+    ctx.font = `500 ${story ? 44 : 34}px ${mono}`;
+    ctx.fillStyle = C.amber; ctx.fillText(t('cardDays'), W/2, y);
 
-    ctx.font = '700 220px Georgia, serif';
-    ctx.fillStyle = '#f4efe6';
-    ctx.fillText(String(streakData.streak), 380, 470);
+    // semana (seg → dom)
+    y += story ? 110 : 58;
+    const names = weekdayNames();
+    const mon = mondayOf(todayStr());
+    const r = story ? 40 : 30, gap = story ? 120 : 104;
+    const x0 = W/2 - gap * 3;
+    for(let i = 0; i < 7; i++){
+      const day = shiftDateStr(mon, i);
+      const st = dayState(day, todayStr());
+      const cx = x0 + i * gap;
+      ctx.beginPath(); ctx.arc(cx, y, r, 0, Math.PI * 2);
+      if(st.indexOf('done') >= 0){ ctx.fillStyle = C.amber; ctx.fill(); }
+      else if(st.indexOf('frozen') >= 0){ ctx.fillStyle = 'rgba(127,179,213,0.35)'; ctx.fill(); ctx.strokeStyle = C.ice; ctx.lineWidth = 3; ctx.stroke(); }
+      else { ctx.strokeStyle = st.indexOf('future') >= 0 ? 'rgba(244,239,230,0.18)' : 'rgba(244,239,230,0.4)'; ctx.lineWidth = 3; ctx.stroke(); }
+      if(st.indexOf('frozen') >= 0){ ctx.font = `${r}px sans-serif`; ctx.fillStyle = C.paper; ctx.fillText('❄', cx, y + r * 0.35); }
+      ctx.font = `500 ${story ? 26 : 22}px ${mono}`;
+      ctx.fillStyle = 'rgba(244,239,230,0.6)';
+      ctx.fillText(String(names[i]).toUpperCase(), cx, y + r + (story ? 44 : 34));
+    }
 
-    ctx.font = '500 40px monospace';
+    // recorde + liga + xp
+    y += story ? 170 : 104;
+    const total = (typeof totalXPAllLangs === 'function') ? totalXPAllLangs() : (streakData.xp || 0);
+    let league = LEAGUES[0]; LEAGUES.forEach(l => { if(total >= l.min) league = l; });
+    const stats = `🏆 ${t('cardRecord')} ${Math.max(streakData.best || 0, n)}   ·   ${league.icon} ${leagueName(league)}   ·   ⚡ ${total} xp`;
+    fitText(ctx, stats, W - 140, `500 {px}px ${sans}`, story ? 36 : 30, 20);
+    ctx.fillStyle = C.paper; ctx.fillText(stats, W/2, y);
+
+    // convite com código
+    const boxH = story ? 250 : 150, boxY = H - boxH - (story ? 260 : 52); // Stories: acima da barra de resposta do Instagram
+    roundRect(ctx, 80, boxY, W - 160, boxH, 28);
+    ctx.fillStyle = 'rgba(244,239,230,0.06)'; ctx.fill();
+    ctx.strokeStyle = 'rgba(240,166,58,0.6)'; ctx.lineWidth = 3; ctx.setLineDash([14, 10]); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = C.paper;
+    ctx.font = `600 ${story ? 46 : 34}px ${serif}`;
+    ctx.fillText(t('cardJoin'), W/2, boxY + (story ? 78 : 50));
+    const host = (window.location.host || 'falaut').replace(/^www\./, '');
+    fitText(ctx, host, W - 220, `500 {px}px ${mono}`, story ? 38 : 30, 18);
+    ctx.fillStyle = C.amber; ctx.fillText(host, W/2, boxY + (story ? 140 : 92));
+    ctx.font = `500 ${story ? 30 : 24}px ${mono}`;
     ctx.fillStyle = 'rgba(244,239,230,0.7)';
-    const dayLabel = currentLang === 'pt' ? t('dynShareDaysPt') : currentLang === 'de' ? 'TAGE IN FOLGE' : 'DIAS SEGUIDOS';
-    ctx.fillText(dayLabel, 92, 560);
-
-    // frase
-    ctx.font = '38px monospace';
-    ctx.fillStyle = '#f4efe6';
-    const phrase = currentLang === 'pt' ? t('dynSharePhrasePt') : currentLang === 'de'
-      ? 'Ich trainiere echtes Deutsch.'
-      : 'Treinando inglês de verdade.';
-    ctx.fillText(phrase, 92, 680);
-
-    // waveform decorativa
-    const barCount = 40;
-    const barBaseX = 92, barY = 820, barMaxH = 90, barW = (S-184)/barCount;
-    for(let i=0;i<barCount;i++){
-      const t = i/barCount;
-      ctx.fillStyle = t < 0.33 ? '#3e6b63' : t < 0.66 ? '#f0a63a' : '#c1483d';
-      const h = 14 + Math.abs(Math.sin(i*0.8))*barMaxH*(0.3+t);
-      ctx.beginPath();
-      ctx.roundRect(barBaseX + i*barW, barY - h/2, barW*0.6, h, 2);
-      ctx.fill();
-    }
-
-    // rodapé com o domínio atual do site
-    ctx.font = '30px monospace';
-    ctx.fillStyle = 'rgba(244,239,230,0.45)';
-    ctx.fillText(window.location.hostname || 'falaut', 92, 980);
+    const code = myInviteCode();
+    ctx.fillText((code ? t('cardCode', {code}) + '  ·  ' : '') + '@falautoficial', W/2, boxY + (story ? 200 : 130));
   }
 
-  function updateShareVisibility(){
-    if(streakData.streak > 0){
-      shareBtn.style.display = 'block';
-    }
+  function canvasBlob(){
+    return new Promise(res => { try{ shareCanvas.toBlob(b => res(b), 'image/png'); }catch(e){ res(null); } });
+  }
+  async function redrawShareCard(){
+    try{ if(document.fonts && document.fonts.load) await Promise.all([document.fonts.load("700 100px 'Fraunces'"), document.fonts.load("500 30px 'IBM Plex Mono'")]); }catch(e){}
+    drawShareCard();
   }
 
-  shareBtn.addEventListener('click', ()=>{
+  function openShareModal(opts){
+    if(!shareReady) return;
+    if(!shareModal) return;
+    if(liveStreak() < 1) return;
+    shareMilestone = (opts && opts.milestone) || null;
+    document.getElementById('share-modal-title').textContent = shareMilestone ? t('shareMilestoneTitle', {n: shareMilestone}) : t('shareModalTitle');
+    document.getElementById('share-modal-hint').textContent = t('shareModalHint');
+    document.getElementById('share-reward').textContent = '';
+    shareModal.querySelectorAll('[data-fmt]').forEach(b => b.classList.toggle('on', b.dataset.fmt === shareFormat));
+    shareModal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    redrawShareCard();
+  }
+  function closeShareModal(){
+    if(!shareModal) return;
+    shareModal.hidden = true;
+    document.body.style.overflow = '';
+  }
+  function copyText(text){
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(text).then(()=>true, ()=>false);
+    }catch(e){}
+    try{
+      const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); const ok = document.execCommand('copy'); ta.remove();
+      return Promise.resolve(ok);
+    }catch(e){ return Promise.resolve(false); }
+  }
+
+  document.getElementById('share-btn').addEventListener('click', ()=> openShareModal());
+  if(shareModal){
+    document.getElementById('share-close').addEventListener('click', closeShareModal);
+    shareModal.addEventListener('click', (e)=>{ if(e.target === shareModal) closeShareModal(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape' && !shareModal.hidden) closeShareModal(); });
+    shareModal.querySelectorAll('[data-fmt]').forEach(b => b.addEventListener('click', ()=>{
+      shareFormat = b.dataset.fmt;
+      shareModal.querySelectorAll('[data-fmt]').forEach(x => x.classList.toggle('on', x === b));
+      redrawShareCard();
+    }));
+
+    // compartilhar nativo (abre Instagram, TikTok, WhatsApp… no celular) — a legenda vai junto copiada
+    document.getElementById('native-share-btn').addEventListener('click', async ()=>{
+      drawShareCard();
+      const caption = shareCaption();
+      copyText(caption);
+      const blob = await canvasBlob();
+      const file = blob ? new File([blob], 'falaut-ofensiva.png', { type: 'image/png' }) : null;
+      try{
+        if(file && navigator.canShare && navigator.canShare({ files: [file] })){
+          await navigator.share({ files: [file], text: caption });
+          rewardShare();
+          return;
+        }
+        if(navigator.share){
+          await navigator.share({ text: caption, url: myInviteLink() });
+          rewardShare();
+          return;
+        }
+      }catch(err){
+        if(err && err.name === 'AbortError') return; // pessoa cancelou: sem recompensa
+      }
+      // computador sem compartilhar nativo: baixa a imagem e a legenda já está copiada
+      downloadShareImage();
+      document.getElementById('share-reward').textContent = t('dynCaptionCopied');
+    });
+
+    document.getElementById('whatsapp-share-btn').addEventListener('click', ()=>{
+      window.open('https://wa.me/?text=' + encodeURIComponent(shareCaption()), '_blank', 'noopener,noreferrer');
+      rewardShare();
+    });
+    document.getElementById('download-share-btn').addEventListener('click', ()=>{ downloadShareImage(); });
+    document.getElementById('copy-caption-btn').addEventListener('click', async (e)=>{
+      const btn = e.currentTarget;
+      const ok = await copyText(shareCaption());
+      if(ok){ const orig = btn.textContent; btn.textContent = t('dynCaptionCopied'); setTimeout(()=>{ btn.textContent = orig; }, 1800); }
+    });
+  }
+  async function downloadShareImage(){
     drawShareCard();
-    sharePreview.style.display = sharePreview.style.display === 'none' ? 'block' : 'none';
-  });
+    const blob = await canvasBlob();
+    if(!blob) return;
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.download = 'falaut-ofensiva-' + liveStreak() + '.png';
+    a.href = url;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(()=> URL.revokeObjectURL(url), 4000);
+    rewardShare();
+  }
 
-  downloadShareBtn.addEventListener('click', ()=>{
-    drawShareCard();
-    const link = document.createElement('a');
-    link.download = 'falaut-sequencia.png';
-    link.href = shareCanvas.toDataURL('image/png');
-    link.click();
-  });
-
-  whatsappShareBtn.addEventListener('click', ()=>{
-    const site = window.location.href;
-    const text = currentLang === 'pt' ? t('dynShareWhatsappPt', {n: streakData.streak, site}) : currentLang === 'de'
-      ? `🔥 ${streakData.streak} Tage in Folge echtes Deutsch geübt! ${site}`
-      : `🔥 Bati ${streakData.streak} dias seguidos treinando inglês de verdade! ${site}`;
-    window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
-  });
-
-  updateShareVisibility();
+  shareReady = true;
+  renderShareMission();
 
   // ---- Diagnóstico rápido (quiz) ----
   const quizAnswers = { desafio: null, nivel: null };
@@ -7814,7 +8124,9 @@
   if(referralLinkPt) referralLinkPt.value = myReferralLink;
 
   function copyReferralLink(){
-    navigator.clipboard.writeText(myReferralLink).catch(()=>{});
+    // v13.3.0: não quebra em navegador sem clipboard (antes dava erro e o botão travava)
+    try{ if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(myReferralLink).catch(()=>{}); return; } }catch(e){}
+    try{ const el = document.getElementById('referral-link-' + currentLang); if(el){ el.select(); document.execCommand('copy'); } }catch(e){}
   }
   const copyDeBtn = document.getElementById('copy-referral-de');
   const copyEnBtn = document.getElementById('copy-referral-en');
@@ -8027,7 +8339,8 @@
     'falareal_gramatica_de_v1', 'falareal_gramatica_en_v1',
     'falareal_streak_pt_v1', 'falareal_challenges_pt_v1', 'falareal_dever_pt_v1',
     'falareal_dever_bonus_pt_v1', 'falareal_gramatica_pt_v1', 'falareal_learn_lang',
-    'falareal_profile_v1', 'falareal_saved_at'
+    'falareal_profile_v1', 'falareal_saved_at',
+    'falaut_social_v1', 'falareal_ref_code'   // v13.3.0: divulgação + mesmo código de convite em todo aparelho
   ];
 
   let currentUser = null;
@@ -8119,12 +8432,21 @@
         // v13.2.0: calendário e congeladores juntam os dois aparelhos
         days: (Array.isArray(l.days) || Array.isArray(c.days)) ? union(l.days, c.days) : undefined,
         frozen: union(l.frozen, c.frozen),
-        xpSpent: Math.max(l.xpSpent || 0, c.xpSpent || 0)
+        xpSpent: Math.max(l.xpSpent || 0, c.xpSpent || 0),
+        best: Math.max(l.best || 0, c.best || 0, l.streak || 0, c.streak || 0)
       }));
     }
     if(/^falareal_dever_(de|en|pt)_v1$/.test(k) && l && c){
       return JSON.stringify(mergeRun(l, c, 'markedDate', 'streakStudied'));
     }
+    if(k === 'falaut_social_v1' && l && c){
+      return JSON.stringify({
+        shareDays: Array.from(new Set([].concat(l.shareDays || [], c.shareDays || []))).sort().slice(-60),
+        totalShares: Math.max(l.totalShares || 0, c.totalShares || 0),
+        freezeWeek: [l.freezeWeek || '', c.freezeWeek || ''].sort().pop() || null
+      });
+    }
+    if(k === 'falareal_ref_code') return cloudRaw; // o código da conta vale em todos os aparelhos
     if(/^falareal_gramatica_/.test(k) && l && c){
       const base = localNewer ? l : c;
       return JSON.stringify(Object.assign({}, base, { done: Object.assign({}, c.done || {}, l.done || {}) }));
@@ -8251,6 +8573,7 @@
       if(typeof renderProfile === 'function') renderProfile();
     }
     if(typeof renderProgressSummary === 'function') renderProgressSummary();
+    if(typeof renderShareMission === 'function') renderShareMission();
   }
 
   function updateAuthUI(){
