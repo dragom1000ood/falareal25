@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.3.0
+     Falaut PWA  v13.4.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -962,6 +962,7 @@
   .avatar-opt.bg-opt.selected{border-color:var(--paper);}
 
   /* PRICING */
+  .pricing-legacy{text-align:center; font-size:0.85rem; color:rgba(244,239,230,0.6); margin:18px auto 0; max-width:560px;}
   .pricing-grid{
     display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:start;
   }
@@ -2233,34 +2234,33 @@
       </div>
 
       <div class="pricing-card featured">
-        <span class="featured-tag" data-i18n="price2FeaturedTagDe">Mais popular</span>
-        <span class="kicker" data-i18n="price2KickerDe">Fundador</span>
-        <div class="pricing-was" data-i18n-html="price2WasDe">de <span class="pricing-was-amount">€25</span>/mês depois do lançamento</div>
-        <div class="pricing-amount"><span class="pricing-currency">€</span>15<span class="pricing-period" data-i18n="price2PeriodDe">/mês</span></div>
-        <p class="pricing-sub" data-i18n="price2SubDe">Preço travado enquanto você for assinante — depois do lançamento oficial, sobe pra quem entrar depois.</p>
+        <span class="featured-tag" data-i18n="planBasicTag">Mais popular</span>
+        <span class="kicker" data-i18n="planBasicKicker">Básico</span>
+        <div class="pricing-amount"><span class="pricing-currency">€</span>19<span class="pricing-period" data-i18n="planPeriod">/mês</span></div>
+        <p class="pricing-sub" data-i18n="planBasicSub">O app inteiro, sem limite. Pra quem quer treinar sério no seu ritmo.</p>
         <ul class="pricing-features">
-          <li data-i18n="price2Li1De">Todos os 4 níveis + nível infinito sem fim</li>
-          <li data-i18n="price2Li2De">Conversas ilimitadas</li>
-          <li data-i18n="price2Li3De">Todos os sotaques — bávaro, suábio, suíço, austríaco</li>
-          <li data-i18n="price2Li4De">Cenário nunca se repete igual</li>
+          <li data-i18n="planBasicLi1">Todos os níveis + nível infinito sem fim</li>
+          <li data-i18n="planBasicLi2">Conversas ilimitadas, todos os sotaques</li>
+          <li data-i18n="planBasicLi3">Trilha de gramática completa (A1–C2)</li>
+          <li data-i18n="planBasicLi4">Palavra bônus diária + proteção da sequência</li>
         </ul>
-        <a href="https://buy.stripe.com/6oU4gybCt1U19jO5716oo00" target="_blank" rel="noopener" class="btn-primary btn-full" data-i18n="price2CtaDe">Quero garantir esse preço</a>
+        <a href="#comecar" data-plan-link="basico" class="btn-primary btn-full" data-i18n="planBasicCta">Quero o Básico</a>
       </div>
 
       <div class="pricing-card">
-        <span class="kicker" data-i18n="price3KickerDe">Anual</span>
-        <div class="pricing-was" data-i18n-html="price3WasDe">de <span class="pricing-was-amount">€249</span>/ano depois do lançamento</div>
-        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>149<span class="pricing-period" data-i18n="price3PeriodDe">/ano</span></div>
-        <p class="pricing-sub" data-i18n="price3SubDe">Pague 12 meses, ganhe o 13º de graça — sai por menos de €13/mês. Renova automaticamente todo ano.</p>
+        <span class="kicker" data-i18n="planPremiumKicker">Premium</span>
+        <div class="pricing-amount"><span class="pricing-currency">€</span>39<span class="pricing-period" data-i18n="planPeriod">/mês</span></div>
+        <p class="pricing-sub" data-i18n="planPremiumSub">O app + eu do teu lado. Pra quem quer resultado mais rápido, com acompanhamento.</p>
         <ul class="pricing-features">
-          <li data-i18n="price3Li1De">Tudo do plano Fundador</li>
-          <li data-i18n="price3Li2De">1 mês de bônus todo ano (13 meses de acesso)</li>
-          <li data-i18n="price3Li3De">Acesso a todas as atualizações futuras</li>
-          <li data-i18n="price3Li4De">Prioridade máxima na fila de lançamento</li>
+          <li data-i18n="planPremiumLi1">Tudo do Básico</li>
+          <li data-i18n="planPremiumLi2">1 conversa ao vivo comigo por mês (30 min)</li>
+          <li data-i18n="planPremiumLi3">Tira-dúvidas e correção de áudio no WhatsApp</li>
+          <li data-i18n="planPremiumLi4">Plano de estudo montado pra você</li>
         </ul>
-        <a href="https://buy.stripe.com/9B6cN4ayp42967Cbvp6oo01" target="_blank" rel="noopener" class="btn-audio btn-full" data-i18n="price3CtaDe">Quero o plano anual</a>
+        <a href="#comecar" data-plan-link="premium" class="btn-audio btn-full" data-i18n="planPremiumCta">Quero o Premium</a>
       </div>
     </div>
+    <p class="pricing-legacy lang-de" data-i18n="planLegacyNote">Já é Fundador (€15/mês) ou Anual (€149/ano)? Teu preço continua travado enquanto a assinatura estiver ativa. 💛</p>
 
     <div class="pricing-grid lang-en" data-reveal>
       <div class="pricing-card">
@@ -2277,34 +2277,33 @@
       </div>
 
       <div class="pricing-card featured">
-        <span class="featured-tag" data-i18n="price2FeaturedTagEn">Most popular</span>
-        <span class="kicker" data-i18n="price2KickerEn">Founder</span>
-        <div class="pricing-was" data-i18n-html="price2WasEn">from <span class="pricing-was-amount">€25</span>/month after launch</div>
-        <div class="pricing-amount"><span class="pricing-currency">€</span>15<span class="pricing-period" data-i18n="price2PeriodEn">/month</span></div>
-        <p class="pricing-sub" data-i18n="price2SubEn">Price locked in as long as you stay subscribed — it goes up for everyone joining after launch.</p>
+        <span class="featured-tag" data-i18n="planBasicTag">Mais popular</span>
+        <span class="kicker" data-i18n="planBasicKicker">Básico</span>
+        <div class="pricing-amount"><span class="pricing-currency">€</span>19<span class="pricing-period" data-i18n="planPeriod">/mês</span></div>
+        <p class="pricing-sub" data-i18n="planBasicSub">O app inteiro, sem limite. Pra quem quer treinar sério no seu ritmo.</p>
         <ul class="pricing-features">
-          <li data-i18n="price2Li1En">All 4 levels + endless infinite level</li>
-          <li data-i18n="price2Li2En">Unlimited conversations</li>
-          <li data-i18n="price2Li3En">All accents — Scottish, Indian, Irish, Southern US</li>
-          <li data-i18n="price2Li4En">A scenario that never repeats itself</li>
+          <li data-i18n="planBasicLi1">Todos os níveis + nível infinito sem fim</li>
+          <li data-i18n="planBasicLi2">Conversas ilimitadas, todos os sotaques</li>
+          <li data-i18n="planBasicLi3">Trilha de gramática completa (A1–C2)</li>
+          <li data-i18n="planBasicLi4">Palavra bônus diária + proteção da sequência</li>
         </ul>
-        <a href="https://buy.stripe.com/6oU4gybCt1U19jO5716oo00" target="_blank" rel="noopener" class="btn-primary btn-full" data-i18n="price2CtaEn">Lock in this price</a>
+        <a href="#comecar" data-plan-link="basico" class="btn-primary btn-full" data-i18n="planBasicCta">Quero o Básico</a>
       </div>
 
       <div class="pricing-card">
-        <span class="kicker" data-i18n="price3KickerEn">Annual</span>
-        <div class="pricing-was" data-i18n-html="price3WasEn">from <span class="pricing-was-amount">€249</span>/year after launch</div>
-        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>149<span class="pricing-period" data-i18n="price3PeriodEn">/year</span></div>
-        <p class="pricing-sub" data-i18n="price3SubEn">Pay for 12 months, get the 13th free — works out to under €13/month. Renews automatically every year.</p>
+        <span class="kicker" data-i18n="planPremiumKicker">Premium</span>
+        <div class="pricing-amount"><span class="pricing-currency">€</span>39<span class="pricing-period" data-i18n="planPeriod">/mês</span></div>
+        <p class="pricing-sub" data-i18n="planPremiumSub">O app + eu do teu lado. Pra quem quer resultado mais rápido, com acompanhamento.</p>
         <ul class="pricing-features">
-          <li data-i18n="price3Li1En">Everything in Founder</li>
-          <li data-i18n="price3Li2En">1 bonus month every year (13 months of access)</li>
-          <li data-i18n="price3Li3En">Access to all future updates</li>
-          <li data-i18n="price3Li4En">Top priority in the launch queue</li>
+          <li data-i18n="planPremiumLi1">Tudo do Básico</li>
+          <li data-i18n="planPremiumLi2">1 conversa ao vivo comigo por mês (30 min)</li>
+          <li data-i18n="planPremiumLi3">Tira-dúvidas e correção de áudio no WhatsApp</li>
+          <li data-i18n="planPremiumLi4">Plano de estudo montado pra você</li>
         </ul>
-        <a href="https://buy.stripe.com/9B6cN4ayp42967Cbvp6oo01" target="_blank" rel="noopener" class="btn-audio btn-full" data-i18n="price3CtaEn">Get the annual plan</a>
+        <a href="#comecar" data-plan-link="premium" class="btn-audio btn-full" data-i18n="planPremiumCta">Quero o Premium</a>
       </div>
     </div>
+    <p class="pricing-legacy lang-en" data-i18n="planLegacyNote">Já é Fundador (€15/mês) ou Anual (€149/ano)? Teu preço continua travado enquanto a assinatura estiver ativa. 💛</p>
         <div class="pricing-grid lang-pt" data-reveal>
       <div class="pricing-card">
         <span class="kicker" data-i18n="price1KickerPt">Free</span>
@@ -2320,34 +2319,33 @@
       </div>
 
       <div class="pricing-card featured">
-        <span class="featured-tag" data-i18n="price2FeaturedTagPt">Most popular</span>
-        <span class="kicker" data-i18n="price2KickerPt">Founder</span>
-        <div class="pricing-was" data-i18n-html="price2WasPt">from <span class="pricing-was-amount">€25</span>/month after launch</div>
-        <div class="pricing-amount"><span class="pricing-currency">€</span>15<span class="pricing-period" data-i18n="price2PeriodPt">/month</span></div>
-        <p class="pricing-sub" data-i18n="price2SubPt">Price locked in as long as you stay subscribed — it goes up for everyone joining after launch.</p>
+        <span class="featured-tag" data-i18n="planBasicTag">Mais popular</span>
+        <span class="kicker" data-i18n="planBasicKicker">Básico</span>
+        <div class="pricing-amount"><span class="pricing-currency">€</span>19<span class="pricing-period" data-i18n="planPeriod">/mês</span></div>
+        <p class="pricing-sub" data-i18n="planBasicSub">O app inteiro, sem limite. Pra quem quer treinar sério no seu ritmo.</p>
         <ul class="pricing-features">
-          <li data-i18n="price2Li1Pt">All 4 levels + endless infinite level</li>
-          <li data-i18n="price2Li2Pt">Unlimited conversations</li>
-          <li data-i18n="price2Li3Pt">All accents — Scottish, Indian, Irish, Southern US</li>
-          <li data-i18n="price2Li4Pt">A scenario that never repeats itself</li>
+          <li data-i18n="planBasicLi1">Todos os níveis + nível infinito sem fim</li>
+          <li data-i18n="planBasicLi2">Conversas ilimitadas, todos os sotaques</li>
+          <li data-i18n="planBasicLi3">Trilha de gramática completa (A1–C2)</li>
+          <li data-i18n="planBasicLi4">Palavra bônus diária + proteção da sequência</li>
         </ul>
-        <a href="https://buy.stripe.com/6oU4gybCt1U19jO5716oo00" target="_blank" rel="noopener" class="btn-primary btn-full" data-i18n="price2CtaPt">Lock in this price</a>
+        <a href="#comecar" data-plan-link="basico" class="btn-primary btn-full" data-i18n="planBasicCta">Quero o Básico</a>
       </div>
 
       <div class="pricing-card">
-        <span class="kicker" data-i18n="price3KickerPt">Annual</span>
-        <div class="pricing-was" data-i18n-html="price3WasPt">from <span class="pricing-was-amount">€249</span>/year after launch</div>
-        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>149<span class="pricing-period" data-i18n="price3PeriodPt">/year</span></div>
-        <p class="pricing-sub" data-i18n="price3SubPt">Pay for 12 months, get the 13th free — works out to under €13/month. Renews automatically every year.</p>
+        <span class="kicker" data-i18n="planPremiumKicker">Premium</span>
+        <div class="pricing-amount"><span class="pricing-currency">€</span>39<span class="pricing-period" data-i18n="planPeriod">/mês</span></div>
+        <p class="pricing-sub" data-i18n="planPremiumSub">O app + eu do teu lado. Pra quem quer resultado mais rápido, com acompanhamento.</p>
         <ul class="pricing-features">
-          <li data-i18n="price3Li1Pt">Everything in Founder</li>
-          <li data-i18n="price3Li2Pt">1 bonus month every year (13 months of access)</li>
-          <li data-i18n="price3Li3Pt">Access to all future updates</li>
-          <li data-i18n="price3Li4Pt">Top priority in the launch queue</li>
+          <li data-i18n="planPremiumLi1">Tudo do Básico</li>
+          <li data-i18n="planPremiumLi2">1 conversa ao vivo comigo por mês (30 min)</li>
+          <li data-i18n="planPremiumLi3">Tira-dúvidas e correção de áudio no WhatsApp</li>
+          <li data-i18n="planPremiumLi4">Plano de estudo montado pra você</li>
         </ul>
-        <a href="https://buy.stripe.com/9B6cN4ayp42967Cbvp6oo01" target="_blank" rel="noopener" class="btn-audio btn-full" data-i18n="price3CtaPt">Get the annual plan</a>
+        <a href="#comecar" data-plan-link="premium" class="btn-audio btn-full" data-i18n="planPremiumCta">Quero o Premium</a>
       </div>
     </div>
+    <p class="pricing-legacy lang-pt" data-i18n="planLegacyNote">Já é Fundador (€15/mês) ou Anual (€149/ano)? Teu preço continua travado enquanto a assinatura estiver ativa. 💛</p>
   </div>
 </section>
 
@@ -2463,7 +2461,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.3.0</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.4.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -4525,6 +4523,13 @@
   Object.assign(I18N_STRINGS.en, {"shareStreak": "📣 Share my streak", "smTitle": "📣 Share mission", "smBest": "🏆 best {n}", "smToday": "Share your streak today: +{xp} xp", "smTodayDone": "✓ Shared today (+{xp} xp). Come back tomorrow!", "smWeek": "{n}/{goal} days this week → ❄️ free freeze", "smWeekDone": "❄️ This week's freeze is yours!", "shareModalTitle": "Show off your streak 🔥", "shareMilestoneTitle": "🏅 {n} days in a row! Show the world", "shareModalHint": "Post it to your Stories and tag @falautoficial. Anyone joining through your link comes in with your code.", "shareFmtStory": "Stories 9:16", "shareFmtPost": "Post 1:1", "shareNative": "📤 Share", "shareCopyCaption": "📋 Copy caption", "dynCaptionCopied": "✓ Caption copied, just paste it!", "dynShareReward": "📣 Thanks for sharing! +{xp} xp", "dynShareFreeze": "❄️ Shared {goal} days this week: you earned 1 free freeze!", "dynShareFreezeFullXp": "❄️ Freezes are full, so you got +{xp} xp!", "dynShareAlready": "You already got today's bonus. Share as much as you like!", "dynNewRecord": "🏆 New record: {n} days in a row!", "cardDays": "DAYS IN A ROW", "cardRecord": "Best", "cardJoin": "Practice with me 👇", "cardCode": "code {code}", "cardMilestone": "MILESTONE · {n} DAYS", "cardTrackDe": "REAL GERMAN", "cardTrackEn": "REAL ENGLISH", "cardTrackPt": "REAL PORTUGUESE", "langNameDe": "German", "langNameEn": "English", "langNamePt": "Portuguese", "shareCaption": "🔥 {n} days in a row practicing real {lang} on @falautoficial! Practice with me: {link}"});
   Object.assign(I18N_STRINGS.es, {"shareStreak": "📣 Compartir mi racha", "smTitle": "📣 Misión de difusión", "smBest": "🏆 récord {n}", "smToday": "Comparte tu racha hoy: +{xp} xp", "smTodayDone": "✓ Compartiste hoy (+{xp} xp). ¡Vuelve mañana!", "smWeek": "{n}/{goal} días esta semana → ❄️ congelador gratis", "smWeekDone": "❄️ ¡Congelador de la semana asegurado!", "shareModalTitle": "Muestra tu racha 🔥", "shareMilestoneTitle": "🏅 ¡{n} días seguidos! Muéstralo al mundo", "shareModalHint": "Publícalo en tus Stories y etiqueta a @falautoficial. Quien entre por tu enlace llega con tu código.", "shareFmtStory": "Stories 9:16", "shareFmtPost": "Post 1:1", "shareNative": "📤 Compartir", "shareCopyCaption": "📋 Copiar texto", "dynCaptionCopied": "✓ Texto copiado, ¡solo pégalo!", "dynShareReward": "📣 ¡Gracias por compartir! +{xp} xp", "dynShareFreeze": "❄️ {goal} días compartiendo esta semana: ¡ganaste 1 congelador gratis!", "dynShareFreezeFullXp": "❄️ Congeladores llenos, ¡así que ganaste +{xp} xp!", "dynShareAlready": "Ya ganaste el bono de hoy. ¡Comparte cuanto quieras!", "dynNewRecord": "🏆 Nuevo récord: ¡{n} días seguidos!", "cardDays": "DÍAS SEGUIDOS", "cardRecord": "Récord", "cardJoin": "Entrena conmigo 👇", "cardCode": "código {code}", "cardMilestone": "LOGRO · {n} DÍAS", "cardTrackDe": "ALEMÁN DE VERDAD", "cardTrackEn": "INGLÉS DE VERDAD", "cardTrackPt": "PORTUGUÉS DE VERDAD", "langNameDe": "alemán", "langNameEn": "inglés", "langNamePt": "portugués", "shareCaption": "🔥 ¡{n} días seguidos entrenando {lang} de verdad en @falautoficial! Entrena conmigo: {link}"});
   Object.assign(I18N_STRINGS.de, {"shareStreak": "📣 Meine Serie teilen", "smTitle": "📣 Teilen-Mission", "smBest": "🏆 Rekord {n}", "smToday": "Teile heute deine Serie: +{xp} xp", "smTodayDone": "✓ Heute geteilt (+{xp} xp). Bis morgen!", "smWeek": "{n}/{goal} Tage diese Woche → ❄️ Gratis-Freeze", "smWeekDone": "❄️ Freeze der Woche gesichert!", "shareModalTitle": "Zeig deine Serie 🔥", "shareMilestoneTitle": "🏅 {n} Tage in Folge! Zeig es der Welt", "shareModalHint": "Poste es in deiner Story und markiere @falautoficial. Wer über deinen Link kommt, bringt deinen Code mit.", "shareFmtStory": "Story 9:16", "shareFmtPost": "Post 1:1", "shareNative": "📤 Teilen", "shareCopyCaption": "📋 Text kopieren", "dynCaptionCopied": "✓ Text kopiert, einfach einfügen!", "dynShareReward": "📣 Danke fürs Teilen! +{xp} xp", "dynShareFreeze": "❄️ {goal} Tage geteilt diese Woche: 1 Gratis-Freeze verdient!", "dynShareFreezeFullXp": "❄️ Freezes voll, dafür +{xp} xp!", "dynShareAlready": "Den Bonus für heute hast du schon. Teile so viel du willst!", "dynNewRecord": "🏆 Neuer Rekord: {n} Tage in Folge!", "cardDays": "TAGE IN FOLGE", "cardRecord": "Rekord", "cardJoin": "Trainier mit mir 👇", "cardCode": "Code {code}", "cardMilestone": "MEILENSTEIN · {n} TAGE", "cardTrackDe": "ECHTES DEUTSCH", "cardTrackEn": "ECHTES ENGLISCH", "cardTrackPt": "ECHTES PORTUGIESISCH", "langNameDe": "Deutsch", "langNameEn": "Englisch", "langNamePt": "Portugiesisch", "shareCaption": "🔥 {n} Tage in Folge echtes {lang} geübt mit @falautoficial! Trainier mit mir: {link}"});
+
+
+  // v13.4.0: planos Básico €19 / Premium €39 (Fundador e Anual continuam pra quem já assina)
+  Object.assign(I18N_STRINGS.pt, {"planPeriod": "/mês", "planBasicTag": "Mais popular", "planBasicKicker": "Básico", "planBasicSub": "O app inteiro, sem limite. Pra quem quer treinar sério no seu ritmo.", "planBasicLi1": "Todos os níveis + nível infinito sem fim", "planBasicLi2": "Conversas ilimitadas, todos os sotaques", "planBasicLi3": "Trilha de gramática completa (A1–C2)", "planBasicLi4": "Palavra bônus diária + proteção da sequência", "planBasicCta": "Quero o Básico", "planPremiumKicker": "Premium", "planPremiumSub": "O app + eu do teu lado. Pra quem quer resultado mais rápido, com acompanhamento.", "planPremiumLi1": "Tudo do Básico", "planPremiumLi2": "1 conversa ao vivo comigo por mês (30 min)", "planPremiumLi3": "Tira-dúvidas e correção de áudio no WhatsApp", "planPremiumLi4": "Plano de estudo montado pra você", "planPremiumCta": "Quero o Premium", "planLegacyNote": "Já é Fundador (€15/mês) ou Anual (€149/ano)? Teu preço continua travado enquanto a assinatura estiver ativa. 💛", "streakShielded": "🛡️ Sequência protegida — como assinante, faltar 1 dia não derruba sua sequência.", "dynStreakShieldedToast": "🛡️ Sequência protegida — como assinante, faltar 1 dia não te derruba.", "founderBonusLocked": "🎁 Assinantes ganham uma <strong>segunda palavra por dia</strong> — vocabulário no dobro da velocidade. <a href=\"#preco\">Ver planos</a>", "founderBonusWord": "🎁 Palavra bônus do assinante", "dynLockLevels": "🔒 Níveis 3+ são exclusivos dos planos Básico e Premium.", "dynLockBonus": "🎁 A palavra bônus do dia é exclusiva dos planos Básico e Premium.", "dynLockGrammar": "🔒 A trilha {code} é exclusiva dos planos Básico e Premium.", "grammarLockTag": "🔒 assinantes"});
+  Object.assign(I18N_STRINGS.en, {"planPeriod": "/month", "planBasicTag": "Most popular", "planBasicKicker": "Basic", "planBasicSub": "The whole app, no limits. For people who want to practice seriously at their own pace.", "planBasicLi1": "All levels + the never-ending infinite level", "planBasicLi2": "Unlimited conversations, every accent", "planBasicLi3": "Full grammar track (A1–C2)", "planBasicLi4": "Daily bonus word + streak protection", "planBasicCta": "Get Basic", "planPremiumKicker": "Premium", "planPremiumSub": "The app + me by your side. For faster results, with personal guidance.", "planPremiumLi1": "Everything in Basic", "planPremiumLi2": "1 live conversation with me per month (30 min)", "planPremiumLi3": "Questions and audio feedback on WhatsApp", "planPremiumLi4": "A study plan made for you", "planPremiumCta": "Get Premium", "planLegacyNote": "Already a Founder (€15/month) or Annual (€149/year) member? Your price stays locked while your subscription is active. 💛", "streakShielded": "🛡️ Streak protected — as a subscriber, missing 1 day won't break your streak.", "dynStreakShieldedToast": "🛡️ Streak protected — as a subscriber, missing 1 day won't knock you down.", "founderBonusLocked": "🎁 Subscribers get a <strong>second word every day</strong> — vocabulary at twice the speed. <a href=\"#preco\">See plans</a>", "founderBonusWord": "🎁 Subscriber bonus word", "dynLockLevels": "🔒 Levels 3+ are part of the Basic and Premium plans.", "dynLockBonus": "🎁 The daily bonus word is part of the Basic and Premium plans.", "dynLockGrammar": "🔒 The {code} track is part of the Basic and Premium plans.", "grammarLockTag": "🔒 subscribers"});
+  Object.assign(I18N_STRINGS.es, {"planPeriod": "/mes", "planBasicTag": "Más popular", "planBasicKicker": "Básico", "planBasicSub": "La app completa, sin límites. Para quien quiere entrenar en serio a su ritmo.", "planBasicLi1": "Todos los niveles + nivel infinito sin fin", "planBasicLi2": "Conversaciones ilimitadas, todos los acentos", "planBasicLi3": "Ruta de gramática completa (A1–C2)", "planBasicLi4": "Palabra extra diaria + protección de la racha", "planBasicCta": "Quiero el Básico", "planPremiumKicker": "Premium", "planPremiumSub": "La app + yo a tu lado. Para resultados más rápidos, con acompañamiento.", "planPremiumLi1": "Todo lo del Básico", "planPremiumLi2": "1 conversación en vivo conmigo al mes (30 min)", "planPremiumLi3": "Dudas y corrección de audios por WhatsApp", "planPremiumLi4": "Plan de estudio hecho para ti", "planPremiumCta": "Quiero el Premium", "planLegacyNote": "¿Ya eres Fundador (€15/mes) o Anual (€149/año)? Tu precio sigue congelado mientras tu suscripción esté activa. 💛", "streakShielded": "🛡️ Racha protegida — como suscriptor, faltar 1 día no rompe tu racha.", "dynStreakShieldedToast": "🛡️ Racha protegida — como suscriptor, faltar 1 día no te la rompe.", "founderBonusLocked": "🎁 Los suscriptores reciben una <strong>segunda palabra por día</strong> — vocabulario al doble de velocidad. <a href=\"#preco\">Ver planes</a>", "founderBonusWord": "🎁 Palabra extra del suscriptor", "dynLockLevels": "🔒 Los niveles 3+ son parte de los planes Básico y Premium.", "dynLockBonus": "🎁 La palabra extra del día es parte de los planes Básico y Premium.", "dynLockGrammar": "🔒 La ruta {code} es parte de los planes Básico y Premium.", "grammarLockTag": "🔒 suscriptores"});
+  Object.assign(I18N_STRINGS.de, {"planPeriod": "/Monat", "planBasicTag": "Am beliebtesten", "planBasicKicker": "Basis", "planBasicSub": "Die ganze App, ohne Limit. Für alle, die ernsthaft in ihrem Tempo üben wollen.", "planBasicLi1": "Alle Level + endloses Infinity-Level", "planBasicLi2": "Unbegrenzte Gespräche, alle Akzente", "planBasicLi3": "Komplette Grammatik-Strecke (A1–C2)", "planBasicLi4": "Tägliches Bonuswort + Serienschutz", "planBasicCta": "Basis wählen", "planPremiumKicker": "Premium", "planPremiumSub": "Die App + ich an deiner Seite. Für schnellere Ergebnisse, mit persönlicher Begleitung.", "planPremiumLi1": "Alles aus Basis", "planPremiumLi2": "1 Live-Gespräch mit mir pro Monat (30 Min.)", "planPremiumLi3": "Fragen und Audio-Korrektur per WhatsApp", "planPremiumLi4": "Ein Lernplan nur für dich", "planPremiumCta": "Premium wählen", "planLegacyNote": "Schon Gründer (15 €/Monat) oder Jahresabo (149 €/Jahr)? Dein Preis bleibt fest, solange dein Abo aktiv ist. 💛", "streakShielded": "🛡️ Serie geschützt – als Abonnent bricht 1 verpasster Tag deine Serie nicht.", "dynStreakShieldedToast": "🛡️ Serie geschützt – als Abonnent wirft dich 1 verpasster Tag nicht zurück.", "founderBonusLocked": "🎁 Abonnenten bekommen <strong>ein zweites Wort pro Tag</strong> – doppelt so schnell Wortschatz aufbauen. <a href=\"#preco\">Pläne ansehen</a>", "founderBonusWord": "🎁 Bonuswort für Abonnenten", "dynLockLevels": "🔒 Level 3+ gehören zu den Plänen Basis und Premium.", "dynLockBonus": "🎁 Das tägliche Bonuswort gehört zu den Plänen Basis und Premium.", "dynLockGrammar": "🔒 Die Strecke {code} gehört zu den Plänen Basis und Premium.", "grammarLockTag": "🔒 Abonnenten"});
 
   // currentSiteLang mirrors whatever applyInterfaceLanguage() last applied, so
   // dynamic (JS-generated) UI text built with t() below is locale-correct at
@@ -7975,6 +7980,25 @@
 
   shareReady = true;
   renderShareMission();
+
+  // ---- v13.4.0: PLANOS NOVOS — Básico €19 e Premium €39 ----
+  // Wagner: crie no Stripe os 2 Payment Links (assinatura mensal) e cole aqui.
+  // Enquanto estiver vazio, o botão leva pra lista de espera (#comecar) em vez de um checkout quebrado.
+  const PLAN_LINKS = {
+    basico:  '',   // ex.: 'https://buy.stripe.com/xxxxxxxx'  (€19/mês)
+    premium: ''    // ex.: 'https://buy.stripe.com/yyyyyyyy'  (€39/mês)
+  };
+  document.querySelectorAll('[data-plan-link]').forEach(a=>{
+    const url = PLAN_LINKS[a.dataset.planLink];
+    if(url){
+      // leva o código de convite pro Stripe (aparece como client_reference_id no pagamento)
+      let ref = null; try{ ref = localStorage.getItem('falareal_referred_by'); }catch(e){}
+      a.href = url + (ref ? (url.includes('?') ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(ref) : '');
+      a.target = '_blank'; a.rel = 'noopener';
+    } else {
+      a.href = '#comecar'; a.removeAttribute('target');
+    }
+  });
 
   // ---- Diagnóstico rápido (quiz) ----
   const quizAnswers = { desafio: null, nivel: null };

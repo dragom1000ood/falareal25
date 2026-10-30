@@ -1,5 +1,5 @@
 /* ============================================================
-   Falaut — Service Worker  (v13.3.0)
+   Falaut — Service Worker  (v13.4.0)
    ============================================================
 
    ÚNICA COISA QUE VOCÊ PRECISA MEXER A CADA DEPLOY:
@@ -28,7 +28,7 @@
    embaixo do usuário no meio de um exercício.
    ============================================================ */
 
-const CACHE_VERSION = 'falaut-v13.3.0';
+const CACHE_VERSION = 'falaut-v13.4.0';
 const OFFLINE_URL   = '/offline.html';
 const NAV_TIMEOUT   = 4000;
 
