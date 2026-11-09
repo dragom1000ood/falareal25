@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.4.0
+     Falaut PWA  v13.4.4
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -66,7 +66,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Falaut — Alemão e inglês de verdade">
 <meta property="og:description" content="Sotaque, ruído de fundo, interrupções — pratique o idioma como ele realmente acontece no dia a dia, pra quem quer se envolver de verdade.">
-<meta property="og:image" content="/og-image.png">
+<meta property="og:image" content="https://falareal-site31.vercel.app/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://falareal-site31.vercel.app">
@@ -93,10 +93,10 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Falaut — Alemão e inglês de verdade">
 <meta name="twitter:description" content="Sotaque, ruído de fundo, interrupções — pratique o idioma como ele realmente acontece no dia a dia, pra quem quer se envolver de verdade.">
-<meta name="twitter:image" content="/og-image.png">
+<meta name="twitter:image" content="https://falareal-site31.vercel.app/og-image.png">
 
-<link rel="icon" type="image/png" href="/favicon-32.png">
-<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="icon" type="image/png" href="/icons/favicon-32.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 <meta name="theme-color" content="#12181f">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2046,14 +2046,14 @@
     </div>
     <div class="ao-vivo-card" data-reveal>
       <div class="ao-vivo-price-row">
-        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>15</div>
+        <div class="pricing-amount pricing-amount-small"><span class="pricing-currency">€</span>50</div>
         <div>
           <div class="ao-vivo-option-title" data-i18n="liveOptionTitle">30 minutos, só com você</div>
-          <div class="ao-vivo-option-sub" data-i18n="liveOptionSub">Preço fixo pra qualquer pessoa, fundador ou não — é o meu tempo real que tá sendo reservado.</div>
+          <div class="ao-vivo-option-sub" data-i18n="liveOptionSub">Preço fixo pra quem não tem o Premium. No Premium, 1 conversa por mês já vem incluída.</div>
         </div>
       </div>
 
-      <a href="https://buy.stripe.com/SUBSTITUA_PELO_SEU_LINK" target="_blank" rel="noopener" class="btn-primary btn-full" id="ao-vivo-pay-btn" data-i18n="livePayBtn">Pagar e marcar minha conversa — €15</a>
+      <a href="#ao-vivo-form" data-plan-link="aoVivo" data-plan-fallback="#ao-vivo-form" class="btn-primary btn-full" id="ao-vivo-pay-btn" data-i18n="livePayBtn">Pagar e marcar minha conversa — €50</a>
 
       <div class="ao-vivo-step2">
         <p class="ao-vivo-step2-label" data-i18n="liveStep2Label">Depois de pagar, me conta seu horário aqui embaixo — eu confirmo por e-mail:</p>
@@ -2461,7 +2461,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.4.0</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.4.4</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2667,8 +2667,8 @@
       liveTitle: 'Treina uma conversa ao vivo comigo.',
       liveLede: 'A conversa por IA (passo 2 aí em cima) ainda está sendo construída. Enquanto isso, se quiser praticar de verdade, marca uma conversa comigo direto — sem robô nenhum no meio.',
       liveOptionTitle: '30 minutos, só com você',
-      liveOptionSub: 'Preço fixo pra qualquer pessoa, fundador ou não — é o meu tempo real que tá sendo reservado.',
-      livePayBtn: 'Pagar e marcar minha conversa — €15',
+      liveOptionSub: 'Preço fixo pra quem não tem o Premium. No Premium, 1 conversa por mês já vem incluída.',
+      livePayBtn: 'Pagar e marcar minha conversa — €50',
       liveStep2Label: 'Depois de pagar, me conta seu horário aqui embaixo — eu confirmo por e-mail:',
       yourName: 'Seu nome',
       yourEmailPayment: 'Seu e-mail (o mesmo do pagamento, se puder)',
@@ -3134,8 +3134,8 @@
       liveTitle: 'Practice a live conversation with me.',
       liveLede: "The AI conversation (step 2 above) is still being built. In the meantime, if you want to practice for real, book a conversation with me directly — no bot in between.",
       liveOptionTitle: '30 minutes, just you and me',
-      liveOptionSub: "Fixed price for everyone, founder or not — it's my real time being booked.",
-      livePayBtn: 'Pay and book my conversation — €15',
+      liveOptionSub: "Fixed price if you're not on Premium. Premium already includes 1 conversation a month.",
+      livePayBtn: 'Pay and book my conversation — €50',
       liveStep2Label: 'After paying, tell me your availability below — I confirm by email:',
       yourName: 'Your name',
       yourEmailPayment: 'Your email (same as payment, if possible)',
@@ -3707,8 +3707,8 @@
       liveTitle: 'Entrena una conversación en vivo conmigo.',
       liveLede: 'La conversación por IA (paso 2 ahí arriba) todavía se está construyendo. Mientras tanto, si quieres practicar de verdad, agenda una conversación conmigo directamente — sin ningún robot de por medio.',
       liveOptionTitle: '30 minutos, solo tú y yo',
-      liveOptionSub: 'Precio fijo para cualquier persona, fundador o no — es mi tiempo real el que se está reservando.',
-      livePayBtn: 'Pagar y agendar mi conversación — €15',
+      liveOptionSub: 'Precio fijo si no tienes Premium. En Premium ya viene incluida 1 conversación al mes.',
+      livePayBtn: 'Pagar y agendar mi conversación — €50',
       liveStep2Label: 'Después de pagar, cuéntame tu horario aquí abajo — te confirmo por correo:',
       yourName: 'Tu nombre',
       yourEmailPayment: 'Tu correo (el mismo del pago, si es posible)',
@@ -4172,8 +4172,8 @@
       liveTitle: "Übe ein Live-Gespräch mit mir.",
       liveLede: "Das KI-Gespräch (Schritt 2 oben) ist noch in Arbeit. Bis dahin kannst du, wenn du wirklich üben willst, direkt ein Gespräch mit mir buchen – ohne Bot dazwischen.",
       liveOptionTitle: "30 Minuten, nur du und ich",
-      liveOptionSub: "Fester Preis für alle, Gründer oder nicht – hier wird meine echte Zeit gebucht.",
-      livePayBtn: "Bezahlen und Gespräch buchen – 15 €",
+      liveOptionSub: "Fester Preis ohne Premium. Im Premium ist 1 Gespräch pro Monat schon dabei.",
+      livePayBtn: "Bezahlen und Gespräch buchen – 50 €",
       liveStep2Label: "Nach der Zahlung sag mir unten, wann du Zeit hast – ich bestätige per E-Mail:",
       yourName: "Dein Name",
       yourEmailPayment: "Deine E-Mail (möglichst dieselbe wie bei der Zahlung)",
@@ -7981,22 +7981,24 @@
   shareReady = true;
   renderShareMission();
 
-  // ---- v13.4.0: PLANOS NOVOS — Básico €19 e Premium €39 ----
-  // Wagner: crie no Stripe os 2 Payment Links (assinatura mensal) e cole aqui.
-  // Enquanto estiver vazio, o botão leva pra lista de espera (#comecar) em vez de um checkout quebrado.
+  // ---- v13.4.1: LINKS DE PAGAMENTO — todos num lugar só ----
+  // Payment Links do Stripe (Básico e Premium = assinatura mensal; aoVivo = pagamento único).
+  // Enquanto um link estiver vazio, o botão dele leva pro destino de reserva, nunca pra um checkout quebrado.
   const PLAN_LINKS = {
-    basico:  '',   // ex.: 'https://buy.stripe.com/xxxxxxxx'  (€19/mês)
-    premium: ''    // ex.: 'https://buy.stripe.com/yyyyyyyy'  (€39/mês)
+    basico:  'https://buy.stripe.com/bJe14meOF0PXfIcdDx6oo02',   // €19/mês
+    premium: 'https://buy.stripe.com/6oU14mdKBeGN2Vq2YT6oo03',   // €39/mês
+    aoVivo:  'https://buy.stripe.com/5kQ00i4a1aqxcw07f96oo04'    // €50, conversa ao vivo de 30 min
   };
   document.querySelectorAll('[data-plan-link]').forEach(a=>{
     const url = PLAN_LINKS[a.dataset.planLink];
     if(url){
-      // leva o código de convite pro Stripe (aparece como client_reference_id no pagamento)
-      let ref = null; try{ ref = localStorage.getItem('falareal_referred_by'); }catch(e){}
-      a.href = url + (ref ? (url.includes('?') ? '&' : '?') + 'client_reference_id=' + encodeURIComponent(ref) : '');
+      // leva o código de convite pro Stripe (aparece como client_reference_id no pagamento).
+      // O Stripe só aceita letras, números, - e _ nesse campo; o ?ref= vem da URL, então limpamos aqui.
+      let ref = new URLSearchParams(location.search).get('ref') || ''; try{ ref = (ref || localStorage.getItem('falareal_referred_by') || '').replace(/[^A-Za-z0-9_-]/g,'').slice(0,200); }catch(e){}
+      a.href = url + (ref ? (url.includes('?') ? '&' : '?') + 'client_reference_id=' + ref : '');
       a.target = '_blank'; a.rel = 'noopener';
     } else {
-      a.href = '#comecar'; a.removeAttribute('target');
+      a.href = a.dataset.planFallback || '#comecar'; a.removeAttribute('target');
     }
   });
 
