@@ -1,5 +1,19 @@
 # CHANGELOG — Falaut
 
+## v13.4.5 — 2026-11-09 · E-book baixa de verdade
+
+**Onde está:** seção **E-book grátis** (`#ebook-gratis`) e pasta `ebook/` na raiz do site.
+
+**O que mudou**
+- **O PDF não estava na raiz do repositório**, só dentro de pastas de update. O botão "Baixar e-book agora" dava erro 404. O zip agora traz a pasta `ebook/`.
+- **Download automático:** depois de enviar o e-mail, o download começa sozinho. O botão continua na tela como plano B.
+- **Se o envio do e-mail falhar**, a pessoa recebe o e-book mesmo assim, em vez de um alerta de erro.
+
+**Como funciona:** função `showEbookDownload` no `index.html`. No app instalado (PWA) o download não dispara sozinho, porque a tela do PDF pode não ter botão de voltar; lá a pessoa toca no botão.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `obrigado.html`, `reembolso.html`, `loading-aviao.html`, `og-image.png`, a pasta `icons/` e a pasta `ebook/` (inclui tudo da v13.4.1 até a v13.4.4).
+Service Worker: cache `falaut-v13.4.5`.
+
 ## v13.4.4 — 2026-11-09 · Links de pagamento reais
 
 **Onde está:** botões **Quero o Básico** e **Quero o Premium** (`#preco`, nas 3 trilhas) e **Pagar e marcar minha conversa** (`#ao-vivo`). Configuração em `index.html`, bloco *LINKS DE PAGAMENTO*.

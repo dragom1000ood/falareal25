@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.4.4
+     Falaut PWA  v13.4.5
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -2461,7 +2461,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.4.4</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.4.5</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -8225,6 +8225,19 @@
 
   // E-book grátis — mesma lógica da waitlist, mas libera o download ao enviar
   const ebookForm = document.getElementById('ebook-form');
+  // v13.4.5: depois do e-mail o download já começa; o botão fica na tela como plano B.
+  function showEbookDownload(){
+    const thanks = document.getElementById('ebook-thanks');
+    thanks.style.display = 'block';
+    ebookForm.style.display = 'none';
+    // No app instalado, baixar direto pode prender a pessoa na tela do PDF: lá fica só o botão.
+    const installed = navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+    if(installed) return;
+    const link = document.createElement('a');
+    link.href = thanks.querySelector('a').getAttribute('href');
+    link.download = '';
+    document.body.appendChild(link); link.click(); link.remove();
+  }
   if(ebookForm){
     ebookForm.addEventListener('submit', function(e){
       e.preventDefault();
@@ -8240,14 +8253,10 @@
         headers: { 'Accept': 'application/json' },
         body: formData
       }).then(res=>{
-        if(res.ok){
-          document.getElementById('ebook-thanks').style.display = 'block';
-          ebookForm.style.display = 'none';
-        } else {
-          alert(t('dynFormError'));
-        }
+        showEbookDownload();
       }).catch(()=>{
-        alert(t('dynFormError'));
+        // Se o envio do e-mail falhar, a pessoa recebe o e-book do mesmo jeito.
+        showEbookDownload();
       }).finally(()=>{
         submitBtn.disabled = false;
         submitBtn.textContent = originalBtnText;
