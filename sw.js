@@ -1,5 +1,5 @@
 /* ============================================================
-   Falaut — Service Worker  (v13.4.5)
+   Falaut — Service Worker  (v13.4.6)
    ============================================================
 
    ÚNICA COISA QUE VOCÊ PRECISA MEXER A CADA DEPLOY:
@@ -28,7 +28,7 @@
    embaixo do usuário no meio de um exercício.
    ============================================================ */
 
-const CACHE_VERSION = 'falaut-v13.4.5';
+const CACHE_VERSION = 'falaut-v13.4.6';
 const OFFLINE_URL   = '/offline.html';
 const NAV_TIMEOUT   = 4000;
 
@@ -37,9 +37,9 @@ const PRECACHE = [
   '/index.html',
   '/offline.html',
   '/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
-  '/icons/apple-touch-icon.png'
+  '/icon-192.png',
+  '/icon-512.png',
+  '/apple-touch-icon.png'
 ];
 
 /* ---------- install ---------- */
@@ -146,8 +146,8 @@ self.addEventListener('push', (event) => {
   const title = data.title || 'Falaut 🔥';
   const options = {
     body: data.body || 'Ainda dá tempo de treinar hoje e manter sua sequência!',
-    icon: '/icons/icon-192.png',
-    badge: '/icons/icon-192.png',
+    icon: '/icon-192.png',
+    badge: '/icon-192.png',
     tag: data.tag || 'falaut-daily',
     renotify: true,
     data: { url: data.url || '/#experimente' }

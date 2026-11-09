@@ -1,5 +1,16 @@
 # CHANGELOG — Falaut
 
+## v13.4.6 — 2026-11-09 · E-book e ícones nos lugares certos
+
+**Onde está:** botão **Baixar e-book agora** (`#ebook-gratis`), ícones do app e da aba do navegador.
+
+**O que mudou:** o upload no GitHub colocou o PDF e os ícones novos soltos na raiz, sem as pastas `ebook/` e `icons/`. O e-book dava erro 404, e o app continuava com o ícone antigo da pasta `icons/`. Agora `index.html`, `sw.js`, `manifest.json` e as outras páginas apontam para os arquivos na raiz.
+
+**Como funciona:** o site não depende mais das pastas `ebook/` e `icons/` para esses arquivos; todos ficam soltos na raiz do repositório.
+
+**Arquivos para subir na raiz do repositório (só arquivos soltos, sem pasta):** os arquivos deste pacote.
+Service Worker: cache `falaut-v13.4.6`.
+
 ## v13.4.5 — 2026-11-09 · E-book baixa de verdade
 
 **Onde está:** seção **E-book grátis** (`#ebook-gratis`) e pasta `ebook/` na raiz do site.

@@ -15,10 +15,10 @@
   "categories": ["education"],
   "prefer_related_applications": false,
   "icons": [
-    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
     {
@@ -26,21 +26,21 @@
       "short_name": "Nível",
       "description": "Descobrir seu nível de alemão",
       "url": "/?source=pwa#diagnostico",
-      "icons": [{ "src": "/icons/sc-quiz.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [{ "src": "/sc-quiz.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "E-book grátis",
       "short_name": "E-book",
       "description": "Baixar o e-book gratuito",
       "url": "/?source=pwa#ebook-gratis",
-      "icons": [{ "src": "/icons/sc-ebook.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [{ "src": "/sc-ebook.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
       "name": "Assinar",
       "short_name": "Assinar",
       "description": "Ver os planos",
       "url": "/?source=pwa#comecar",
-      "icons": [{ "src": "/icons/sc-assinar.png", "sizes": "96x96", "type": "image/png" }]
+      "icons": [{ "src": "/sc-assinar.png", "sizes": "96x96", "type": "image/png" }]
     }
   ]
 }
