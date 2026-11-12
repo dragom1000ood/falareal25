@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v13.4.6
+     Falaut PWA  v13.5.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -278,6 +278,46 @@
     font-family:var(--mono); font-size:0.85rem; color:rgba(244,239,230,0.6);
     border-bottom:1px solid rgba(244,239,230,0.3); padding-bottom:2px;
   }
+
+  /* v13.5.0: PORTÃO DE ENTRADA — grupo do WhatsApp em destaque no topo */
+  .gate-pass{
+    position:relative; display:grid; grid-template-columns:1fr auto; align-items:center; gap:20px 32px;
+    margin:0 0 44px; padding:22px 28px; border-radius:18px;
+    background:linear-gradient(135deg, rgba(240,166,58,0.16), rgba(62,107,99,0.22));
+    border:1.5px solid rgba(240,166,58,0.55);
+    box-shadow:0 10px 40px rgba(0,0,0,0.25);
+  }
+  .gate-pass::before, .gate-pass::after{
+    content:""; position:absolute; top:50%; width:22px; height:22px; border-radius:50%;
+    background:var(--ink); transform:translateY(-50%);
+  }
+  .gate-pass::before{left:-12px; border-right:1.5px solid rgba(240,166,58,0.55);}
+  .gate-pass::after{right:-12px; border-left:1.5px solid rgba(240,166,58,0.55);}
+  .gate-label{font-family:var(--mono); font-size:0.72rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--amber);}
+  .gate-title{font-family:var(--display); font-weight:600; font-size:clamp(1.3rem, 2.6vw, 1.75rem); line-height:1.15; margin-top:6px;}
+  .gate-sub{margin-top:6px; font-size:0.95rem; color:rgba(244,239,230,0.72); max-width:52ch;}
+  .gate-btn{
+    display:inline-flex; align-items:center; gap:10px; white-space:nowrap;
+    font-family:var(--body); font-weight:600; font-size:1rem;
+    background:#25D366; color:#0b1f12; padding:16px 26px; border-radius:100px;
+    transition:transform .15s ease, box-shadow .15s ease;
+    box-shadow:0 0 0 0 rgba(37,211,102,0.5); animation:gatePulse 2.4s ease-out infinite;
+  }
+  .gate-btn:hover{transform:translateY(-2px); box-shadow:0 8px 24px rgba(37,211,102,0.35);}
+  @keyframes gatePulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,0.45);}70%{box-shadow:0 0 0 14px rgba(37,211,102,0);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0);}}
+  @media (prefers-reduced-motion: reduce){.gate-btn{animation:none;}}
+  .nav-group{
+    font-family:var(--mono); font-size:0.8rem; letter-spacing:0.02em;
+    border:1px solid #25D366; color:#25D366; padding:8px 14px; border-radius:100px; white-space:nowrap;
+  }
+  .nav-group:hover{background:rgba(37,211,102,0.12);}
+  @media (max-width:720px){
+    .gate-pass{grid-template-columns:1fr; padding:20px 20px; margin-bottom:32px;}
+    .gate-btn{justify-content:center; width:100%;}
+  }
+  @media (max-width:640px){ .nav-group{display:none;} }
+  /* telas largas: o cartão termina antes do painel fixo do perfil (que fica à direita) */
+  @media (min-width:1181px){ .gate-pass{margin-right:max(0px, calc(701px - 50vw));} }
 
   /* WAVEFORM SIGNATURE */
   .wave-stage{
@@ -1367,6 +1407,7 @@
         <option value="es">🇪🇸 Español</option>
         <option value="de">🇩🇪 Deutsch</option>
       </select>
+      <a href="https://chat.whatsapp.com/IcLGGrxhBo8Lfyy9O9datY" class="nav-group" target="_blank" rel="noopener" data-i18n="navGroup">💬 Grupo</a>
       <a href="#comecar" class="nav-cta" data-i18n="navCta">Quero testar</a>
     </div>
   </div>
@@ -1374,6 +1415,14 @@
 
 <header class="hero">
   <div class="wrap">
+    <div class="gate-pass" id="grupo">
+      <div>
+        <div class="gate-label" data-i18n="gateLabel">Portão 1 · Embarque</div>
+        <div class="gate-title" data-i18n="gateTitle">Comece pelo grupo do Falaut</div>
+        <p class="gate-sub" data-i18n="gateSub">É por aqui que todo mundo entra: novidades em primeira mão, dicas e gente treinando junto. Grátis.</p>
+      </div>
+      <a href="https://chat.whatsapp.com/IcLGGrxhBo8Lfyy9O9datY" class="gate-btn" target="_blank" rel="noopener" data-i18n="gateBtn">💬 Entrar no grupo do WhatsApp</a>
+    </div>
     <div class="hero-top">
       <div class="hero-text">
         <div class="lang-de">
@@ -2461,7 +2510,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.4.6</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v13.5.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -4530,6 +4579,11 @@
   Object.assign(I18N_STRINGS.en, {"planPeriod": "/month", "planBasicTag": "Most popular", "planBasicKicker": "Basic", "planBasicSub": "The whole app, no limits. For people who want to practice seriously at their own pace.", "planBasicLi1": "All levels + the never-ending infinite level", "planBasicLi2": "Unlimited conversations, every accent", "planBasicLi3": "Full grammar track (A1–C2)", "planBasicLi4": "Daily bonus word + streak protection", "planBasicCta": "Get Basic", "planPremiumKicker": "Premium", "planPremiumSub": "The app + me by your side. For faster results, with personal guidance.", "planPremiumLi1": "Everything in Basic", "planPremiumLi2": "1 live conversation with me per month (30 min)", "planPremiumLi3": "Questions and audio feedback on WhatsApp", "planPremiumLi4": "A study plan made for you", "planPremiumCta": "Get Premium", "planLegacyNote": "Already a Founder (€15/month) or Annual (€149/year) member? Your price stays locked while your subscription is active. 💛", "streakShielded": "🛡️ Streak protected — as a subscriber, missing 1 day won't break your streak.", "dynStreakShieldedToast": "🛡️ Streak protected — as a subscriber, missing 1 day won't knock you down.", "founderBonusLocked": "🎁 Subscribers get a <strong>second word every day</strong> — vocabulary at twice the speed. <a href=\"#preco\">See plans</a>", "founderBonusWord": "🎁 Subscriber bonus word", "dynLockLevels": "🔒 Levels 3+ are part of the Basic and Premium plans.", "dynLockBonus": "🎁 The daily bonus word is part of the Basic and Premium plans.", "dynLockGrammar": "🔒 The {code} track is part of the Basic and Premium plans.", "grammarLockTag": "🔒 subscribers"});
   Object.assign(I18N_STRINGS.es, {"planPeriod": "/mes", "planBasicTag": "Más popular", "planBasicKicker": "Básico", "planBasicSub": "La app completa, sin límites. Para quien quiere entrenar en serio a su ritmo.", "planBasicLi1": "Todos los niveles + nivel infinito sin fin", "planBasicLi2": "Conversaciones ilimitadas, todos los acentos", "planBasicLi3": "Ruta de gramática completa (A1–C2)", "planBasicLi4": "Palabra extra diaria + protección de la racha", "planBasicCta": "Quiero el Básico", "planPremiumKicker": "Premium", "planPremiumSub": "La app + yo a tu lado. Para resultados más rápidos, con acompañamiento.", "planPremiumLi1": "Todo lo del Básico", "planPremiumLi2": "1 conversación en vivo conmigo al mes (30 min)", "planPremiumLi3": "Dudas y corrección de audios por WhatsApp", "planPremiumLi4": "Plan de estudio hecho para ti", "planPremiumCta": "Quiero el Premium", "planLegacyNote": "¿Ya eres Fundador (€15/mes) o Anual (€149/año)? Tu precio sigue congelado mientras tu suscripción esté activa. 💛", "streakShielded": "🛡️ Racha protegida — como suscriptor, faltar 1 día no rompe tu racha.", "dynStreakShieldedToast": "🛡️ Racha protegida — como suscriptor, faltar 1 día no te la rompe.", "founderBonusLocked": "🎁 Los suscriptores reciben una <strong>segunda palabra por día</strong> — vocabulario al doble de velocidad. <a href=\"#preco\">Ver planes</a>", "founderBonusWord": "🎁 Palabra extra del suscriptor", "dynLockLevels": "🔒 Los niveles 3+ son parte de los planes Básico y Premium.", "dynLockBonus": "🎁 La palabra extra del día es parte de los planes Básico y Premium.", "dynLockGrammar": "🔒 La ruta {code} es parte de los planes Básico y Premium.", "grammarLockTag": "🔒 suscriptores"});
   Object.assign(I18N_STRINGS.de, {"planPeriod": "/Monat", "planBasicTag": "Am beliebtesten", "planBasicKicker": "Basis", "planBasicSub": "Die ganze App, ohne Limit. Für alle, die ernsthaft in ihrem Tempo üben wollen.", "planBasicLi1": "Alle Level + endloses Infinity-Level", "planBasicLi2": "Unbegrenzte Gespräche, alle Akzente", "planBasicLi3": "Komplette Grammatik-Strecke (A1–C2)", "planBasicLi4": "Tägliches Bonuswort + Serienschutz", "planBasicCta": "Basis wählen", "planPremiumKicker": "Premium", "planPremiumSub": "Die App + ich an deiner Seite. Für schnellere Ergebnisse, mit persönlicher Begleitung.", "planPremiumLi1": "Alles aus Basis", "planPremiumLi2": "1 Live-Gespräch mit mir pro Monat (30 Min.)", "planPremiumLi3": "Fragen und Audio-Korrektur per WhatsApp", "planPremiumLi4": "Ein Lernplan nur für dich", "planPremiumCta": "Premium wählen", "planLegacyNote": "Schon Gründer (15 €/Monat) oder Jahresabo (149 €/Jahr)? Dein Preis bleibt fest, solange dein Abo aktiv ist. 💛", "streakShielded": "🛡️ Serie geschützt – als Abonnent bricht 1 verpasster Tag deine Serie nicht.", "dynStreakShieldedToast": "🛡️ Serie geschützt – als Abonnent wirft dich 1 verpasster Tag nicht zurück.", "founderBonusLocked": "🎁 Abonnenten bekommen <strong>ein zweites Wort pro Tag</strong> – doppelt so schnell Wortschatz aufbauen. <a href=\"#preco\">Pläne ansehen</a>", "founderBonusWord": "🎁 Bonuswort für Abonnenten", "dynLockLevels": "🔒 Level 3+ gehören zu den Plänen Basis und Premium.", "dynLockBonus": "🎁 Das tägliche Bonuswort gehört zu den Plänen Basis und Premium.", "dynLockGrammar": "🔒 Die Strecke {code} gehört zu den Plänen Basis und Premium.", "grammarLockTag": "🔒 Abonnenten"});
+  // v13.5.0: portão de entrada (grupo do WhatsApp)
+  Object.assign(I18N_STRINGS.pt, {"gateLabel": "Portão 1 · Embarque", "gateTitle": "Comece pelo grupo do Falaut", "gateSub": "É por aqui que todo mundo entra: novidades em primeira mão, dicas e gente treinando junto. Grátis.", "gateBtn": "💬 Entrar no grupo do WhatsApp", "navGroup": "💬 Grupo"});
+  Object.assign(I18N_STRINGS.en, {"gateLabel": "Gate 1 · Boarding", "gateTitle": "Start with the Falaut group", "gateSub": "This is where everyone comes in: news first, tips and people practicing together. Free.", "gateBtn": "💬 Join the WhatsApp group", "navGroup": "💬 Group"});
+  Object.assign(I18N_STRINGS.es, {"gateLabel": "Puerta 1 · Embarque", "gateTitle": "Empieza por el grupo de Falaut", "gateSub": "Por aquí entra todo el mundo: novedades antes que nadie, consejos y gente practicando junta. Gratis.", "gateBtn": "💬 Entrar al grupo de WhatsApp", "navGroup": "💬 Grupo"});
+  Object.assign(I18N_STRINGS.de, {"gateLabel": "Gate 1 · Boarding", "gateTitle": "Starte in der Falaut-Gruppe", "gateSub": "Hier kommen alle rein: Neuigkeiten zuerst, Tipps und Leute, die zusammen üben. Kostenlos.", "gateBtn": "💬 Der WhatsApp-Gruppe beitreten", "navGroup": "💬 Gruppe"});
 
   // currentSiteLang mirrors whatever applyInterfaceLanguage() last applied, so
   // dynamic (JS-generated) UI text built with t() below is locale-correct at
