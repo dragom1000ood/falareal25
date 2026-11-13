@@ -1,5 +1,29 @@
 # CHANGELOG — Falaut
 
+## v15.3.2 — 2026-11-13 · Falaut é alemão, inglês e português (não só alemão)
+
+**Onde está:** tela de abertura do app, tela offline, nome do app instalado e prévia de link.
+
+**O que mudou**
+- Frase da tela de abertura e da tela offline: "alemão de verdade…" → **"idiomas de verdade, sem sala de aula."**
+- Nome do app (`manifest.json`): "Falaut — alemão de verdade" → **"Falaut — idiomas de verdade"**, com a descrição citando as 3 línguas.
+- Título da página e textos da prévia de link (Google, WhatsApp, Instagram) agora falam de **alemão, inglês e português**, das 5 palavras por dia e do teste grátis de 7 dias.
+- Os textos da trilha de alemão no site continuam falando de alemão, porque só aparecem pra quem escolheu alemão.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `manifest.json`, `offline.html`, `CHANGELOG.md` e a pasta `splash/`.
+Service Worker: cache `falaut-v15.3.2`.
+
+## v15.3.1 — 2026-11-13 · Tela de abertura com a logo nova (iPhone)
+
+**Onde está:** tela que aparece ao abrir o app instalado no iPhone/iPad (`splash/`).
+
+**O que mudou**
+- A tela de abertura ainda mostrava o selo antigo "fl / FALAUT". Agora mostra o **ícone novo** (mascote + F com ondas) sobre o verde, com a frase "alemão de verdade, sem sala de aula." e o traço dourado embaixo, no mesmo estilo de antes.
+- **Força o iPhone a buscar as imagens novas:** os links das telas de abertura, do `apple-touch-icon` e dos ícones do `manifest.json` ganharam `?v=15.3.1`. Antes, o iPhone podia continuar mostrando a versão antiga guardada em cache.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `manifest.json`, `CHANGELOG.md` e a pasta `splash/` (e os ícones da v15.3.0, se ainda não subiu).
+Service Worker: cache `falaut-v15.3.1`.
+
 ## v15.3.0 — 2026-11-13 · Ícone novo do app: mascote + F com ondas
 
 **Onde está:** ícone do app instalado e telas de abertura (splash).
