@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v14.0.0
+     Falaut PWA  v15.0.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -1387,6 +1387,44 @@
     .hero-visual{max-width:220px;}
     .feedback-fab, .mobile-account-fab{width:44px; height:44px; font-size:1.1rem;}
   }
+  /* v15.0.0: LIÇÃO DO DIA (#licao) */
+  #licao{padding:90px 0 70px;}
+  .lc-card{max-width:620px; margin:0 auto; background:var(--ink-soft); border:1px solid var(--line); border-radius:22px; padding:24px; box-shadow:0 18px 50px rgba(0,0,0,0.3);}
+  .lc-top{display:flex; justify-content:space-between; align-items:center; gap:12px;}
+  .lc-flame{display:flex; align-items:baseline; gap:8px; font-family:var(--mono); font-size:0.8rem; color:rgba(244,239,230,0.7);}
+  .lc-flame b{font-family:var(--display); font-size:2.2rem; color:var(--amber); line-height:1;}
+  .lc-flame-ico{font-size:1.8rem; filter:grayscale(1); opacity:0.5; transition:filter .3s, opacity .3s;}
+  .lc-flame-ico.lit{filter:none; opacity:1;}
+  .lc-lesson{font-family:var(--mono); font-size:0.75rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--amber);}
+  .lc-bar{height:8px; border-radius:8px; background:rgba(244,239,230,0.08); margin:16px 0 20px; overflow:hidden;}
+  .lc-bar-fill{height:100%; width:0; background:linear-gradient(90deg, var(--amber), #ffcf73); border-radius:8px; transition:width .35s ease;}
+  .lc-status{font-size:1rem; color:rgba(244,239,230,0.8); margin-bottom:18px; text-align:center;}
+  .lc-status.risk{color:#ffcf73; font-weight:600;}
+  .lc-word{text-align:center; padding:10px 0 6px;}
+  .lc-emoji{font-size:4.2rem; line-height:1.1;}
+  .lc-target{font-family:var(--display); font-size:clamp(1.9rem, 6vw, 2.6rem); font-weight:600; margin-top:10px;}
+  .lc-art-der{color:#7fb3ff;} .lc-art-die{color:#ff8d84;} .lc-art-das{color:#8fe0a6;}
+  .lc-gloss{font-size:1.1rem; color:rgba(244,239,230,0.7); margin-top:6px;}
+  .lc-count{font-family:var(--mono); font-size:0.75rem; color:rgba(244,239,230,0.5); text-align:center; margin-top:14px;}
+  .lc-row{display:flex; gap:10px; margin-top:20px;}
+  .lc-row > *{flex:1;}
+  .lc-ghost{font-family:var(--body); font-weight:600; font-size:1rem; color:var(--paper); background:transparent; border:1px solid var(--line); border-radius:100px; padding:15px 18px; cursor:pointer;}
+  .lc-q{text-align:center; font-family:var(--mono); font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--amber); margin-bottom:6px;}
+  .lc-opts{display:grid; gap:10px; margin-top:18px;}
+  .lc-opt{font-family:var(--body); font-size:1.08rem; text-align:left; color:var(--paper); background:rgba(244,239,230,0.05); border:1.5px solid var(--line); border-radius:14px; padding:15px 18px; cursor:pointer; transition:border-color .15s, background .15s;}
+  .lc-opt:hover:not(:disabled){border-color:rgba(240,166,58,0.6);}
+  .lc-opt.right{border-color:#5ccf86; background:rgba(92,207,134,0.15);}
+  .lc-opt.wrong{border-color:var(--rust); background:rgba(193,72,61,0.18); animation:lcShake .35s;}
+  @keyframes lcShake{25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
+  .lc-feedback{text-align:center; margin-top:14px; font-weight:600; min-height:1.4em;}
+  .lc-feedback.ok{color:#8fe0a6;} .lc-feedback.no{color:#ff9d8f;}
+  .lc-done-title{font-family:var(--display); font-size:clamp(1.7rem, 5vw, 2.2rem); text-align:center; margin:4px 0 6px;}
+  .lc-list{display:grid; gap:8px; margin:16px 0;}
+  .lc-li{display:flex; align-items:center; gap:12px; padding:10px 14px; border-radius:12px; background:rgba(244,239,230,0.05); cursor:pointer; border:none; color:var(--paper); font-family:var(--body); font-size:1rem; text-align:left;}
+  .lc-li span:first-child{font-size:1.5rem;}
+  .lc-li em{font-style:normal; color:rgba(244,239,230,0.6); margin-left:auto; font-size:0.92rem;}
+  .lc-note{text-align:center; font-size:0.9rem; color:rgba(244,239,230,0.65);}
+  @media (max-width:640px){ #licao{padding:70px 0 50px;} .lc-card{padding:18px; border-radius:18px;} }
   /* v14.0.0: página mais direta + teste grátis */
   .v14-hidden{display:none !important;}
   #experimente.collapsed .wrap > :not(.section-head):not(.exp-toggle){display:none !important;}
@@ -1396,73 +1434,7 @@
   .trial-banner-title{font-family:var(--display); font-weight:600; font-size:clamp(1.25rem,2.4vw,1.6rem);}
   .trial-banner-text{grid-column:1; color:rgba(244,239,230,0.8); font-size:0.95rem; max-width:60ch;}
   .trial-banner .btn-primary{grid-column:2; grid-row:1 / span 2; white-space:nowrap;}
-  .cv-quota.trial{color:var(--amber);}
   @media (max-width:640px){ .trial-banner{grid-template-columns:1fr;} .trial-banner .btn-primary{grid-column:1; grid-row:auto; text-align:center;} }
-  /* v14.0.0: CONVERSA COM IA (#conversa) */
-  #conversa{padding:110px 0;}
-  .cv-card{background:var(--ink-soft); border:1px solid var(--line); border-radius:20px; padding:28px; box-shadow:0 18px 50px rgba(0,0,0,0.3);}
-  .cv-label{font-family:var(--mono); font-size:0.75rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--amber); margin:4px 0 12px;}
-  .cv-chips{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px;}
-  .cv-chip{font-family:var(--body); font-size:0.95rem; color:var(--paper); background:rgba(244,239,230,0.06); border:1px solid var(--line); border-radius:100px; padding:10px 16px; cursor:pointer; transition:background .15s, border-color .15s;}
-  .cv-chip:hover{border-color:rgba(240,166,58,0.6);}
-  .cv-chip.active{background:rgba(240,166,58,0.18); border-color:var(--amber); color:#fff;}
-  .cv-levels{display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-bottom:22px;}
-  .cv-level{position:relative; display:flex; flex-direction:column; align-items:flex-start; gap:4px; text-align:left; font-family:var(--body); color:var(--paper); background:rgba(244,239,230,0.05); border:1px solid var(--line); border-radius:14px; padding:12px 14px; cursor:pointer;}
-  .cv-level b{font-family:var(--display); font-size:1.4rem; line-height:1;}
-  .cv-level span{font-size:0.82rem; color:rgba(244,239,230,0.7);}
-  .cv-level.active{border-color:var(--amber); background:rgba(240,166,58,0.14);}
-  .cv-level.locked::after{content:"🔒"; position:absolute; top:10px; right:12px; font-size:0.85rem;}
-  .cv-setup-foot{display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:18px;}
-  .cv-voice-toggle,.cv-noise,.cv-back,.cv-help,.cv-finish{white-space:nowrap; font-family:var(--mono); font-size:0.8rem; color:var(--paper); background:transparent; border:1px solid var(--line); border-radius:100px; padding:8px 14px; cursor:pointer;}
-  .cv-noise.off{opacity:0.45; text-decoration:line-through;}
-  .cv-quota{font-family:var(--mono); font-size:0.78rem; color:rgba(244,239,230,0.65);}
-  .cv-quota.out{color:var(--rust);}
-  .cv-note{margin-top:12px; font-size:0.85rem; color:rgba(244,239,230,0.6); text-align:center;}
-  .cv-error{color:#ff9d8f;}
-  .cv-chat-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px;}
-  .cv-chat-meta{flex:1; font-family:var(--mono); font-size:0.78rem; color:rgba(244,239,230,0.7);}
-  .cv-chat-meta b{color:var(--amber); font-weight:500;}
-  .cv-log{height:min(52vh,440px); overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding:14px; background:rgba(0,0,0,0.22); border-radius:14px; border:1px solid var(--line);}
-  .cv-msg{max-width:82%; padding:11px 14px; border-radius:16px; font-size:0.98rem; line-height:1.45;}
-  .cv-msg.ai{align-self:flex-start; background:rgba(62,107,99,0.45); border-bottom-left-radius:4px;}
-  .cv-msg.me{align-self:flex-end; background:rgba(240,166,58,0.2); border-bottom-right-radius:4px;}
-  .cv-msg.sys{align-self:center; max-width:92%; background:transparent; font-family:var(--mono); font-size:0.78rem; color:rgba(244,239,230,0.6); text-align:center;}
-  .cv-msg .cv-hidden-text{filter:blur(6px); user-select:none;}
-  .cv-msg-tools{display:flex; gap:8px; margin-top:6px;}
-  .cv-msg-tools button{white-space:nowrap; font-family:var(--mono); font-size:0.72rem; color:rgba(244,239,230,0.8); background:rgba(0,0,0,0.2); border:none; border-radius:100px; padding:4px 10px; cursor:pointer;}
-  .cv-typing{opacity:0.6; font-style:italic;}
-  .cv-hint{margin-top:12px; padding:14px 16px; border-radius:14px; background:rgba(240,166,58,0.1); border:1px dashed rgba(240,166,58,0.5); font-size:0.92rem;}
-  .cv-hint h5{font-family:var(--mono); font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--amber); margin:0 0 6px;}
-  .cv-hint p{margin:0 0 10px;}
-  .cv-hint .cv-use{font-family:var(--mono); font-size:0.75rem; background:var(--amber); color:var(--ink); border:none; border-radius:100px; padding:4px 12px; margin-left:8px; cursor:pointer;}
-  .cv-input-row{display:flex; gap:8px; margin-top:14px;}
-  .cv-mic{flex:none; font-family:var(--body); font-weight:600; background:var(--amber); color:var(--ink); border:none; border-radius:100px; padding:12px 18px; cursor:pointer;}
-  .cv-mic.rec{background:var(--rust); color:#fff; animation:cvPulse 1.2s infinite;}
-  @keyframes cvPulse{50%{box-shadow:0 0 0 8px rgba(193,72,61,0.25);}}
-  .cv-input{flex:1; min-width:0; font-family:var(--body); font-size:1rem; color:var(--paper); background:rgba(0,0,0,0.25); border:1px solid var(--line); border-radius:100px; padding:12px 16px;}
-  .cv-send{flex:none; font-family:var(--body); color:var(--paper); background:transparent; border:1px solid var(--line); border-radius:100px; padding:12px 16px; cursor:pointer;}
-  .cv-actions{display:flex; justify-content:space-between; gap:10px; margin-top:12px;}
-  .cv-finish{border-color:var(--amber); color:var(--amber);}
-  .cv-feedback h3{font-family:var(--display); font-size:1.6rem; margin:0 0 8px;}
-  .cv-fb-sum{color:rgba(244,239,230,0.8); margin-bottom:18px;}
-  .cv-fb-block{margin-bottom:16px; padding:14px 16px; border-radius:14px; background:rgba(244,239,230,0.05); border:1px solid var(--line);}
-  .cv-fb-block h4{font-size:1rem; margin:0 0 8px;}
-  .cv-fb-block ul{margin:0; padding-left:18px;}
-  .cv-fb-block li{margin:4px 0; color:rgba(244,239,230,0.85);}
-  .cv-fix-wrong{text-decoration:line-through; color:#ff9d8f;}
-  .cv-fix-right{color:#9fe0b4;}
-  .cv-fb-actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px;}
-  @media (max-width:640px){
-    #conversa{padding:80px 0;}
-    .cv-help,.cv-finish{font-size:0.72rem; padding:8px 10px;}
-    .cv-chat-meta{flex-basis:100%; order:3;}
-    .cv-card{padding:18px; border-radius:16px;}
-    .cv-levels{grid-template-columns:repeat(2,1fr);}
-    .cv-log{height:52vh;}
-    .cv-msg{max-width:90%;}
-    .cv-mic{padding:12px 14px;}
-    .cv-send{padding:12px 12px;}
-  }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
@@ -1484,7 +1456,7 @@
         <option value="de">🇩🇪 Deutsch</option>
       </select>
       <a href="https://chat.whatsapp.com/IcLGGrxhBo8Lfyy9O9datY" class="nav-group" target="_blank" rel="noopener" data-i18n="navGroup">💬 Grupo</a>
-      <a href="#conversa" class="nav-cta" data-i18n="navCta">Quero testar</a>
+      <a href="#licao" class="nav-cta" data-i18n="navCta">Quero testar</a>
     </div>
   </div>
 </nav>
@@ -1517,7 +1489,7 @@
           <p class="sub" data-i18n="heroSubPt">A maioria dos apps te ensina um inglês de laboratório — devagar, claro, sem interrupção. A vida real não é assim. Aqui você treina inglês de verdade: pra se envolver de verdade — no trabalho, viajando, ou vivendo fora — com sotaque, ruído e gente te cortando no meio da frase.</p>
         </div>
         <div class="hero-actions">
-          <a href="#conversa" class="btn-primary" data-i18n="heroCtaPrimary">Quero testar agora</a>
+          <a href="#licao" class="btn-primary" data-i18n="heroCtaPrimary">Quero testar agora</a>
           <a href="#niveis" class="btn-ghost" data-i18n="heroCtaGhost">ver os 4 níveis ↓</a>
         </div>
       </div>
@@ -1582,58 +1554,263 @@
   <div class="avatar-picker-row" id="avatar-bg-options"></div>
 </div>
 
-<!-- v14.0.0: CONVERSA COM IA — passo 2 funcionando de verdade -->
-<section id="conversa">
+
+<!-- v15.0.0: LIÇÃO DO DIA — 5 palavras por dia, mantém a ofensiva -->
+<section id="licao">
   <div class="wrap">
     <div class="section-head" data-reveal>
-      <span class="kicker" data-i18n="cvKicker">Passo 2 · funcionando agora</span>
-      <h2 data-i18n="cvTitle">Conversa de verdade. Agora.</h2>
-      <p class="lede" data-i18n="cvLede">Escolhe o cenário e o nível. A pessoa do outro lado fala com sotaque, com pressa e não espera você terminar. Você responde falando (🎤) ou digitando. No fim, recebe o retorno.</p>
+      <span class="kicker" data-i18n="lcKicker">Lição do dia · 2 minutos</span>
+      <h2 data-i18n="lcTitle">5 palavras por dia. Todo dia.</h2>
+      <p class="lede" data-i18n="lcLede">Sem tempo? Tudo bem. Em 2 minutos você aprende 5 palavras novas e mantém sua ofensiva 🔥. Pulou um dia, a ofensiva zera.</p>
+    </div>
+    <div class="lc-card" id="lc-card">
+      <div class="lc-top">
+        <div class="lc-flame"><span class="lc-flame-ico" id="lc-flame-ico">🔥</span><b id="lc-streak">0</b><span data-i18n="lcStreakLabel">dias de ofensiva</span></div>
+        <div class="lc-lesson" id="lc-lesson-n"></div>
+      </div>
+      <div class="lc-bar"><div class="lc-bar-fill" id="lc-bar"></div></div>
+      <div class="lc-body" id="lc-body"></div>
+    </div>
+  </div>
+</section>
+
+<section id="experimente" class="collapsed">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="kicker" data-i18n="tryKicker">Não seria justo só contar</span>
+      <h2 data-i18n="tryTitle">Testa aqui. Os níveis não têm fim.</h2>
+      <p class="lede" data-i18n="tryLede">No app de verdade a dificuldade nunca para de subir, e você ganha por treinar todo dia. Duas mostras rápidas de como isso funciona:</p>
+    </div>
+    <button type="button" class="exp-toggle" id="exp-toggle" data-i18n="expOpen">📊 Ver meu progresso, desafios e recompensas ↓</button>
+
+    <div class="profile-card" data-reveal>
+      <div class="profile-avatar-wrap">
+        <div class="profile-avatar" id="profile-avatar">🙂</div>
+        <button class="avatar-edit-btn" id="avatar-edit-btn" title="Editar avatar" data-i18n-title="editAvatar">✏️</button>
+      </div>
+      <div class="profile-info">
+        <input class="profile-nickname" id="profile-nickname" placeholder="Seu nome de guerra" maxlength="20" data-i18n-placeholder="nicknamePlaceholder">
+        <div class="league-row">
+          <span class="league-badge" id="league-badge">🥉 Liga Bronze</span>
+          <span class="founder-badge" id="founder-badge">🎖️ Fundador</span>
+        </div>
+        <div class="challenge-bar-track league-bar"><div class="challenge-bar-fill" id="league-progress-fill"></div></div>
+        <div class="challenge-progress-txt" id="league-progress-txt" style="display:block;"></div>
+        <button class="auth-status-btn" id="auth-status-btn" data-i18n="saveCloud">☁️ Salvar progresso na nuvem</button>
+      </div>
     </div>
 
-    <div class="cv-card" id="cv-card">
-      <!-- 1. preparar -->
-      <div class="cv-setup" id="cv-setup">
-        <div class="cv-label" data-i18n="cvScenarioLabel">1 · Cenário</div>
-        <div class="cv-chips" id="cv-scenarios"></div>
-        <div class="cv-label" data-i18n="cvLevelLabel">2 · Nível</div>
-        <div class="cv-levels" id="cv-levels">
-          <button type="button" class="cv-level" data-cv-level="1"><b>1</b><span data-i18n="cvL1">Devagar e claro</span></button>
-          <button type="button" class="cv-level" data-cv-level="2"><b>2</b><span data-i18n="cvL2">Dia a dia</span></button>
-          <button type="button" class="cv-level" data-cv-level="3"><b>3</b><span data-i18n="cvL3">Sotaque + ruído</span></button>
-          <button type="button" class="cv-level" data-cv-level="4"><b>4</b><span data-i18n="cvL4">Vida real</span></button>
+    <div class="progress-summary" data-reveal>
+      <div class="progress-summary-item">
+        <div class="progress-summary-value" id="ps-xp">0</div>
+        <div class="progress-summary-label" data-i18n="totalXp">XP total</div>
+      </div>
+      <div class="progress-summary-item">
+        <div class="progress-summary-value" id="ps-streak">0</div>
+        <div class="progress-summary-label" data-i18n="streakDays">dias de sequência</div>
+      </div>
+      <div class="progress-summary-item">
+        <div class="progress-summary-value" id="ps-dever">0</div>
+        <div class="progress-summary-label" data-i18n="vocabDays">dias de vocabulário</div>
+      </div>
+      <div class="progress-summary-item">
+        <div class="progress-summary-value" id="ps-grammar">0%</div>
+        <div class="progress-summary-label" data-i18n="grammarStudied">gramática estudada</div>
+      </div>
+      <div class="progress-summary-item">
+        <div class="progress-summary-value" id="ps-discount">0%</div>
+        <div class="progress-summary-label" data-i18n="discountUnlocked">desconto destravado</div>
+      </div>
+    </div>
+
+    <div class="demo-grid" data-reveal>
+      <div class="demo-card">
+        <h3 data-i18n="infiniteLevel">Nível infinito</h3>
+        <p class="demo-sub" data-i18n="infiniteLevelDesc">Cada clique soma um elemento novo de dificuldade — sotaque, ruído, interrupção. Vai até onde você aguentar.</p>
+
+        <div class="level-display">
+          <div class="level-badge" id="level-badge">Nível 1</div>
+          <div class="level-tier" id="level-tier">iniciante</div>
         </div>
-        <div class="cv-setup-foot">
-          <button type="button" class="cv-voice-toggle" id="cv-voice-toggle" data-i18n="cvVoice">🔊 Voz ligada</button>
-          <span class="cv-quota" id="cv-quota"></span>
+        <div class="level-tags-live" id="level-tags"></div>
+
+        <div class="mini-wave-wrap">
+          <svg id="mini-wave" viewBox="0 0 400 60" preserveAspectRatio="none"></svg>
         </div>
-        <button type="button" class="btn-primary btn-full" id="cv-start" data-i18n="cvStart">Começar conversa →</button>
-        <p class="cv-note" id="cv-setup-note" data-i18n="cvStartingHint">Liga o som 🔊 — a pessoa vai falar primeiro.</p>
+
+        <div class="audio-row">
+          <button class="btn-audio" id="listen-btn" data-i18n="listenLevel">🔊 Ouvir este nível</button>
+          <span class="audio-status" id="audio-status"></span>
+        </div>
+
+        <button class="btn-primary btn-full" id="level-up-btn" data-i18n="levelUp">Subir de nível ↑</button>
       </div>
 
-      <!-- 2. conversar -->
-      <div class="cv-chat" id="cv-chat" hidden>
-        <div class="cv-chat-head">
-          <button type="button" class="cv-back" id="cv-back" data-i18n="cvBack">← trocar cenário</button>
-          <div class="cv-chat-meta" id="cv-chat-meta"></div>
-          <button type="button" class="cv-noise" id="cv-noise" hidden data-i18n="cvNoise">🔉 ruído de fundo</button>
+      <div class="demo-card">
+        <h3 data-i18n="dailyStreak">Sequência diária</h3>
+        <p class="demo-sub" data-i18n="dailyStreakDesc">Treina todo dia, mantém a sequência viva e destrava recompensas. Isso aqui já guarda seu progresso.</p>
+
+        <div class="streak-hero">
+          <span class="flame" id="flame">🔥</span>
+          <div>
+            <div class="streak-num" id="streak-num">0</div>
+            <div class="streak-label" data-i18n="daysInRow">dias seguidos</div>
+          </div>
         </div>
-        <div class="cv-log" id="cv-log" aria-live="polite"></div>
-        <div class="cv-hint" id="cv-hint" hidden></div>
-        <div class="cv-input-row">
-          <button type="button" class="cv-mic" id="cv-mic" data-i18n="cvMic">🎤 Falar</button>
-          <input type="text" class="cv-input" id="cv-input" maxlength="500" autocomplete="off" placeholder="Ou digita sua resposta…" data-i18n-placeholder="cvTypePh">
-          <button type="button" class="cv-send" id="cv-send" data-i18n="cvSend">Enviar</button>
+
+        <div class="streak-dots week" id="streak-dots"></div>
+        <div class="streak-tools" id="streak-tools">
+          <button type="button" class="streak-tool" id="cal-toggle-btn" aria-expanded="false"></button>
+          <button type="button" class="streak-tool" id="freeze-btn"></button>
+          <button type="button" class="streak-tool" id="reminder-btn"></button>
         </div>
-        <div class="cv-actions">
-          <button type="button" class="cv-help" id="cv-help" data-i18n="cvHelp">💡 Não entendi</button>
-          <button type="button" class="cv-finish" id="cv-finish" data-i18n="cvFinish">Terminar e ver retorno</button>
+        <div class="freeze-info" id="freeze-info"></div>
+        <div class="month-cal" id="month-cal" hidden>
+          <div class="month-cal-head">
+            <button type="button" class="month-nav" id="cal-prev" aria-label="‹">‹</button>
+            <div class="month-title" id="cal-title"></div>
+            <button type="button" class="month-nav" id="cal-next" aria-label="›">›</button>
+          </div>
+          <div class="month-grid" id="cal-grid"></div>
+          <div class="month-foot" id="cal-foot"></div>
         </div>
-        <p class="cv-note cv-error" id="cv-error" hidden></p>
+        <div class="streak-shield" id="streak-shield" data-i18n="streakShielded">🛡️ Sequência protegida — como fundador, faltar 1 dia não derruba sua sequência.</div>
+
+        <div class="xp-row">
+          <div class="xp-bar-track"><div class="xp-bar-fill" id="xp-fill"></div></div>
+          <span class="xp-label" id="xp-label">0 xp</span>
+        </div>
+
+        <button class="btn-primary btn-full" id="streak-btn" data-i18n="markToday">Fazer a lição de hoje →</button>
+        <div class="reward-toast" id="reward-toast"></div>
+
+        <div class="share-mission" id="share-mission">
+          <div class="sm-head"><span data-i18n="smTitle">📣 Missão de divulgação</span><span class="sm-best" id="sm-best"></span></div>
+          <div class="sm-today" id="sm-today"></div>
+          <div class="sm-week" id="sm-week"></div>
+        </div>
+        <button class="btn-share" id="share-btn" data-i18n="shareStreak">📣 Divulgar minha ofensiva</button>
+      </div>
+    </div>
+
+    <div class="challenges-card" data-reveal>
+      <div class="challenges-head">
+        <h3 data-i18n="challengesTitle">Desafios que te prendem no hábito</h3>
+        <p data-i18n="challengesDesc">Cumpra e resgate o XP. Diário reseta à meia-noite, semanal na segunda, mensal todo dia 1.</p>
+      </div>
+      <div class="combo-indicator" id="combo-indicator">
+        <span>🔥</span><span data-i18n="comboIndicator">Combo de <span class="combo-num">0</span> dias perfeitos — bônus crescendo</span>
+      </div>
+      <div class="challenge-cols">
+        <div>
+          <div class="challenge-col-label" data-i18n="today">🗓️ Hoje</div>
+          <div id="challenges-daily"></div>
+        </div>
+        <div>
+          <div class="challenge-col-label" data-i18n="thisWeek">📅 Essa semana</div>
+          <div id="challenges-weekly"></div>
+        </div>
+        <div>
+          <div class="challenge-col-label" data-i18n="thisMonth">🏆 Esse mês</div>
+          <div id="challenges-monthly"></div>
+        </div>
       </div>
 
-      <!-- 3. retorno -->
-      <div class="cv-feedback" id="cv-feedback" hidden></div>
+      <div class="rewards-panel">
+        <div class="rewards-panel-head">
+          <h4 data-i18n="rewardsTitle">🎟️ Recompensas reais — descontos de verdade</h4>
+          <p data-i18n="rewardsDesc">Não é só XP. Bata essas metas e ganha cupom de desconto de verdade pra usar no checkout.</p>
+        </div>
+
+        <div class="rewards-track">
+          <div class="rewards-track-label" data-i18n="comboTrackLabel">Trilha de combo — quanto mais dias perfeitos seguidos, maior o desconto (fica valendo pra sempre depois de destravado)</div>
+          <div class="reward-ladder" id="reward-ladder-combo"></div>
+        </div>
+
+        <div class="rewards-track">
+          <div class="rewards-track-label" data-i18n="monthlyTrackLabel">Trilha mensal — complete os 2 desafios do mês</div>
+          <div class="reward-ladder" id="reward-ladder-monthly"></div>
+        </div>
+
+        <div class="rewards-track legend-track">
+          <div class="rewards-track-label" data-i18n="legendTrackLabel">👑 Trilha lendária — sequência diária sem furar, desconto vitalício crescente até quase de graça</div>
+          <div class="legend-headline" id="legend-headline" data-i18n="noLifetimeYet">Ainda sem desconto vitalício destravado</div>
+          <div class="challenge-bar-track legend-bar"><div class="challenge-bar-fill" id="legend-progress-fill"></div></div>
+          <div class="challenge-progress-txt" id="legend-progress-txt" style="margin-bottom:12px; display:block;"></div>
+          <div class="reward-ladder legend-ladder" id="legend-trail"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dever-card" data-reveal>
+      <div class="dever-head">
+        <h3 data-i18n="homeworkTitle">📔 Dever de casa</h3>
+        <p data-i18n="homeworkDesc">Uma palavra por dia. No dia seguinte, testamos se ficou.</p>
+      </div>
+
+      <div class="dever-review" id="dever-review" style="display:none;">
+        <div class="dever-review-label" data-i18n="rememberYesterday">Lembra da palavra de ontem?</div>
+        <div class="dever-word-hidden" id="dever-hidden-word">•••••••</div>
+        <div class="dever-review-actions" id="dever-review-actions">
+          <button class="btn-audio" id="dever-reveal-btn" data-i18n="reveal">Revelar</button>
+        </div>
+        <div class="dever-review-result" id="dever-review-result" style="display:none;">
+          <div class="dever-word-shown" id="dever-shown-word"></div>
+          <div class="dever-review-actions">
+            <button class="btn-primary" id="dever-remembered-btn" data-i18n="remembered">✓ Lembrei</button>
+            <button class="btn-audio" id="dever-forgot-btn" data-i18n="forgot">Esqueci</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="dever-today">
+        <div class="dever-today-label" data-i18n="todaysWord">Palavra de hoje</div>
+        <div class="dever-word" id="dever-today-word">—</div>
+        <div class="dever-translation" id="dever-today-translation">—</div>
+        <div class="dever-example" id="dever-today-example"></div>
+        <button class="btn-audio dever-mark-btn" id="dever-mark-btn" data-i18n="markStudied">Marcar como estudado +5xp</button>
+        <div class="dever-marked-txt" id="dever-marked-txt" style="display:none;" data-i18n="studiedToday">✓ Estudado hoje</div>
+      </div>
+
+      <div class="dever-streak-txt" id="dever-streak-txt"></div>
+
+      <div class="dever-bonus" id="dever-bonus">
+        <div class="dever-bonus-locked" id="dever-bonus-locked" data-founder-lock="1" data-i18n-html="founderBonusLocked">
+          🎁 Fundadores ganham uma <strong>segunda palavra por dia</strong> — vocabulário no dobro da velocidade. <a href="#preco">Ver planos</a>
+        </div>
+        <div class="dever-today" id="dever-bonus-unlocked" style="display:none;">
+          <div class="dever-bonus-label" data-i18n="founderBonusWord">🎁 Palavra bônus do fundador</div>
+          <div class="dever-word" id="dever-bonus-word">—</div>
+          <div class="dever-translation" id="dever-bonus-translation">—</div>
+          <div class="dever-example" id="dever-bonus-example"></div>
+          <button class="btn-audio dever-mark-btn" id="dever-bonus-mark-btn" data-i18n="markStudiedAlt">Marcar como estudada +5xp</button>
+          <div class="dever-marked-txt" id="dever-bonus-marked-txt" style="display:none;" data-i18n="studiedTodayAlt">✓ Estudada hoje</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grammar-card" data-reveal>
+      <div class="grammar-head">
+        <span class="grammar-badge" data-i18n="grammarBadge">🧠 a mais completa do Falaut</span>
+        <h3 data-i18n="grammarTitle">🧩 Trilha de gramática — A1 até C2</h3>
+        <p data-i18n="grammarDesc">Aula de verdade, quiz e exercício de montar frase em cada tópico. Marca o que você já estudou — a trilha cresce com você, do básico até o nível quase nativo.</p>
+      </div>
+
+      <div class="grammar-review" id="grammar-review" style="display:none;">
+        <div class="grammar-review-head">
+          <span class="grammar-review-badge" data-i18n="quickReview">🔁 Revisão rápida</span>
+          <button type="button" class="grammar-review-skip" id="grammar-review-skip" data-i18n="swap">trocar</button>
+        </div>
+        <div class="grammar-review-topic" id="grammar-review-topic-name"></div>
+        <div class="grammar-review-slot" id="grammar-review-slot"></div>
+        <div class="grammar-review-bank" id="grammar-review-bank"></div>
+        <div class="grammar-review-status" id="grammar-review-status"></div>
+        <button type="button" class="btn-primary" id="grammar-review-check-btn" data-i18n="check">Conferir</button>
+      </div>
+
+      <div class="grammar-overall-track"><div class="grammar-overall-fill" id="grammar-overall-fill"></div></div>
+      <div class="challenge-progress-txt" id="grammar-overall-txt" style="display:block; margin-bottom:20px;"></div>
+      <div class="grammar-levels" id="grammar-levels"></div>
     </div>
   </div>
 </section>
@@ -1654,8 +1831,8 @@
 
     <div class="trial-banner" data-reveal>
       <div class="trial-banner-title" data-i18n="trialBannerTitle">🎁 7 dias com tudo liberado. Sem cartão.</div>
-      <p class="trial-banner-text" data-i18n="trialBannerText">Começa sozinho na sua primeira visita: todos os níveis, sotaques fortes e conversas sem limite. Depois dos 7 dias, você continua no Grátis ou assina — sem cobrança automática.</p>
-      <a href="#conversa" class="btn-primary" data-i18n="trialBannerBtn">Testar agora →</a>
+      <p class="trial-banner-text" data-i18n="trialBannerText">Começa sozinho na sua primeira visita: todos os níveis e sotaques, gramática completa (A1–C2), palavra bônus e todos os desafios. Depois dos 7 dias, você continua no Grátis ou assina — sem cobrança automática.</p>
+      <a href="#licao" class="btn-primary" data-i18n="trialBannerBtn">Testar agora →</a>
     </div>
 
     <div class="pricing-grid lang-de" data-reveal>
@@ -1669,7 +1846,7 @@
           <li data-i18n="price1Li3De">Sequência diária e XP</li>
           <li data-i18n="price1Li4De">1 sotaque neutro</li>
         </ul>
-        <a href="#conversa" class="btn-audio btn-full" data-i18n="price1CtaDe">Quero começar de graça</a>
+        <a href="#licao" class="btn-audio btn-full" data-i18n="price1CtaDe">Quero começar de graça</a>
       </div>
 
       <div class="pricing-card featured">
@@ -1712,7 +1889,7 @@
           <li data-i18n="price1Li3En">Daily streak and XP</li>
           <li data-i18n="price1Li4En">1 neutral accent</li>
         </ul>
-        <a href="#conversa" class="btn-audio btn-full" data-i18n="price1CtaEn">Start for free</a>
+        <a href="#licao" class="btn-audio btn-full" data-i18n="price1CtaEn">Start for free</a>
       </div>
 
       <div class="pricing-card featured">
@@ -1754,7 +1931,7 @@
           <li data-i18n="price1Li3Pt">Daily streak and XP</li>
           <li data-i18n="price1Li4Pt">1 neutral accent</li>
         </ul>
-        <a href="#conversa" class="btn-audio btn-full" data-i18n="price1CtaPt">Start for free</a>
+        <a href="#licao" class="btn-audio btn-full" data-i18n="price1CtaPt">Start for free</a>
       </div>
 
       <div class="pricing-card featured">
@@ -2092,246 +2269,6 @@
   </div>
 </section>
 
-<section id="experimente" class="collapsed">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <span class="kicker" data-i18n="tryKicker">Não seria justo só contar</span>
-      <h2 data-i18n="tryTitle">Testa aqui. Os níveis não têm fim.</h2>
-      <p class="lede" data-i18n="tryLede">No app de verdade a dificuldade nunca para de subir, e você ganha por treinar todo dia. Duas mostras rápidas de como isso funciona:</p>
-    </div>
-    <button type="button" class="exp-toggle" id="exp-toggle" data-i18n="expOpen">📊 Ver meu progresso, desafios e recompensas ↓</button>
-
-    <div class="profile-card" data-reveal>
-      <div class="profile-avatar-wrap">
-        <div class="profile-avatar" id="profile-avatar">🙂</div>
-        <button class="avatar-edit-btn" id="avatar-edit-btn" title="Editar avatar" data-i18n-title="editAvatar">✏️</button>
-      </div>
-      <div class="profile-info">
-        <input class="profile-nickname" id="profile-nickname" placeholder="Seu nome de guerra" maxlength="20" data-i18n-placeholder="nicknamePlaceholder">
-        <div class="league-row">
-          <span class="league-badge" id="league-badge">🥉 Liga Bronze</span>
-          <span class="founder-badge" id="founder-badge">🎖️ Fundador</span>
-        </div>
-        <div class="challenge-bar-track league-bar"><div class="challenge-bar-fill" id="league-progress-fill"></div></div>
-        <div class="challenge-progress-txt" id="league-progress-txt" style="display:block;"></div>
-        <button class="auth-status-btn" id="auth-status-btn" data-i18n="saveCloud">☁️ Salvar progresso na nuvem</button>
-      </div>
-    </div>
-
-    <div class="progress-summary" data-reveal>
-      <div class="progress-summary-item">
-        <div class="progress-summary-value" id="ps-xp">0</div>
-        <div class="progress-summary-label" data-i18n="totalXp">XP total</div>
-      </div>
-      <div class="progress-summary-item">
-        <div class="progress-summary-value" id="ps-streak">0</div>
-        <div class="progress-summary-label" data-i18n="streakDays">dias de sequência</div>
-      </div>
-      <div class="progress-summary-item">
-        <div class="progress-summary-value" id="ps-dever">0</div>
-        <div class="progress-summary-label" data-i18n="vocabDays">dias de vocabulário</div>
-      </div>
-      <div class="progress-summary-item">
-        <div class="progress-summary-value" id="ps-grammar">0%</div>
-        <div class="progress-summary-label" data-i18n="grammarStudied">gramática estudada</div>
-      </div>
-      <div class="progress-summary-item">
-        <div class="progress-summary-value" id="ps-discount">0%</div>
-        <div class="progress-summary-label" data-i18n="discountUnlocked">desconto destravado</div>
-      </div>
-    </div>
-
-    <div class="demo-grid" data-reveal>
-      <div class="demo-card">
-        <h3 data-i18n="infiniteLevel">Nível infinito</h3>
-        <p class="demo-sub" data-i18n="infiniteLevelDesc">Cada clique soma um elemento novo de dificuldade — sotaque, ruído, interrupção. Vai até onde você aguentar.</p>
-
-        <div class="level-display">
-          <div class="level-badge" id="level-badge">Nível 1</div>
-          <div class="level-tier" id="level-tier">iniciante</div>
-        </div>
-        <div class="level-tags-live" id="level-tags"></div>
-
-        <div class="mini-wave-wrap">
-          <svg id="mini-wave" viewBox="0 0 400 60" preserveAspectRatio="none"></svg>
-        </div>
-
-        <div class="audio-row">
-          <button class="btn-audio" id="listen-btn" data-i18n="listenLevel">🔊 Ouvir este nível</button>
-          <span class="audio-status" id="audio-status"></span>
-        </div>
-
-        <button class="btn-primary btn-full" id="level-up-btn" data-i18n="levelUp">Subir de nível ↑</button>
-      </div>
-
-      <div class="demo-card">
-        <h3 data-i18n="dailyStreak">Sequência diária</h3>
-        <p class="demo-sub" data-i18n="dailyStreakDesc">Treina todo dia, mantém a sequência viva e destrava recompensas. Isso aqui já guarda seu progresso.</p>
-
-        <div class="streak-hero">
-          <span class="flame" id="flame">🔥</span>
-          <div>
-            <div class="streak-num" id="streak-num">0</div>
-            <div class="streak-label" data-i18n="daysInRow">dias seguidos</div>
-          </div>
-        </div>
-
-        <div class="streak-dots week" id="streak-dots"></div>
-        <div class="streak-tools" id="streak-tools">
-          <button type="button" class="streak-tool" id="cal-toggle-btn" aria-expanded="false"></button>
-          <button type="button" class="streak-tool" id="freeze-btn"></button>
-          <button type="button" class="streak-tool" id="reminder-btn"></button>
-        </div>
-        <div class="freeze-info" id="freeze-info"></div>
-        <div class="month-cal" id="month-cal" hidden>
-          <div class="month-cal-head">
-            <button type="button" class="month-nav" id="cal-prev" aria-label="‹">‹</button>
-            <div class="month-title" id="cal-title"></div>
-            <button type="button" class="month-nav" id="cal-next" aria-label="›">›</button>
-          </div>
-          <div class="month-grid" id="cal-grid"></div>
-          <div class="month-foot" id="cal-foot"></div>
-        </div>
-        <div class="streak-shield" id="streak-shield" data-i18n="streakShielded">🛡️ Sequência protegida — como fundador, faltar 1 dia não derruba sua sequência.</div>
-
-        <div class="xp-row">
-          <div class="xp-bar-track"><div class="xp-bar-fill" id="xp-fill"></div></div>
-          <span class="xp-label" id="xp-label">0 xp</span>
-        </div>
-
-        <button class="btn-primary btn-full" id="streak-btn" data-i18n="markToday">Marcar hoje ✓</button>
-        <div class="reward-toast" id="reward-toast"></div>
-
-        <div class="share-mission" id="share-mission">
-          <div class="sm-head"><span data-i18n="smTitle">📣 Missão de divulgação</span><span class="sm-best" id="sm-best"></span></div>
-          <div class="sm-today" id="sm-today"></div>
-          <div class="sm-week" id="sm-week"></div>
-        </div>
-        <button class="btn-share" id="share-btn" data-i18n="shareStreak">📣 Divulgar minha ofensiva</button>
-      </div>
-    </div>
-
-    <div class="challenges-card" data-reveal>
-      <div class="challenges-head">
-        <h3 data-i18n="challengesTitle">Desafios que te prendem no hábito</h3>
-        <p data-i18n="challengesDesc">Cumpra e resgate o XP. Diário reseta à meia-noite, semanal na segunda, mensal todo dia 1.</p>
-      </div>
-      <div class="combo-indicator" id="combo-indicator">
-        <span>🔥</span><span data-i18n="comboIndicator">Combo de <span class="combo-num">0</span> dias perfeitos — bônus crescendo</span>
-      </div>
-      <div class="challenge-cols">
-        <div>
-          <div class="challenge-col-label" data-i18n="today">🗓️ Hoje</div>
-          <div id="challenges-daily"></div>
-        </div>
-        <div>
-          <div class="challenge-col-label" data-i18n="thisWeek">📅 Essa semana</div>
-          <div id="challenges-weekly"></div>
-        </div>
-        <div>
-          <div class="challenge-col-label" data-i18n="thisMonth">🏆 Esse mês</div>
-          <div id="challenges-monthly"></div>
-        </div>
-      </div>
-
-      <div class="rewards-panel">
-        <div class="rewards-panel-head">
-          <h4 data-i18n="rewardsTitle">🎟️ Recompensas reais — descontos de verdade</h4>
-          <p data-i18n="rewardsDesc">Não é só XP. Bata essas metas e ganha cupom de desconto de verdade pra usar no checkout.</p>
-        </div>
-
-        <div class="rewards-track">
-          <div class="rewards-track-label" data-i18n="comboTrackLabel">Trilha de combo — quanto mais dias perfeitos seguidos, maior o desconto (fica valendo pra sempre depois de destravado)</div>
-          <div class="reward-ladder" id="reward-ladder-combo"></div>
-        </div>
-
-        <div class="rewards-track">
-          <div class="rewards-track-label" data-i18n="monthlyTrackLabel">Trilha mensal — complete os 2 desafios do mês</div>
-          <div class="reward-ladder" id="reward-ladder-monthly"></div>
-        </div>
-
-        <div class="rewards-track legend-track">
-          <div class="rewards-track-label" data-i18n="legendTrackLabel">👑 Trilha lendária — sequência diária sem furar, desconto vitalício crescente até quase de graça</div>
-          <div class="legend-headline" id="legend-headline" data-i18n="noLifetimeYet">Ainda sem desconto vitalício destravado</div>
-          <div class="challenge-bar-track legend-bar"><div class="challenge-bar-fill" id="legend-progress-fill"></div></div>
-          <div class="challenge-progress-txt" id="legend-progress-txt" style="margin-bottom:12px; display:block;"></div>
-          <div class="reward-ladder legend-ladder" id="legend-trail"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="dever-card" data-reveal>
-      <div class="dever-head">
-        <h3 data-i18n="homeworkTitle">📔 Dever de casa</h3>
-        <p data-i18n="homeworkDesc">Uma palavra por dia. No dia seguinte, testamos se ficou.</p>
-      </div>
-
-      <div class="dever-review" id="dever-review" style="display:none;">
-        <div class="dever-review-label" data-i18n="rememberYesterday">Lembra da palavra de ontem?</div>
-        <div class="dever-word-hidden" id="dever-hidden-word">•••••••</div>
-        <div class="dever-review-actions" id="dever-review-actions">
-          <button class="btn-audio" id="dever-reveal-btn" data-i18n="reveal">Revelar</button>
-        </div>
-        <div class="dever-review-result" id="dever-review-result" style="display:none;">
-          <div class="dever-word-shown" id="dever-shown-word"></div>
-          <div class="dever-review-actions">
-            <button class="btn-primary" id="dever-remembered-btn" data-i18n="remembered">✓ Lembrei</button>
-            <button class="btn-audio" id="dever-forgot-btn" data-i18n="forgot">Esqueci</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="dever-today">
-        <div class="dever-today-label" data-i18n="todaysWord">Palavra de hoje</div>
-        <div class="dever-word" id="dever-today-word">—</div>
-        <div class="dever-translation" id="dever-today-translation">—</div>
-        <div class="dever-example" id="dever-today-example"></div>
-        <button class="btn-audio dever-mark-btn" id="dever-mark-btn" data-i18n="markStudied">Marcar como estudado +5xp</button>
-        <div class="dever-marked-txt" id="dever-marked-txt" style="display:none;" data-i18n="studiedToday">✓ Estudado hoje</div>
-      </div>
-
-      <div class="dever-streak-txt" id="dever-streak-txt"></div>
-
-      <div class="dever-bonus" id="dever-bonus">
-        <div class="dever-bonus-locked" id="dever-bonus-locked" data-founder-lock="1" data-i18n-html="founderBonusLocked">
-          🎁 Fundadores ganham uma <strong>segunda palavra por dia</strong> — vocabulário no dobro da velocidade. <a href="#preco">Ver planos</a>
-        </div>
-        <div class="dever-today" id="dever-bonus-unlocked" style="display:none;">
-          <div class="dever-bonus-label" data-i18n="founderBonusWord">🎁 Palavra bônus do fundador</div>
-          <div class="dever-word" id="dever-bonus-word">—</div>
-          <div class="dever-translation" id="dever-bonus-translation">—</div>
-          <div class="dever-example" id="dever-bonus-example"></div>
-          <button class="btn-audio dever-mark-btn" id="dever-bonus-mark-btn" data-i18n="markStudiedAlt">Marcar como estudada +5xp</button>
-          <div class="dever-marked-txt" id="dever-bonus-marked-txt" style="display:none;" data-i18n="studiedTodayAlt">✓ Estudada hoje</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grammar-card" data-reveal>
-      <div class="grammar-head">
-        <span class="grammar-badge" data-i18n="grammarBadge">🧠 a mais completa do Falaut</span>
-        <h3 data-i18n="grammarTitle">🧩 Trilha de gramática — A1 até C2</h3>
-        <p data-i18n="grammarDesc">Aula de verdade, quiz e exercício de montar frase em cada tópico. Marca o que você já estudou — a trilha cresce com você, do básico até o nível quase nativo.</p>
-      </div>
-
-      <div class="grammar-review" id="grammar-review" style="display:none;">
-        <div class="grammar-review-head">
-          <span class="grammar-review-badge" data-i18n="quickReview">🔁 Revisão rápida</span>
-          <button type="button" class="grammar-review-skip" id="grammar-review-skip" data-i18n="swap">trocar</button>
-        </div>
-        <div class="grammar-review-topic" id="grammar-review-topic-name"></div>
-        <div class="grammar-review-slot" id="grammar-review-slot"></div>
-        <div class="grammar-review-bank" id="grammar-review-bank"></div>
-        <div class="grammar-review-status" id="grammar-review-status"></div>
-        <button type="button" class="btn-primary" id="grammar-review-check-btn" data-i18n="check">Conferir</button>
-      </div>
-
-      <div class="grammar-overall-track"><div class="grammar-overall-fill" id="grammar-overall-fill"></div></div>
-      <div class="challenge-progress-txt" id="grammar-overall-txt" style="display:block; margin-bottom:20px;"></div>
-      <div class="grammar-levels" id="grammar-levels"></div>
-    </div>
-  </div>
-</section>
 
 <section id="como-funciona" class="v14-hidden">
   <div class="wrap">
@@ -2373,9 +2310,9 @@
 <section id="ao-vivo">
   <div class="wrap">
     <div class="section-head" data-reveal>
-      <span class="kicker" data-i18n="liveKicker">Prefere gente de verdade?</span>
+      <span class="kicker" data-i18n="liveKicker">Conversa ao vivo</span>
       <h2 data-i18n="liveTitle">Treina uma conversa ao vivo comigo.</h2>
-      <p class="lede" data-i18n="liveLede">A IA aí em cima treina com você todo dia. Se quiser uma conversa com uma pessoa de verdade — eu —, marca aqui.</p>
+      <p class="lede" data-i18n="liveLede">Quer praticar com uma pessoa de verdade? Marca uma conversa comigo — 30 minutos, só você e eu.</p>
     </div>
     <div class="ao-vivo-card" data-reveal>
       <div class="ao-vivo-price-row">
@@ -2651,7 +2588,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v14.0.0</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.0.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -4725,19 +4662,20 @@
   Object.assign(I18N_STRINGS.en, {"gateLabel": "Gate 1 · Boarding", "gateTitle": "Start with the Falaut group", "gateSub": "This is where everyone comes in: news first, tips and people practicing together. Free.", "gateBtn": "💬 Join the WhatsApp group", "navGroup": "💬 Group"});
   Object.assign(I18N_STRINGS.es, {"gateLabel": "Puerta 1 · Embarque", "gateTitle": "Empieza por el grupo de Falaut", "gateSub": "Por aquí entra todo el mundo: novedades antes que nadie, consejos y gente practicando junta. Gratis.", "gateBtn": "💬 Entrar al grupo de WhatsApp", "navGroup": "💬 Grupo"});
   Object.assign(I18N_STRINGS.de, {"gateLabel": "Gate 1 · Boarding", "gateTitle": "Starte in der Falaut-Gruppe", "gateSub": "Hier kommen alle rein: Neuigkeiten zuerst, Tipps und Leute, die zusammen üben. Kostenlos.", "gateBtn": "💬 Der WhatsApp-Gruppe beitreten", "navGroup": "💬 Gruppe"});
-  // v14.0.0: conversa com IA (#conversa)
-  Object.assign(I18N_STRINGS.pt, {"trialBadge": "🎁 Teste grátis · {n} dias", "trialBannerTitle": "🎁 7 dias com tudo liberado. Sem cartão.", "trialBannerText": "Começa sozinho na sua primeira visita: todos os níveis, sotaques fortes e conversas sem limite. Depois dos 7 dias, você continua no Grátis ou assina — sem cobrança automática.", "trialBannerBtn": "Testar agora →", "cvTrial": "🎁 Teste grátis: tudo liberado por mais {n} dias", "expOpen": "📊 Ver meu progresso, desafios e recompensas ↓", "expClose": "Fechar ↑", "tryKicker": "Seu progresso", "tryTitle": "Treina todo dia, ganha desconto de verdade.", "tryLede": "XP, sequência, desafios, palavra do dia e gramática. Tudo salvo no seu aparelho.", "pricingLedeDe": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite.", "pricingLedeEn": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite.", "pricingLedePt": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite."});
+  // v14.1.0: teste grátis, textos de preço sem IA, área de progresso
+  // v15.0.0: lição do dia (#licao)
+  Object.assign(I18N_STRINGS.pt, {"lcKicker": "Lição do dia · 2 minutos", "lcTitle": "5 palavras por dia. Todo dia.", "lcLede": "Sem tempo? Tudo bem. Em 2 minutos você aprende 5 palavras novas e mantém sua ofensiva 🔥. Pulou um dia, a ofensiva zera.", "lcStreakLabel": "dias de ofensiva", "lcLessonN": "Lição {n}", "lcToday": "Hoje: 5 palavras novas · ~2 min", "lcAtRisk": "⚠️ Faz a lição de hoje pra não perder sua ofensiva de {n} dias!", "lcBroken": "Sua ofensiva zerou. Começa uma nova hoje.", "lcFirst": "Primeira lição: começa sua ofensiva hoje.", "lcStart": "Começar lição de hoje →", "lcListen": "🔊 Ouvir", "lcNext": "Próxima →", "lcToQuiz": "Testar →", "lcQ1De": "Como se diz em alemão?", "lcQ1En": "Como se diz em inglês?", "lcQ1Pt": "Como se diz em português?", "lcQ2": "O que significa?", "lcRight": "Isso! ✓", "lcWrong": "Quase. O certo é: {w}", "lcContinue": "Continuar →", "lcDoneTitle": "🔥 {n} {d} de ofensiva!", "lcDay": "dia", "lcDays": "dias", "lcDoneSub": "Você aprendeu hoje:", "lcTomorrow": "Volta amanhã pra mais 5 palavras. Se pular um dia, a ofensiva zera.", "lcExtra": "Quero mais 5 agora (+XP)", "lcDoneToday": "✓ Lição de hoje feita. Ofensiva garantida.", "lcXp": "+{n} XP", "markToday": "Fazer a lição de hoje →"});
+  Object.assign(I18N_STRINGS.en, {"lcKicker": "Daily lesson · 2 minutes", "lcTitle": "5 words a day. Every day.", "lcLede": "No time? No problem. In 2 minutes you learn 5 new words and keep your streak 🔥. Skip a day and the streak resets.", "lcStreakLabel": "day streak", "lcLessonN": "Lesson {n}", "lcToday": "Today: 5 new words · ~2 min", "lcAtRisk": "⚠️ Do today's lesson or you'll lose your {n}-day streak!", "lcBroken": "Your streak reset. Start a new one today.", "lcFirst": "First lesson: start your streak today.", "lcStart": "Start today's lesson →", "lcListen": "🔊 Listen", "lcNext": "Next →", "lcToQuiz": "Quiz me →", "lcQ1De": "How do you say it in German?", "lcQ1En": "How do you say it in English?", "lcQ1Pt": "How do you say it in Portuguese?", "lcQ2": "What does it mean?", "lcRight": "Correct! ✓", "lcWrong": "Almost. The right answer: {w}", "lcContinue": "Continue →", "lcDoneTitle": "🔥 {n}-{d} streak!", "lcDay": "day", "lcDays": "day", "lcDoneSub": "You learned today:", "lcTomorrow": "Come back tomorrow for 5 more words. Skip a day and the streak resets.", "lcExtra": "Give me 5 more now (+XP)", "lcDoneToday": "✓ Today's lesson done. Streak safe.", "lcXp": "+{n} XP", "markToday": "Do today's lesson →"});
+  Object.assign(I18N_STRINGS.es, {"lcKicker": "Lección del día · 2 minutos", "lcTitle": "5 palabras al día. Todos los días.", "lcLede": "¿Sin tiempo? No pasa nada. En 2 minutos aprendes 5 palabras nuevas y mantienes tu racha 🔥. Si te saltas un día, la racha vuelve a cero.", "lcStreakLabel": "días de racha", "lcLessonN": "Lección {n}", "lcToday": "Hoy: 5 palabras nuevas · ~2 min", "lcAtRisk": "⚠️ ¡Haz la lección de hoy para no perder tu racha de {n} días!", "lcBroken": "Tu racha volvió a cero. Empieza una nueva hoy.", "lcFirst": "Primera lección: empieza tu racha hoy.", "lcStart": "Empezar la lección de hoy →", "lcListen": "🔊 Escuchar", "lcNext": "Siguiente →", "lcToQuiz": "Ponerme a prueba →", "lcQ1De": "¿Cómo se dice en alemán?", "lcQ1En": "¿Cómo se dice en inglés?", "lcQ1Pt": "¿Cómo se dice en portugués?", "lcQ2": "¿Qué significa?", "lcRight": "¡Eso es! ✓", "lcWrong": "Casi. Lo correcto es: {w}", "lcContinue": "Continuar →", "lcDoneTitle": "🔥 ¡{n} {d} de racha!", "lcDay": "día", "lcDays": "días", "lcDoneSub": "Hoy aprendiste:", "lcTomorrow": "Vuelve mañana por 5 palabras más. Si te saltas un día, la racha vuelve a cero.", "lcExtra": "Quiero 5 más ahora (+XP)", "lcDoneToday": "✓ Lección de hoy hecha. Racha asegurada.", "lcXp": "+{n} XP", "markToday": "Hacer la lección de hoy →"});
+  Object.assign(I18N_STRINGS.de, {"lcKicker": "Lektion des Tages · 2 Minuten", "lcTitle": "5 Wörter am Tag. Jeden Tag.", "lcLede": "Keine Zeit? Kein Problem. In 2 Minuten lernst du 5 neue Wörter und hältst deine Serie 🔥. Einen Tag ausgelassen, und die Serie ist weg.", "lcStreakLabel": "Tage Serie", "lcLessonN": "Lektion {n}", "lcToday": "Heute: 5 neue Wörter · ~2 Min.", "lcAtRisk": "⚠️ Mach die heutige Lektion, sonst ist deine {n}-Tage-Serie weg!", "lcBroken": "Deine Serie ist weg. Starte heute eine neue.", "lcFirst": "Erste Lektion: starte heute deine Serie.", "lcStart": "Heutige Lektion starten →", "lcListen": "🔊 Anhören", "lcNext": "Weiter →", "lcToQuiz": "Testen →", "lcQ1De": "Wie sagt man das auf Deutsch?", "lcQ1En": "Wie sagt man das auf Englisch?", "lcQ1Pt": "Wie sagt man das auf Portugiesisch?", "lcQ2": "Was bedeutet das?", "lcRight": "Richtig! ✓", "lcWrong": "Fast. Richtig ist: {w}", "lcContinue": "Weiter →", "lcDoneTitle": "🔥 {n} {d} Serie!", "lcDay": "Tag", "lcDays": "Tage", "lcDoneSub": "Heute gelernt:", "lcTomorrow": "Komm morgen für 5 weitere Wörter wieder. Lässt du einen Tag aus, ist die Serie weg.", "lcExtra": "Gib mir jetzt 5 mehr (+XP)", "lcDoneToday": "✓ Heutige Lektion erledigt. Serie gesichert.", "lcXp": "+{n} XP", "markToday": "Heutige Lektion machen →"});
+  Object.assign(I18N_STRINGS.pt, {"trialBadge": "🎁 Teste grátis · {n} dias", "trialBannerTitle": "🎁 7 dias com tudo liberado. Sem cartão.", "trialBannerText": "Começa sozinho na sua primeira visita: todos os níveis e sotaques, gramática completa (A1–C2), palavra bônus e todos os desafios. Depois dos 7 dias, você continua no Grátis ou assina — sem cobrança automática.", "trialBannerBtn": "Testar agora →", "cvTrial": "🎁 Teste grátis: tudo liberado por mais {n} dias", "expOpen": "📊 Ver meu progresso, desafios e recompensas ↓", "expClose": "Fechar ↑", "tryKicker": "Seu progresso", "tryTitle": "Treina todo dia, ganha desconto de verdade.", "tryLede": "XP, sequência, desafios, palavra do dia e gramática. Tudo salvo no seu aparelho.", "pricingLedeDe": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite.", "pricingLedeEn": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite.", "pricingLedePt": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite."});
   Object.assign(I18N_STRINGS.en, {"trialBadge": "🎁 Free trial · {n} days", "trialBannerTitle": "🎁 7 days with everything unlocked. No card.", "trialBannerText": "Starts on your first visit: every level, strong accents and unlimited conversations. After 7 days you stay on Free or subscribe — no automatic charge.", "trialBannerBtn": "Try it now →", "cvTrial": "🎁 Free trial: everything unlocked for {n} more days", "expOpen": "📊 See my progress, challenges & rewards ↓", "expClose": "Close ↑", "tryKicker": "Your progress", "tryTitle": "Train every day, earn real discounts.", "tryLede": "XP, streaks, challenges, word of the day and grammar. All saved on your device.", "pricingLedeDe": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, 3 conversations a week) — or subscribe and train without limits.", "pricingLedeEn": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, 3 conversations a week) — or subscribe and train without limits.", "pricingLedePt": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, 3 conversations a week) — or subscribe and train without limits."});
   Object.assign(I18N_STRINGS.es, {"trialBadge": "🎁 Prueba gratis · {n} días", "trialBannerTitle": "🎁 7 días con todo desbloqueado. Sin tarjeta.", "trialBannerText": "Empieza solo en tu primera visita: todos los niveles, acentos fuertes y conversaciones sin límite. Después de 7 días sigues en el plan Gratis o te suscribes — sin cobro automático.", "trialBannerBtn": "Probar ahora →", "cvTrial": "🎁 Prueba gratis: todo desbloqueado {n} días más", "expOpen": "📊 Ver mi progreso, desafíos y recompensas ↓", "expClose": "Cerrar ↑", "tryKicker": "Tu progreso", "tryTitle": "Entrena cada día, gana descuentos de verdad.", "tryLede": "XP, racha, desafíos, palabra del día y gramática. Todo guardado en tu dispositivo.", "pricingLedeDe": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, 3 conversaciones por semana), o te suscribes y entrenas sin límite.", "pricingLedeEn": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, 3 conversaciones por semana), o te suscribes y entrenas sin límite.", "pricingLedePt": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, 3 conversaciones por semana), o te suscribes y entrenas sin límite."});
   Object.assign(I18N_STRINGS.de, {"trialBadge": "🎁 Gratis-Test · {n} Tage", "trialBannerTitle": "🎁 7 Tage alles freigeschaltet. Ohne Karte.", "trialBannerText": "Startet bei deinem ersten Besuch: alle Level, starke Akzente, unbegrenzte Gespräche. Nach 7 Tagen bleibst du bei Gratis oder abonnierst – ohne automatische Abbuchung.", "trialBannerBtn": "Jetzt testen →", "cvTrial": "🎁 Gratis-Test: noch {n} Tage alles frei", "expOpen": "📊 Fortschritt, Challenges & Belohnungen ↓", "expClose": "Schließen ↑", "tryKicker": "Dein Fortschritt", "tryTitle": "Trainier täglich, verdien echte Rabatte.", "tryLede": "XP, Streak, Challenges, Wort des Tages und Grammatik. Alles auf deinem Gerät gespeichert.", "pricingLedeDe": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, 3 Gespräche pro Woche) – oder du abonnierst und trainierst ohne Limit.", "pricingLedeEn": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, 3 Gespräche pro Woche) – oder du abonnierst und trainierst ohne Limit.", "pricingLedePt": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, 3 Gespräche pro Woche) – oder du abonnierst und trainierst ohne Limit."});
-  Object.assign(I18N_STRINGS.pt, {"faqA1De": "Existe e funciona hoje. A conversa com IA (seção \"Conversa de verdade. Agora.\") já está no ar: você escolhe o cenário, conversa por voz ou texto e recebe o retorno no fim. Desafios, sequência, vocabulário diário e trilha de gramática também já rodam no seu navegador.", "faqA1En": "Existe e funciona hoje. A conversa com IA (seção \"Conversa de verdade. Agora.\") já está no ar: você escolhe o cenário, conversa por voz ou texto e recebe o retorno no fim. Desafios, sequência, vocabulário diário e trilha de gramática também já rodam no seu navegador."});
-  Object.assign(I18N_STRINGS.en, {"faqA1De": "It exists and works today. The AI conversation (the \"A real conversation. Right now.\" section) is live: pick a scenario, talk by voice or text and get feedback at the end. Challenges, streaks, daily vocabulary and the grammar track also run in your browser today.", "faqA1En": "It exists and works today. The AI conversation (the \"A real conversation. Right now.\" section) is live: pick a scenario, talk by voice or text and get feedback at the end. Challenges, streaks, daily vocabulary and the grammar track also run in your browser today."});
-  Object.assign(I18N_STRINGS.es, {"faqA1De": "Existe y funciona hoy. La conversación con IA (sección \"Una conversación de verdad. Ahora.\") ya está activa: eliges el escenario, hablas por voz o texto y recibes retroalimentación al final. Desafíos, racha, vocabulario diario y ruta de gramática también funcionan ya en tu navegador.", "faqA1En": "Existe y funciona hoy. La conversación con IA (sección \"Una conversación de verdad. Ahora.\") ya está activa: eliges el escenario, hablas por voz o texto y recibes retroalimentación al final. Desafíos, racha, vocabulario diario y ruta de gramática también funcionan ya en tu navegador."});
-  Object.assign(I18N_STRINGS.de, {"faqA1De": "Es gibt sie, und sie funktioniert heute. Das KI-Gespräch (Abschnitt „Ein echtes Gespräch. Jetzt.\") ist live: Szene wählen, per Sprache oder Text reden, am Ende Feedback bekommen. Challenges, Streak, tägliche Vokabeln und der Grammatikpfad laufen auch schon in deinem Browser.", "faqA1En": "Es gibt sie, und sie funktioniert heute. Das KI-Gespräch (Abschnitt „Ein echtes Gespräch. Jetzt.\") ist live: Szene wählen, per Sprache oder Text reden, am Ende Feedback bekommen. Challenges, Streak, tägliche Vokabeln und der Grammatikpfad laufen auch schon in deinem Browser."});
-  Object.assign(I18N_STRINGS.pt, {"cvKicker": "Passo 2 · funcionando agora", "cvTitle": "Conversa de verdade. Agora.", "cvLede": "Escolhe o cenário e o nível. A pessoa do outro lado fala com sotaque, com pressa e não espera você terminar. Você responde falando (🎤) ou digitando. No fim, recebe o retorno.", "cvScenarioLabel": "1 · Cenário", "cvLevelLabel": "2 · Nível", "cvL1": "Devagar e claro", "cvL2": "Dia a dia", "cvL3": "Sotaque + ruído", "cvL4": "Vida real", "cvStart": "Começar conversa →", "cvVoice": "🔊 Voz ligada", "cvVoiceOff": "🔇 Só texto", "cvFreeLeft": "{n} de 3 conversas grátis nesta semana", "cvFreeOut": "Suas 3 conversas grátis da semana acabaram. Elas voltam na segunda — ou destrava tudo no Básico.", "cvUnlimited": "🎖️ Conversas ilimitadas", "cvLocked": "Níveis 3 e 4 (sotaques fortes, ruído, interrupção) são do Básico e do Premium.", "cvMic": "🎤 Falar", "cvListening": "🔴 Ouvindo… toca pra parar", "cvTypePh": "Ou digita sua resposta…", "cvSend": "Enviar", "cvHelp": "💡 Não entendi", "cvFinish": "Terminar e ver retorno", "cvShowText": "👁 mostrar texto", "cvReplay": "🔊 de novo", "cvThinking": "digitando…", "cvErrConfig": "A conversa ainda não foi ligada no servidor. (Falta a chave da IA na Vercel.)", "cvErr": "Deu um problema na conexão. Tenta de novo.", "cvErrRate": "Muitas mensagens seguidas. Espera uns minutos.", "cvNoMic": "Seu navegador não reconhece voz. Digita a resposta (no Chrome ou no Safari funciona).", "cvAccent": "sotaque", "cvNoise": "🔉 ruído de fundo", "cvHintTitle": "O que foi dito", "cvHintSay": "Você pode responder:", "cvUse": "usar", "cvFbLoading": "Montando seu retorno…", "cvFbTitle": "Seu retorno", "cvFbGood": "✅ O que você entendeu", "cvFbMissed": "👂 O que passou batido", "cvFbTrain": "🎯 O que treinar na próxima", "cvFbFix": "✏️ Do jeito natural", "cvNew": "Nova conversa", "cvSeePlans": "Ver planos", "cvTooShort": "Responde pelo menos 2 vezes antes de terminar, pra dar retorno de verdade.", "cvMaxTurns": "A conversa chegou ao fim. Toca em \"Terminar e ver retorno\".", "cvXp": "+{n} XP pela conversa", "cvBack": "← trocar cenário", "cvStartingHint": "Liga o som 🔊 — a pessoa vai falar primeiro.", "cvS_de_arzt": "🩺 Marcar médico", "cvS_de_amt": "🏛️ Bürgeramt (Anmeldung)", "cvS_de_job": "💼 Entrevista de emprego", "cvS_de_arbeit": "🔁 Trocar turno com colega", "cvS_de_nachbar": "📦 Vizinho (pacote e barulho)", "cvS_de_baecker": "🥨 Padaria na correria", "cvS_de_vermieter": "🔥 Ligar pro Vermieter (aquecimento)", "cvS_en_interview": "💼 Entrevista de emprego", "cvS_en_restaurant": "🍽️ Pedido no restaurante", "cvS_en_workcall": "📞 Call de trabalho", "cvS_en_airport": "✈️ Aeroporto (voo atrasado)", "cvS_en_smalltalk": "🍻 Papo numa festa", "cvS_en_doctor": "🩺 Marcar médico", "cvS_pt_padaria": "☕ Padaria", "cvS_pt_uber": "🚕 Papo no Uber", "cvS_pt_feira": "🍍 Feira livre", "cvS_pt_festa": "🎉 Churrasco com amigos", "cvS_pt_hotel": "🏨 Check-in na pousada", "cvS_pt_medico": "🩺 Marcar médico", "liveKicker": "Prefere gente de verdade?", "liveLede": "A IA aí em cima treina com você todo dia. Se quiser uma conversa com uma pessoa de verdade — eu —, marca aqui."});
-  Object.assign(I18N_STRINGS.en, {"cvKicker": "Step 2 · live now", "cvTitle": "A real conversation. Right now.", "cvLede": "Pick a scenario and a level. The person on the other side has an accent, is in a hurry and doesn't wait for you to finish. Answer by speaking (🎤) or typing. At the end you get feedback.", "cvScenarioLabel": "1 · Scenario", "cvLevelLabel": "2 · Level", "cvL1": "Slow & clear", "cvL2": "Everyday", "cvL3": "Accent + noise", "cvL4": "Real life", "cvStart": "Start conversation →", "cvVoice": "🔊 Voice on", "cvVoiceOff": "🔇 Text only", "cvFreeLeft": "{n} of 3 free conversations left this week", "cvFreeOut": "Your 3 free conversations this week are used up. They reset on Monday — or unlock everything with Básico.", "cvUnlimited": "🎖️ Unlimited conversations", "cvLocked": "Levels 3 and 4 (strong accents, noise, interruptions) come with Básico and Premium.", "cvMic": "🎤 Speak", "cvListening": "🔴 Listening… tap to stop", "cvTypePh": "Or type your answer…", "cvSend": "Send", "cvHelp": "💡 Didn't get it", "cvFinish": "Finish & get feedback", "cvShowText": "👁 show text", "cvReplay": "🔊 again", "cvThinking": "typing…", "cvErrConfig": "The conversation isn't switched on on the server yet (AI key missing on Vercel).", "cvErr": "Connection problem. Try again.", "cvErrRate": "Too many messages in a row. Wait a few minutes.", "cvNoMic": "Your browser can't recognise speech. Type your answer (works in Chrome or Safari).", "cvAccent": "accent", "cvNoise": "🔉 background noise", "cvHintTitle": "What was said", "cvHintSay": "You could answer:", "cvUse": "use", "cvFbLoading": "Building your feedback…", "cvFbTitle": "Your feedback", "cvFbGood": "✅ What you understood", "cvFbMissed": "👂 What slipped past you", "cvFbTrain": "🎯 What to practise next", "cvFbFix": "✏️ The natural way", "cvNew": "New conversation", "cvSeePlans": "See plans", "cvTooShort": "Answer at least twice before finishing, so the feedback is real.", "cvMaxTurns": "The conversation has come to an end. Tap \"Finish & get feedback\".", "cvXp": "+{n} XP for the conversation", "cvBack": "← change scenario", "cvStartingHint": "Turn your sound on 🔊 — the other person speaks first.", "cvS_de_arzt": "🩺 Doctor's appointment", "cvS_de_amt": "🏛️ Bürgeramt (registration)", "cvS_de_job": "💼 Job interview", "cvS_de_arbeit": "🔁 Swap a shift", "cvS_de_nachbar": "📦 Neighbour (parcel & noise)", "cvS_de_baecker": "🥨 Bakery rush hour", "cvS_de_vermieter": "🔥 Call the landlord (heating)", "cvS_en_interview": "💼 Job interview", "cvS_en_restaurant": "🍽️ Ordering at a restaurant", "cvS_en_workcall": "📞 Work call", "cvS_en_airport": "✈️ Airport (delayed flight)", "cvS_en_smalltalk": "🍻 Small talk at a party", "cvS_en_doctor": "🩺 Doctor's appointment", "cvS_pt_padaria": "☕ Bakery", "cvS_pt_uber": "🚕 Chat in an Uber", "cvS_pt_feira": "🍍 Street market", "cvS_pt_festa": "🎉 Barbecue with friends", "cvS_pt_hotel": "🏨 Hotel check-in", "cvS_pt_medico": "🩺 Doctor's appointment", "liveKicker": "Prefer a real person?", "liveLede": "The AI above trains with you every day. If you want a conversation with a real person — me — book it here."});
-  Object.assign(I18N_STRINGS.es, {"cvKicker": "Paso 2 · ya funciona", "cvTitle": "Una conversación de verdad. Ahora.", "cvLede": "Elige el escenario y el nivel. La persona del otro lado tiene acento, tiene prisa y no espera a que termines. Respondes hablando (🎤) o escribiendo. Al final recibes tu retroalimentación.", "cvScenarioLabel": "1 · Escenario", "cvLevelLabel": "2 · Nivel", "cvL1": "Lento y claro", "cvL2": "Día a día", "cvL3": "Acento + ruido", "cvL4": "Vida real", "cvStart": "Empezar conversación →", "cvVoice": "🔊 Voz activada", "cvVoiceOff": "🔇 Solo texto", "cvFreeLeft": "{n} de 3 conversaciones gratis esta semana", "cvFreeOut": "Tus 3 conversaciones gratis de la semana se acabaron. Vuelven el lunes, o desbloquea todo con el Básico.", "cvUnlimited": "🎖️ Conversaciones ilimitadas", "cvLocked": "Los niveles 3 y 4 (acentos fuertes, ruido, interrupciones) son del Básico y del Premium.", "cvMic": "🎤 Hablar", "cvListening": "🔴 Escuchando… toca para parar", "cvTypePh": "O escribe tu respuesta…", "cvSend": "Enviar", "cvHelp": "💡 No entendí", "cvFinish": "Terminar y ver retroalimentación", "cvShowText": "👁 mostrar texto", "cvReplay": "🔊 otra vez", "cvThinking": "escribiendo…", "cvErrConfig": "La conversación todavía no está activada en el servidor (falta la clave de la IA en Vercel).", "cvErr": "Hubo un problema de conexión. Inténtalo de nuevo.", "cvErrRate": "Demasiados mensajes seguidos. Espera unos minutos.", "cvNoMic": "Tu navegador no reconoce la voz. Escribe la respuesta (funciona en Chrome o Safari).", "cvAccent": "acento", "cvNoise": "🔉 ruido de fondo", "cvHintTitle": "Lo que se dijo", "cvHintSay": "Puedes responder:", "cvUse": "usar", "cvFbLoading": "Preparando tu retroalimentación…", "cvFbTitle": "Tu retroalimentación", "cvFbGood": "✅ Lo que entendiste", "cvFbMissed": "👂 Lo que se te escapó", "cvFbTrain": "🎯 Qué practicar la próxima vez", "cvFbFix": "✏️ Dicho de forma natural", "cvNew": "Nueva conversación", "cvSeePlans": "Ver planes", "cvTooShort": "Responde al menos 2 veces antes de terminar, para que la retroalimentación sea real.", "cvMaxTurns": "La conversación llegó al final. Toca \"Terminar y ver retroalimentación\".", "cvXp": "+{n} XP por la conversación", "cvBack": "← cambiar escenario", "cvStartingHint": "Sube el volumen 🔊: la otra persona habla primero.", "cvS_de_arzt": "🩺 Cita médica", "cvS_de_amt": "🏛️ Bürgeramt (empadronamiento)", "cvS_de_job": "💼 Entrevista de trabajo", "cvS_de_arbeit": "🔁 Cambiar turno", "cvS_de_nachbar": "📦 Vecino (paquete y ruido)", "cvS_de_baecker": "🥨 Panadería con prisa", "cvS_de_vermieter": "🔥 Llamar al casero (calefacción)", "cvS_en_interview": "💼 Entrevista de trabajo", "cvS_en_restaurant": "🍽️ Pedir en un restaurante", "cvS_en_workcall": "📞 Llamada de trabajo", "cvS_en_airport": "✈️ Aeropuerto (vuelo retrasado)", "cvS_en_smalltalk": "🍻 Charla en una fiesta", "cvS_en_doctor": "🩺 Cita médica", "cvS_pt_padaria": "☕ Panadería", "cvS_pt_uber": "🚕 Charla en el Uber", "cvS_pt_feira": "🍍 Feria", "cvS_pt_festa": "🎉 Asado con amigos", "cvS_pt_hotel": "🏨 Check-in en la posada", "cvS_pt_medico": "🩺 Cita médica", "liveKicker": "¿Prefieres una persona de verdad?", "liveLede": "La IA de arriba entrena contigo todos los días. Si quieres una conversación con una persona de verdad — yo —, agéndala aquí."});
-  Object.assign(I18N_STRINGS.de, {"cvKicker": "Schritt 2 · jetzt live", "cvTitle": "Ein echtes Gespräch. Jetzt.", "cvLede": "Wähl Szene und Level. Die Person gegenüber hat Akzent, ist in Eile und wartet nicht, bis du fertig bist. Du antwortest per Sprache (🎤) oder Text. Am Ende bekommst du Feedback.", "cvScenarioLabel": "1 · Szene", "cvLevelLabel": "2 · Level", "cvL1": "Langsam & klar", "cvL2": "Alltag", "cvL3": "Akzent + Lärm", "cvL4": "Echtes Leben", "cvStart": "Gespräch starten →", "cvVoice": "🔊 Stimme an", "cvVoiceOff": "🔇 Nur Text", "cvFreeLeft": "{n} von 3 Gratis-Gesprächen diese Woche", "cvFreeOut": "Deine 3 Gratis-Gespräche diese Woche sind aufgebraucht. Am Montag gibt's neue – oder schalte mit Básico alles frei.", "cvUnlimited": "🎖️ Unbegrenzte Gespräche", "cvLocked": "Level 3 und 4 (starke Akzente, Lärm, Unterbrechungen) gibt's mit Básico und Premium.", "cvMic": "🎤 Sprechen", "cvListening": "🔴 Ich höre zu… tippen zum Stoppen", "cvTypePh": "Oder tipp deine Antwort…", "cvSend": "Senden", "cvHelp": "💡 Nicht verstanden", "cvFinish": "Beenden & Feedback", "cvShowText": "👁 Text zeigen", "cvReplay": "🔊 nochmal", "cvThinking": "tippt…", "cvErrConfig": "Das Gespräch ist auf dem Server noch nicht aktiviert (KI-Schlüssel fehlt bei Vercel).", "cvErr": "Verbindungsproblem. Versuch es nochmal.", "cvErrRate": "Zu viele Nachrichten hintereinander. Warte ein paar Minuten.", "cvNoMic": "Dein Browser erkennt keine Sprache. Tipp die Antwort (geht in Chrome oder Safari).", "cvAccent": "Akzent", "cvNoise": "🔉 Hintergrundlärm", "cvHintTitle": "Was gesagt wurde", "cvHintSay": "Du könntest antworten:", "cvUse": "übernehmen", "cvFbLoading": "Dein Feedback wird erstellt…", "cvFbTitle": "Dein Feedback", "cvFbGood": "✅ Was du verstanden hast", "cvFbMissed": "👂 Was dir entgangen ist", "cvFbTrain": "🎯 Was du als Nächstes üben solltest", "cvFbFix": "✏️ So sagt man es natürlich", "cvNew": "Neues Gespräch", "cvSeePlans": "Pläne ansehen", "cvTooShort": "Antworte mindestens zweimal, bevor du beendest, damit das Feedback echt ist.", "cvMaxTurns": "Das Gespräch ist zu Ende. Tipp auf „Beenden & Feedback\".", "cvXp": "+{n} XP für das Gespräch", "cvBack": "← Szene wechseln", "cvStartingHint": "Mach den Ton an 🔊 – die andere Person spricht zuerst.", "cvS_de_arzt": "🩺 Arzttermin", "cvS_de_amt": "🏛️ Bürgeramt (Anmeldung)", "cvS_de_job": "💼 Vorstellungsgespräch", "cvS_de_arbeit": "🔁 Schicht tauschen", "cvS_de_nachbar": "📦 Nachbar (Paket & Lärm)", "cvS_de_baecker": "🥨 Bäckerei im Stress", "cvS_de_vermieter": "🔥 Vermieter anrufen (Heizung)", "cvS_en_interview": "💼 Vorstellungsgespräch", "cvS_en_restaurant": "🍽️ Im Restaurant bestellen", "cvS_en_workcall": "📞 Arbeits-Call", "cvS_en_airport": "✈️ Flughafen (Verspätung)", "cvS_en_smalltalk": "🍻 Smalltalk auf einer Party", "cvS_en_doctor": "🩺 Arzttermin", "cvS_pt_padaria": "☕ Bäckerei", "cvS_pt_uber": "🚕 Smalltalk im Uber", "cvS_pt_feira": "🍍 Wochenmarkt", "cvS_pt_festa": "🎉 Grillen mit Freunden", "cvS_pt_hotel": "🏨 Check-in in der Pousada", "cvS_pt_medico": "🩺 Arzttermin", "liveKicker": "Lieber mit einem echten Menschen?", "liveLede": "Die KI oben trainiert jeden Tag mit dir. Wenn du ein Gespräch mit einem echten Menschen willst – mit mir –, buch es hier."});
+  Object.assign(I18N_STRINGS.pt, {"trialBannerText": "Começa sozinho na sua primeira visita: todos os níveis e sotaques, gramática completa (A1–C2), palavra bônus e todos os desafios. Depois dos 7 dias, você continua no Grátis ou assina — sem cobrança automática.", "trialBannerBtn": "Testar agora →", "liveKicker": "Conversa ao vivo", "liveLede": "Quer praticar com uma pessoa de verdade? Marca uma conversa comigo — 30 minutos, só você e eu.", "planBasicLi2": "Todos os desafios e recompensas (cupons de desconto)", "price1Li2De": "Palavra do dia (dever de casa)", "price1Li2En": "Palavra do dia (dever de casa)", "price1Li2Pt": "Palavra do dia (dever de casa)", "price1Li4De": "Grupo do WhatsApp", "price1Li4En": "Grupo do WhatsApp", "price1Li4Pt": "Grupo do WhatsApp", "pricingLedeDe": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, sequência, XP e palavra do dia) — ou você assina e libera tudo.", "pricingLedeEn": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, sequência, XP e palavra do dia) — ou você assina e libera tudo.", "pricingLedePt": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, sequência, XP e palavra do dia) — ou você assina e libera tudo."});
+  Object.assign(I18N_STRINGS.en, {"trialBannerText": "Starts on your first visit: every level and accent, the full grammar track (A1–C2), the bonus word and all challenges. After 7 days you stay on Free or subscribe — no automatic charge.", "trialBannerBtn": "Try it now →", "liveKicker": "Live conversation", "liveLede": "Want to practise with a real person? Book a conversation with me — 30 minutes, just you and me.", "planBasicLi2": "All challenges and rewards (discount coupons)", "price1Li2De": "Word of the day (homework)", "price1Li2En": "Word of the day (homework)", "price1Li2Pt": "Word of the day (homework)", "price1Li4De": "WhatsApp group", "price1Li4En": "WhatsApp group", "price1Li4Pt": "WhatsApp group", "pricingLedeDe": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, streak, XP and word of the day) — or subscribe and unlock everything.", "pricingLedeEn": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, streak, XP and word of the day) — or subscribe and unlock everything.", "pricingLedePt": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, streak, XP and word of the day) — or subscribe and unlock everything."});
+  Object.assign(I18N_STRINGS.es, {"trialBannerText": "Empieza solo en tu primera visita: todos los niveles y acentos, la ruta de gramática completa (A1–C2), la palabra extra y todos los desafíos. Después de 7 días sigues en el plan Gratis o te suscribes — sin cobro automático.", "trialBannerBtn": "Probar ahora →", "liveKicker": "Conversación en vivo", "liveLede": "¿Quieres practicar con una persona de verdad? Agenda una conversación conmigo: 30 minutos, solo tú y yo.", "planBasicLi2": "Todos los desafíos y recompensas (cupones de descuento)", "price1Li2De": "Palabra del día (tarea)", "price1Li2En": "Palabra del día (tarea)", "price1Li2Pt": "Palabra del día (tarea)", "price1Li4De": "Grupo de WhatsApp", "price1Li4En": "Grupo de WhatsApp", "price1Li4Pt": "Grupo de WhatsApp", "pricingLedeDe": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, racha, XP y palabra del día), o te suscribes y desbloqueas todo.", "pricingLedeEn": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, racha, XP y palabra del día), o te suscribes y desbloqueas todo.", "pricingLedePt": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, racha, XP y palabra del día), o te suscribes y desbloqueas todo."});
+  Object.assign(I18N_STRINGS.de, {"trialBannerText": "Startet bei deinem ersten Besuch: alle Level und Akzente, der komplette Grammatikpfad (A1–C2), das Bonuswort und alle Challenges. Nach 7 Tagen bleibst du bei Gratis oder abonnierst – ohne automatische Abbuchung.", "trialBannerBtn": "Jetzt testen →", "liveKicker": "Live-Gespräch", "liveLede": "Willst du mit einem echten Menschen üben? Buch ein Gespräch mit mir – 30 Minuten, nur du und ich.", "planBasicLi2": "Alle Challenges und Belohnungen (Rabattcoupons)", "price1Li2De": "Wort des Tages (Hausaufgabe)", "price1Li2En": "Wort des Tages (Hausaufgabe)", "price1Li2Pt": "Wort des Tages (Hausaufgabe)", "price1Li4De": "WhatsApp-Gruppe", "price1Li4En": "WhatsApp-Gruppe", "price1Li4Pt": "WhatsApp-Gruppe", "pricingLedeDe": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, Streak, XP und Wort des Tages) – oder du abonnierst und schaltest alles frei.", "pricingLedeEn": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, Streak, XP und Wort des Tages) – oder du abonnierst und schaltest alles frei.", "pricingLedePt": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, Streak, XP und Wort des Tages) – oder du abonnierst und schaltest alles frei."});
 
   // currentSiteLang mirrors whatever applyInterfaceLanguage() last applied, so
   // dynamic (JS-generated) UI text built with t() below is locale-correct at
@@ -5682,7 +5620,12 @@
   animateMini();
 
   // ---- SEQUÊNCIA DIÁRIA (separada por idioma — alemão e inglês são hábitos independentes) ----
-  const STREAK_KEYS = { de: 'falareal_streak_de_v1', en: 'falareal_streak_en_v1', pt: 'falareal_streak_pt_v1' };
+  // v15.0.0: UMA ofensiva só, pra todos os idiomas (igual Duolingo). Antes eram 3 separadas
+  // (alemão, inglês, português): quem treinava um dia em cada idioma ficava sempre no dia 1.
+  // As 3 antigas continuam guardadas e são juntadas na nova toda vez que ela carrega.
+  const STREAK_GLOBAL_KEY = 'falareal_streak_all_v1';
+  const OLD_STREAK_KEYS = ['falareal_streak_de_v1', 'falareal_streak_en_v1', 'falareal_streak_pt_v1'];
+  const STREAK_KEYS = { de: STREAK_GLOBAL_KEY, en: STREAK_GLOBAL_KEY, pt: STREAK_GLOBAL_KEY };
   // v12.0.2: datas sempre no fuso local (antes era UTC — na Alemanha isso quebrava a sequência)
   function localDateStr(d){
     return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
@@ -5725,11 +5668,39 @@
     while(list.length > DAYS_KEEP) list.shift();
   }
 
+  // conta a ofensiva olhando o calendário: dias seguidos (treinados ou congelados ❄️) até o último dia treinado
+  function streakFromDays(days, frozen, lastDate){
+    if(!lastDate) return 0;
+    const set = new Set([].concat(days || [], frozen || []));
+    let n = 0, d = lastDate;
+    while(set.has(d)){ if((days || []).includes(d)) n++; d = shiftDateStr(d, -1); }
+    return n;
+  }
   function loadStreak(lang){
-    try{
-      const raw = localStorage.getItem(STREAK_KEYS[lang]);
-      return normalizeStreak(raw ? JSON.parse(raw) : null);
-    }catch(e){ return normalizeStreak(null); }
+    let g = null;
+    try{ const raw = localStorage.getItem(STREAK_GLOBAL_KEY); g = raw ? JSON.parse(raw) : null; }catch(e){}
+    const olds = [];
+    OLD_STREAK_KEYS.forEach(k => { try{ const r = localStorage.getItem(k); if(r) olds.push(normalizeStreak(JSON.parse(r))); }catch(e){} });
+    if(!olds.length) return normalizeStreak(g);
+    const hadGlobal = !!g;
+    g = normalizeStreak(g);
+    const all = [g].concat(olds);
+    const union = (f) => Array.from(new Set([].concat(...all.map(x => x[f] || [])))).sort().slice(-DAYS_KEEP);
+    const days = union('days'), frozen = union('frozen');
+    const lastDate = all.map(x => x.lastDate).filter(Boolean).sort().pop() || null;
+    let streak = streakFromDays(days, frozen, lastDate);
+    all.forEach(x => { if(x.lastDate === lastDate) streak = Math.max(streak, x.streak || 0); }); // respeita a proteção do fundador
+    const sumOld = (f) => olds.reduce((a, x) => a + (x[f] || 0), 0);
+    const merged = Object.assign({}, g, {
+      days, frozen, lastDate, streak,
+      xp: Math.max(g.xp || 0, sumOld('xp')),
+      xpSpent: Math.max(g.xpSpent || 0, sumOld('xpSpent')),
+      freezes: hadGlobal ? g.freezes : Math.min(FREEZE_MAX, Math.max(...olds.map(x => x.freezes || 0))),
+      best: Math.max(streak, ...all.map(x => Math.max(x.best || 0, x.streak || 0))),
+      bestStreakTier: Math.max(...all.map(x => x.bestStreakTier ?? -1))
+    });
+    try{ localStorage.setItem(STREAK_GLOBAL_KEY, JSON.stringify(merged)); }catch(e){}
+    return merged;
   }
   function saveStreak(lang, data){
     try{ localStorage.setItem(STREAK_KEYS[lang], JSON.stringify(data)); }catch(e){}
@@ -6135,6 +6106,7 @@
 
     const shieldEl = document.getElementById('streak-shield');
     if(shieldEl) shieldEl.classList.toggle('show', !!isFounder);
+    if(typeof window.lcRefresh === 'function') window.lcRefresh(); // v15.0.0
   }
 
   // v12.0.6: marcar o dia virou função — o botão usa, e qualquer estudo do dia
@@ -6213,7 +6185,12 @@
   function autoMarkStreak(){
     if(streakData && streakData.lastDate !== todayStr()) markStreakToday(null);
   }
-  streakBtn.addEventListener('click', (e)=> markStreakToday(e));
+  // v15.0.0: a ofensiva só sobe fazendo a lição do dia (ou estudando algo) — o botão leva pra lição
+  streakBtn.addEventListener('click', (e)=>{
+    const lc = document.getElementById('licao');
+    if(lc){ lc.scrollIntoView({ behavior:'smooth', block:'start' }); return; }
+    markStreakToday(e);
+  });
 
   renderStreak();
   if(typeof renderLegendTrail === 'function') renderLegendTrail();
@@ -8594,6 +8571,7 @@
     'falareal_streak_pt_v1', 'falareal_challenges_pt_v1', 'falareal_dever_pt_v1',
     'falareal_dever_bonus_pt_v1', 'falareal_gramatica_pt_v1', 'falareal_learn_lang',
     'falareal_profile_v1', 'falareal_saved_at',
+    'falareal_streak_all_v1', 'falaut_licao_de_v1', 'falaut_licao_en_v1', 'falaut_licao_pt_v1',   // v15.0.0
     'falaut_social_v1', 'falareal_ref_code'   // v13.3.0: divulgação + mesmo código de convite em todo aparelho
   ];
 
@@ -8615,7 +8593,6 @@
     if(typeof renderStreak === 'function') renderStreak();
     if(typeof renderBonusWord === 'function') renderBonusWord();
     if(typeof renderChallenges === 'function') renderChallenges(); // v13.2.1: desafios dependem do plano
-    if(typeof window.cvRefresh === 'function') window.cvRefresh(); // v14.0.0: conversa (níveis 3–4, cota)
   }
 
   async function checkFounderStatus(){
@@ -9078,384 +9055,220 @@
 </script>
 
 <script>
+/* v14.1.0: área "Seu progresso" (#experimente) fica fechada; abre no botão ou ao chegar pelos links "Quero testar" */
+(function(){
+  const sec = document.getElementById('experimente'), btn = document.getElementById('exp-toggle');
+  if(typeof applyFounderUI === 'function') applyFounderUI(); // mostra o selo do teste grátis
+  if(!sec || !btn) return;
+  const label = () => { btn.textContent = t(sec.classList.contains('collapsed') ? 'expOpen' : 'expClose'); };
+  btn.addEventListener('click', () => { sec.classList.toggle('collapsed'); label(); });
+  document.querySelectorAll('a[href="#experimente"]').forEach((a) => a.addEventListener('click', () => {
+    if(sec.classList.contains('collapsed')){ sec.classList.remove('collapsed'); label(); }
+  }));
+})();
+</script>
+<script>
 /* ============================================================
-   v14.0.0 — CONVERSA COM IA (#conversa)
-   Fala com /api/conversa (a chave da IA fica só na Vercel).
-   Voz: reconhecimento de fala do navegador (SpeechRecognition)
-   e voz do navegador (speechSynthesis) com sotaque/velocidade
-   por nível. Ruído de fundo gerado com Web Audio (níveis 3–4).
-   Grátis: 3 conversas por semana, níveis 1–2 (igual à seção de
-   preços). Fundador (is_founder no Supabase): tudo liberado.
+   v15.0.0 — LIÇÃO DO DIA (#licao)
+   5 palavras por dia: aprender (cartão + áudio) → testar → 🔥.
+   Terminar a lição marca o dia na ofensiva (uma só, pra todos
+   os idiomas). Progresso por idioma em falaut_licao_{de|en|pt}_v1.
+   Baralho: [emoji, alemão, inglês, português] — 30 lições de 5.
    ============================================================ */
 (function(){
-  const SCEN = {"de": ["arzt", "amt", "job", "arbeit", "nachbar", "baecker", "vermieter"], "en": ["interview", "restaurant", "workcall", "airport", "smalltalk", "doctor"], "pt": ["padaria", "uber", "feira", "festa", "hotel", "medico"]};
-  const RECOG_LANG = { de:'de-DE', en:'en-US', pt:'pt-BR' };
-  const RATE = {1:0.82, 2:1.0, 3:1.06, 4:1.16};
-  const FREE_PER_WEEK = 3;
-  const MAX_USER_TURNS = 12;
-  const IMPATIENT = {
-    de:['Hallo? Sind Sie noch da?','Na? Ich hab nicht ewig Zeit, gell.','Und? Was jetzt?'],
-    en:['Hello? You still there?','Sorry, I haven\'t got all day.','So? What\'ll it be?'],
-    pt:['Alô? Tá aí ainda?','E aí, vai querer ou não?','Oxe, travou foi?']
-  };
+  const DECK = [["👋", "Hallo", "Hello", "Olá"], ["👋", "Tschüss", "Bye", "Tchau"], ["🙏", "Danke", "Thank you", "Obrigado"], ["🙂", "Bitte", "Please", "Por favor"], ["✅", "Ja", "Yes", "Sim"], ["❌", "Nein", "No", "Não"], ["🌅", "Guten Morgen", "Good morning", "Bom dia"], ["🌙", "Gute Nacht", "Good night", "Boa noite"], ["🙇", "Entschuldigung", "Excuse me", "Com licença"], ["🤔", "Wie geht's?", "How are you?", "Tudo bem?"], ["🐕", "der Hund", "the dog", "o cachorro"], ["🐈", "die Katze", "the cat", "o gato"], ["🐦", "der Vogel", "the bird", "o pássaro"], ["🐎", "das Pferd", "the horse", "o cavalo"], ["🐄", "die Kuh", "the cow", "a vaca"], ["👩", "die Mutter", "the mother", "a mãe"], ["👨", "der Vater", "the father", "o pai"], ["🧒", "das Kind", "the child", "a criança"], ["👦", "der Bruder", "the brother", "o irmão"], ["👧", "die Schwester", "the sister", "a irmã"], ["🏠", "das Haus", "the house", "a casa"], ["🚪", "die Tür", "the door", "a porta"], ["🪟", "das Fenster", "the window", "a janela"], ["🛏️", "das Bett", "the bed", "a cama"], ["🔑", "der Schlüssel", "the key", "a chave"], ["🍞", "das Brot", "the bread", "o pão"], ["🧀", "der Käse", "the cheese", "o queijo"], ["🥚", "das Ei", "the egg", "o ovo"], ["🍎", "der Apfel", "the apple", "a maçã"], ["🍌", "die Banane", "the banana", "a banana"], ["💧", "das Wasser", "the water", "a água"], ["☕", "der Kaffee", "the coffee", "o café"], ["🍵", "der Tee", "the tea", "o chá"], ["🥛", "die Milch", "the milk", "o leite"], ["🍺", "das Bier", "the beer", "a cerveja"], ["🖊️", "der Kuli", "the pen", "a caneta"], ["📖", "das Buch", "the book", "o livro"], ["📱", "das Handy", "the phone", "o celular"], ["💻", "der Computer", "the computer", "o computador"], ["📄", "das Papier", "the paper", "o papel"], ["✋", "die Hand", "the hand", "a mão"], ["🦶", "der Fuß", "the foot", "o pé"], ["👁️", "das Auge", "the eye", "o olho"], ["👄", "der Mund", "the mouth", "a boca"], ["👃", "die Nase", "the nose", "o nariz"], ["1️⃣", "eins", "one", "um"], ["2️⃣", "zwei", "two", "dois"], ["3️⃣", "drei", "three", "três"], ["4️⃣", "vier", "four", "quatro"], ["5️⃣", "fünf", "five", "cinco"], ["6️⃣", "sechs", "six", "seis"], ["7️⃣", "sieben", "seven", "sete"], ["8️⃣", "acht", "eight", "oito"], ["9️⃣", "neun", "nine", "nove"], ["🔟", "zehn", "ten", "dez"], ["🔴", "rot", "red", "vermelho"], ["🔵", "blau", "blue", "azul"], ["🟢", "grün", "green", "verde"], ["🟡", "gelb", "yellow", "amarelo"], ["⚫", "schwarz", "black", "preto"], ["☀️", "die Sonne", "the sun", "o sol"], ["🌧️", "der Regen", "the rain", "a chuva"], ["❄️", "der Schnee", "the snow", "a neve"], ["💨", "der Wind", "the wind", "o vento"], ["🥶", "kalt", "cold", "frio"], ["🚗", "das Auto", "the car", "o carro"], ["🚌", "der Bus", "the bus", "o ônibus"], ["🚆", "der Zug", "the train", "o trem"], ["🚲", "das Fahrrad", "the bike", "a bicicleta"], ["🛣️", "die Straße", "the street", "a rua"], ["🛒", "der Supermarkt", "the supermarket", "o supermercado"], ["💊", "die Apotheke", "the pharmacy", "a farmácia"], ["🚉", "der Bahnhof", "the train station", "a estação de trem"], ["🏥", "das Krankenhaus", "the hospital", "o hospital"], ["🥐", "die Bäckerei", "the bakery", "a padaria"], ["🔥", "das Feuer", "the fire", "o fogo"], ["💶", "das Geld", "the money", "o dinheiro"], ["⏰", "die Uhr", "the clock", "o relógio"], ["👜", "die Tasche", "the bag", "a bolsa"], ["☂️", "der Regenschirm", "the umbrella", "o guarda-chuva"], ["🧥", "die Jacke", "the jacket", "a jaqueta"], ["👖", "die Hose", "the trousers", "a calça"], ["👟", "der Schuh", "the shoe", "o sapato"], ["🧢", "die Mütze", "the cap", "o boné"], ["👕", "das T-Shirt", "the T-shirt", "a camiseta"], ["🍽️", "essen", "to eat", "comer"], ["🥤", "trinken", "to drink", "beber"], ["😴", "schlafen", "to sleep", "dormir"], ["🚶", "gehen", "to go / to walk", "ir / andar"], ["💼", "arbeiten", "to work", "trabalhar"], ["🗣️", "sprechen", "to speak", "falar"], ["📚", "lesen", "to read", "ler"], ["✍️", "schreiben", "to write", "escrever"], ["🛍️", "kaufen", "to buy", "comprar"], ["🍳", "kochen", "to cook", "cozinhar"], ["🦒", "groß", "big", "grande"], ["🐜", "klein", "small", "pequeno"], ["👍", "gut", "good", "bom"], ["👎", "schlecht", "bad", "ruim"], ["🌸", "schön", "beautiful", "bonito"], ["📅", "heute", "today", "hoje"], ["⏭️", "morgen", "tomorrow", "amanhã"], ["⏮️", "gestern", "yesterday", "ontem"], ["⏱️", "jetzt", "now", "agora"], ["⏳", "später", "later", "mais tarde"], ["📆", "Montag", "Monday", "segunda-feira"], ["📆", "Dienstag", "Tuesday", "terça-feira"], ["📆", "Mittwoch", "Wednesday", "quarta-feira"], ["📆", "Donnerstag", "Thursday", "quinta-feira"], ["📆", "Freitag", "Friday", "sexta-feira"], ["👔", "der Chef", "the boss", "o chefe"], ["🤝", "der Kollege", "the colleague", "o colega"], ["⏸️", "die Pause", "the break", "a pausa"], ["🗓️", "der Termin", "the appointment", "o horário marcado"], ["🏖️", "der Urlaub", "the holiday", "as férias"], ["🩺", "der Arzt", "the doctor", "o médico"], ["🤒", "krank", "sick", "doente"], ["🤕", "die Kopfschmerzen", "the headache", "a dor de cabeça"], ["💊", "das Medikament", "the medicine", "o remédio"], ["🚨", "der Notfall", "the emergency", "a emergência"], ["🍽️", "der Teller", "the plate", "o prato"], ["🍴", "die Gabel", "the fork", "o garfo"], ["🥄", "der Löffel", "the spoon", "a colher"], ["🔪", "das Messer", "the knife", "a faca"], ["☕", "die Tasse", "the cup", "a xícara"], ["🥔", "die Kartoffel", "the potato", "a batata"], ["🍅", "die Tomate", "the tomato", "o tomate"], ["🧅", "die Zwiebel", "the onion", "a cebola"], ["🥕", "die Karotte", "the carrot", "a cenoura"], ["🍓", "die Erdbeere", "the strawberry", "o morango"], ["🌳", "der Baum", "the tree", "a árvore"], ["🌼", "die Blume", "the flower", "a flor"], ["⛰️", "der Berg", "the mountain", "a montanha"], ["🏞️", "der See", "the lake", "o lago"], ["🌊", "das Meer", "the sea", "o mar"], ["🤷", "Ich verstehe nicht.", "I don't understand.", "Não entendi."], ["🔁", "Noch einmal, bitte.", "Again, please.", "De novo, por favor."], ["🐢", "Langsamer, bitte.", "Slower, please.", "Mais devagar, por favor."], ["💶", "Wie viel kostet das?", "How much is it?", "Quanto custa?"], ["📍", "Wo ist die Toilette?", "Where is the toilet?", "Onde fica o banheiro?"], ["🐭", "die Maus", "the mouse", "o rato"], ["🐟", "der Fisch", "the fish", "o peixe"], ["🐖", "das Schwein", "the pig", "o porco"], ["🐻", "der Bär", "the bear", "o urso"], ["🐔", "das Huhn", "the chicken", "a galinha"], ["😄", "glücklich", "happy", "feliz"], ["😢", "traurig", "sad", "triste"], ["😪", "müde", "tired", "cansado"], ["😋", "hungrig", "hungry", "com fome"], ["😠", "wütend", "angry", "bravo"]];
+  const PER = 5;
+  const LESSONS = Math.floor(DECK.length / PER);
+  const COL = { de:1, en:2, pt:3 };            // coluna da palavra que se aprende
+  const GLOSS = { de:3, en:3, pt:1 };          // tradução mostrada (português; alemão pra quem aprende português)
+  const SPEECH = { de:'de-DE', en:'en-US', pt:'pt-BR' };
   const $ = (id) => document.getElementById(id);
-  if(!$('cv-card')) return;
-
-  const st = { track:'de', scenario:null, level:1, voiceOn:true, messages:[], accent:null, accentLabel:'', voice:'de-DE',
-               busy:false, userTurns:0, impatientCount:0, impatientTimer:null, recog:null, recording:false, noise:null, noiseOn:true };
+  if(!$('lc-card')) return;
   const tr = (k, v) => (typeof t === 'function' ? t(k, v) : k);
-  const founder = () => (typeof isFounder !== 'undefined' && isFounder);
-  const track = () => (typeof currentLang !== 'undefined' && SCEN[currentLang]) ? currentLang : 'de';
+  const trk = () => (typeof currentLang !== 'undefined' && COL[currentLang]) ? currentLang : 'de';
+  const today = () => (typeof todayStr === 'function' ? todayStr() : new Date().toISOString().slice(0,10));
+  const key = (l) => 'falaut_licao_' + l + '_v1';
 
-  // ---------- cota semanal ----------
-  function weekKey(){
-    const d = new Date(); const day = (d.getDay() + 6) % 7; d.setDate(d.getDate() - day);
-    return d.getFullYear() + '-' + (d.getMonth()+1) + '-' + d.getDate();
+  function loadP(l){ try{ const p = JSON.parse(localStorage.getItem(key(l)) || '{}'); return { n: p.n || 0, lastDate: p.lastDate || null }; }catch(e){ return { n:0, lastDate:null }; } }
+  function saveP(l, p){
+    try{ localStorage.setItem(key(l), JSON.stringify(p)); }catch(e){}
+    if(typeof syncToCloud === 'function') syncToCloud();
   }
-  function quota(){
-    try{ const q = JSON.parse(localStorage.getItem('falaut_cv_quota') || '{}'); return q.week === weekKey() ? q.n : 0; }catch(e){ return 0; }
+  function words(l, idx){
+    const start = (idx % LESSONS) * PER;
+    return DECK.slice(start, start + PER).map(r => ({ emoji: r[0], word: r[COL[l]], gloss: r[GLOSS[l]] }));
   }
-  function useQuota(){
-    try{ localStorage.setItem('falaut_cv_quota', JSON.stringify({ week: weekKey(), n: quota() + 1 })); }catch(e){}
-  }
-  function renderQuota(){
-    const el = $('cv-quota');
-    el.classList.remove('trial');
-    if(founder() && typeof trialOnly !== 'undefined' && trialOnly && typeof trialInfo === 'function'){
-      el.textContent = tr('cvTrial', { n: trialInfo().daysLeft }); el.classList.add('trial'); el.classList.remove('out'); return;
-    }
-    if(founder()){ el.textContent = tr('cvUnlimited'); el.classList.remove('out'); return; }
-    const left = Math.max(0, FREE_PER_WEEK - quota());
-    el.textContent = tr('cvFreeLeft', { n: left });
-    el.classList.toggle('out', left === 0);
-  }
+  function streakNow(){ return (typeof liveStreak === 'function') ? liveStreak() : 0; }
 
-  // ---------- preparar ----------
-  function renderSetup(){
-    st.track = track();
-    const box = $('cv-scenarios'); box.innerHTML = '';
-    const list = SCEN[st.track];
-    if(!list.includes(st.scenario)) st.scenario = list[0];
-    list.forEach((id) => {
-      const b = document.createElement('button');
-      b.type = 'button'; b.className = 'cv-chip' + (id === st.scenario ? ' active' : '');
-      b.textContent = tr('cvS_' + st.track + '_' + id);
-      b.onclick = () => { st.scenario = id; renderSetup(); };
-      box.appendChild(b);
-    });
-    if(!founder() && st.level > 2) st.level = 2;
-    document.querySelectorAll('[data-cv-level]').forEach((b) => {
-      const n = Number(b.getAttribute('data-cv-level'));
-      b.classList.toggle('active', n === st.level);
-      b.classList.toggle('locked', !founder() && n > 2);
-    });
-    $('cv-voice-toggle').textContent = tr(st.voiceOn ? 'cvVoice' : 'cvVoiceOff');
-    renderQuota();
-  }
-  document.querySelectorAll('[data-cv-level]').forEach((b) => {
-    b.addEventListener('click', () => {
-      const n = Number(b.getAttribute('data-cv-level'));
-      if(!founder() && n > 2){ if(typeof showFounderLock === 'function') showFounderLock(tr('cvLocked')); return; }
-      st.level = n; renderSetup();
-    });
-  });
-  $('cv-voice-toggle').addEventListener('click', () => { st.voiceOn = !st.voiceOn; renderSetup(); });
+  let st = { mode:'home', l:'de', idx:0, list:[], i:0, queue:[], extra:false };
 
-  // ---------- voz (falar) ----------
-  function pickVoice(lang){
-    if(!window.speechSynthesis) return null;
-    const vs = speechSynthesis.getVoices();
-    const base = lang.slice(0,2);
-    return vs.find(v => v.lang && v.lang.replace('_','-').toLowerCase() === lang.toLowerCase())
-        || vs.find(v => v.lang && v.lang.toLowerCase().startsWith(base)) || null;
-  }
-  function speak(text, onEnd){
-    if(!st.voiceOn || !window.speechSynthesis){ onEnd && onEnd(); return; }
+  function speak(text){
+    if(!window.speechSynthesis) return;
     try{
       speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text.replace(/[—–]/g, ', '));
-      const v = pickVoice(st.voice) || pickVoice(RECOG_LANG[st.track]);
+      const u = new SpeechSynthesisUtterance(text.replace(/\.$/, ''));
+      u.lang = SPEECH[st.l]; u.rate = 0.85;
+      const v = speechSynthesis.getVoices().find(x => x.lang && x.lang.replace('_','-').toLowerCase().startsWith(SPEECH[st.l].slice(0,2)));
       if(v) u.voice = v;
-      u.lang = v ? v.lang : RECOG_LANG[st.track];
-      u.rate = RATE[st.level] || 1;
-      u.pitch = 0.9 + Math.random() * 0.25;
-      let done = false; const fin = () => { if(!done){ done = true; onEnd && onEnd(); } };
-      u.onend = fin; u.onerror = fin;
-      setTimeout(fin, 4000 + text.length * 110);
       speechSynthesis.speak(u);
-    }catch(e){ onEnd && onEnd(); }
-  }
-
-  // ---------- ruído de fundo (Web Audio) ----------
-  function startNoise(){
-    stopNoise();
-    if(st.level < 3 || !st.noiseOn) return;
-    try{
-      const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return;
-      const ctx = new AC();
-      const len = ctx.sampleRate * 4, buf = ctx.createBuffer(1, len, ctx.sampleRate), d = buf.getChannelData(0);
-      let b0=0,b1=0,b2=0;
-      for(let i=0;i<len;i++){ const w = Math.random()*2-1; b0=0.997*b0+w*0.029; b1=0.985*b1+w*0.032; b2=0.95*b2+w*0.048; d[i]=(b0+b1+b2)*0.5; }
-      const src = ctx.createBufferSource(); src.buffer = buf; src.loop = true;
-      const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = st.level === 4 ? 1400 : 900;
-      const g = ctx.createGain(); g.gain.value = st.level === 4 ? 0.16 : 0.08;
-      // "conversa ao fundo": volume que sobe e desce devagar
-      const lfo = ctx.createOscillator(), lg = ctx.createGain(); lfo.frequency.value = 0.23; lg.gain.value = g.gain.value * 0.5;
-      lfo.connect(lg); lg.connect(g.gain); lfo.start();
-      src.connect(lp); lp.connect(g); g.connect(ctx.destination); src.start();
-      st.noise = ctx;
     }catch(e){}
   }
-  function stopNoise(){ if(st.noise){ try{ st.noise.close(); }catch(e){} st.noise = null; } }
-  $('cv-noise').addEventListener('click', () => {
-    st.noiseOn = !st.noiseOn; $('cv-noise').classList.toggle('off', !st.noiseOn);
-    st.noiseOn ? startNoise() : stopNoise();
-  });
-
-  // ---------- log ----------
-  function addMsg(role, text, opts){
-    const log = $('cv-log');
-    const div = document.createElement('div');
-    div.className = 'cv-msg ' + role;
-    if(role === 'ai'){
-      const p = document.createElement('div'); p.textContent = text;
-      const hide = st.voiceOn && st.level >= 3 && !(opts && opts.show);
-      if(hide) p.className = 'cv-hidden-text';
-      div.appendChild(p);
-      const tools = document.createElement('div'); tools.className = 'cv-msg-tools';
-      if(window.speechSynthesis){
-        const r = document.createElement('button'); r.type='button'; r.textContent = tr('cvReplay'); r.onclick = () => speak(text); tools.appendChild(r);
-      }
-      if(hide){
-        const s = document.createElement('button'); s.type='button'; s.textContent = tr('cvShowText');
-        s.onclick = () => { p.className = ''; s.remove(); }; tools.appendChild(s);
-      }
-      if(tools.children.length) div.appendChild(tools);
-    } else div.textContent = text;
-    log.appendChild(div); log.scrollTop = log.scrollHeight;
-    return div;
+  function wordHtmlInto(el, w){
+    el.textContent = '';
+    const m = st.l === 'de' && /^(der|die|das) /.exec(w);
+    if(m){ const a = document.createElement('span'); a.className = 'lc-art-' + m[1]; a.textContent = m[1] + ' '; el.appendChild(a); el.appendChild(document.createTextNode(w.slice(m[0].length))); }
+    else el.textContent = w;
   }
-  function showError(msg){ const e = $('cv-error'); e.textContent = msg || ''; e.hidden = !msg; }
-  function errText(code){ return code === 'not_configured' ? tr('cvErrConfig') : code === 'rate_limited' ? tr('cvErrRate') : tr('cvErr'); }
+  function el(tag, cls, text){ const e = document.createElement(tag); if(cls) e.className = cls; if(text != null) e.textContent = text; return e; }
+  function btn(cls, text, fn){ const b = el('button', cls, text); b.type = 'button'; b.onclick = fn; return b; }
+  function bar(p){ $('lc-bar').style.width = Math.round(p * 100) + '%'; }
 
-  async function api(mode){
-    const res = await fetch('/api/conversa', {
-      method:'POST', headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ mode, track: st.track, scenario: st.scenario, level: st.level, accent: st.accent,
-                             uiLang: (typeof currentSiteLang !== 'undefined' ? currentSiteLang : 'pt'), messages: st.messages })
-    });
-    const data = await res.json().catch(() => ({}));
-    if(!res.ok) throw new Error(data.error || 'http');
-    return data;
+  function header(){
+    const s = streakNow();
+    $('lc-streak').textContent = s;
+    $('lc-flame-ico').classList.toggle('lit', loadP(st.l).lastDate === today());
+    $('lc-lesson-n').textContent = tr('lcLessonN', { n: st.idx + 1 });
   }
 
-  function setBusy(b){
-    st.busy = b;
-    ['cv-send','cv-mic','cv-help','cv-finish'].forEach(id => $(id).disabled = b);
+  // ---------- tela inicial ----------
+  function home(){
+    st.l = trk(); st.mode = 'home';
+    const p = loadP(st.l);
+    const doneToday = p.lastDate === today();
+    st.idx = doneToday ? Math.max(0, p.n - 1) : p.n;
+    header();
+    const body = $('lc-body'); body.textContent = '';
+    if(doneToday){ return done(false); }
+    bar(0);
+    const sd = (typeof streakData !== 'undefined') ? streakData : null;
+    const s = streakNow();
+    let msg = tr('lcToday'), cls = 'lc-status';
+    if(sd && sd.lastDate && s > 0 && sd.lastDate !== today()){ msg = tr('lcAtRisk', { n: s }); cls += ' risk'; }
+    else if(sd && sd.lastDate && s === 0){ msg = tr('lcBroken'); }
+    else if(!sd || !sd.lastDate){ msg = tr('lcFirst'); }
+    body.appendChild(el('p', cls, msg));
+    const prev = el('div', 'lc-list');
+    words(st.l, st.idx).forEach(w => { const r = el('div', 'lc-li'); r.appendChild(el('span', null, w.emoji)); r.appendChild(el('span', null, '•••')); prev.appendChild(r); });
+    body.appendChild(prev);
+    body.appendChild(btn('btn-primary btn-full', tr('lcStart'), () => learn(0, false)));
   }
 
-  // ---------- pressa (nível 4) ----------
-  function armImpatience(){
-    clearTimeout(st.impatientTimer);
-    if(st.level < 4 || st.impatientCount >= 2) return;
-    st.impatientTimer = setTimeout(() => {
-      if(st.busy || st.recording || $('cv-input').value.trim()) return;
-      const line = IMPATIENT[st.track][st.impatientCount % 3];
-      st.impatientCount++;
-      st.messages.push({ role:'assistant', content: line });
-      addMsg('ai', line); speak(line);
-    }, 9000);
+  // ---------- aprender ----------
+  function learn(i, extra){
+    if(i === 0){ st.list = words(st.l, st.idx); st.extra = extra; }
+    st.mode = 'learn'; st.i = i;
+    const w = st.list[i];
+    bar((i + 1) / (PER * 2));
+    const body = $('lc-body'); body.textContent = '';
+    const box = el('div', 'lc-word');
+    box.appendChild(el('div', 'lc-emoji', w.emoji));
+    const tg = el('div', 'lc-target'); wordHtmlInto(tg, w.word); box.appendChild(tg);
+    box.appendChild(el('div', 'lc-gloss', w.gloss));
+    body.appendChild(box);
+    const row = el('div', 'lc-row');
+    row.appendChild(btn('lc-ghost', tr('lcListen'), () => speak(w.word)));
+    row.appendChild(btn('btn-primary', i < PER - 1 ? tr('lcNext') : tr('lcToQuiz'), () => i < PER - 1 ? learn(i + 1) : startQuiz()));
+    body.appendChild(row);
+    body.appendChild(el('div', 'lc-count', (i + 1) + ' / ' + PER));
+    speak(w.word);
   }
 
-  async function aiTurn(){
-    setBusy(true); showError('');
-    const typing = addMsg('sys', tr('cvThinking')); typing.classList.add('cv-typing');
-    try{
-      const data = await api('chat');
-      typing.remove();
-      if(data.accent){ st.accent = data.accent; st.accentLabel = data.accentLabel; st.voice = data.voice || st.voice; renderMeta(); }
-      st.messages.push({ role:'assistant', content: data.reply });
-      addMsg('ai', data.reply);
-      setBusy(false);
-      speak(data.reply, armImpatience);
-      if(st.userTurns >= MAX_USER_TURNS){ addMsg('sys', tr('cvMaxTurns')); $('cv-send').disabled = $('cv-mic').disabled = true; }
-    }catch(e){
-      typing.remove(); setBusy(false); showError(errText(e.message));
-      return false;
+  // ---------- testar ----------
+  function shuffle(a){ for(let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  function startQuiz(){
+    st.queue = shuffle(st.list.map((w, k) => ({ w, type: k % 2 ? 'meaning' : 'say' })));
+    st.answered = 0;
+    ask();
+  }
+  function ask(){
+    st.mode = 'quiz';
+    const q = st.queue[0];
+    if(!q) return finish();
+    bar(0.5 + (st.answered / PER) * 0.5);
+    const body = $('lc-body'); body.textContent = '';
+    const box = el('div', 'lc-word');
+    if(q.type === 'say'){
+      body.appendChild(el('div', 'lc-q', tr('lcQ1' + st.l.charAt(0).toUpperCase() + st.l.slice(1))));
+      box.appendChild(el('div', 'lc-emoji', q.w.emoji));
+      box.appendChild(el('div', 'lc-gloss', q.w.gloss));
+    } else {
+      body.appendChild(el('div', 'lc-q', tr('lcQ2')));
+      const tg = el('div', 'lc-target'); wordHtmlInto(tg, q.w.word); box.appendChild(tg);
+      speak(q.w.word);
     }
-    return true;
-  }
-
-  function renderMeta(){
-    $('cv-chat-meta').innerHTML = '';
-    const s = document.createElement('span'); s.textContent = tr('cvS_' + st.track + '_' + st.scenario) + ' · ' + tr('cvL' + st.level);
-    $('cv-chat-meta').appendChild(s);
-    if(st.accentLabel){
-      const a = document.createElement('b'); a.textContent = ' · ' + tr('cvAccent') + ': ' + st.accentLabel;
-      $('cv-chat-meta').appendChild(a);
-    }
-  }
-
-  async function sendUser(text){
-    text = (text || '').trim();
-    if(!text || st.busy || st.userTurns >= MAX_USER_TURNS) return;
-    clearTimeout(st.impatientTimer);
-    if(window.speechSynthesis) speechSynthesis.cancel();
-    $('cv-hint').hidden = true;
-    st.messages.push({ role:'user', content: text }); st.userTurns++;
-    addMsg('me', text); $('cv-input').value = '';
-    const ok = await aiTurn();
-    if(!ok){ st.messages.pop(); st.userTurns--; $('cv-input').value = text; }
-  }
-
-  // ---------- começar / voltar ----------
-  $('cv-start').addEventListener('click', async () => {
-    if(!founder() && quota() >= FREE_PER_WEEK){
-      if(typeof showFounderLock === 'function') showFounderLock(tr('cvFreeOut'));
-      renderQuota(); return;
-    }
-    if(window.speechSynthesis){ try{ speechSynthesis.speak(new SpeechSynthesisUtterance('')); }catch(e){} } // destrava áudio no iPhone
-    st.messages = []; st.accent = null; st.accentLabel = ''; st.voice = RECOG_LANG[st.track];
-    st.userTurns = 0; st.impatientCount = 0; st.xpGiven = false;
-    $('cv-log').innerHTML = ''; $('cv-hint').hidden = true; showError('');
-    $('cv-setup').hidden = true; $('cv-feedback').hidden = true; $('cv-chat').hidden = false;
-    $('cv-noise').hidden = st.level < 3; $('cv-noise').classList.toggle('off', !st.noiseOn);
-    $('cv-send').disabled = $('cv-mic').disabled = false;
-    renderMeta(); startNoise();
-    $('cv-card').scrollIntoView({ behavior:'smooth', block:'start' });
-    const ok = await aiTurn();
-    if(ok && !founder()){ useQuota(); renderQuota(); }
-    if(!ok){ stopNoise(); }
-  });
-  function backToSetup(){
-    clearTimeout(st.impatientTimer); stopNoise(); stopRecog();
-    if(window.speechSynthesis) speechSynthesis.cancel();
-    $('cv-chat').hidden = true; $('cv-feedback').hidden = true; $('cv-setup').hidden = false;
-    renderSetup();
-  }
-  $('cv-back').addEventListener('click', backToSetup);
-
-  $('cv-send').addEventListener('click', () => sendUser($('cv-input').value));
-  $('cv-input').addEventListener('keydown', (e) => { if(e.key === 'Enter'){ e.preventDefault(); sendUser($('cv-input').value); } });
-  $('cv-input').addEventListener('input', () => clearTimeout(st.impatientTimer));
-
-  // ---------- microfone ----------
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  function stopRecog(){ if(st.recog){ try{ st.recog.stop(); }catch(e){} } }
-  $('cv-mic').addEventListener('click', () => {
-    if(!SR){ showError(tr('cvNoMic')); $('cv-input').focus(); return; }
-    if(st.recording){ stopRecog(); return; }
-    if(window.speechSynthesis) speechSynthesis.cancel();
-    clearTimeout(st.impatientTimer);
-    const r = new SR(); st.recog = r;
-    r.lang = RECOG_LANG[st.track]; r.interimResults = true; r.continuous = false; r.maxAlternatives = 1;
-    let finalText = '';
-    r.onresult = (ev) => {
-      let interim = '';
-      for(let i = ev.resultIndex; i < ev.results.length; i++){
-        if(ev.results[i].isFinal) finalText += ev.results[i][0].transcript; else interim += ev.results[i][0].transcript;
-      }
-      $('cv-input').value = (finalText + ' ' + interim).trim();
-    };
-    r.onerror = (ev) => { if(ev.error === 'not-allowed' || ev.error === 'service-not-allowed') showError(tr('cvNoMic')); };
-    r.onend = () => {
-      st.recording = false; $('cv-mic').classList.remove('rec'); $('cv-mic').textContent = tr('cvMic');
-      const txt = ($('cv-input').value || '').trim();
-      if(txt) sendUser(txt); else armImpatience();
-    };
-    try{ r.start(); st.recording = true; $('cv-mic').classList.add('rec'); $('cv-mic').textContent = tr('cvListening'); showError(''); }
-    catch(e){ showError(tr('cvNoMic')); }
-  });
-
-  // ---------- ajuda ----------
-  $('cv-help').addEventListener('click', async () => {
-    if(st.busy || !st.messages.some(m => m.role === 'assistant')) return;
-    clearTimeout(st.impatientTimer);
-    setBusy(true); showError('');
-    const box = $('cv-hint'); box.hidden = false; box.textContent = tr('cvThinking');
-    try{
-      const h = await api('hint');
-      box.innerHTML = '';
-      const h1 = document.createElement('h5'); h1.textContent = tr('cvHintTitle'); box.appendChild(h1);
-      const p1 = document.createElement('p'); p1.textContent = h.traducao; box.appendChild(p1);
-      if(h.sugestao){
-        const h2 = document.createElement('h5'); h2.textContent = tr('cvHintSay'); box.appendChild(h2);
-        const p2 = document.createElement('p');
-        const s = document.createElement('strong'); s.textContent = h.sugestao; p2.appendChild(s);
-        const u = document.createElement('button'); u.type='button'; u.className='cv-use'; u.textContent = tr('cvUse');
-        u.onclick = () => { $('cv-input').value = h.sugestao; $('cv-input').focus(); };
-        p2.appendChild(u);
-        if(h.sugestaoTraducao){ const em = document.createElement('div'); em.style.opacity = '0.7'; em.textContent = h.sugestaoTraducao; p2.appendChild(em); }
-        box.appendChild(p2);
-      }
-    }catch(e){ box.hidden = true; showError(errText(e.message)); }
-    setBusy(false);
-  });
-
-  // ---------- retorno ----------
-  $('cv-finish').addEventListener('click', async () => {
-    if(st.busy) return;
-    if(st.userTurns < 2){ showError(tr('cvTooShort')); return; }
-    clearTimeout(st.impatientTimer); stopNoise(); stopRecog();
-    if(window.speechSynthesis) speechSynthesis.cancel();
-    setBusy(true); showError('');
-    const fb = $('cv-feedback');
-    $('cv-chat').hidden = true; fb.hidden = false; fb.innerHTML = '';
-    const loading = document.createElement('p'); loading.className = 'cv-note'; loading.textContent = tr('cvFbLoading'); fb.appendChild(loading);
-    try{
-      const f = await api('feedback');
-      fb.innerHTML = '';
-      const h = document.createElement('h3'); h.textContent = tr('cvFbTitle'); fb.appendChild(h);
-      if(f.resumo){ const p = document.createElement('p'); p.className = 'cv-fb-sum'; p.textContent = f.resumo; fb.appendChild(p); }
-      [['cvFbGood', f.entendeu], ['cvFbMissed', f.passou], ['cvFbTrain', f.treinar]].forEach(([k, items]) => {
-        if(!items || !items.length) return;
-        const b = document.createElement('div'); b.className = 'cv-fb-block';
-        const h4 = document.createElement('h4'); h4.textContent = tr(k); b.appendChild(h4);
-        const ul = document.createElement('ul');
-        items.forEach(x => { const li = document.createElement('li'); li.textContent = x; ul.appendChild(li); });
-        b.appendChild(ul); fb.appendChild(b);
+    body.appendChild(box);
+    const field = q.type === 'say' ? 'word' : 'gloss';
+    const others = shuffle(st.list.filter(x => x !== q.w)).slice(0, 2);
+    const opts = shuffle([q.w].concat(others));
+    const wrap = el('div', 'lc-opts');
+    const fb = el('div', 'lc-feedback');
+    opts.forEach(o => {
+      const b = btn('lc-opt', o[field], () => {
+        wrap.querySelectorAll('button').forEach(x => x.disabled = true);
+        const ok = o === q.w;
+        b.classList.add(ok ? 'right' : 'wrong');
+        if(!ok){ [...wrap.children].find(x => x.textContent === q.w[field]).classList.add('right'); }
+        fb.className = 'lc-feedback ' + (ok ? 'ok' : 'no');
+        fb.textContent = ok ? tr('lcRight') : tr('lcWrong', { w: q.w[field] });
+        if(q.type === 'say') speak(q.w.word);
+        st.queue.shift();
+        if(ok) st.answered++; else st.queue.push(q);   // errou: volta no fim da fila
+        body.appendChild(btn('btn-primary btn-full lc-cont', tr('lcContinue'), ask));
       });
-      if(f.frases && f.frases.length){
-        const b = document.createElement('div'); b.className = 'cv-fb-block';
-        const h4 = document.createElement('h4'); h4.textContent = tr('cvFbFix'); b.appendChild(h4);
-        const ul = document.createElement('ul');
-        f.frases.forEach(x => {
-          const li = document.createElement('li');
-          const w = document.createElement('span'); w.className = 'cv-fix-wrong'; w.textContent = x.errado;
-          const r = document.createElement('span'); r.className = 'cv-fix-right'; r.textContent = ' → ' + x.certo;
-          li.appendChild(w); li.appendChild(r); ul.appendChild(li);
-        });
-        b.appendChild(ul); fb.appendChild(b);
-      }
-      if(!st.xpGiven && typeof addXP === 'function'){
-        const xp = 10 + st.level * 5; st.xpGiven = true;
-        try{ addXP(xp); }catch(e){}
-        const x = document.createElement('p'); x.className = 'cv-note'; x.textContent = tr('cvXp', { n: xp }); fb.appendChild(x);
-      }
-    }catch(e){
-      fb.innerHTML = ''; const p = document.createElement('p'); p.className = 'cv-note cv-error'; p.textContent = errText(e.message); fb.appendChild(p);
-    }
-    const acts = document.createElement('div'); acts.className = 'cv-fb-actions';
-    const n = document.createElement('button'); n.type='button'; n.className = 'btn-primary'; n.textContent = tr('cvNew'); n.onclick = backToSetup; acts.appendChild(n);
-    if(!founder()){ const a = document.createElement('a'); a.href = '#preco'; a.className = 'btn-ghost'; a.textContent = tr('cvSeePlans'); acts.appendChild(a); }
-    fb.appendChild(acts);
-    setBusy(false);
-  });
-
-  // trilha (alemão/inglês/português) ou idioma do site mudou → redesenha
-  new MutationObserver(() => { if(!$('cv-setup').hidden) renderSetup(); })
-    .observe(document.body, { attributes:true, attributeFilter:['class'] });
-  new MutationObserver(() => { if(!$('cv-setup').hidden) renderSetup(); })
-    .observe(document.documentElement, { attributes:true, attributeFilter:['lang'] });
-  const expSec = document.getElementById('experimente'), expBtn = document.getElementById('exp-toggle');
-  if(expSec && expBtn){
-    expBtn.addEventListener('click', () => {
-      const open = expSec.classList.toggle('collapsed') === false;
-      expBtn.textContent = tr(open ? 'expClose' : 'expOpen');
+      wrap.appendChild(b);
     });
+    body.appendChild(wrap); body.appendChild(fb);
   }
-  window.cvRefresh = () => { if(!$('cv-setup').hidden) renderSetup(); };
-  renderSetup();
+
+  // ---------- fim ----------
+  function finish(){
+    const p = loadP(st.l);
+    const first = p.lastDate !== today();
+    p.n = Math.max(p.n, st.idx + 1);
+    p.lastDate = today();
+    saveP(st.l, p);
+    if(first && typeof markStreakToday === 'function') markStreakToday(null);   // 🔥 +1 (e +10 XP)
+    if(!first && typeof addXP === 'function') addXP(10);                         // lição extra: só XP
+    if(typeof confettiBurst === 'function') try{ confettiBurst(); }catch(e){}
+    st.idx = p.n - 1;
+    done(true);
+  }
+  function done(fresh){
+    st.mode = 'done';
+    header(); bar(1);
+    const body = $('lc-body'); body.textContent = '';
+    const s = streakNow();
+    if(fresh) body.appendChild(el('div', 'lc-done-title', tr('lcDoneTitle', { n: s, d: tr(s === 1 ? 'lcDay' : 'lcDays') })));
+    else body.appendChild(el('p', 'lc-status', tr('lcDoneToday')));
+    body.appendChild(el('p', 'lc-note', tr('lcDoneSub')));
+    const list = el('div', 'lc-list');
+    words(st.l, st.idx).forEach(w => {
+      const r = btn('lc-li', null, () => speak(w.word));
+      r.appendChild(el('span', null, w.emoji));
+      const tg = el('span'); wordHtmlInto(tg, w.word); r.appendChild(tg);
+      r.appendChild(el('em', null, w.gloss));
+      list.appendChild(r);
+    });
+    body.appendChild(list);
+    body.appendChild(el('p', 'lc-note', tr('lcTomorrow')));
+    const row = el('div', 'lc-row');
+    row.appendChild(btn('lc-ghost', tr('lcExtra'), () => { st.idx = loadP(st.l).n; header(); learn(0, true); }));
+    body.appendChild(row);
+  }
+
+  // muda de idioma (alemão/inglês/português) ou idioma do site → recomeça a tela
+  let lastSig = '';
+  function maybeRefresh(){
+    const sig = trk() + '|' + (typeof currentSiteLang !== 'undefined' ? currentSiteLang : '');
+    if(sig !== lastSig && (st.mode === 'home' || st.mode === 'done')){ lastSig = sig; home(); }
+    else if(st.mode === 'home' || st.mode === 'done') header();
+  }
+  new MutationObserver(maybeRefresh).observe(document.body, { attributes:true, attributeFilter:['class'] });
+  new MutationObserver(() => { lastSig = ''; maybeRefresh(); }).observe(document.documentElement, { attributes:true, attributeFilter:['lang'] });
+  window.addEventListener('focus', () => { if(st.mode === 'home' || st.mode === 'done'){ lastSig = ''; maybeRefresh(); } });
+  window.lcRefresh = () => { if(st.mode === 'home' || st.mode === 'done'){ lastSig = ''; maybeRefresh(); } };
+  lastSig = trk() + '|' + (typeof currentSiteLang !== 'undefined' ? currentSiteLang : '');
+  home();
 })();
 </script>
 <script src="/pwa.js" defer></script>

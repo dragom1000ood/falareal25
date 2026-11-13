@@ -1,5 +1,71 @@
 # CHANGELOG — Falaut
 
+## v15.0.0 — 2026-11-13 · Lição do dia (5 palavras) + ofensiva única que salva direito
+
+**Onde está:** nova seção **Lição do dia** (`#licao`), logo abaixo do topo. Os botões **Quero testar**, **Quero começar de graça**, **Testar agora** e o botão do card da sequência levam pra ela.
+
+**O que mudou**
+- **Lição do dia:** 5 palavras novas por dia, em uns 2 minutos.
+  1. **Aprender:** cartão com emoji, a palavra (no alemão o artigo vem colorido: der azul, die vermelho, das verde), a tradução e o áudio, que toca sozinho.
+  2. **Testar:** 5 perguntas ("Como se diz em alemão?" / "O que significa?"). Quem erra vê a resposta certa, e a pergunta volta no fim da fila.
+  3. **Fim:** confete, 🔥 +1 na ofensiva, lista das 5 palavras pra ouvir de novo. Botão **Quero mais 5 agora**, que dá XP mas não conta outro dia.
+  - 150 palavras (30 lições), do "Hallo" ao "Wo ist die Toilette?", passando por Hund, Kuli e Feuer. Funciona nas 3 trilhas: alemão e inglês com tradução em português, e português com tradução em alemão. Depois da lição 30, o baralho recomeça como revisão.
+  - O aviso muda conforme a situação: primeira lição, "⚠️ faz hoje pra não perder sua ofensiva de X dias", ofensiva zerada ou lição de hoje já feita.
+- **Ofensiva única (correção do bug):** antes existiam 3 ofensivas separadas (alemão, inglês e português). Quem treinava um dia em cada idioma ficava sempre no dia 1. Agora é **uma só pra todos os idiomas**.
+  - Na primeira vez que o site abre, as 3 antigas são juntadas: dias treinados somados num calendário só, XP somado, recorde e congeladores mantidos.
+- O botão do card da sequência ("Marcar hoje") virou **Fazer a lição de hoje →**. Não dá mais pra marcar o dia sem estudar. Estudar gramática ou a palavra do dever de casa continua contando.
+- Se pular um dia, a ofensiva zera, com as mesmas exceções de antes: congeladores ❄️ e a proteção de 1 dia do assinante.
+
+**Como funciona**
+- Progresso da lição: `falaut_licao_de_v1`, `falaut_licao_en_v1` e `falaut_licao_pt_v1` (número de lições feitas + último dia).
+- Ofensiva: `falareal_streak_all_v1`. As chaves antigas (`falareal_streak_de/en/pt_v1`) ficam guardadas e são juntadas toda vez que a ofensiva carrega.
+- As 4 chaves novas entram na sincronização da conta (Supabase), então a lição e a ofensiva seguem a pessoa entre aparelhos quando ela está logada.
+- Baralho no `index.html`: bloco `LIÇÃO DO DIA`, `const DECK` = [emoji, alemão, inglês, português]. Pra adicionar palavras, basta acrescentar linhas de 5 em 5.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `CHANGELOG.md` (e a pasta `api/` e o `SETUP-PAGAMENTO.md` da v14.1.0, se ainda não subiu).
+Service Worker: cache `falaut-v15.0.0`.
+
+## v14.1.0 — 2026-11-13 · Conversa com IA retirada (fica pra depois), página direta e teste grátis mantidos
+
+**Onde está:** a página toda. Ordem nova: topo → **Seu progresso** (`#experimente`) → **Preços** (`#preco`) → comparação → níveis → conversa ao vivo → FAQ.
+
+**O que mudou**
+- **A conversa com IA da v14.0.0 saiu** (seção `#conversa` e `api/conversa.js`). O código continua no pacote da v14.0.0, se quiser usar depois.
+- Os botões **Quero testar** (menu e topo), **Quero começar de graça** e **Testar agora** levam pra **Seu progresso**, que abre sozinha ao chegar por esses links.
+- **Preços sem promessa de conversa com IA:** Grátis = níveis 1 e 2, palavra do dia, sequência e XP, grupo do WhatsApp. O Básico agora lista "Todos os desafios e recompensas (cupons de desconto)" no lugar de "Conversas ilimitadas".
+- **Conversa ao vivo** ganhou um texto novo, sem falar de IA ("Quer praticar com uma pessoa de verdade?").
+- O FAQ 1 voltou ao texto original.
+- **Mantido da v14.0.0:** teste grátis de 7 dias sem cartão (agora com o selo 🎁 no perfil), liberação automática do plano depois do pagamento, quiz e "Como funciona" fora da tela e a área de progresso fechada.
+
+**Como funciona:** a configuração do pagamento está em **SETUP-PAGAMENTO.md** (substitui o SETUP-CONVERSA.md).
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, a pasta `api/`, `CHANGELOG.md`, `SETUP-PAGAMENTO.md`. Se a v14.0.0 já foi subida, apague `api/conversa.js` e `SETUP-CONVERSA.md`.
+Service Worker: cache `falaut-v14.1.0`.
+
+## v14.0.0 — 2026-11-13 · A conversa com IA funciona de verdade + teste grátis de 7 dias + página mais direta
+
+**Onde está:** nova seção **Conversa de verdade. Agora.** (`#conversa`), logo abaixo do topo. Os botões **Quero testar** (menu e topo) e **Quero começar de graça** (preços) levam pra lá.
+
+**O que mudou**
+- **Conversa com IA (o passo 2 que faltava).** A pessoa escolhe o cenário (7 no alemão, 6 no inglês, 6 no português) e o nível 1–4. A personagem fala primeiro, com voz. A resposta pode ser falada (🎤) ou digitada.
+  - Nível 1: devagar e claro. Nível 2: ritmo do dia a dia. Nível 3: sotaque regional (bávaro, suábio, saxão / britânico, australiano, irlandês / carioca, paraibano, mineiro) e ruído de fundo. Nível 4: sotaque forte (suíço, austríaco…), pressa, interrupções; se a pessoa demora mais de 9 segundos, a personagem cobra ("Hallo? Sind Sie noch da?").
+  - Nos níveis 3 e 4 o texto vem borrado: primeiro ouvir, depois **👁 mostrar texto**.
+  - **💡 Não entendi:** explica a última fala (com as gírias/dialeto) e sugere uma resposta, com botão **usar**.
+  - **Terminar e ver retorno (passo 3):** o que você entendeu, o que passou batido, o que treinar, e as frases com erro no jeito natural. Dá XP.
+- **Teste grátis de 7 dias, sem cartão.** Começa na primeira visita: tudo liberado (níveis 3–4, conversas sem limite, gramática completa, palavra bônus). Depois volta pro Grátis (níveis 1–2, 3 conversas por semana). Banner novo em **Preços**.
+- **Plano liberado sozinho depois do pagamento.** O Stripe avisa o site (`/api/stripe-webhook`), o e-mail entra na tabela `assinantes`, e quando a pessoa entra com esse e-mail o site libera tudo (`/api/plano`). Antes, quem pagava Básico/Premium não era liberado.
+- **Página mais direta:** ordem nova = topo → conversa → preços → comparação → níveis → progresso → ao vivo → FAQ. O quiz de diagnóstico e o "Como funciona" saíram da tela. A área de XP/desafios/recompensas fica fechada atrás do botão **📊 Ver meu progresso**.
+- Textos que diziam que a IA "ainda está sendo construída" (seção ao vivo e FAQ 1) foram corrigidos nos 4 idiomas.
+
+**Como funciona**
+- `api/conversa.js` fala com a IA (Anthropic). A chave fica só na Vercel (`ANTHROPIC_API_KEY`). Limites: 15 falas por conversa, 600 caracteres por mensagem, 80 pedidos a cada 10 min por IP.
+- Voz: reconhecimento e voz do próprio navegador (Chrome, Safari, Android). Se o navegador não reconhece voz, a pessoa digita.
+- Teste grátis: `trialInfo()` no `index.html` (chave `falaut_trial_start` no aparelho).
+- Configuração única: ver **SETUP-CONVERSA.md**.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, a pasta `api/` (novos: `conversa.js`, `plano.js`, `stripe-webhook.js`, `_assinantes.js`), `CHANGELOG.md`, `SETUP-CONVERSA.md`.
+Service Worker: cache `falaut-v14.0.0`.
+
 ## v13.4.6 — 2026-11-09 · E-book e ícones nos lugares certos
 
 **Onde está:** botão **Baixar e-book agora** (`#ebook-gratis`), ícones do app e da aba do navegador.
