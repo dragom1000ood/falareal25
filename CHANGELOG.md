@@ -1,5 +1,18 @@
 # CHANGELOG — Falaut
 
+## v15.3.0 — 2026-11-13 · Ícone novo do app: mascote + F com ondas
+
+**Onde está:** ícone do app instalado e telas de abertura (splash).
+
+**O que mudou:** o ícone agora é a arte nova: o mascote fazendo joinha, o F creme com ondas douradas, o livro com as bandeiras da Alemanha, do Reino Unido e do Brasil, e a moldura dourada.
+- `icon-192/512`: com cantos arredondados transparentes (os cantos pretos da imagem original foram removidos).
+- `apple-touch-icon` (iPhone) e `icon-*-maskable` (Android): fundo verde da marca, pra não aparecer canto preto quando o sistema arredonda o ícone.
+- Telas de abertura: ícone novo no centro, sobre o verde.
+- Os **favicons** (aba do navegador, 16 e 32 px) continuam com o F + ondas da v15.1.1, porque a arte detalhada vira um borrão nesse tamanho.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `CHANGELOG.md`, `icon-192.png`, `icon-512.png`, `icon-192-maskable.png`, `icon-512-maskable.png`, `apple-touch-icon.png`, a pasta `icons/` e a pasta `splash/`.
+Service Worker: cache `falaut-v15.3.0`.
+
 ## v15.2.0 — 2026-11-13 · Mascote anime no site + banner com a marca
 
 **Onde está:** topo do site (`.hero-visual`), card da **Lição do dia** (`#licao`) e prévia de link no WhatsApp/Instagram (`og-image.jpg`).
