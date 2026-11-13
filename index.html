@@ -6,7 +6,7 @@
 <title>Falaut — Alemão (e inglês) de verdade, não de sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v15.0.0
+     Falaut PWA  v15.2.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -66,7 +66,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Falaut — Alemão e inglês de verdade">
 <meta property="og:description" content="Sotaque, ruído de fundo, interrupções — pratique o idioma como ele realmente acontece no dia a dia, pra quem quer se envolver de verdade.">
-<meta property="og:image" content="https://falareal-site31.vercel.app/og-image.png">
+<meta property="og:image" content="https://falareal-site31.vercel.app/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://falareal-site31.vercel.app">
@@ -93,7 +93,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Falaut — Alemão e inglês de verdade">
 <meta name="twitter:description" content="Sotaque, ruído de fundo, interrupções — pratique o idioma como ele realmente acontece no dia a dia, pra quem quer se envolver de verdade.">
-<meta name="twitter:image" content="https://falareal-site31.vercel.app/og-image.png">
+<meta name="twitter:image" content="https://falareal-site31.vercel.app/og-image.jpg">
 
 <link rel="icon" type="image/png" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -1387,6 +1387,12 @@
     .hero-visual{max-width:220px;}
     .feedback-fab, .mobile-account-fab{width:44px; height:44px; font-size:1.1rem;}
   }
+  /* v15.2.0: mascote no topo e na lição */
+  .hero-mascote img{width:100%; height:auto; display:block; -webkit-mask-image:linear-gradient(to bottom,#000 78%,transparent 100%); mask-image:linear-gradient(to bottom,#000 78%,transparent 100%);}
+  @media (min-width:901px){ .hero-top{grid-template-columns:0.8fr 1.2fr;} .hero-mascote{order:-1;} }
+  .lc-mascote{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+  .lc-mascote img{width:56px; height:56px; border-radius:50%; background:var(--teal); object-fit:cover; flex:none; box-shadow:0 0 0 3px rgba(240,166,58,0.6);}
+  .lc-mascote .lc-status{margin:0; text-align:left;}
   /* v15.0.0: LIÇÃO DO DIA (#licao) */
   #licao{padding:90px 0 70px;}
   .lc-card{max-width:620px; margin:0 auto; background:var(--ink-soft); border:1px solid var(--line); border-radius:22px; padding:24px; box-shadow:0 18px 50px rgba(0,0,0,0.3);}
@@ -1494,28 +1500,8 @@
         </div>
       </div>
 
-      <div class="hero-visual" aria-hidden="true">
-        <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg" class="hero-illustration-svg">
-<path d="M 100 90 Q 250 240 320 420" fill="none" style="stroke:var(--line); stroke-width:2; stroke-dasharray:4 8;" />
-<path d="M 48 40 H 162 A 18 18 0 0 1 180 58 V 92 A 18 18 0 0 1 162 110 H 48 A 18 18 0 0 1 30 92 V 58 A 18 18 0 0 1 48 40 Z" style="fill:var(--ink-soft); stroke:var(--teal); stroke-width:2;" opacity="0.50" class="bubble" />
-<path d="M 50.0 75.0 L 52.8 75.4 L 55.5 75.9 L 58.2 76.4 L 61.0 77.0 L 63.8 77.5 L 66.5 78.0 L 69.2 78.5 L 72.0 78.8 L 74.8 78.9 L 77.5 78.9 L 80.2 78.8 L 83.0 78.4 L 85.8 77.9 L 88.5 77.3 L 91.2 76.5 L 94.0 75.6 L 96.8 74.7 L 99.5 73.8 L 102.2 72.9 L 105.0 72.1 L 107.8 71.4 L 110.5 70.8 L 113.2 70.4 L 116.0 70.2 L 118.8 70.2 L 121.5 70.4 L 124.2 70.8 L 127.0 71.3 L 129.8 71.9 L 132.5 72.6 L 135.2 73.3 L 138.0 74.1 L 140.8 74.8 L 143.5 75.4 L 146.2 76.0 L 149.0 76.4 L 151.8 76.7 L 154.5 76.9 L 157.2 77.0 L 160.0 76.9" fill="none" style="stroke:var(--teal); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;" />
-<path d="M 158 130 H 302 A 18 18 0 0 1 320 148 V 192 A 18 18 0 0 1 302 210 H 158 A 18 18 0 0 1 140 192 V 148 A 18 18 0 0 1 158 130 Z" style="fill:var(--ink-soft); stroke:var(--teal); stroke-width:2;" opacity="0.62" class="bubble" />
-<path d="M 160.0 170.0 L 163.5 171.1 L 167.0 172.4 L 170.5 173.6 L 174.0 174.8 L 177.5 175.6 L 181.0 176.0 L 184.5 175.9 L 188.0 175.2 L 191.5 174.0 L 195.0 172.3 L 198.5 170.2 L 202.0 168.0 L 205.5 165.8 L 209.0 163.9 L 212.5 162.3 L 216.0 161.4 L 219.5 161.2 L 223.0 161.7 L 226.5 162.9 L 230.0 164.7 L 233.5 167.0 L 237.0 169.4 L 240.5 171.9 L 244.0 174.2 L 247.5 176.1 L 251.0 177.4 L 254.5 178.0 L 258.0 178.0 L 261.5 177.3 L 265.0 176.0 L 268.5 174.4 L 272.0 172.5 L 275.5 170.6 L 279.0 168.9 L 282.5 167.4 L 286.0 166.4 L 289.5 165.8 L 293.0 165.7 L 296.5 166.0 L 300.0 166.6" fill="none" style="stroke:var(--teal); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;" />
-<path d="M 108 240 H 282 A 18 18 0 0 1 300 258 V 312 A 18 18 0 0 1 282 330 H 108 A 18 18 0 0 1 90 312 V 258 A 18 18 0 0 1 108 240 Z" style="fill:var(--ink-soft); stroke:var(--amber); stroke-width:2;" opacity="0.74" class="bubble" />
-<path d="M 110.0 285.0 L 114.2 287.7 L 118.5 290.4 L 122.8 292.6 L 127.0 293.8 L 131.2 293.4 L 135.5 291.4 L 139.8 288.0 L 144.0 283.6 L 148.2 279.0 L 152.5 275.0 L 156.8 272.5 L 161.0 272.0 L 165.2 273.7 L 169.5 277.5 L 173.8 282.8 L 178.0 288.6 L 182.2 294.0 L 186.5 298.0 L 190.8 299.9 L 195.0 299.3 L 199.2 296.2 L 203.5 291.3 L 207.8 285.5 L 212.0 279.6 L 216.2 274.9 L 220.5 272.0 L 224.8 271.3 L 229.0 273.0 L 233.2 276.5 L 237.5 281.2 L 241.8 286.1 L 246.0 290.4 L 250.2 293.5 L 254.5 294.8 L 258.8 294.3 L 263.0 292.4 L 267.2 289.6 L 271.5 286.4 L 275.8 283.5 L 280.0 281.5" fill="none" style="stroke:var(--amber); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;" />
-<path d="M 178 350 H 382 A 18 18 0 0 1 400 368 V 432 A 18 18 0 0 1 382 450 H 178 A 18 18 0 0 1 160 432 V 368 A 18 18 0 0 1 178 350 Z" style="fill:var(--ink-soft); stroke:var(--rust); stroke-width:2;" opacity="0.86" class="bubble bubble-loud" />
-<path d="M 180.0 400.0 L 185.0 405.7 L 190.0 410.7 L 195.0 412.9 L 200.0 410.8 L 205.0 404.7 L 210.0 396.0 L 215.0 387.5 L 220.0 382.3 L 225.0 382.4 L 230.0 388.4 L 235.0 398.7 L 240.0 410.2 L 245.0 419.2 L 250.0 422.4 L 255.0 418.5 L 260.0 408.6 L 265.0 395.6 L 270.0 383.7 L 275.0 376.8 L 280.0 377.2 L 285.0 384.7 L 290.0 397.0 L 295.0 410.0 L 300.0 419.7 L 305.0 422.9 L 310.0 418.9 L 315.0 409.3 L 320.0 397.3 L 325.0 386.9 L 330.0 381.2 L 335.0 381.6 L 340.0 387.6 L 345.0 396.8 L 350.0 405.9 L 355.0 412.2 L 360.0 414.0 L 365.0 411.4 L 370.0 405.7 L 375.0 399.3 L 380.0 394.4" fill="none" style="stroke:var(--rust); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;" />
-<g class="burst">
-<line x1="404.0" y1="360.0" x2="420.0" y2="360.0" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-<line x1="399.9" y1="369.9" x2="411.2" y2="381.2" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-<line x1="390.0" y1="374.0" x2="390.0" y2="390.0" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-<line x1="380.1" y1="369.9" x2="368.8" y2="381.2" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-<line x1="376.0" y1="360.0" x2="360.0" y2="360.0" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-<line x1="380.1" y1="350.1" x2="368.8" y2="338.8" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-<line x1="390.0" y1="346.0" x2="390.0" y2="330.0" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-<line x1="399.9" y1="350.1" x2="411.2" y2="338.8" style="stroke:var(--rust); stroke-width:2; stroke-linecap:round;" opacity="0.7" />
-</g>
-</svg>
+      <div class="hero-visual hero-mascote" aria-hidden="true">
+        <img src="/mascote.webp" alt="" width="720" height="720" fetchpriority="high">
       </div>
     </div>
 
@@ -2588,7 +2574,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.0.0</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.2.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -9146,7 +9132,9 @@
     if(sd && sd.lastDate && s > 0 && sd.lastDate !== today()){ msg = tr('lcAtRisk', { n: s }); cls += ' risk'; }
     else if(sd && sd.lastDate && s === 0){ msg = tr('lcBroken'); }
     else if(!sd || !sd.lastDate){ msg = tr('lcFirst'); }
-    body.appendChild(el('p', cls, msg));
+    const mrow = el('div', 'lc-mascote');
+    const mimg = document.createElement('img'); mimg.src = '/mascote-cabeca.webp'; mimg.alt = ''; mrow.appendChild(mimg);
+    mrow.appendChild(el('p', cls, msg)); body.appendChild(mrow);
     const prev = el('div', 'lc-list');
     words(st.l, st.idx).forEach(w => { const r = el('div', 'lc-li'); r.appendChild(el('span', null, w.emoji)); r.appendChild(el('span', null, '•••')); prev.appendChild(r); });
     body.appendChild(prev);
@@ -9238,7 +9226,11 @@
     header(); bar(1);
     const body = $('lc-body'); body.textContent = '';
     const s = streakNow();
-    if(fresh) body.appendChild(el('div', 'lc-done-title', tr('lcDoneTitle', { n: s, d: tr(s === 1 ? 'lcDay' : 'lcDays') })));
+    if(fresh){
+      const mi = document.createElement('img'); mi.src = '/mascote.webp'; mi.alt = ''; mi.style.cssText = 'display:block;width:150px;height:150px;margin:0 auto -6px;object-fit:contain';
+      body.appendChild(mi);
+      body.appendChild(el('div', 'lc-done-title', tr('lcDoneTitle', { n: s, d: tr(s === 1 ? 'lcDay' : 'lcDays') })));
+    }
     else body.appendChild(el('p', 'lc-status', tr('lcDoneToday')));
     body.appendChild(el('p', 'lc-note', tr('lcDoneSub')));
     const list = el('div', 'lc-list');

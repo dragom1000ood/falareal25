@@ -1,5 +1,41 @@
 # CHANGELOG — Falaut
 
+## v15.2.0 — 2026-11-13 · Mascote anime no site + banner com a marca
+
+**Onde está:** topo do site (`.hero-visual`), card da **Lição do dia** (`#licao`) e prévia de link no WhatsApp/Instagram (`og-image.jpg`).
+
+**O que mudou**
+- **Topo:** a ilustração antiga de ondas foi trocada pelo mascote (jaqueta verde, fone com o F, joinha). No computador ele fica à esquerda, "apresentando" o título; no celular, fica em cima do título.
+- **Lição do dia:** o rosto do mascote aparece ao lado do aviso ("Primeira lição…", "⚠️ Faz hoje pra não perder…"). Quando a pessoa termina a lição, o mascote aparece grande, comemorando junto com a 🔥.
+- **Prévia de link:** quem compartilha o site no WhatsApp agora vê o banner com o mascote, a logo e o slogan (`og-image.jpg`, 1200×630).
+
+**Como funciona:** imagens em WebP, leves: `mascote.webp` (720 px, ~100 KB) e `mascote-cabeca.webp` (240 px, ~25 KB). A parte de baixo do mascote some num degradê pra não ficar um corte reto.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `CHANGELOG.md`, `mascote.webp`, `mascote-cabeca.webp`, `og-image.jpg`.
+Service Worker: cache `falaut-v15.2.0`.
+
+## v15.1.1 — 2026-11-13 · Logo final: F creme com ondas douradas (versão C)
+
+**Onde está:** ícone do app, favicon e telas de abertura (splash).
+
+**O que mudou:** o F dourado da v15.1.0 foi trocado pela versão escolhida, a C. É um **F creme (Fraunces) sobre o verde da marca, com 3 ondas douradas** saindo dele, de "laut", ou seja, falar alto. Nas telas de abertura, o ícone ganhou uma borda dourada fina pra não sumir no fundo verde.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `CHANGELOG.md`, os PNGs de ícone (`icon-*`, `apple-touch-icon`, `favicon-*`), a pasta `icons/` e a pasta `splash/`.
+Service Worker: cache `falaut-v15.1.1`.
+
+## v15.1.0 — 2026-11-13 · Logo nova do app: um F sozinho
+
+**Onde está:** ícone do app instalado (tela inicial do celular), favicon da aba e telas de abertura (splash) do iPhone/iPad.
+
+**O que mudou:** o selo verde com "fl" + "FALAUT" deu lugar a um **F grande** (Fraunces Black, verde-escuro) sobre **fundo dourado**, com um ponto vermelho-tijolo ("F."). O dourado se destaca na tela inicial, e o F continua legível até no tamanho de favicon (16 px). As splash screens agora mostram o ícone novo sobre o verde da marca.
+
+**Como funciona:** os PNGs têm os mesmos nomes, na raiz e na pasta `icons/`: `icon-192/512`, `icon-192/512-maskable` (com o F menor, dentro da área segura do Android), `apple-touch-icon`, `favicon-16/32` e `splash/*.png`. O `manifest.json` não mudou.
+
+**Atenção:** no iPhone, o ícone de quem já instalou só troca removendo o app da tela inicial e adicionando de novo. No Android, troca sozinho em alguns dias.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `CHANGELOG.md`, os PNGs de ícone, a pasta `icons/` e a pasta `splash/`.
+Service Worker: cache `falaut-v15.1.0`.
+
 ## v15.0.0 — 2026-11-13 · Lição do dia (5 palavras) + ofensiva única que salva direito
 
 **Onde está:** nova seção **Lição do dia** (`#licao`), logo abaixo do topo. Os botões **Quero testar**, **Quero começar de graça**, **Testar agora** e o botão do card da sequência levam pra ela.
