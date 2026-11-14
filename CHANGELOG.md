@@ -1,5 +1,23 @@
 # CHANGELOG — Falaut
 
+## v15.3.3 — 2026-11-14 · Logo nova (F verde) + tela de abertura que finalmente troca
+
+**Onde está:** ícone do app, favicon, tela de abertura do app instalado (iPhone/iPad), tela offline e menu do topo do site.
+
+**Por que a tela de abertura não mudou na v15.3.2:** as imagens novas foram parar na **raiz** do repositório (`splash-*.png`), mas o `index.html` procurava dentro da pasta `/splash/`, que continuava com o selo antigo "fl / FALAUT". O upload pelo GitHub não manteve a pasta.
+
+**O que mudou**
+- **Logo nova:** o F verde em duas faixas (estilo folha) vira o ícone do app (`icon-192/512`, com cantos transparentes), o ícone do iPhone (`apple-touch-icon`), o ícone do Android (`icon-*-maskable`, com o F dentro da área segura) e os favicons 16/32.
+- **Tela de abertura:** logo nova no centro, frase "idiomas de verdade, sem sala de aula." e o traço dourado embaixo.
+- **Correção do caminho:** o `index.html` agora busca as telas de abertura **direto na raiz** (`/splash-1170x2532.png` etc.), do jeito que o upload sobe. As mesmas imagens também foram colocadas na pasta `splash/`, por garantia.
+- **Menu do topo:** a logo aparece pequena ao lado do nome "falaut".
+- Todos os links de ícone e de tela de abertura ganharam `?v=15.3.3`, pra forçar o celular a baixar as imagens novas.
+
+**Atenção:** no iPhone, quem já instalou o app só vê o ícone e a tela de abertura novos removendo o app da tela inicial e adicionando de novo (Safari → Compartilhar → Adicionar à Tela de Início).
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `manifest.json`, `offline.html`, `CHANGELOG.md`, `icon-192.png`, `icon-512.png`, `icon-192-maskable.png`, `icon-512-maskable.png`, `apple-touch-icon.png`, `favicon-16.png`, `favicon-32.png` e os 15 arquivos `splash-*.png`.
+Service Worker: cache `falaut-v15.3.3`.
+
 ## v15.3.2 — 2026-11-13 · Falaut é alemão, inglês e português (não só alemão)
 
 **Onde está:** tela de abertura do app, tela offline, nome do app instalado e prévia de link.
