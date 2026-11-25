@@ -6,7 +6,7 @@
 <title>Falaut — Alemão, inglês e português de verdade, sem sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v15.3.3
+     Falaut PWA  v15.3.4
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -95,9 +95,6 @@
 <meta name="twitter:description" content="Sotaque, ruído de fundo, interrupções — pratique o idioma como ele realmente acontece no dia a dia, pra quem quer se envolver de verdade.">
 <meta name="twitter:image" content="https://falareal-site31.vercel.app/og-image.jpg">
 
-<link rel="icon" type="image/png" href="/favicon-32.png?v=15.3.3">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=15.3.3">
-<meta name="theme-color" content="#12181f">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2577,7 +2574,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.3.3</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.3.4</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -2677,6 +2674,109 @@
     <div class="share-reward" id="share-reward"></div>
   </div>
 </div>
+<script>
+/* ============================================================
+   v15.3.4 — FalautVoz: escolhe a voz mais humana disponível no
+   aparelho (DE / EN / PT) e fala com ela. Usado pela Lição do dia,
+   pelo simulador de nível e pelos exemplos dos 4 níveis.
+   ============================================================ */
+window.FalautVoz = (function(){
+  const synth = window.speechSynthesis || null;
+
+  // nomes de vozes que soam naturais, em ordem de preferência por idioma
+  const PREFERIDAS = {
+    de: [/Seraphina.*Natural/i, /Katja.*Natural/i, /Amala.*Natural/i, /Conrad.*Natural/i, /Florian.*Natural/i, /Killian.*Natural/i,
+         /Google Deutsch/i, /Anna.*(Premium|Enhanced|Erweitert|Verbessert)/i, /(Petra|Helena|Markus|Yannick|Viktor).*(Premium|Enhanced|Erweitert|Verbessert)/i],
+    en: [/Ava.*Natural/i, /Aria.*Natural/i, /Jenny.*Natural/i, /Emma.*Natural/i, /Andrew.*Natural/i, /Guy.*Natural/i, /Sonia.*Natural/i, /Ryan.*Natural/i, /Libby.*Natural/i,
+         /Google US English/i, /Google UK English/i, /(Ava|Samantha|Zoe|Evan|Nathan|Daniel|Serena|Kate|Karen|Moira).*(Premium|Enhanced)/i],
+    pt: [/Francisca.*Natural/i, /Thalita.*Natural/i, /Antonio.*Natural/i, /Raquel.*Natural/i, /Duarte.*Natural/i,
+         /Google portugu[eê]s do Brasil/i, /(Luciana|Felipe|Fernanda|Joana|Catarina).*(Premium|Enhanced|Melhorada|Aprimorada)/i]
+  };
+  // vozes "de brincadeira" / muito robóticas do macOS e Linux
+  const RUINS = /(compact|espeak|Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Junior|Ralph|Fred|Kathy|Grandma|Grandpa|Eddy|Flo|Reed|Rocko|Sandy|Shelley)/i;
+
+  let vozes = [];
+  const cache = {};
+  function carregar(){
+    vozes = synth ? (synth.getVoices() || []) : [];
+    for(const k in cache) delete cache[k];
+  }
+  let pronto = null;
+  function esperar(){
+    if(vozes.length) return Promise.resolve();
+    if(!pronto){
+      pronto = new Promise(resolve => {
+        if(!synth) return resolve();
+        const fim = () => { carregar(); resolve(); };
+        synth.addEventListener('voiceschanged', fim, { once:true });
+        setTimeout(fim, 1200);   // Safari nem sempre dispara o evento
+      });
+    }
+    return pronto;
+  }
+  if(synth){
+    carregar();
+    synth.addEventListener('voiceschanged', carregar);
+  }
+
+  const norm = (l) => (l || '').replace('_', '-').toLowerCase();
+
+  function pontuar(v, locale, fam){
+    const n = v.name || '';
+    let p = 0;
+    if(norm(v.lang) === norm(locale)) p += 6;
+    const pref = PREFERIDAS[fam] || [];
+    const i = pref.findIndex(rx => rx.test(n));
+    if(i >= 0) p += 40 - i;
+    if(/natural|neural/i.test(n)) p += 20;
+    if(/premium/i.test(n)) p += 16;
+    if(/enhanced|erweitert|verbessert|melhorada|aprimorada/i.test(n)) p += 12;
+    if(/online/i.test(n)) p += 8;
+    if(/google/i.test(n)) p += 8;
+    if(v.localService === false) p += 4;
+    if(RUINS.test(n)) p -= 30;
+    return p;
+  }
+
+  function pick(locale){
+    if(!vozes.length) carregar();
+    if(!vozes.length || !locale) return null;
+    if(cache[locale] !== undefined) return cache[locale];
+    const fam = norm(locale).split('-')[0];
+    const doIdioma = vozes.filter(v => norm(v.lang).startsWith(fam));
+    if(!doIdioma.length) return (cache[locale] = null);
+    doIdioma.sort((a, b) => pontuar(b, locale, fam) - pontuar(a, locale, fam));
+    return (cache[locale] = doIdioma[0]);
+  }
+
+  function falarAgora(text, o){
+    try{
+      synth.cancel();
+      if(synth.paused) synth.resume();            // Chrome às vezes fica "pausado"
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = o.locale || 'de-DE';
+      u.rate = o.rate || 0.95;
+      u.pitch = 1;
+      const v = pick(u.lang);
+      if(v) u.voice = v;
+      if(o.onend) u.onend = o.onend;
+      if(o.onerror) u.onerror = o.onerror;
+      synth.speak(u);
+    }catch(e){ if(o.onerror) o.onerror(e); }
+  }
+
+  function speak(text, opts){
+    const o = opts || {};
+    if(!synth || !text){ if(o.onerror) o.onerror(); return; }
+    // vozes já carregadas: fala na hora (mantém o "toque do usuário" no iPhone)
+    if(vozes.length) return falarAgora(text, o);
+    esperar().then(() => falarAgora(text, o));
+  }
+
+  return { pick, speak, ready: esperar };
+})();
+
+</script>
 <script>
   // ============================================================
   // SITE INTERFACE I18N — idioma da interface (nav, botões, cards
@@ -5345,28 +5445,12 @@
     window.speechSynthesis.onvoiceschanged = loadVoices;
   }
 
+  // v15.3.4: escolha de voz centralizada no FalautVoz (prioriza vozes naturais/neurais)
   function pickVoice(locale){
+    if(window.FalautVoz) return window.FalautVoz.pick(locale);
     if(!voicesCache.length) return null;
     const family = locale.split('-')[0];
-    const matches = voicesCache.filter(v => v.lang === locale || (v.lang && v.lang.startsWith(family)));
-    if(!matches.length) return null;
-
-    // prefer exact locale match over just same language family
-    const exact = matches.filter(v => v.lang === locale);
-    const pool = exact.length ? exact : matches;
-
-    // score voices: network/cloud engines and "natural"-labelled voices sound far less robotic
-    // than compact on-device ones, so push those to the front when available
-    const scored = pool.map(v=>{
-      let score = 0;
-      if(v.localService === false) score += 3;          // cloud voice (usually Google's, much better)
-      if(/google/i.test(v.name)) score += 2;
-      if(/natural|neural|enhanced|premium|online/i.test(v.name)) score += 2;
-      if(/compact|espeak|mobile/i.test(v.name)) score -= 2;
-      return {v, score};
-    }).sort((a,b)=> b.score - a.score);
-
-    return scored[0].v;
+    return voicesCache.find(v => v.lang === locale) || voicesCache.find(v => v.lang && v.lang.startsWith(family)) || null;
   }
 
   function startNoise(chaos){
@@ -5460,31 +5544,27 @@
     listenBtn.textContent = t('dynPlaying');
     audioStatus.textContent = locale;
 
+    // reserva: voz do navegador (sem áudio gravado, ou se o mp3 não carregar)
+    const speakFallback = ()=>{
+      if(activeAudioBtn !== listenBtn) return;           // o usuário já parou/trocou
+      if(!window.speechSynthesis){
+        audioStatus.textContent = t('dynNoAudioSupportHere');
+        stopNoise(); listenBtn.classList.remove('playing'); listenBtn.disabled = false;
+        listenBtn.textContent = listenBtn.dataset.defaultLabel; activeAudioBtn = null;
+        return;
+      }
+      window.FalautVoz.speak(phrase, { locale, rate, onend: stopAllAudio, onerror: stopAllAudio });
+    };
+
     // usa o áudio real gravado quando existir pra essa mesma frase/idioma
     if(lists.audioFiles){
       const audioUrl = pick(lists.audioFiles, n);
-      playRealAudio(audioUrl, chaos, stopAllAudio);
+      playRealAudio(audioUrl, chaos, stopAllAudio, speakFallback);
       return;
     }
 
-    // reserva: voz do navegador (usada enquanto não temos áudio real pro idioma atual)
-    if(!window.speechSynthesis){
-      audioStatus.textContent = t('dynNoAudioSupportHere');
-      return;
-    }
     if(chaos > 0) startNoise(chaos);
-
-    setTimeout(()=>{
-      const utter = new SpeechSynthesisUtterance(phrase);
-      utter.lang = locale;
-      utter.rate = rate;
-      const voice = pickVoice(locale);
-      if(voice) utter.voice = voice;
-
-      utter.onend = stopAllAudio;
-      utter.onerror = stopAllAudio;
-      window.speechSynthesis.speak(utter);
-    }, chaos > 0 ? 350 : 60);
+    setTimeout(speakFallback, chaos > 0 ? 350 : 60);
   });
 
   // ---- Exemplos de áudio dos 4 níveis fixos ----
@@ -5528,14 +5608,22 @@
 
   let activeAudioEl = null;
 
-  function playRealAudio(url, chaos, onDone){
+  // v15.3.4: se o mp3 não existir/não carregar, cai na voz do navegador (antes ficava mudo)
+  function playRealAudio(url, chaos, onDone, fallback){
     if(chaos > 0) startNoise(chaos);
     const audioEl = new Audio(url);
     activeAudioEl = audioEl;
-    audioEl.addEventListener('ended', onDone);
-    audioEl.addEventListener('error', onDone);
+    let failed = false;
+    const fail = ()=>{
+      if(failed || activeAudioEl !== audioEl) return;
+      failed = true;
+      activeAudioEl = null;
+      if(typeof fallback === 'function') fallback(); else onDone();
+    };
+    audioEl.addEventListener('ended', ()=>{ if(activeAudioEl === audioEl) onDone(); });
+    audioEl.addEventListener('error', fail);
     // small head start so the noise is already under way when the voice comes in
-    setTimeout(()=> audioEl.play().catch(onDone), chaos > 0 ? 300 : 0);
+    setTimeout(()=>{ if(activeAudioEl === audioEl) audioEl.play().catch(fail); }, chaos > 0 ? 300 : 0);
   }
 
   document.querySelectorAll('.level-audio-btn').forEach(btn=>{
@@ -5553,28 +5641,26 @@
       btn.disabled = true;
       btn.textContent = t('dynPlaying');
 
+      const cfg = LEVEL_DEMOS[lang] && LEVEL_DEMOS[lang][levelNum];
+      // reserva: voz do navegador (sem áudio gravado desse nível/idioma, ou se o mp3 falhar)
+      const speakFallback = ()=>{
+        if(activeAudioBtn !== btn) return;
+        if(!window.speechSynthesis || !cfg){
+          stopNoise(); btn.classList.remove('playing'); activeAudioBtn = null;
+          btn.disabled = false;
+          btn.textContent = window.speechSynthesis ? btn.dataset.defaultLabel : t('dynNoAudioSupport');
+          return;
+        }
+        window.FalautVoz.speak(cfg.phrase, { locale: cfg.locale, rate: cfg.rate, onend: stopAllAudio, onerror: stopAllAudio });
+      };
+
       if(realUrl){
-        playRealAudio(realUrl, LEVEL_CHAOS[levelNum] || 0, stopAllAudio);
+        playRealAudio(realUrl, LEVEL_CHAOS[levelNum] || 0, stopAllAudio, speakFallback);
         return;
       }
 
-      // reserva: voz do navegador, pra quando ainda não tem o áudio real desse nível/idioma
-      if(!window.speechSynthesis){
-        btn.textContent = t('dynNoAudioSupport');
-        return;
-      }
-      const cfg = LEVEL_DEMOS[lang][levelNum];
-      if(!cfg) return;
-
-      if(cfg.chaos > 0) startNoise(cfg.chaos);
-      setTimeout(()=>{
-        const u = new SpeechSynthesisUtterance(cfg.phrase);
-        u.lang = cfg.locale; u.rate = cfg.rate;
-        const v = pickVoice(cfg.locale); if(v) u.voice = v;
-        u.onend = stopAllAudio;
-        u.onerror = stopAllAudio;
-        window.speechSynthesis.speak(u);
-      }, cfg.chaos > 0 ? 350 : 60);
+      if(cfg && cfg.chaos > 0) startNoise(cfg.chaos);
+      setTimeout(speakFallback, cfg && cfg.chaos > 0 ? 350 : 60);
     });
   });
 
@@ -9071,6 +9157,12 @@
   const COL = { de:1, en:2, pt:3 };            // coluna da palavra que se aprende
   const GLOSS = { de:3, en:3, pt:1 };          // tradução mostrada (português; alemão pra quem aprende português)
   const SPEECH = { de:'de-DE', en:'en-US', pt:'pt-BR' };
+  // v15.3.4: quem aprende português vê a tradução no idioma do site (alemão ou inglês), não sempre em alemão
+  function glossCol(l){
+    if(l !== 'pt') return GLOSS[l];
+    const sl = (typeof currentSiteLang !== 'undefined') ? currentSiteLang : 'de';
+    return (sl === 'en' || sl === 'es') ? 2 : 1;
+  }
   const $ = (id) => document.getElementById(id);
   if(!$('lc-card')) return;
   const tr = (k, v) => (typeof t === 'function' ? t(k, v) : k);
@@ -9085,22 +9177,15 @@
   }
   function words(l, idx){
     const start = (idx % LESSONS) * PER;
-    return DECK.slice(start, start + PER).map(r => ({ emoji: r[0], word: r[COL[l]], gloss: r[GLOSS[l]] }));
+    return DECK.slice(start, start + PER).map(r => ({ emoji: r[0], word: r[COL[l]], gloss: r[glossCol(l)] }));
   }
   function streakNow(){ return (typeof liveStreak === 'function') ? liveStreak() : 0; }
 
   let st = { mode:'home', l:'de', idx:0, list:[], i:0, queue:[], extra:false };
 
+  // v15.3.4: usa a melhor voz do aparelho (antes pegava a primeira da lista, quase sempre robótica)
   function speak(text){
-    if(!window.speechSynthesis) return;
-    try{
-      speechSynthesis.cancel();
-      const u = new SpeechSynthesisUtterance(text.replace(/\.$/, ''));
-      u.lang = SPEECH[st.l]; u.rate = 0.85;
-      const v = speechSynthesis.getVoices().find(x => x.lang && x.lang.replace('_','-').toLowerCase().startsWith(SPEECH[st.l].slice(0,2)));
-      if(v) u.voice = v;
-      speechSynthesis.speak(u);
-    }catch(e){}
+    if(window.FalautVoz) window.FalautVoz.speak(text.replace(/\.$/, ''), { locale: SPEECH[st.l], rate: 0.9 });
   }
   function wordHtmlInto(el, w){
     el.textContent = '';
@@ -9255,7 +9340,9 @@
   let lastSig = '';
   function maybeRefresh(){
     const sig = trk() + '|' + (typeof currentSiteLang !== 'undefined' ? currentSiteLang : '');
-    if(sig !== lastSig && (st.mode === 'home' || st.mode === 'done')){ lastSig = sig; home(); }
+    // v15.3.4: trocar o idioma de estudo no meio da lição recomeça com as palavras do idioma novo
+    const langChanged = trk() !== st.l;
+    if(langChanged || (sig !== lastSig && (st.mode === 'home' || st.mode === 'done'))){ lastSig = sig; home(); }
     else if(st.mode === 'home' || st.mode === 'done') header();
   }
   new MutationObserver(maybeRefresh).observe(document.body, { attributes:true, attributeFilter:['class'] });
