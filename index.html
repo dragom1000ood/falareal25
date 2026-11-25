@@ -6,7 +6,7 @@
 <title>Falaut — Alemão, inglês e português de verdade, sem sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v15.3.4
+     Falaut PWA  v15.4.0
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -516,6 +516,7 @@
   .streak-tool.on{border-color:var(--amber); color:var(--amber);}
   .streak-tool:disabled{opacity:0.5; cursor:default;}
   .freeze-info{font-family:var(--mono); font-size:0.72rem; color:rgba(244,239,230,0.45); margin-bottom:16px; min-height:1em;}
+  .freeze-info.repair{color:#7fb3d5; font-weight:500;}
   .month-cal{border:1px solid var(--line); border-radius:16px; padding:14px; margin-bottom:18px; background:rgba(0,0,0,0.12);}
   .month-cal[hidden]{display:none;}
   .month-cal-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:10px;}
@@ -2574,7 +2575,7 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.3.4</span></div>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.4.0</span></div>
       <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
       <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
@@ -4757,6 +4758,11 @@ window.FalautVoz = (function(){
   Object.assign(I18N_STRINGS.en, {"lcKicker": "Daily lesson · 2 minutes", "lcTitle": "5 words a day. Every day.", "lcLede": "No time? No problem. In 2 minutes you learn 5 new words and keep your streak 🔥. Skip a day and the streak resets.", "lcStreakLabel": "day streak", "lcLessonN": "Lesson {n}", "lcToday": "Today: 5 new words · ~2 min", "lcAtRisk": "⚠️ Do today's lesson or you'll lose your {n}-day streak!", "lcBroken": "Your streak reset. Start a new one today.", "lcFirst": "First lesson: start your streak today.", "lcStart": "Start today's lesson →", "lcListen": "🔊 Listen", "lcNext": "Next →", "lcToQuiz": "Quiz me →", "lcQ1De": "How do you say it in German?", "lcQ1En": "How do you say it in English?", "lcQ1Pt": "How do you say it in Portuguese?", "lcQ2": "What does it mean?", "lcRight": "Correct! ✓", "lcWrong": "Almost. The right answer: {w}", "lcContinue": "Continue →", "lcDoneTitle": "🔥 {n}-{d} streak!", "lcDay": "day", "lcDays": "day", "lcDoneSub": "You learned today:", "lcTomorrow": "Come back tomorrow for 5 more words. Skip a day and the streak resets.", "lcExtra": "Give me 5 more now (+XP)", "lcDoneToday": "✓ Today's lesson done. Streak safe.", "lcXp": "+{n} XP", "markToday": "Do today's lesson →"});
   Object.assign(I18N_STRINGS.es, {"lcKicker": "Lección del día · 2 minutos", "lcTitle": "5 palabras al día. Todos los días.", "lcLede": "¿Sin tiempo? No pasa nada. En 2 minutos aprendes 5 palabras nuevas y mantienes tu racha 🔥. Si te saltas un día, la racha vuelve a cero.", "lcStreakLabel": "días de racha", "lcLessonN": "Lección {n}", "lcToday": "Hoy: 5 palabras nuevas · ~2 min", "lcAtRisk": "⚠️ ¡Haz la lección de hoy para no perder tu racha de {n} días!", "lcBroken": "Tu racha volvió a cero. Empieza una nueva hoy.", "lcFirst": "Primera lección: empieza tu racha hoy.", "lcStart": "Empezar la lección de hoy →", "lcListen": "🔊 Escuchar", "lcNext": "Siguiente →", "lcToQuiz": "Ponerme a prueba →", "lcQ1De": "¿Cómo se dice en alemán?", "lcQ1En": "¿Cómo se dice en inglés?", "lcQ1Pt": "¿Cómo se dice en portugués?", "lcQ2": "¿Qué significa?", "lcRight": "¡Eso es! ✓", "lcWrong": "Casi. Lo correcto es: {w}", "lcContinue": "Continuar →", "lcDoneTitle": "🔥 ¡{n} {d} de racha!", "lcDay": "día", "lcDays": "días", "lcDoneSub": "Hoy aprendiste:", "lcTomorrow": "Vuelve mañana por 5 palabras más. Si te saltas un día, la racha vuelve a cero.", "lcExtra": "Quiero 5 más ahora (+XP)", "lcDoneToday": "✓ Lección de hoy hecha. Racha asegurada.", "lcXp": "+{n} XP", "markToday": "Hacer la lección de hoy →"});
   Object.assign(I18N_STRINGS.de, {"lcKicker": "Lektion des Tages · 2 Minuten", "lcTitle": "5 Wörter am Tag. Jeden Tag.", "lcLede": "Keine Zeit? Kein Problem. In 2 Minuten lernst du 5 neue Wörter und hältst deine Serie 🔥. Einen Tag ausgelassen, und die Serie ist weg.", "lcStreakLabel": "Tage Serie", "lcLessonN": "Lektion {n}", "lcToday": "Heute: 5 neue Wörter · ~2 Min.", "lcAtRisk": "⚠️ Mach die heutige Lektion, sonst ist deine {n}-Tage-Serie weg!", "lcBroken": "Deine Serie ist weg. Starte heute eine neue.", "lcFirst": "Erste Lektion: starte heute deine Serie.", "lcStart": "Heutige Lektion starten →", "lcListen": "🔊 Anhören", "lcNext": "Weiter →", "lcToQuiz": "Testen →", "lcQ1De": "Wie sagt man das auf Deutsch?", "lcQ1En": "Wie sagt man das auf Englisch?", "lcQ1Pt": "Wie sagt man das auf Portugiesisch?", "lcQ2": "Was bedeutet das?", "lcRight": "Richtig! ✓", "lcWrong": "Fast. Richtig ist: {w}", "lcContinue": "Weiter →", "lcDoneTitle": "🔥 {n} {d} Serie!", "lcDay": "Tag", "lcDays": "Tage", "lcDoneSub": "Heute gelernt:", "lcTomorrow": "Komm morgen für 5 weitere Wörter wieder. Lässt du einen Tag aus, ist die Serie weg.", "lcExtra": "Gib mir jetzt 5 mehr (+XP)", "lcDoneToday": "✓ Heutige Lektion erledigt. Serie gesichert.", "lcXp": "+{n} XP", "markToday": "Heutige Lektion machen →"});
+  /* v15.4.0: missão de resgate da ofensiva */
+  Object.assign(I18N_STRINGS.pt, {"repairTasks1": "a lição de hoje", "repairTasks2": "a lição de hoje + 1 lição extra", "lcRepairOffer": "🛟 Sua ofensiva de {n} dias quebrou! Missão de resgate: faça {tasks} e recupere tudo.", "lcRepairNext": "🛟 Missão de resgate: {done}/{need}. Faça mais 1 lição agora pra recuperar sua ofensiva!", "lcRepairDone": "🛟 Missão concluída! Sua ofensiva foi recuperada.", "repairInfo": "🛟 Missão de resgate: {done}/{need} lições hoje → recupera {n} dias", "repairOfferInfo": "🛟 Ofensiva de {n} dias quebrada: faça {tasks} pra recuperar", "dynRepairStart": "🛟 Missão de resgate aberta: faça {tasks} pra recuperar sua ofensiva de {n} dias.", "dynRepairDone": "🔥 Ofensiva recuperada: {n} dias! Os dias perdidos viraram ❄️.", "dynRepairStep": "🛟 Missão {done}/{need}: falta só mais 1 lição!"});
+  Object.assign(I18N_STRINGS.en, {"repairTasks1": "today's lesson", "repairTasks2": "today's lesson + 1 extra lesson", "lcRepairOffer": "🛟 Your {n}-day streak broke! Rescue mission: do {tasks} and get it all back.", "lcRepairNext": "🛟 Rescue mission: {done}/{need}. Do 1 more lesson now to get your streak back!", "lcRepairDone": "🛟 Mission complete! Your streak is back.", "repairInfo": "🛟 Rescue mission: {done}/{need} lessons today → recovers {n} days", "repairOfferInfo": "🛟 {n}-day streak broken: do {tasks} to recover it", "dynRepairStart": "🛟 Rescue mission open: do {tasks} to recover your {n}-day streak.", "dynRepairDone": "🔥 Streak recovered: {n} days! The missed days turned into ❄️.", "dynRepairStep": "🛟 Mission {done}/{need}: just 1 more lesson!"});
+  Object.assign(I18N_STRINGS.es, {"repairTasks1": "la lección de hoy", "repairTasks2": "la lección de hoy + 1 lección extra", "lcRepairOffer": "🛟 ¡Tu racha de {n} días se rompió! Misión de rescate: haz {tasks} y recupérala.", "lcRepairNext": "🛟 Misión de rescate: {done}/{need}. ¡Haz 1 lección más ahora para recuperar tu racha!", "lcRepairDone": "🛟 ¡Misión cumplida! Recuperaste tu racha.", "repairInfo": "🛟 Misión de rescate: {done}/{need} lecciones hoy → recupera {n} días", "repairOfferInfo": "🛟 Racha de {n} días rota: haz {tasks} para recuperarla", "dynRepairStart": "🛟 Misión de rescate abierta: haz {tasks} para recuperar tu racha de {n} días.", "dynRepairDone": "🔥 Racha recuperada: ¡{n} días! Los días perdidos se volvieron ❄️.", "dynRepairStep": "🛟 Misión {done}/{need}: ¡solo falta 1 lección!"});
+  Object.assign(I18N_STRINGS.de, {"repairTasks1": "die heutige Lektion", "repairTasks2": "die heutige Lektion + 1 Extra-Lektion", "lcRepairOffer": "🛟 Deine {n}-Tage-Serie ist gerissen! Rettungsmission: mach {tasks} und hol sie dir zurück.", "lcRepairNext": "🛟 Rettungsmission: {done}/{need}. Mach jetzt noch 1 Lektion, um deine Serie zu retten!", "lcRepairDone": "🛟 Mission geschafft! Deine Serie ist zurück.", "repairInfo": "🛟 Rettungsmission: {done}/{need} Lektionen heute → rettet {n} Tage", "repairOfferInfo": "🛟 {n}-Tage-Serie gerissen: mach {tasks}, um sie zu retten", "dynRepairStart": "🛟 Rettungsmission gestartet: mach {tasks}, um deine {n}-Tage-Serie zu retten.", "dynRepairDone": "🔥 Serie gerettet: {n} Tage! Die verpassten Tage wurden zu ❄️.", "dynRepairStep": "🛟 Mission {done}/{need} – nur noch 1 Lektion!"});
   Object.assign(I18N_STRINGS.pt, {"trialBadge": "🎁 Teste grátis · {n} dias", "trialBannerTitle": "🎁 7 dias com tudo liberado. Sem cartão.", "trialBannerText": "Começa sozinho na sua primeira visita: todos os níveis e sotaques, gramática completa (A1–C2), palavra bônus e todos os desafios. Depois dos 7 dias, você continua no Grátis ou assina — sem cobrança automática.", "trialBannerBtn": "Testar agora →", "cvTrial": "🎁 Teste grátis: tudo liberado por mais {n} dias", "expOpen": "📊 Ver meu progresso, desafios e recompensas ↓", "expClose": "Fechar ↑", "tryKicker": "Seu progresso", "tryTitle": "Treina todo dia, ganha desconto de verdade.", "tryLede": "XP, sequência, desafios, palavra do dia e gramática. Tudo salvo no seu aparelho.", "pricingLedeDe": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite.", "pricingLedeEn": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite.", "pricingLedePt": "Teste tudo por 7 dias. Depois, o Grátis continua de verdade (níveis 1 e 2, 3 conversas por semana) — ou você assina e treina sem limite."});
   Object.assign(I18N_STRINGS.en, {"trialBadge": "🎁 Free trial · {n} days", "trialBannerTitle": "🎁 7 days with everything unlocked. No card.", "trialBannerText": "Starts on your first visit: every level, strong accents and unlimited conversations. After 7 days you stay on Free or subscribe — no automatic charge.", "trialBannerBtn": "Try it now →", "cvTrial": "🎁 Free trial: everything unlocked for {n} more days", "expOpen": "📊 See my progress, challenges & rewards ↓", "expClose": "Close ↑", "tryKicker": "Your progress", "tryTitle": "Train every day, earn real discounts.", "tryLede": "XP, streaks, challenges, word of the day and grammar. All saved on your device.", "pricingLedeDe": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, 3 conversations a week) — or subscribe and train without limits.", "pricingLedeEn": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, 3 conversations a week) — or subscribe and train without limits.", "pricingLedePt": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, 3 conversations a week) — or subscribe and train without limits."});
   Object.assign(I18N_STRINGS.es, {"trialBadge": "🎁 Prueba gratis · {n} días", "trialBannerTitle": "🎁 7 días con todo desbloqueado. Sin tarjeta.", "trialBannerText": "Empieza solo en tu primera visita: todos los niveles, acentos fuertes y conversaciones sin límite. Después de 7 días sigues en el plan Gratis o te suscribes — sin cobro automático.", "trialBannerBtn": "Probar ahora →", "cvTrial": "🎁 Prueba gratis: todo desbloqueado {n} días más", "expOpen": "📊 Ver mi progreso, desafíos y recompensas ↓", "expClose": "Cerrar ↑", "tryKicker": "Tu progreso", "tryTitle": "Entrena cada día, gana descuentos de verdad.", "tryLede": "XP, racha, desafíos, palabra del día y gramática. Todo guardado en tu dispositivo.", "pricingLedeDe": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, 3 conversaciones por semana), o te suscribes y entrenas sin límite.", "pricingLedeEn": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, 3 conversaciones por semana), o te suscribes y entrenas sin límite.", "pricingLedePt": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, 3 conversaciones por semana), o te suscribes y entrenas sin límite."});
@@ -5725,6 +5731,9 @@ window.FalautVoz = (function(){
     if(data.lastDate === undefined) data.lastDate = null;
     if(data.bestStreakTier === undefined) data.bestStreakTier = -1;
     if(typeof data.freezes !== 'number') data.freezes = 0;
+    // v15.4.0: total de congeladores ganhos (fzIn) e usados (fzOut) — só crescem, então dá pra juntar 2 aparelhos
+    if(typeof data.fzIn !== 'number') data.fzIn = data.freezes;
+    if(typeof data.fzOut !== 'number') data.fzOut = 0;
     if(typeof data.xpSpent !== 'number') data.xpSpent = 0;
     if(!Array.isArray(data.frozen)) data.frozen = [];
     if(typeof data.best !== 'number') data.best = data.streak || 0; // v13.3.0: recorde
@@ -5989,7 +5998,13 @@ window.FalautVoz = (function(){
       frzBtn.disabled = n >= FREEZE_MAX;
       frzBtn.classList.toggle('on', n > 0);
     }
-    if(info) info.textContent = t('freezeInfo', {xp: freezeAvailableXp()});
+    if(info){
+      const ri = (typeof window.falautRepairInfo === 'function') ? window.falautRepairInfo() : null;
+      info.textContent = !ri ? t('freezeInfo', {xp: freezeAvailableXp()})
+        : ri.state === 'active' ? t('repairInfo', {done: ri.done, need: ri.need, n: ri.n})
+        : t('repairOfferInfo', {n: ri.n, tasks: ri.tasks});
+      info.classList.toggle('repair', !!ri);
+    }
     if(typeof renderReminderBtn === 'function') renderReminderBtn();
   }
   function buyFreeze(e){
@@ -5998,6 +6013,7 @@ window.FalautVoz = (function(){
       rewardToast.textContent = t('dynFreezeNoXp', {cost: FREEZE_COST, xp: freezeAvailableXp()});
     } else {
       streakData.freezes = (streakData.freezes || 0) + 1;
+      streakData.fzIn = (streakData.fzIn || 0) + 1;
       streakData.xpSpent = (streakData.xpSpent || 0) + FREEZE_COST;
       saveStreak(currentLang, streakData);
       rewardToast.textContent = t('dynFreezeBought', {n: streakData.freezes, max: FREEZE_MAX});
@@ -6148,10 +6164,70 @@ window.FalautVoz = (function(){
     if(!streakData.lastDate || !streakData.streak) return streakData.streak || 0;
     const gap = daysBetween(streakData.lastDate, todayStr());
     if(gap <= 1) return streakData.streak;
-    if(isFounder && gap === 2) return streakData.streak;
-    if((gap - 1) <= (streakData.freezes || 0)) return streakData.streak;
+    const grace = isFounder ? 1 : 0;
+    if((gap - 1 - grace) <= (streakData.freezes || 0)) return streakData.streak;
     return 0;
   }
+
+  // ---- v15.4.0: MISSÃO DE RESGATE 🛟 ----
+  // Quebrou a ofensiva (faltou mais dias do que os congeladores cobrem)? Dá pra recuperar
+  // no mesmo dia em que volta: 1 dia perdido → 1 lição; 2+ dias → 2 lições (até 7 dias perdidos).
+  const REPAIR_MAX_MISSED = 7;
+  function repairTasksText(need){ return t(need >= 2 ? 'repairTasks2' : 'repairTasks1'); }
+  // missão já aberta hoje (depois do 1º estudo do dia)
+  function repairActive(){
+    const r = streakData.repair;
+    return (r && r.date === todayStr() && (r.done || 0) < r.need) ? r : null;
+  }
+  // ainda não estudou hoje, mas a ofensiva quebrou e dá pra resgatar
+  function repairOffer(){
+    if(repairActive()) return null;
+    if(!streakData.lastDate || !streakData.streak) return null;
+    const gap = daysBetween(streakData.lastDate, todayStr());
+    if(gap < 2) return null;
+    const missed = gap - 1;
+    const grace = isFounder ? 1 : 0;
+    if(missed - grace <= (streakData.freezes || 0)) return null;   // congelador/proteção resolvem sozinhos
+    if(missed > REPAIR_MAX_MISSED) return null;
+    return { n: streakData.streak, missed, need: missed >= 2 ? 2 : 1 };
+  }
+  window.falautRepairInfo = ()=>{
+    const a = repairActive();
+    if(a) return { state:'active', n: a.prev, done: a.done || 0, need: a.need, tasks: repairTasksText(a.need) };
+    const o = repairOffer();
+    if(o) return { state:'offer', n: o.n, need: o.need, tasks: repairTasksText(o.need) };
+    return null;
+  };
+  // chamado ao terminar cada lição do dia: conta 1 tarefa e, se completou, devolve a ofensiva
+  function repairStep(){
+    const r = streakData.repair;
+    if(!r) return null;
+    if(r.date !== todayStr()){ delete streakData.repair; saveStreak(currentLang, streakData); return null; }
+    r.done = Math.min(r.need, (r.done || 0) + 1);
+    if(r.done < r.need){
+      saveStreak(currentLang, streakData);
+      renderStreak();
+      rewardToast.textContent = t('dynRepairStep', { done: r.done, need: r.need });
+      rewardToast.classList.add('show');
+      setTimeout(()=> rewardToast.classList.remove('show'), 3600);
+      return 'step';
+    }
+    for(let i = 1; i <= r.missed; i++) addDay(streakData.frozen, shiftDateStr(r.from, i));
+    streakData.streak = (r.prev || 0) + (streakData.streak || 1);
+    streakData.best = Math.max(streakData.best || 0, streakData.streak);
+    delete streakData.repair;
+    saveStreak(currentLang, streakData);
+    renderStreak();
+    rewardToast.textContent = t('dynRepairDone', { n: streakData.streak });
+    rewardToast.classList.add('show');
+    setTimeout(()=> rewardToast.classList.remove('show'), 4200);
+    if(typeof confettiBurst === 'function') try{ confettiBurst(); }catch(e){}
+    if(typeof checkLegendUnlock === 'function') checkLegendUnlock();
+    if(typeof renderLeague === 'function') renderLeague();
+    if(typeof renderProgressSummary === 'function') renderProgressSummary();
+    return 'done';
+  }
+  window.falautRepairStep = repairStep;
   function renderStreak(){
     const shown = liveStreak();
     streakNumEl.textContent = shown;
@@ -6193,18 +6269,29 @@ window.FalautVoz = (function(){
 
     // Fundadores têm proteção de sequência: faltar exatamente 1 dia não zera o progresso.
     // v13.2.0: depois disso, congeladores ❄️ cobrem os dias perdidos (1 por dia).
-    let graceUsed = false, freezesUsed = 0;
+    // v15.4.0: proteção do fundador e congeladores agora se somam; se não bastar, abre a missão de resgate 🛟
+    let graceUsed = false, freezesUsed = 0, repairStarted = null;
     if(streakData.lastDate){
       const gap = daysBetween(streakData.lastDate, today);
       const missed = gap - 1;
-      graceUsed = isFounder && gap === 2;
-      if(gap === 1 || graceUsed){
+      const grace = (isFounder && missed >= 1) ? 1 : 0;
+      const toCover = missed - grace;
+      if(gap === 1){
         streakData.streak += 1;
-      } else if(missed >= 1 && missed <= (streakData.freezes || 0)){
+      } else if(toCover <= 0){
+        graceUsed = true;
+        streakData.streak += 1;
+      } else if(toCover <= (streakData.freezes || 0)){
         for(let i = 1; i <= missed; i++) addDay(streakData.frozen, shiftDateStr(streakData.lastDate, i));
-        streakData.freezes -= missed;
-        freezesUsed = missed;
+        streakData.freezes -= toCover;
+        streakData.fzOut = (streakData.fzOut || 0) + toCover;
+        freezesUsed = toCover;
+        graceUsed = grace > 0;
         streakData.streak += 1;
+      } else if(streakData.streak > 0 && missed <= REPAIR_MAX_MISSED){
+        repairStarted = { date: today, from: streakData.lastDate, prev: streakData.streak, missed, need: missed >= 2 ? 2 : 1, done: 0 };
+        streakData.repair = repairStarted;
+        streakData.streak = 1;
       } else {
         streakData.streak = 1;
       }
@@ -6241,11 +6328,14 @@ window.FalautVoz = (function(){
     } else if(isNewRecord){
       rewardToast.textContent = t('dynNewRecord', {n: streakData.streak});
       rewardToast.classList.add('show');
-    } else if(graceUsed){
-      rewardToast.textContent = t('dynStreakShieldedToast');
+    } else if(repairStarted){
+      rewardToast.textContent = t('dynRepairStart', { n: repairStarted.prev, tasks: repairTasksText(repairStarted.need) });
       rewardToast.classList.add('show');
     } else if(freezesUsed){
       rewardToast.textContent = t('dynFreezeUsed', {n: freezesUsed});
+      rewardToast.classList.add('show');
+    } else if(graceUsed){
+      rewardToast.textContent = t('dynStreakShieldedToast');
       rewardToast.classList.add('show');
     } else {
       rewardToast.textContent = t('dynStreakXpTomorrow');
@@ -8004,6 +8094,7 @@ window.FalautVoz = (function(){
       d.freezeWeek = week;
       if((streakData.freezes || 0) < FREEZE_MAX){
         streakData.freezes = (streakData.freezes || 0) + 1;
+        streakData.fzIn = (streakData.fzIn || 0) + 1;
         msgs.push(t('dynShareFreeze', {goal: SHARE_WEEK_GOAL}));
       } else {
         bonusXp += SHARE_FREEZE_FULL_XP;
@@ -8757,7 +8848,12 @@ window.FalautVoz = (function(){
         days: (Array.isArray(l.days) || Array.isArray(c.days)) ? union(l.days, c.days) : undefined,
         frozen: union(l.frozen, c.frozen),
         xpSpent: Math.max(l.xpSpent || 0, c.xpSpent || 0),
-        best: Math.max(l.best || 0, c.best || 0, l.streak || 0, c.streak || 0)
+        best: Math.max(l.best || 0, c.best || 0, l.streak || 0, c.streak || 0),
+        // v15.4.0: congeladores não somem mais ao juntar aparelhos
+        fzIn: Math.max(l.fzIn ?? l.freezes ?? 0, c.fzIn ?? c.freezes ?? 0),
+        fzOut: Math.max(l.fzOut || 0, c.fzOut || 0),
+        freezes: Math.max(0, Math.min(2,
+          Math.max(l.fzIn ?? l.freezes ?? 0, c.fzIn ?? c.freezes ?? 0) - Math.max(l.fzOut || 0, c.fzOut || 0)))
       }));
     }
     if(/^falareal_dever_(de|en|pt)_v1$/.test(k) && l && c){
@@ -9217,7 +9313,9 @@ window.FalautVoz = (function(){
     const sd = (typeof streakData !== 'undefined') ? streakData : null;
     const s = streakNow();
     let msg = tr('lcToday'), cls = 'lc-status';
-    if(sd && sd.lastDate && s > 0 && sd.lastDate !== today()){ msg = tr('lcAtRisk', { n: s }); cls += ' risk'; }
+    const ri = (typeof window.falautRepairInfo === 'function') ? window.falautRepairInfo() : null;
+    if(ri && ri.state === 'offer'){ msg = tr('lcRepairOffer', { n: ri.n, tasks: ri.tasks }); cls += ' risk'; }
+    else if(sd && sd.lastDate && s > 0 && sd.lastDate !== today()){ msg = tr('lcAtRisk', { n: s }); cls += ' risk'; }
     else if(sd && sd.lastDate && s === 0){ msg = tr('lcBroken'); }
     else if(!sd || !sd.lastDate){ msg = tr('lcFirst'); }
     const mrow = el('div', 'lc-mascote');
@@ -9305,8 +9403,10 @@ window.FalautVoz = (function(){
     saveP(st.l, p);
     if(first && typeof markStreakToday === 'function') markStreakToday(null);   // 🔥 +1 (e +10 XP)
     if(!first && typeof addXP === 'function') addXP(10);                         // lição extra: só XP
-    if(typeof confettiBurst === 'function') try{ confettiBurst(); }catch(e){}
+    const rs = (typeof window.falautRepairStep === 'function') ? window.falautRepairStep() : null;   // v15.4.0: missão de resgate
+    if(rs !== 'done' && typeof confettiBurst === 'function') try{ confettiBurst(); }catch(e){}
     st.idx = p.n - 1;
+    st.repairJustDone = rs === 'done';
     done(true);
   }
   function done(fresh){
@@ -9330,9 +9430,14 @@ window.FalautVoz = (function(){
       list.appendChild(r);
     });
     body.appendChild(list);
-    body.appendChild(el('p', 'lc-note', tr('lcTomorrow')));
+    // v15.4.0: missão de resgate em andamento → destaca a lição extra
+    const ri = (typeof window.falautRepairInfo === 'function') ? window.falautRepairInfo() : null;
+    const repairing = ri && ri.state === 'active';
+    if(st.repairJustDone){ const ttl = body.querySelector('.lc-done-title'); const note = el('p', 'lc-status', tr('lcRepairDone')); if(ttl) ttl.after(note); else body.prepend(note); st.repairJustDone = false; }
+    if(repairing) body.appendChild(el('p', 'lc-status risk', tr('lcRepairNext', { done: ri.done, need: ri.need })));
+    else body.appendChild(el('p', 'lc-note', tr('lcTomorrow')));
     const row = el('div', 'lc-row');
-    row.appendChild(btn('lc-ghost', tr('lcExtra'), () => { st.idx = loadP(st.l).n; header(); learn(0, true); }));
+    row.appendChild(btn(repairing ? 'btn-primary btn-full' : 'lc-ghost', tr('lcExtra'), () => { st.idx = loadP(st.l).n; header(); learn(0, true); }));
     body.appendChild(row);
   }
 
