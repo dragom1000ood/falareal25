@@ -1,5 +1,36 @@
 # CHANGELOG — Falaut
 
+## v15.5.1 — 2026-11-28 · Trilha de português 100% em espanhol
+
+**Onde está:** site inteiro, quando o idioma do site é **Español** e a pessoa escolhe aprender **português** (🇧🇷).
+
+**O que mudou**
+- Antes, nessa combinação, uns 100 textos caíam no inglês: topo da página, comparação, os 4 níveis, quiz, preços, FAQ e a faixa de e-mail. Agora tudo aparece em espanhol.
+- As frases em português de exemplo ("cê tá", "tô", "pra") continuam em português, porque fazem parte do aprendizado.
+- Conferido: o espanhol agora tem todos os textos que o inglês tem (nenhuma chave faltando).
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `CHANGELOG.md`.
+Service Worker: cache `falaut-v15.5.1`.
+
+## v15.5.0 — 2026-11-28 · Avatar ilustrado (adeus emojis) + correções
+
+**Onde está:** card "Seu progresso" (`#experimente`), gaveta lateral **Avatar**, painel lateral do computador, botão redondo da conta no celular, rodapé, FAQ e seção **Conversa ao vivo**.
+
+**O que mudou**
+- **Avatar novo, desenhado em SVG no estilo do mascote:** o aluno monta o próprio bonequinho com cabelo (8 estilos), cor do cabelo, tom de pele (6), acessório (fone dourado, óculos, óculos de sol, boné Falaut, brincos), cor da roupa, **bandeira no peito (Brasil, Alemanha ou Reino Unido)** e cor de fundo. Cada opção mostra uma miniatura do próprio avatar com aquela mudança. Tem também o botão **🎲 Sortear um visual**.
+- O avatar aparece no card de perfil, no painel lateral (computador) e agora também no **botão redondo da conta no celular** (antes era 👤).
+- **Quem já tinha avatar de emoji** ganha automaticamente o avatar padrão (cabelo bagunçado, fone dourado, jaqueta verde, bandeira do Brasil). O apelido e a cor de fundo continuam iguais. Nada se perde, e o avatar novo também vai pra nuvem junto com o perfil (mesma chave `falareal_profile_v1`).
+- Rótulos do editor traduzidos em pt, en, es e de.
+
+**Correções**
+- **Botão "Pagar e marcar minha conversa — €50"** quebrava em duas "cápsulas" tortas no celular. Agora é um botão inteiro, com o texto centralizado em até 2 linhas.
+- **FAQ "Meu progresso fica salvo se eu trocar de celular?"** (trilhas de alemão e inglês) dizia que ainda não existia sincronização. Já existe (login na nuvem). Agora responde "sim, cria uma conta grátis no botão ☁️", em pt, en, es e de.
+- **Rodapé da trilha de alemão** dizia "já viveu mais de 6 anos na Alemanha". Agora diz "vive há mais de 7 anos", e está traduzido nas 4 línguas do site.
+- **Rodapé da trilha de inglês** ficava sempre em português, e "Refund policy / Report a problem" ficava sempre em inglês, mesmo com o site em português. Agora segue o idioma do site.
+
+**Arquivos para subir na raiz do repositório:** `index.html`, `sw.js`, `CHANGELOG.md`.
+Service Worker: cache `falaut-v15.5.0` (força o celular a pegar a versão nova).
+
 ## v15.3.3 — 2026-11-14 · Logo nova (F verde) + tela de abertura que finalmente troca
 
 **Onde está:** ícone do app, favicon, tela de abertura do app instalado (iPhone/iPad), tela offline e menu do topo do site.

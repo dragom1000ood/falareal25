@@ -28,7 +28,7 @@
    embaixo do usuário no meio de um exercício.
    ============================================================ */
 
-const CACHE_VERSION = 'falaut-v15.3.3';
+const CACHE_VERSION = 'falaut-v15.5.1';
 const OFFLINE_URL   = '/offline.html';
 const NAV_TIMEOUT   = 4000;
 

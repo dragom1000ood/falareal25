@@ -6,7 +6,7 @@
 <title>Falaut — Alemão, inglês e português de verdade, sem sala de aula</title>
 
 <!-- ============================================================
-     Falaut PWA  v15.4.0
+     Falaut PWA  v15.5.1
      Cole este bloco no <head> do index.html, logo depois do <title>.
      ============================================================ -->
 
@@ -440,6 +440,9 @@
   }
   .demo-sub{color:rgba(244,239,230,0.6); font-size:0.92rem; margin-bottom:24px;}
   .btn-full{width:100%; margin-top:auto;}
+  /* v15.5.0: link com cara de botão (ex.: "Pagar e marcar minha conversa — €50") quebrava em 2 "cápsulas" no celular */
+  a.btn-full{display:block; box-sizing:border-box; text-align:center; text-decoration:none; line-height:1.3;}
+  #ao-vivo-pay-btn{border-radius:16px; padding:15px 18px;}
 
   /* nos cards de preço, o texto do botão pode quebrar em 2 linhas em telas de largura
      intermediária — reduz o arredondamento e o padding aqui pra nunca ficar com aparência
@@ -1001,6 +1004,17 @@
   .avatar-opt.selected{border-color:var(--amber); box-shadow:0 0 0 2px rgba(240,166,58,0.25);}
   .avatar-opt.bg-opt{border:2px solid rgba(244,239,230,0.15);}
   .avatar-opt.bg-opt.selected{border-color:var(--paper);}
+  /* v15.5.0: avatar ilustrado em SVG */
+  .av-svg{width:100%; height:100%; display:block;}
+  .profile-avatar, .sidebar-avatar, .avatar-drawer-preview{overflow:hidden; padding:0;}
+  .profile-avatar{width:84px; height:84px; border:3px solid var(--amber);}
+  .sidebar-avatar{border:2px solid var(--amber);}
+  .avatar-drawer-preview{width:120px; height:120px; border-radius:50%; margin:0 auto 18px; border:3px solid var(--amber); box-shadow:0 10px 28px rgba(0,0,0,0.35);}
+  .avatar-opt.av-preview{width:48px; height:48px; padding:0; overflow:hidden; background:var(--ink);}
+  .avatar-opt.av-preview .av-svg{border-radius:50%;}
+  .mobile-account-fab.has-avatar{padding:0; overflow:hidden; border:2px solid var(--amber);}
+  .avatar-random-btn{display:block; width:100%; margin-top:20px; background:transparent; color:var(--amber); border:1px solid rgba(240,166,58,0.5); border-radius:100px; padding:11px 14px; font-family:var(--body); font-weight:600; font-size:0.88rem; cursor:pointer;}
+  .avatar-random-btn:hover{background:rgba(240,166,58,0.1);}
 
   /* PRICING */
   .pricing-legacy{text-align:center; font-size:0.85rem; color:rgba(244,239,230,0.6); margin:18px auto 0; max-width:560px;}
@@ -1520,7 +1534,7 @@
 </header>
 
 <div class="profile-sidebar" id="profile-sidebar">
-  <div class="sidebar-avatar" id="sidebar-avatar">🙂</div>
+  <div class="sidebar-avatar" id="sidebar-avatar"></div>
   <div class="sidebar-league-badge" id="sidebar-league-badge">🥉 Bronze</div>
   <div class="sidebar-xp" id="sidebar-xp">0 xp</div>
   <button class="sidebar-auth-btn" id="sidebar-auth-btn" data-i18n="enter">Entrar</button>
@@ -1533,12 +1547,8 @@
 <div class="avatar-drawer" id="avatar-drawer">
   <button class="avatar-drawer-close" id="avatar-drawer-close" aria-label="Fechar" data-i18n-aria="close">✕</button>
   <h4 class="avatar-drawer-title" data-i18n="editAvatar">Editar avatar</h4>
-  <div class="avatar-picker-label" data-i18n="face">Rosto</div>
-  <div class="avatar-picker-row" id="avatar-face-options"></div>
-  <div class="avatar-picker-label" data-i18n="accessory">Acessório</div>
-  <div class="avatar-picker-row" id="avatar-accessory-options"></div>
-  <div class="avatar-picker-label" data-i18n="bgColor">Cor de fundo</div>
-  <div class="avatar-picker-row" id="avatar-bg-options"></div>
+  <div class="avatar-drawer-preview" id="avatar-drawer-preview"></div>
+  <div id="avatar-picker-rows"></div>
 </div>
 
 
@@ -1572,7 +1582,7 @@
 
     <div class="profile-card" data-reveal>
       <div class="profile-avatar-wrap">
-        <div class="profile-avatar" id="profile-avatar">🙂</div>
+        <div class="profile-avatar" id="profile-avatar"></div>
         <button class="avatar-edit-btn" id="avatar-edit-btn" title="Editar avatar" data-i18n-title="editAvatar">✏️</button>
       </div>
       <div class="profile-info">
@@ -2381,7 +2391,7 @@
           <span data-i18n="faqQ5De">Meu progresso fica salvo se eu trocar de celular?</span>
           <span class="faq-toggle">+</span>
         </button>
-        <div class="faq-answer" data-i18n="faqA5De">Hoje o progresso (XP, sequência, gramática estudada) fica salvo no navegador do aparelho que você usa — ainda não temos conta de usuário sincronizando entre dispositivos. Isso é uma das próximas evoluções planejadas, junto com o chat de IA.</div>
+        <div class="faq-answer" data-i18n="faqA5De">Fica, sim. Cria uma conta grátis (no botão ☁️ Salvar progresso na nuvem) e seu XP, sua sequência e a gramática estudada ficam salvos na nuvem, em qualquer aparelho.</div>
       </div>
     </div>
 
@@ -2419,7 +2429,7 @@
           <span data-i18n="faqQ5En">Does my progress sync across devices?</span>
           <span class="faq-toggle">+</span>
         </button>
-        <div class="faq-answer" data-i18n="faqA5En">Right now progress (XP, streaks, grammar studied) is saved in the browser on the device you're using — there's no account system syncing across devices yet. That's one of the next planned upgrades, alongside the AI chat.</div>
+        <div class="faq-answer" data-i18n="faqA5En">Yes. Create a free account (the ☁️ Save progress to the cloud button) and your XP, streak and grammar progress are saved to the cloud and available on any device.</div>
       </div>
     </div>
         <div class="faq-list lang-pt" data-reveal>
@@ -2456,7 +2466,7 @@
           <span data-i18n="faqQ5Pt">Does my progress sync across devices?</span>
           <span class="faq-toggle">+</span>
         </button>
-        <div class="faq-answer" data-i18n="faqA5Pt">Right now progress (XP, streaks, grammar studied) is saved in the browser on the device you're using — there's no account system syncing across devices yet. That's one of the next planned upgrades, alongside the AI chat.</div>
+        <div class="faq-answer" data-i18n="faqA5Pt">Yes. Create a free account (the ☁️ Save progress to the cloud button) and your XP, streak and grammar progress are saved to the cloud and available on any device.</div>
       </div>
     </div>
   </div>
@@ -2575,9 +2585,9 @@
 <footer>
   <div class="wrap">
     <div class="footer-top">
-      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.4.0</span></div>
-      <p class="lang-de">Feito por um brazuca que já viveu mais de 6 anos na Alemanha.</p>
-      <p class="lang-en">feito pra quem já cansou do inglês de laboratório</p>
+      <div class="logo">fala<span>ut</span> <span class="version-tag">v15.5.1</span></div>
+      <p class="lang-de" data-i18n="footerTaglineDe">Feito por um brasileiro que vive há mais de 7 anos na Alemanha.</p>
+      <p class="lang-en" data-i18n="footerTaglineEn">Feito pra quem já cansou do inglês de laboratório.</p>
         <p class="lang-pt" data-i18n="footerTaglinePt">Made by a Brazilian who wants to show you real Portuguese.</p>
       <div class="footer-links lang-de">
         <a href="/reembolso.html" data-i18n="refundPolicy">Política de reembolso</a>
@@ -2585,9 +2595,9 @@
         <button type="button" class="footer-link-btn footer-report-link" data-i18n="reportProblem">Reportar um problema</button>
       </div>
       <div class="footer-links lang-en">
-        <a href="/reembolso.html">Refund policy</a>
+        <a href="/reembolso.html" data-i18n="refundPolicy">Refund policy</a>
         <span class="footer-sep">·</span>
-        <button type="button" class="footer-link-btn footer-report-link">Report a problem</button>
+        <button type="button" class="footer-link-btn footer-report-link" data-i18n="reportProblem">Report a problem</button>
       </div>
         <div class="footer-links lang-pt">
         <a href="/reembolso.html" data-i18n="refundPolicy">Refund policy</a>
@@ -4771,6 +4781,18 @@ window.FalautVoz = (function(){
   Object.assign(I18N_STRINGS.en, {"trialBannerText": "Starts on your first visit: every level and accent, the full grammar track (A1–C2), the bonus word and all challenges. After 7 days you stay on Free or subscribe — no automatic charge.", "trialBannerBtn": "Try it now →", "liveKicker": "Live conversation", "liveLede": "Want to practise with a real person? Book a conversation with me — 30 minutes, just you and me.", "planBasicLi2": "All challenges and rewards (discount coupons)", "price1Li2De": "Word of the day (homework)", "price1Li2En": "Word of the day (homework)", "price1Li2Pt": "Word of the day (homework)", "price1Li4De": "WhatsApp group", "price1Li4En": "WhatsApp group", "price1Li4Pt": "WhatsApp group", "pricingLedeDe": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, streak, XP and word of the day) — or subscribe and unlock everything.", "pricingLedeEn": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, streak, XP and word of the day) — or subscribe and unlock everything.", "pricingLedePt": "Try everything for 7 days. After that, Free stays truly free (levels 1 and 2, streak, XP and word of the day) — or subscribe and unlock everything."});
   Object.assign(I18N_STRINGS.es, {"trialBannerText": "Empieza solo en tu primera visita: todos los niveles y acentos, la ruta de gramática completa (A1–C2), la palabra extra y todos los desafíos. Después de 7 días sigues en el plan Gratis o te suscribes — sin cobro automático.", "trialBannerBtn": "Probar ahora →", "liveKicker": "Conversación en vivo", "liveLede": "¿Quieres practicar con una persona de verdad? Agenda una conversación conmigo: 30 minutos, solo tú y yo.", "planBasicLi2": "Todos los desafíos y recompensas (cupones de descuento)", "price1Li2De": "Palabra del día (tarea)", "price1Li2En": "Palabra del día (tarea)", "price1Li2Pt": "Palabra del día (tarea)", "price1Li4De": "Grupo de WhatsApp", "price1Li4En": "Grupo de WhatsApp", "price1Li4Pt": "Grupo de WhatsApp", "pricingLedeDe": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, racha, XP y palabra del día), o te suscribes y desbloqueas todo.", "pricingLedeEn": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, racha, XP y palabra del día), o te suscribes y desbloqueas todo.", "pricingLedePt": "Prueba todo durante 7 días. Después, el plan Gratis sigue siendo gratis de verdad (niveles 1 y 2, racha, XP y palabra del día), o te suscribes y desbloqueas todo."});
   Object.assign(I18N_STRINGS.de, {"trialBannerText": "Startet bei deinem ersten Besuch: alle Level und Akzente, der komplette Grammatikpfad (A1–C2), das Bonuswort und alle Challenges. Nach 7 Tagen bleibst du bei Gratis oder abonnierst – ohne automatische Abbuchung.", "trialBannerBtn": "Jetzt testen →", "liveKicker": "Live-Gespräch", "liveLede": "Willst du mit einem echten Menschen üben? Buch ein Gespräch mit mir – 30 Minuten, nur du und ich.", "planBasicLi2": "Alle Challenges und Belohnungen (Rabattcoupons)", "price1Li2De": "Wort des Tages (Hausaufgabe)", "price1Li2En": "Wort des Tages (Hausaufgabe)", "price1Li2Pt": "Wort des Tages (Hausaufgabe)", "price1Li4De": "WhatsApp-Gruppe", "price1Li4En": "WhatsApp-Gruppe", "price1Li4Pt": "WhatsApp-Gruppe", "pricingLedeDe": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, Streak, XP und Wort des Tages) – oder du abonnierst und schaltest alles frei.", "pricingLedeEn": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, Streak, XP und Wort des Tages) – oder du abonnierst und schaltest alles frei.", "pricingLedePt": "Teste 7 Tage alles. Danach bleibt Gratis wirklich gratis (Level 1 und 2, Streak, XP und Wort des Tages) – oder du abonnierst und schaltest alles frei."});
+  /* v15.5.1: trilha de português traduzida pro espanhol (antes caía no inglês) */
+  Object.assign(I18N_STRINGS.es, {"heroEyebrowPt": "Práctica de conversación en portugués de Brasil", "heroTitlePt": "El portugués que te enseñan para el examen. <em>Não o que está no livro – mas o que a vida real te joga.</em>", "heroSubPt": "La mayoría de las apps te enseñan un portugués de libro, lento y educado. Brasil no suena así. Aquí entrenas el portugués de Brasil de verdad, hecho por un brasileño, para el trabajo, los viajes, la familia y los amigos: con acento carioca, paulista y nordestino, ruido de la calle y gente que te corta a mitad de la frase.", "quizStep1QPt": "¿Cuál es tu mayor desafío con el portugués?", "quizOpt1SotaquePt": "Entender los acentos de Brasil", "quizOpt1EnvolvimentoPt": "Hablar con amigos, familia o pareja", "quizOpt1EntrevistaPt": "Trabajar con brasileños", "quizOpt1TrabalhoPt": "Viajar o mudarme a Brasil", "quizStep2QPt": "¿Cómo está tu portugués hoy?", "quizOpt2Level1Pt": "Principiante total", "quizOpt2Level2Pt": "Me defiendo con lo básico", "quizOpt2Level3Pt": "Intermedio, pero me pierdo cuando hablan rápido", "quizResultTitlePt": "Nivel sugerido para ti:", "dynQuizDescPt": "Según lo que respondiste, te sugerimos enfocarte en {focus}.", "dynQuizFocusFallbackPt": "situaciones variadas del día a día", "dynQuizSummaryPt": "✓ Nivel {level} sugerido — enfoque en {focus}", "compLedePt": "La mayoría de las apps te entrenan para un portugués que solo existe dentro de la app: muchas veces el de Portugal, y siempre lento. La diferencia aquí es lo que pasa cuando un brasileño habla rápido, se come la mitad de las sílabas o tiene un acento que nunca oíste.", "compLabTitlePt": "App de laboratorio", "compLabLi1Pt": "Voz sintética, ritmo perfecto", "compLabLi2Pt": "Un solo acento, muchas veces de Portugal", "compLabLi3Pt": "Silencio total de fondo", "compLabLi4Pt": "\"Você está\", nunca \"cê tá\"", "compLabLi5Pt": "El mismo ejercicio se repite igual", "compRealLi1Pt": "Habla brasileña real, con jerga y ritmo", "compRealLi2Pt": "Río, São Paulo, el Nordeste, el Sur: tú eliges", "compRealLi3Pt": "Autobús, playa, panadería, almuerzo familiar", "compRealLi4Pt": "Interrupciones y gente hablando a la vez", "compRealLi5Pt": "Un escenario nuevo en cada conversación", "level1TitlePt": "Lento y claro", "level1DescPt": "Habla pausada, vocabulario sencillo y acento brasileño neutro. Ideal para acostumbrar el oído al portugués.", "level1Tag1Pt": "ritmo lento", "level1Tag2Pt": "sin ruido", "level1Tag3Pt": "1 acento", "level1AudioBtnPt": "🔊 Escuchar ejemplo", "level2TitlePt": "Ritmo natural", "level2DescPt": "La conversación fluye a velocidad real, con \"tô\", \"pra\", \"cê\" y jerga del día a día.", "level2Tag1Pt": "ritmo normal", "level2Tag2Pt": "jerga ligera", "level2Tag3Pt": "2 acentos", "level2AudioBtnPt": "🔊 Escuchar ejemplo", "level3TitlePt": "Acentos y ambiente", "level3DescPt": "Entran los acentos regionales (carioca, nordestino, gaúcho) con sonido de fondo: panadería, autobús, mercado callejero.", "level3Tag1Pt": "varios acentos", "level3Tag2Pt": "ruido ligero", "level3AudioBtnPt": "🔊 Escuchar ejemplo", "level4TitlePt": "Calle de verdad", "level4DescPt": "Interrupciones, todos hablando a la vez, mucho ruido de fondo. Lo más cerca que una app llega a un almuerzo familiar brasileño.", "level4Tag1Pt": "interrupciones", "level4Tag2Pt": "ruido fuerte", "level4Tag3Pt": "acentos fuertes", "level4AudioBtnPt": "🔊 Escuchar ejemplo (con interrupción)", "step1TitlePt": "Tú eliges el escenario", "step1DescPt": "Pedir en una padaria, charlar con la familia de tu pareja, una llamada de trabajo con un equipo brasileño: el escenario nunca se repite igual.", "faqKickerPt": "Preguntas frecuentes", "faqTitlePt": "Antes de decidir, te respondo lo que todo el mundo pregunta.", "faqQ1Pt": "¿Portugués de Brasil o de Portugal?", "faqA1Pt": "De Brasil, el que hablan más de 200 millones de personas. De vez en cuando vas a oír un acento de Portugal para que no te sorprenda, pero todo lo que aprendes aquí es como se habla de verdad en Brasil.", "faqQ2Pt": "¿Puedo cancelar cuando quiera?", "faqA2Pt": "Sí, cuando quieras, sin penalización. Tienes una garantía completa de 14 días (derecho de desistimiento de la UE) y una garantía extra: si el desarrollo se retrasa bastante, te devolvemos el dinero incluso fuera de ese plazo. Detalles en la <a href=\"/reembolso.html\">política de reembolso</a>.", "faqQ3Pt": "¿Quién está detrás de esto?", "faqA3Pt": "Yo, Wagner, un brasileño de João Pessoa que ha vivido en Suiza, el Reino Unido, España, Portugal y ahora Alemania. Aprendí idiomas a la fuerza, directo de la vida real. Ahora quiero enseñarte el portugués como lo hablan de verdad los brasileños. Respondo personalmente cada correo.", "faqQ4Pt": "¿En qué se diferencia de Duolingo?", "faqA4Pt": "Duolingo enseña frases sueltas sin contexto de la vida real. Falaut se centra en situaciones que de verdad vas a vivir en Brasil (la panadería, el autobús, el asado familiar, una llamada de trabajo) con una dificultad que sube de verdad: acentos, ruido, interrupciones.", "faqQ5Pt": "¿Mi progreso se sincroniza entre dispositivos?", "faqA5Pt": "Sí. Crea una cuenta gratis (con el botón ☁️) y tu XP, tu racha y la gramática estudiada quedan guardados en la nube, en cualquier dispositivo.", "pricingKickerPt": "Elige tu plan", "pricingTitlePt": "No vamos a cobrar a quien no puede pagar.", "price1KickerPt": "Gratis", "price1SubPt": "Para quien quiere probar sin compromiso, o simplemente no puede pagar ahora.", "price1Li1Pt": "Niveles 1 y 2 (lento y claro + ritmo del día a día)", "price1Li3Pt": "Racha diaria, XP y una palabra al día", "price1CtaPt": "Empezar gratis", "price2FeaturedTagPt": "El más popular", "price2KickerPt": "Fundador", "price2WasPt": "desde <span class=\"pricing-was-amount\">€25</span>/mes después del lanzamiento", "price2PeriodPt": "/mes", "price2SubPt": "Precio congelado mientras sigas suscrito; sube para todos los que entren después del lanzamiento.", "price2Li1Pt": "Los 4 niveles + nivel infinito sin fin", "price2Li2Pt": "Ruta de gramática completa hasta C2 + palabra de jerga extra cada día", "price2Li3Pt": "Todos los acentos: carioca, paulista, nordestino, gaúcho", "price2Li4Pt": "Un escenario que nunca se repite", "price2CtaPt": "Asegurar este precio", "price3KickerPt": "Anual", "price3WasPt": "desde <span class=\"pricing-was-amount\">€249</span>/año después del lanzamiento", "price3PeriodPt": "/año", "price3SubPt": "Pagas 12 meses y el 13.º es gratis: sale a menos de €13/mes. Se renueva automáticamente cada año.", "price3Li1Pt": "Todo lo del plan Fundador", "price3Li2Pt": "1 mes extra cada año (13 meses de acceso)", "price3Li3Pt": "Acceso a todas las actualizaciones futuras", "price3Li4Pt": "Máxima prioridad en la fila del lanzamiento", "price3CtaPt": "Quiero el plan anual", "ctaKickerPt": "¿Todavía lo estás pensando?", "ctaTitlePt": "Deja tu correo y recibe consejos de portugués de Brasil de verdad, sin rodeos.", "ctaLedePt": "Te enviamos frases del día a día, jerga y ejercicios, y eres la primera persona en enterarte cuando salga algo grande en la app.", "ctaEmailPlaceholderPt": "tu@email.com", "ctaEmailAriaPt": "Tu correo", "ctaSubmitPt": "Apuntarme", "ctaFormNotePt": "sin spam, solo contenido que ayuda de verdad", "ctaThanksPPt": "¡Listo! Ya estás en la lista; atento a tu bandeja de entrada.", "ctaReferralTitlePt": "🚀 ¿Quieres acceso prioritario? Invita a tus amigos.", "ctaReferralDescPt": "Quien entre con tu enlace y tú suben juntos en la fila.", "ctaCopyBtnPt": "📋 Copiar", "ctaWhatsappBtnPt": "📲 Invitar por WhatsApp"});
+  /* v15.5.0: avatar ilustrado — rótulos do editor */
+  Object.assign(I18N_STRINGS.pt, {"avHair": "Cabelo", "avHairColor": "Cor do cabelo", "avSkin": "Tom de pele", "avOutfit": "Roupa", "avFlag": "Bandeira no peito", "avRandom": "🎲 Sortear um visual", "avHair_franja": "Bagunçado", "avHair_curto": "Curto", "avHair_cacheado": "Cacheado", "avHair_longo": "Longo", "avHair_coque": "Coque", "avHair_tranca": "Trança", "avHair_raspado": "Raspado", "avHair_careca": "Careca", "avAcc_none": "Nenhum", "avAcc_fone": "Fone", "avAcc_oculos": "Óculos", "avAcc_oculosSol": "Óculos de sol", "avAcc_bone": "Boné", "avAcc_brinco": "Brincos", "avFlag_none": "Sem bandeira", "avFlag_br": "Brasil", "avFlag_de": "Alemanha", "avFlag_uk": "Reino Unido"});
+  Object.assign(I18N_STRINGS.en, {"avHair": "Hair", "avHairColor": "Hair colour", "avSkin": "Skin tone", "avOutfit": "Outfit", "avFlag": "Flag on your chest", "avRandom": "🎲 Random look", "avHair_franja": "Messy", "avHair_curto": "Short", "avHair_cacheado": "Curly", "avHair_longo": "Long", "avHair_coque": "Bun", "avHair_tranca": "Braid", "avHair_raspado": "Buzz cut", "avHair_careca": "Bald", "avAcc_none": "None", "avAcc_fone": "Headphones", "avAcc_oculos": "Glasses", "avAcc_oculosSol": "Sunglasses", "avAcc_bone": "Cap", "avAcc_brinco": "Earrings", "avFlag_none": "No flag", "avFlag_br": "Brazil", "avFlag_de": "Germany", "avFlag_uk": "United Kingdom"});
+  Object.assign(I18N_STRINGS.es, {"avHair": "Pelo", "avHairColor": "Color del pelo", "avSkin": "Tono de piel", "avOutfit": "Ropa", "avFlag": "Bandera en el pecho", "avRandom": "🎲 Sortear un look", "avHair_franja": "Despeinado", "avHair_curto": "Corto", "avHair_cacheado": "Rizado", "avHair_longo": "Largo", "avHair_coque": "Moño", "avHair_tranca": "Trenza", "avHair_raspado": "Rapado", "avHair_careca": "Calvo", "avAcc_none": "Ninguno", "avAcc_fone": "Auriculares", "avAcc_oculos": "Gafas", "avAcc_oculosSol": "Gafas de sol", "avAcc_bone": "Gorra", "avAcc_brinco": "Pendientes", "avFlag_none": "Sin bandera", "avFlag_br": "Brasil", "avFlag_de": "Alemania", "avFlag_uk": "Reino Unido"});
+  Object.assign(I18N_STRINGS.de, {"avHair": "Haare", "avHairColor": "Haarfarbe", "avSkin": "Hautton", "avOutfit": "Outfit", "avFlag": "Flagge auf der Brust", "avRandom": "🎲 Zufälliger Look", "avHair_franja": "Verwuschelt", "avHair_curto": "Kurz", "avHair_cacheado": "Lockig", "avHair_longo": "Lang", "avHair_coque": "Dutt", "avHair_tranca": "Zopf", "avHair_raspado": "Kurzgeschoren", "avHair_careca": "Glatze", "avAcc_none": "Keins", "avAcc_fone": "Kopfhörer", "avAcc_oculos": "Brille", "avAcc_oculosSol": "Sonnenbrille", "avAcc_bone": "Cap", "avAcc_brinco": "Ohrringe", "avFlag_none": "Keine Flagge", "avFlag_br": "Brasilien", "avFlag_de": "Deutschland", "avFlag_uk": "Vereinigtes Königreich"});
+  /* v15.5.0: rodapé traduzido nas trilhas de alemão e inglês + FAQ de sincronização corrigido (o login na nuvem já existe) */
+  Object.assign(I18N_STRINGS.pt, {"footerTaglineDe": "Feito por um brasileiro que vive há mais de 7 anos na Alemanha.", "footerTaglineEn": "Feito pra quem já cansou do inglês de laboratório.", "faqQ5De": "Meu progresso fica salvo se eu trocar de celular?", "faqA5De": "Fica, sim. Cria uma conta grátis (no botão ☁️ Salvar progresso na nuvem) e seu XP, sua sequência e a gramática estudada ficam salvos na nuvem, em qualquer aparelho.", "faqQ5En": "Meu progresso sincroniza entre aparelhos?", "faqA5En": "Sincroniza, sim. Cria uma conta grátis (no botão ☁️ Salvar progresso na nuvem) e seu XP, sua sequência e a gramática estudada ficam salvos na nuvem, em qualquer aparelho."});
+  Object.assign(I18N_STRINGS.en, {"footerTaglineDe": "Made by a Brazilian who has lived in Germany for over 7 years.", "footerTaglineEn": "Made for people tired of textbook English.", "faqQ5De": "Is my progress saved if I switch phones?", "faqA5De": "Yes. Create a free account (the ☁️ Save progress to the cloud button) and your XP, streak and grammar progress are saved to the cloud and available on any device.", "faqQ5En": "Does my progress sync across devices?", "faqA5En": "Yes. Create a free account (the ☁️ Save progress to the cloud button) and your XP, streak and grammar progress are saved to the cloud and available on any device."});
+  Object.assign(I18N_STRINGS.es, {"footerTaglineDe": "Hecho por un brasileño que vive en Alemania desde hace más de 7 años.", "footerTaglineEn": "Hecho para quien ya se cansó del inglés de laboratorio.", "faqQ5De": "¿Mi progreso se guarda si cambio de celular?", "faqA5De": "Sí. Crea una cuenta gratis (con el botón ☁️) y tu XP, tu racha y la gramática estudiada quedan guardados en la nube, en cualquier dispositivo.", "faqQ5En": "¿Mi progreso se sincroniza entre dispositivos?", "faqA5En": "Sí. Crea una cuenta gratis (con el botón ☁️) y tu XP, tu racha y la gramática estudiada quedan guardados en la nube, en cualquier dispositivo."});
+  Object.assign(I18N_STRINGS.de, {"footerTaglineDe": "Gemacht von einem Brasilianer, der seit über 7 Jahren in Deutschland lebt.", "footerTaglineEn": "Für alle, die Lehrbuch-Englisch satthaben.", "faqQ5De": "Bleibt mein Fortschritt gespeichert, wenn ich das Handy wechsle?", "faqA5De": "Ja. Erstelle ein kostenloses Konto (der ☁️-Button), dann werden XP, Serie und Grammatik-Fortschritt in der Cloud gespeichert und sind auf jedem Gerät verfügbar.", "faqQ5En": "Wird mein Fortschritt zwischen Geräten synchronisiert?", "faqA5En": "Ja. Erstelle ein kostenloses Konto (der ☁️-Button), dann werden XP, Serie und Grammatik-Fortschritt in der Cloud gespeichert und sind auf jedem Gerät verfügbar."});
 
   // currentSiteLang mirrors whatever applyInterfaceLanguage() last applied, so
   // dynamic (JS-generated) UI text built with t() below is locale-correct at
@@ -6364,15 +6386,111 @@ window.FalautVoz = (function(){
   // comparar com outras pessoas — isso vem quando o backend estiver pronto) ----
   const PROFILE_KEY = 'falareal_profile_v1'; // perfil é da pessoa, não do idioma — fica fora do STREAK_KEYS
 
-  const FACE_OPTIONS = ['🙂','😎','🤓','🥳','🧐','🤠','👽','🤖','🦊','🐱','🦁','🐻'];
-  const ACCESSORY_OPTIONS = ['', '🎩','👑','🕶️','🎧','🧣','⚡','🌟'];
-  const BG_OPTIONS = ['#f0a63a','#3e6b63','#c1483d','#4a6fa5','#8b5fbf','#2d2d2d'];
+  // v15.5.0: avatar ilustrado em SVG (no estilo do mascote), no lugar dos emojis.
+  // Tudo é desenhado aqui no navegador: sem imagens extras, sem custo de API.
+  const AV_SKINS  = ['#F6D7BF','#EBC09C','#D29A6E','#B57A4D','#8C5733','#5E3A22'];
+  const AV_HAIRS  = ['franja','curto','cacheado','longo','coque','tranca','raspado','careca'];
+  const AV_HAIR_COLORS = ['#1E1712','#4A2E1E','#7A4B2A','#C08A3E','#D9C6A5','#B33A2E'];
+  const AV_ACCS   = ['','fone','oculos','oculosSol','bone','brinco'];
+  const AV_TOPS   = ['#1F5A3A','#B33A2E','#C9A227','#EDE6D6','#3E5C8A','#262626'];
+  const AV_FLAGS  = ['','br','de','uk'];
+  const BG_OPTIONS = ['#0F2E1D','#f0a63a','#3e6b63','#c1483d','#4a6fa5','#8b5fbf','#2d2d2d'];
+
+  const AV_DEFAULT = { skin:AV_SKINS[2], hair:'franja', hairColor:AV_HAIR_COLORS[0], acc:'fone', top:AV_TOPS[0], flag:'br' };
+
+  function normalizeAvatar(a){
+    a = (a && typeof a === 'object') ? a : {};
+    const pick = (v, list, d) => list.includes(v) ? v : d;
+    return {
+      skin: pick(a.skin, AV_SKINS, AV_DEFAULT.skin),
+      hair: pick(a.hair, AV_HAIRS, AV_DEFAULT.hair),
+      hairColor: pick(a.hairColor, AV_HAIR_COLORS, AV_DEFAULT.hairColor),
+      acc: pick(a.acc, AV_ACCS, AV_DEFAULT.acc),
+      top: pick(a.top, AV_TOPS, AV_DEFAULT.top),
+      flag: pick(a.flag, AV_FLAGS, AV_DEFAULT.flag)
+    };
+  }
+
+  function shade(hex, amt){
+    const n = parseInt(hex.slice(1), 16);
+    const c = (x) => Math.max(0, Math.min(255, Math.round(x + amt)));
+    const r = c(n >> 16), g = c((n >> 8) & 255), b = c(n & 255);
+    return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+  }
+
+  // Desenha o avatar como SVG (viewBox 100×100). bg = cor do círculo de fundo.
+  function avatarSVG(a, bg){
+    a = normalizeAvatar(a);
+    const hc = a.hairColor, hd = shade(hc, -18), sk = a.skin, skd = shade(sk, -22), top = a.top, topd = shade(top, -28);
+    const light = ['#EDE6D6','#C9A227'].includes(top);
+    let back = '', front = '', acc = '', extra = '';
+
+    // cabelo de trás (fica atrás da cabeça)
+    if(a.hair === 'longo') back = `<path d="M27 46 C25 26 37 15 50 15 C63 15 75 26 73 46 L75 80 C66 84 58 82 50 82 C42 82 34 84 25 80 Z" fill="${hd}"/>`;
+    if(a.hair === 'cacheado') back = `<g fill="${hc}"><circle cx="30" cy="38" r="11"/><circle cx="70" cy="38" r="11"/><circle cx="36" cy="25" r="12"/><circle cx="64" cy="25" r="12"/><circle cx="50" cy="20" r="13"/><circle cx="27" cy="52" r="8"/><circle cx="73" cy="52" r="8"/></g>`;
+    if(a.hair === 'coque') back = `<circle cx="50" cy="13" r="9" fill="${hc}"/><circle cx="50" cy="13" r="9" fill="none" stroke="${hd}" stroke-width="1.5"/>`;
+    if(a.hair === 'tranca') back = `<path d="M66 44 C78 50 76 62 72 74" stroke="${hc}" stroke-width="9" stroke-linecap="round" fill="none"/><path d="M68 54 l8 2 M69 63 l7 2" stroke="${hd}" stroke-width="2"/>`;
+
+    // cabelo da frente
+    switch(a.hair){
+      case 'franja': front = `<path d="M31 45 C28 27 39 18 51 18 C64 18 73 27 70 44 L66 36 L62 41 L58 32 L53 39 L48 31 L43 39 L39 33 L35 42 Z" fill="${hc}"/><path d="M47 18 L52 10 L55 19 M58 19 L66 13 L64 22" fill="${hc}"/>`; break;
+      case 'curto': front = `<path d="M31 44 C29 26 40 19 50 19 C61 19 72 26 69 44 C66 34 60 30 50 30 C41 30 34 34 31 44 Z" fill="${hc}"/>`; break;
+      case 'cacheado': front = `<g fill="${hc}"><circle cx="38" cy="31" r="8"/><circle cx="50" cy="28" r="9"/><circle cx="62" cy="31" r="8"/></g>`; break;
+      case 'longo': front = `<path d="M31 46 C29 27 40 19 50 19 C61 19 72 27 69 46 C64 33 57 29 49 30 C43 31 36 36 31 46 Z" fill="${hc}"/>`; break;
+      case 'coque': front = `<path d="M31 44 C30 27 40 20 50 20 C61 20 71 27 69 44 C65 33 58 29 50 29 C42 29 35 33 31 44 Z" fill="${hc}"/>`; break;
+      case 'tranca': front = `<path d="M31 45 C29 27 40 19 50 19 C61 19 72 27 69 45 C62 32 50 28 38 34 Z" fill="${hc}"/>`; break;
+      case 'raspado': front = `<path d="M32 40 C32 27 41 21 50 21 C59 21 68 27 68 40 C63 33 57 31 50 31 C43 31 37 33 32 40 Z" fill="${hc}" opacity="0.85"/>`; break;
+      default: front = '';
+    }
+
+    // acessórios
+    switch(a.acc){
+      case 'fone': acc = `<path d="M28 46 C27 22 73 22 72 46" stroke="#1a1a1a" stroke-width="4.5" fill="none" stroke-linecap="round"/><rect x="23" y="42" width="9" height="15" rx="4" fill="#1a1a1a"/><rect x="68" y="42" width="9" height="15" rx="4" fill="#1a1a1a"/><rect x="24.5" y="45" width="3" height="9" rx="1.5" fill="#C9A227"/><rect x="72.5" y="45" width="3" height="9" rx="1.5" fill="#C9A227"/>`; break;
+      case 'oculos': acc = `<g fill="none" stroke="#1a1a1a" stroke-width="2"><rect x="35" y="43" width="12" height="9" rx="3"/><rect x="53" y="43" width="12" height="9" rx="3"/><path d="M47 47 h6"/></g>`; break;
+      case 'oculosSol': acc = `<g><rect x="34" y="42.5" width="13.5" height="9" rx="3.5" fill="#141414"/><rect x="52.5" y="42.5" width="13.5" height="9" rx="3.5" fill="#141414"/><path d="M47.5 46 h5" stroke="#141414" stroke-width="2"/><path d="M37 45 l4 0" stroke="#fff" stroke-opacity=".5" stroke-width="1.5" stroke-linecap="round"/></g>`; break;
+      case 'bone': acc = `<path d="M30 40 C30 24 40 17 50 17 C61 17 70 24 70 40 Z" fill="#1F5A3A"/><path d="M50 40 L80 40 C80 44 74 45 66 45 L50 44 Z" fill="#174630"/><circle cx="50" cy="18" r="2.5" fill="#C9A227"/><path d="M44 30 h12" stroke="#C9A227" stroke-width="2.5" stroke-linecap="round"/>`; break;
+      case 'brinco': acc = `<circle cx="31" cy="58" r="2.6" fill="#C9A227"/><circle cx="69" cy="58" r="2.6" fill="#C9A227"/>`; break;
+    }
+
+    // bandeira no peito
+    if(a.flag === 'br') extra = `<g transform="translate(58 84)"><rect width="13" height="9" rx="1.5" fill="#1F9A48"/><path d="M6.5 1.2 L11.8 4.5 L6.5 7.8 L1.2 4.5 Z" fill="#F4C430"/><circle cx="6.5" cy="4.5" r="2" fill="#24408E"/></g>`;
+    if(a.flag === 'de') extra = `<g transform="translate(58 84)"><rect width="13" height="3" fill="#111"/><rect y="3" width="13" height="3" fill="#D00"/><rect y="6" width="13" height="3" fill="#FFCE00"/></g>`;
+    if(a.flag === 'uk') extra = `<g transform="translate(58 84)"><rect width="13" height="9" fill="#012169"/><path d="M0 0 L13 9 M13 0 L0 9" stroke="#fff" stroke-width="2"/><path d="M0 0 L13 9 M13 0 L0 9" stroke="#C8102E" stroke-width="0.8"/><path d="M6.5 0 V9 M0 4.5 H13" stroke="#fff" stroke-width="3"/><path d="M6.5 0 V9 M0 4.5 H13" stroke="#C8102E" stroke-width="1.6"/></g>`;
+
+    const eyes = (a.acc === 'oculosSol') ? '' : `<ellipse cx="41" cy="48" rx="2.4" ry="3" fill="#1a1a1a"/><ellipse cx="59" cy="48" rx="2.4" ry="3" fill="#1a1a1a"/><circle cx="41.8" cy="47" r=".8" fill="#fff"/><circle cx="59.8" cy="47" r=".8" fill="#fff"/>`;
+
+    return `<svg class="av-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+<g>
+<rect width="100" height="100" fill="${bg || BG_OPTIONS[0]}"/>
+${back}
+<path d="M16 104 C16 82 30 74 50 74 C70 74 84 82 84 104 Z" fill="${top}"/>
+<path d="M40 74 L50 88 L60 74" fill="${topd}"/>
+<rect x="44" y="62" width="12" height="14" rx="5" fill="${skd}"/>
+<ellipse cx="50" cy="47" rx="19" ry="21" fill="${sk}"/>
+<ellipse cx="31.5" cy="50" rx="3.5" ry="5" fill="${sk}"/><ellipse cx="68.5" cy="50" rx="3.5" ry="5" fill="${sk}"/>
+${front}
+${eyes}
+<path d="M38 42.5 q3 -2 6 0 M56 42.5 q3 -2 6 0" stroke="${shade(hc,-10)}" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+<path d="M44.5 57 q5.5 4.5 11 0" stroke="#7a3b2a" stroke-width="2" fill="none" stroke-linecap="round"/>
+<circle cx="37" cy="55" r="3" fill="#e57a6b" opacity=".25"/><circle cx="63" cy="55" r="3" fill="#e57a6b" opacity=".25"/>
+${acc}
+${extra}
+<path d="M16 104 C16 82 30 74 50 74 C70 74 84 82 84 104" fill="none" stroke="${light ? 'rgba(0,0,0,.15)' : 'rgba(255,255,255,.08)'}" stroke-width="1.5"/>
+</g></svg>`;
+  }
 
   function loadProfile(){
+    let p;
     try{
       const raw = localStorage.getItem(PROFILE_KEY);
-      return raw ? JSON.parse(raw) : { nickname:'', face:FACE_OPTIONS[0], accessory:'', bg:BG_OPTIONS[0] };
-    }catch(e){ return { nickname:'', face:FACE_OPTIONS[0], accessory:'', bg:BG_OPTIONS[0] }; }
+      p = raw ? JSON.parse(raw) : null;
+    }catch(e){ p = null; }
+    if(!p || typeof p !== 'object') p = { nickname:'' };
+    // perfis antigos (emoji) ganham o avatar padrão, mantendo apelido e cor de fundo
+    p.avatar = normalizeAvatar(p.avatar);
+    if(!BG_OPTIONS.includes(p.bg)) p.bg = BG_OPTIONS[0];
+    if(typeof p.nickname !== 'string') p.nickname = '';
+    return p;
   }
   function saveProfile(p){ try{ localStorage.setItem(PROFILE_KEY, JSON.stringify(p)); }catch(e){} if(typeof syncToCloud === 'function') syncToCloud(); }
 
@@ -6426,51 +6544,84 @@ window.FalautVoz = (function(){
   function renderProfile(){
     const avatarEl = document.getElementById('profile-avatar');
     const nickEl = document.getElementById('profile-nickname');
-    if(!avatarEl) return;
-    avatarEl.style.background = profileData.bg;
-    avatarEl.innerHTML = profileData.face + (profileData.accessory ? `<span class="avatar-accessory">${profileData.accessory}</span>` : '');
-    if(nickEl && document.activeElement !== nickEl) nickEl.value = profileData.nickname || '';
-    renderLeague();
-
-    const sbAvatar = document.getElementById('sidebar-avatar');
-    if(sbAvatar){
-      sbAvatar.style.background = profileData.bg;
-      sbAvatar.innerHTML = profileData.face;
+    const svg = avatarSVG(profileData.avatar, profileData.bg);
+    if(avatarEl){
+      avatarEl.style.background = profileData.bg;
+      avatarEl.innerHTML = svg;
+      if(nickEl && document.activeElement !== nickEl) nickEl.value = profileData.nickname || '';
+      renderLeague();
     }
+    const sbAvatar = document.getElementById('sidebar-avatar');
+    if(sbAvatar){ sbAvatar.style.background = profileData.bg; sbAvatar.innerHTML = svg; }
+    // v15.5.0: o botão redondo da conta (celular) mostra o seu avatar, não mais o 👤
+    const fab = document.getElementById('mobile-account-fab');
+    if(fab){ fab.classList.add('has-avatar'); fab.innerHTML = svg; }
+    const preview = document.getElementById('avatar-drawer-preview');
+    if(preview){ preview.style.background = profileData.bg; preview.innerHTML = svg; }
   }
 
   function renderAvatarPicker(){
-    const faceRow = document.getElementById('avatar-face-options');
-    const accRow = document.getElementById('avatar-accessory-options');
-    const bgRow = document.getElementById('avatar-bg-options');
-    if(!faceRow) return;
+    const rows = document.getElementById('avatar-picker-rows');
+    if(!rows) return;
+    rows.innerHTML = '';
+    const av = profileData.avatar;
 
-    faceRow.innerHTML = '';
-    FACE_OPTIONS.forEach(face=>{
+    function update(fn){ fn(); saveProfile(profileData); renderProfile(); renderAvatarPicker(); }
+    function addRow(labelKey, fallback){
+      const lbl = document.createElement('div');
+      lbl.className = 'avatar-picker-label';
+      lbl.textContent = t(labelKey) || fallback;
+      const row = document.createElement('div');
+      row.className = 'avatar-picker-row';
+      rows.appendChild(lbl); rows.appendChild(row);
+      return row;
+    }
+    // opção com miniatura do próprio avatar mudando só aquele detalhe
+    function previewOpt(row, selected, patch, title, onPick){
       const btn = document.createElement('button');
-      btn.className = 'avatar-opt' + (profileData.face === face ? ' selected' : '');
-      btn.textContent = face;
-      btn.addEventListener('click', ()=>{ profileData.face = face; saveProfile(profileData); renderProfile(); renderAvatarPicker(); });
-      faceRow.appendChild(btn);
-    });
-
-    accRow.innerHTML = '';
-    ACCESSORY_OPTIONS.forEach(acc=>{
+      btn.type = 'button';
+      btn.className = 'avatar-opt av-preview' + (selected ? ' selected' : '');
+      btn.title = title || '';
+      btn.setAttribute('aria-label', title || '');
+      btn.innerHTML = avatarSVG(Object.assign({}, av, patch), profileData.bg);
+      btn.addEventListener('click', () => update(onPick));
+      row.appendChild(btn);
+    }
+    function swatch(row, color, selected, onPick){
       const btn = document.createElement('button');
-      btn.className = 'avatar-opt' + (profileData.accessory === acc ? ' selected' : '');
-      btn.textContent = acc || '🚫';
-      btn.addEventListener('click', ()=>{ profileData.accessory = acc; saveProfile(profileData); renderProfile(); renderAvatarPicker(); });
-      accRow.appendChild(btn);
-    });
-
-    bgRow.innerHTML = '';
-    BG_OPTIONS.forEach(color=>{
-      const btn = document.createElement('button');
-      btn.className = 'avatar-opt bg-opt' + (profileData.bg === color ? ' selected' : '');
+      btn.type = 'button';
+      btn.className = 'avatar-opt bg-opt' + (selected ? ' selected' : '');
       btn.style.background = color;
-      btn.addEventListener('click', ()=>{ profileData.bg = color; saveProfile(profileData); renderProfile(); renderAvatarPicker(); });
-      bgRow.appendChild(btn);
-    });
+      btn.setAttribute('aria-label', color);
+      btn.addEventListener('click', () => update(onPick));
+      row.appendChild(btn);
+    }
+
+    let row = addRow('avHair', 'Cabelo');
+    AV_HAIRS.forEach(h => previewOpt(row, av.hair === h, {hair:h, acc: av.acc === 'bone' ? '' : av.acc}, t('avHair_' + h), () => { av.hair = h; }));
+    row = addRow('avHairColor', 'Cor do cabelo');
+    AV_HAIR_COLORS.forEach(c => swatch(row, c, av.hairColor === c, () => { av.hairColor = c; }));
+    row = addRow('avSkin', 'Tom de pele');
+    AV_SKINS.forEach(c => swatch(row, c, av.skin === c, () => { av.skin = c; }));
+    row = addRow('accessory', 'Acessório');
+    AV_ACCS.forEach(a => previewOpt(row, av.acc === a, {acc:a}, t('avAcc_' + (a || 'none')), () => { av.acc = a; }));
+    row = addRow('avOutfit', 'Roupa');
+    AV_TOPS.forEach(c => swatch(row, c, av.top === c, () => { av.top = c; }));
+    row = addRow('avFlag', 'Bandeira no peito');
+    AV_FLAGS.forEach(f => previewOpt(row, av.flag === f, {flag:f}, t('avFlag_' + (f || 'none')), () => { av.flag = f; }));
+    row = addRow('bgColor', 'Cor de fundo');
+    BG_OPTIONS.forEach(c => swatch(row, c, profileData.bg === c, () => { profileData.bg = c; }));
+
+    const rnd = document.createElement('button');
+    rnd.type = 'button';
+    rnd.className = 'avatar-random-btn';
+    rnd.textContent = t('avRandom') || '🎲 Sortear um visual';
+    rnd.addEventListener('click', () => update(() => {
+      const r = (l) => l[Math.floor(Math.random() * l.length)];
+      profileData.avatar = normalizeAvatar({ skin:r(AV_SKINS), hair:r(AV_HAIRS), hairColor:r(AV_HAIR_COLORS), acc:r(AV_ACCS), top:r(AV_TOPS), flag:r(AV_FLAGS) });
+      profileData.bg = r(BG_OPTIONS);
+    }));
+    rows.appendChild(rnd);
   }
 
   const avatarEditBtn = document.getElementById('avatar-edit-btn');
